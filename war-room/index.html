@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Talk To Sev — War Room</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--surface:#141414;--surface2:#1c1c1c;--surface3:#282828;--border:#252525;--border2:#353535;--text:#e8e4dc;--muted:#777;--dim:#444;--gold:#c8a96e;--gold2:#e8c88a;--blue:#5a8ec8;--green:#4a9e6a;--red:#c85a4a;--fire:#e8763a;--purple:#8a6ec8;--mono:"IBM Plex Mono",monospace;--sans:"IBM Plex Sans",sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh;overflow-x:hidden}
+.warroom{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;position:sticky;top:0;z-index:200}
+.wr-brand{font-family:var(--mono);font-size:.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;line-height:1.4}
+.wr-brand strong{color:var(--gold);display:block;font-size:.82rem}
+.wr-stats{display:flex;gap:.85rem;flex:1;flex-wrap:wrap}
+.wr-stat{display:flex;flex-direction:column;align-items:center;min-width:60px}
+.wr-stat-val{font-family:var(--mono);font-size:1rem;font-weight:600;line-height:1}
+.wr-stat-label{font-size:.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.fire-val{color:var(--fire)}.gold-val{color:var(--gold)}.blue-val{color:var(--blue)}.green-val{color:var(--green)}
+.level-badge{display:flex;flex-direction:column;align-items:center;background:rgba(200,169,110,.08);border:1px solid rgba(200,169,110,.2);border-radius:6px;padding:.35rem .7rem}
+.level-name{font-family:var(--mono);font-size:.65rem;color:var(--gold);font-weight:600;letter-spacing:.05em}
+.level-xp{font-size:.55rem;color:var(--dim);margin-top:2px}
+.level-bar{width:70px;height:3px;background:var(--border2);border-radius:2px;margin-top:3px;overflow:hidden}
+.level-bar-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s ease}
+.momentum-bar{display:flex;gap:3px;align-items:center}
+.momentum-pip{width:7px;height:7px;border-radius:50%;background:var(--border2);transition:all .2s}
+.momentum-pip.lit{background:var(--fire);box-shadow:0 0 5px var(--fire)}
+.add-lead-btn{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.07em;padding:.4rem .9rem;border-radius:4px;border:1px solid rgba(200,169,110,.35);background:rgba(200,169,110,.08);color:var(--gold);cursor:pointer;transition:all .15s}
+.add-lead-btn:hover{background:rgba(200,169,110,.18)}
+.layout{display:grid;grid-template-columns:220px 1fr;height:calc(100vh - 68px);position:relative}
+.sidebar{border-right:1px solid var(--border);overflow-y:auto;background:var(--surface)}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border2)}
+.main{overflow-y:auto;position:relative}
+.main::-webkit-scrollbar{width:3px}
+.slabel{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);padding:.55rem 1rem .25rem;display:flex;align-items:center;justify-content:space-between}
+.lead-card{padding:.55rem 1rem;border-left:2px solid transparent;cursor:pointer;transition:background .1s,border-color .1s}
+.lead-card:hover{background:var(--surface2)}
+.lead-card.active{background:var(--surface2);border-left-color:var(--gold)}
+.lc-name{font-family:var(--mono);font-size:.75rem;color:var(--text);margin-bottom:2px}
+.lc-biz{font-size:.68rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.empty-state{padding:3rem;text-align:center;color:var(--dim);font-family:var(--mono);font-size:.78rem;line-height:1.8}
+.lead-detail{display:none;flex-direction:column;height:100%}
+.ld-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0}
+.ld-name{font-weight:600;font-size:1rem;color:var(--text);margin-bottom:.4rem}
+.ld-meta{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.4rem}
+.ld-phone a{font-family:var(--mono);font-size:.8rem;color:var(--gold);text-decoration:none}
+.ld-email{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.ld-chips{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.4rem}
+.chip{font-family:var(--mono);font-size:.58rem;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.05em}
+.ld-stage-row{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.4rem;flex-wrap:wrap}
+.ld-stage-label{font-family:var(--mono);font-size:.6rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;padding-top:4px;flex-shrink:0}
+.stage-btn{font-family:var(--mono);font-size:.56rem;padding:2px 6px;border-radius:3px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;transition:all .1s;margin:1px}
+.stage-btn:hover{background:var(--surface2);color:var(--text)}
+.stage-btn.active-stage{color:#0a0a0a;font-weight:600;border-color:transparent}
+.ld-actions{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.4rem}
+.act-btn{font-family:var(--mono);font-size:.58rem;padding:2px 6px;border-radius:3px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;transition:all .12s}
+.act-btn:hover{background:var(--surface2);color:var(--text)}
+.act-btn.on{border-color:transparent;color:#0a0a0a;font-weight:600}
+.act-btn.on-called{background:var(--gold)}.act-btn.on-dm{background:var(--blue)}
+.act-btn.on-session{background:var(--purple)}.act-btn.on-workshop{background:var(--green);color:#fff!important}
+.act-btn.on-cmo{background:#2d7a50;color:#fff!important}.act-btn.on-priced{background:var(--gold);font-weight:700}
+.act-btn.on-dead{background:var(--red);color:#fff!important}
+.ld-notes{width:100%;background:var(--surface3);border:1px solid var(--border);border-radius:3px;padding:.4rem .6rem;color:var(--text);font-family:var(--sans);font-size:.78rem;resize:vertical;outline:none;min-height:36px}
+.ld-notes:focus{border-color:var(--border2)}
+.adventure{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.adv-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0}
+.adv-tab{flex:1;background:none;border:none;border-bottom:2px solid transparent;padding:.6rem .4rem;font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);cursor:pointer}
+.adv-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.adv-body{flex:1;overflow-y:auto;padding:1.25rem}
+.adv-body::-webkit-scrollbar{width:3px}
+.breadcrumb{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.bc-item{font-family:var(--mono);font-size:.58rem;color:var(--dim);padding:2px 5px;background:var(--surface2);border-radius:2px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bc-sep{color:var(--border2);font-size:.6rem}
+.bc-back{font-family:var(--mono);font-size:.58rem;color:var(--blue);cursor:pointer;padding:2px 7px;border:1px solid rgba(90,142,200,.25);border-radius:2px;background:none;margin-left:auto}
+.bc-back:hover{background:rgba(90,142,200,.1)}
+.bc-reset{font-family:var(--mono);font-size:.58rem;color:var(--dim);cursor:pointer;padding:2px 7px;border:1px solid var(--border);border-radius:2px;background:none}
+.bc-reset:hover{color:var(--text);border-color:var(--border2)}
+.scene-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1rem}
+.scene-head{padding:.75rem 1rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.scene-title{font-family:var(--mono);font-size:.78rem;font-weight:600;color:var(--text)}
+.tactic-badge{font-family:var(--mono);font-size:.58rem;padding:2px 7px;border-radius:3px;background:rgba(200,169,110,.1);color:var(--gold);border:1px solid rgba(200,169,110,.25);text-transform:uppercase;letter-spacing:.05em}
+.scene-body{padding:1rem}
+.voss-box{background:rgba(90,142,200,.07);border-left:2px solid rgba(90,142,200,.4);border-radius:0 3px 3px 0;padding:.5rem .75rem;margin-bottom:.75rem;font-size:.75rem;color:var(--blue);line-height:1.6}
+.voss-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(90,142,200,.6);margin-bottom:3px}
+.script-ta{width:100%;background:var(--surface3);border:1px solid var(--border);border-radius:3px;padding:.65rem .8rem;color:var(--text);font-family:var(--sans);font-size:.88rem;line-height:1.7;resize:none;outline:none;min-height:80px;overflow:hidden;transition:border-color .15s;field-sizing:content}
+.script-ta:focus{border-color:var(--border2)}
+.copy-btn{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;padding:3px 9px;border-radius:3px;cursor:pointer;border:1px solid rgba(200,169,110,.3);background:none;color:var(--gold);transition:all .12s;margin-top:.4rem}
+.copy-btn:hover{background:rgba(200,169,110,.1)}
+.copy-btn.copied{background:var(--green);border-color:var(--green);color:#fff}
+.scene-note{font-size:.73rem;color:var(--dim);font-style:italic;margin-top:.5rem;line-height:1.6;padding:.5rem .75rem;background:rgba(255,255,255,.02);border-radius:3px}
+.options-label{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin:.75rem 0 .5rem}
+.option-btn{display:flex;align-items:center;gap:.6rem;width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.65rem .9rem;cursor:pointer;text-align:left;margin-bottom:.4rem;transition:all .12s;color:var(--text);font-family:var(--sans);font-size:.82rem}
+.option-btn:hover{background:var(--surface3);border-color:var(--border2)}
+.option-arrow{color:var(--dim);font-size:.7rem;margin-left:auto;flex-shrink:0}
+.option-btn:hover .option-arrow{color:var(--gold)}
+.end-card{background:rgba(74,158,106,.08);border:1px solid rgba(74,158,106,.25);border-radius:6px;padding:1.25rem;text-align:center}
+.end-icon{font-size:2.5rem;margin-bottom:.75rem}
+.end-title{font-family:var(--mono);font-size:1rem;font-weight:600;color:var(--green);margin-bottom:.5rem}
+.end-script{font-size:.85rem;color:var(--muted);line-height:1.7;text-align:left;background:var(--surface3);border-radius:4px;padding:.75rem 1rem;margin-top:.75rem}
+.modal-bg{position:fixed;inset:0;background:rgba(10,10,10,.88);z-index:500;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.5rem;width:460px;max-width:calc(100vw - 2rem)}
+.modal h2{font-family:var(--mono);font-size:.85rem;font-weight:600;color:var(--gold);margin-bottom:1.25rem;text-transform:uppercase;letter-spacing:.08em}
+.form-group{margin-bottom:.85rem}
+.form-label{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:.35rem;display:block}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--surface3);border:1px solid var(--border);border-radius:3px;padding:.5rem .7rem;color:var(--text);font-family:var(--sans);font-size:.85rem;outline:none;transition:border-color .15s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--border2)}
+.form-select option{background:var(--surface3);color:var(--text)}
+.form-textarea{resize:vertical;min-height:60px}
+.modal-btns{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem}
+.modal-cancel{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;padding:.5rem 1rem;border-radius:3px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer}
+.modal-save{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;padding:.5rem 1.2rem;border-radius:3px;border:1px solid rgba(200,169,110,.4);background:rgba(200,169,110,.12);color:var(--gold);cursor:pointer;transition:all .15s}
+.modal-save:hover{background:rgba(200,169,110,.25)}
+.xp-pop{position:fixed;pointer-events:none;font-family:var(--mono);font-weight:600;font-size:.85rem;color:var(--gold);z-index:9999;animation:xpFloat 1.2s ease-out forwards}
+@keyframes xpFloat{0%{opacity:1;transform:translateY(0) scale(1)}20%{opacity:1;transform:translateY(-8px) scale(1.15)}100%{opacity:0;transform:translateY(-50px) scale(.8)}}
+.fire-banner{position:fixed;top:72px;left:50%;transform:translateX(-50%);background:var(--fire);color:#fff;font-family:var(--mono);font-size:.82rem;font-weight:600;padding:.55rem 1.4rem;border-radius:6px;z-index:9998;animation:firePop .4s ease-out,fireFade 1s ease-in 2s forwards;pointer-events:none}
+@keyframes firePop{0%{opacity:0;transform:translateX(-50%) scale(.7)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+@keyframes fireFade{0%{opacity:1}100%{opacity:0}}
+.levelup-flash{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:2rem;font-weight:600;color:var(--gold);z-index:10000;pointer-events:none;text-align:center;animation:levelFlash 2s ease-out forwards}
+@keyframes levelFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}40%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
+</style>
+</head>
+<body>
+<div class="warroom">
+  <div class="wr-brand"><strong>Talk To Sev</strong>War Room</div>
+  <div class="wr-stats">
+    <div class="wr-stat"><div class="wr-stat-val fire-val" id="streak-val">0</div><div class="wr-stat-label">Streak</div></div>
+    <div class="wr-stat"><div class="wr-stat-val gold-val" id="total-xp">0</div><div class="wr-stat-label">XP</div></div>
+    <div class="wr-stat"><div class="wr-stat-val green-val" id="booked-val">0</div><div class="wr-stat-label">Closed</div></div>
+    <div class="wr-stat"><div class="wr-stat-val blue-val" id="pipeline-val">0</div><div class="wr-stat-label">Pipeline</div></div>
+    <div class="wr-stat"><div class="wr-stat-val gold-val" id="revenue-val">$0</div><div class="wr-stat-label">Revenue</div></div>
+  </div>
+  <div class="momentum-bar">
+    <div class="momentum-pip" id="mp0"></div><div class="momentum-pip" id="mp1"></div>
+    <div class="momentum-pip" id="mp2"></div><div class="momentum-pip" id="mp3"></div>
+    <div class="momentum-pip" id="mp4"></div>
+  </div>
+  <div class="level-badge">
+    <div class="level-name" id="level-name">Cold Start</div>
+    <div class="level-xp" id="level-xp-text">0 / 500 XP</div>
+    <div class="level-bar"><div class="level-bar-fill" id="level-bar-fill" style="width:0%"></div></div>
+  </div>
+  <button class="add-lead-btn" onclick="showAddModal()">+ Add Lead</button>
+</div>
+<div class="layout">
+  <div class="sidebar" id="sidebar"></div>
+  <div class="main" id="main">
+    <div class="empty-state" id="empty-msg">Hit + Add Lead to get started<br><span style="font-size:.68rem;margin-top:.75rem;display:block;color:var(--border2)">Click any lead to open the interactive call guide</span></div>
+    <div class="lead-detail" id="lead-detail">
+      <div class="ld-head">
+        <div class="ld-name" id="ld-name">—</div>
+        <div class="ld-meta"><div class="ld-phone" id="ld-phone"></div><div class="ld-email" id="ld-email"></div></div>
+        <div class="ld-chips" id="ld-chips"></div>
+        <div class="ld-stage-row"><span class="ld-stage-label">Stage:</span><div id="stage-btns" style="display:flex;gap:.25rem;flex-wrap:wrap"></div></div>
+        <div class="ld-actions" id="ld-actions"></div>
+        <textarea class="ld-notes" id="ld-notes" placeholder="Call notes..." oninput="saveNotes(this.value)"></textarea>
+      </div>
+      <div class="adventure">
+        <div class="adv-tabs" id="adv-tabs"></div>
+        <div class="adv-body" id="adv-body"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-bg" id="add-modal" style="display:none">
+  <div class="modal">
+    <h2>Add New Lead</h2>
+    <div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="f-name" placeholder="e.g. Sarah Mitchell"></div>
+    <div class="form-group"><label class="form-label">Business</label><input class="form-input" id="f-biz" placeholder="e.g. Sonic Learning"></div>
+    <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="f-phone" placeholder="0412 345 678"></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="f-email" placeholder="email@business.com"></div>
+    <div class="form-group"><label class="form-label">Lead Source</label>
+      <select class="form-select" id="f-source">
+        <option>Instagram DM</option><option>YouTube</option><option>Referral</option>
+        <option>Brandon's Funnel</option><option>Conference / Event</option><option>Cold Outreach</option><option>Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Lead With</label>
+      <select class="form-select" id="f-offer">
+        <option value="workshop">Workshop ($1,500)</option>
+        <option value="cmo">Fractional CMO ($2,500/mo)</option>
+        <option value="session">Strategy Session ($350)</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f-notes" placeholder="What do you know about them?"></textarea></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="hideModal()">Cancel</button>
+      <button class="modal-save" onclick="saveLead()">Add Lead</button>
+    </div>
+  </div>
+</div>
+<script>
+
+const SCENES = {"open": {"id": "open", "tab": "Call", "title": "Opening", "tactic": "Accusation Audit + Late Night FM Voice", "voss": "Accusation audit disarms before they can put a wall up. Slow your pace by 20%. Don't pitch yet.", "script": "Hey [Name], good to finally connect. So before I say anything \u2014 I just want to be upfront. This isn't one of those calls where I pitch you for 45 minutes. I just want to ask you a few questions, understand what's actually going on, and if there's something here that makes sense for you \u2014 great. If not, totally fine. Does that work?", "note": "Pause after 'Does that work?' Let them confirm. Don't fill the silence.", "options": [{"label": "Yeah, that sounds good", "next": "qualify"}, {"label": "What is this about exactly?", "next": "what_is_this"}]}, "what_is_this": {"id": "what_is_this", "tab": "Call", "title": "They want context first", "tactic": "Label + Brief Frame", "voss": "Don't defend. Label their need for clarity, then give a one-liner and redirect to qualify.", "script": "Completely fair. I work with service-based business owners to build a content system that actually brings in leads \u2014 without relying on agencies or ads. I've got a 2-day online workshop and a monthly advisory setup. But before I go into any of that \u2014 tell me what's actually going on with your content right now. What made you get on this call?", "note": "One sentence on what you do. Then flip it straight back to them.", "options": [{"label": "I'm starting from zero", "next": "qualify_zero"}, {"label": "I'm creating but nothing's working", "next": "qualify_stuck"}, {"label": "I've got something but want to scale it", "next": "qualify_scale"}, {"label": "I just want someone to handle it", "next": "qualify_dfy"}]}, "qualify": {"id": "qualify", "tab": "Call", "title": "Qualify \u2014 Open Question", "tactic": "Calibrated Question", "voss": "Open with 'What' not 'Are you' \u2014 calibrated questions can't be answered yes/no and invite them to share.", "script": "So tell me \u2014 what's actually going on with your content right now? What made you jump on a call today?", "note": "Then stop talking. This is where you learn everything. Mirror key words back.", "options": [{"label": "I'm starting from zero, never done this", "next": "qualify_zero"}, {"label": "I'm creating content but getting zero results", "next": "qualify_stuck"}, {"label": "I've got a system going but want to scale", "next": "qualify_scale"}, {"label": "I want someone to just handle it / I'm too busy", "next": "qualify_dfy"}]}, "qualify_zero": {"id": "qualify_zero", "tab": "Call", "title": "Starting from Zero", "tactic": "Mirror + Calibrated Question", "voss": "Mirror their words back. Then ask what's kept them from starting \u2014 surfaces the real fear.", "script": "Starting from zero. [pause] So how long has this been on the to-do list? [listen] And what's the main thing that's kept you from actually doing it?", "note": "Two questions. Let them answer fully before going to pitch. The more they talk, the more they're invested.", "options": [{"label": "Got my answer, pitch the workshop", "next": "pitch_workshop"}, {"label": "They mentioned they want someone to do it for them", "next": "qualify_dfy"}]}, "qualify_stuck": {"id": "qualify_stuck", "tab": "Call", "title": "Creating but No Results", "tactic": "Mirror + Calibrated Question", "voss": "Acknowledge the frustration before asking anything. Label it first.", "script": "Creating but nothing's working. [pause] It seems like you've put in the effort but the results just haven't matched it. [wait for response] What have you tried so far? [listen] And what does a good outcome actually look like for you if you got this right?", "note": "Let them paint the picture of the dream outcome. That's what you're selling.", "options": [{"label": "Got my answer, pitch the workshop", "next": "pitch_workshop"}, {"label": "They want a more hands-on approach, pitch CMO", "next": "pitch_cmo"}]}, "qualify_scale": {"id": "qualify_scale", "tab": "Call", "title": "Has Something, Wants to Scale", "tactic": "Calibrated Question", "voss": "They're further along. CMO might be the right fit. Ask about the bottleneck.", "script": "Okay so you've got something going \u2014 that's already more than most. What's the biggest bottleneck right now? Is it the strategy, the consistency, or actually knowing whether any of it's working?", "note": "If the answer is strategy or knowing what's working \u2192 CMO. If it's consistency and system \u2192 workshop.", "options": [{"label": "Bottleneck is strategy / knowing what works \u2192 CMO", "next": "pitch_cmo"}, {"label": "Bottleneck is consistency / system \u2192 Workshop", "next": "pitch_workshop"}]}, "qualify_dfy": {"id": "qualify_dfy", "tab": "Call", "title": "Wants Someone to Handle It", "tactic": "Label + Anchor Upsell", "voss": "Label what they're after. Then go straight to CMO first \u2014 Hormozi anchor upsell. If they balk, bridge down to workshop.", "script": "It sounds like you want the result without the learning curve \u2014 you'd rather have someone who knows what they're doing in your corner. Is that right? [wait] Yeah, that makes sense.", "note": "Confirm they want DFY before pitching. Then lead with CMO.", "options": [{"label": "Yes that's right \u2192 pitch CMO", "next": "pitch_cmo"}, {"label": "Not exactly, they still want to learn \u2192 pitch workshop", "next": "pitch_workshop"}]}, "pitch_workshop": {"id": "pitch_workshop", "tab": "Pitch", "title": "Workshop Pitch \u2014 Value Stack First", "tactic": "Hormozi Value Stack then Price Reveal", "voss": "Stack everything they get before you say a number. Make the price feel small by the time you get to it.", "script": "Okay so here's what the workshop is. It's two half-days online with a week in between. By end of day one you've got your full content system built \u2014 your brand DNA locked in, 20-plus video ideas scripted, and your first videos filmed. Day two is editing and publishing. You leave with 10 videos ready to go live and a system you actually understand and own. [pause] On top of that, you get 30 days of direct access to me after \u2014 WhatsApp, accountability, I review what you're putting out. That's included. [pause] The investment for all of that is $1,500.", "note": "Say $1,500 and stop. Don't justify it. Let them respond.", "options": [{"label": "I'm in", "next": "close_workshop"}, {"label": "Can't afford it / that's a lot", "next": "cant_afford"}, {"label": "Need to think about it", "next": "think_about"}, {"label": "Need to talk to my partner first", "next": "partner"}, {"label": "Not sure it'll work for my business", "next": "not_sure"}, {"label": "I'm already using an agency", "next": "agency"}]}, "pitch_cmo": {"id": "pitch_cmo", "tab": "Pitch", "title": "CMO Pitch \u2014 Anchor High First", "tactic": "Hormozi Anchor Upsell", "voss": "Lead with the highest offer first. If they balk, you have room to move down to the workshop \u2014 which then feels cheaper by comparison.", "script": "Based on what you're describing, honestly the workshop might be a step below where you need to be. What sounds like a better fit is the advisory side. I become your fractional CMO \u2014 weekly call with me, WhatsApp access anytime during business hours, I build your content system with you, I oversee whoever you've got doing creative, and we make sure the strategy is actually working. [pause] That's $2,500 a month.", "note": "Say the price and let the silence sit. Don't add 'but' or 'however' after the number.", "options": [{"label": "Tell me more", "next": "cmo_detail"}, {"label": "That's too much", "next": "cmo_too_much"}, {"label": "I'm interested, what's next", "next": "close_cmo"}, {"label": "Need to think about it", "next": "think_about"}, {"label": "Need to talk to my partner", "next": "partner"}]}, "cmo_detail": {"id": "cmo_detail", "tab": "Pitch", "title": "CMO \u2014 More Detail", "tactic": "Value Elaboration", "voss": "They're interested, they just need to understand what they're buying. Spell out the deliverables clearly.", "script": "So the way it works \u2014 every week we've got a one-hour call. Non-compulsory because schedules move, but it's there. In between, I'm on WhatsApp. If something comes up, a campaign goes sideways, you're not sure about a piece of content \u2014 you call or message and I'm there during business hours. I also build your content system with you and stay across whatever creative team you've got. Three-month minimum because anything shorter and we're just getting started when it ends. After three months it goes month-to-month, cancel anytime.", "note": "Minimum commitment = 3 months = $7,500 total. Don't hide this. Say it clearly.", "options": [{"label": "Okay, I'm keen \u2014 what are next steps", "next": "close_cmo"}, {"label": "That's too much commitment / money", "next": "cmo_too_much"}, {"label": "Need to think about it", "next": "think_about"}, {"label": "Need to talk to partner", "next": "partner"}]}, "cmo_too_much": {"id": "cmo_too_much", "tab": "Pitch", "title": "CMO Too Expensive \u2014 Bridge to Workshop", "tactic": "Hormozi Feature Downsell", "voss": "Don't drop the price \u2014 change the offer. Bridge them to the workshop as the natural starting point.", "script": "That's fair \u2014 the advisory is the full-service version. If that feels like too big a step right now, the workshop might actually be the smarter move. You spend two half-days with me online, you build the whole system yourself, and you walk away knowing exactly what needs to happen. Then if you want me in your corner every week after that, we can have that conversation once you've seen how the system works. [pause] The workshop is $1,500. Would that be a better fit right now?", "note": "Reframe the workshop as the smart entry point, not a consolation prize.", "options": [{"label": "Yes, let's do the workshop", "next": "close_workshop"}, {"label": "Still too much", "next": "cant_afford"}, {"label": "Need to think about it", "next": "think_about"}]}, "close_workshop": {"id": "close_workshop", "tab": "Close", "title": "Close \u2014 This or That", "tactic": "Voss This-or-That Close", "voss": "Never ask 'do you want to book?' Two specific options only. Makes the decision feel easy \u2014 it's not whether, it's which.", "script": "Perfect. So two options \u2014 we can lock in your spot right now and I'll send you the payment link while we're on the call, or I can send it through and you sort it in the next 24 hours. Which works better?", "note": "Send the payment link during the call if they say 'now'. Have it ready.", "options": [{"label": "Lock it in now", "next": "booked_workshop"}, {"label": "Send it through, I'll do it today", "next": "payment_link"}, {"label": "Actually wait, I have a question", "next": "think_about"}]}, "close_cmo": {"id": "close_cmo", "tab": "Close", "title": "Close CMO", "tactic": "This-or-That Close + Commitment Frame", "voss": "Same close structure. Also confirm the start date so it feels real.", "script": "Great. So minimum is three months \u2014 that's enough time to actually build something and see results. Two options \u2014 we sort out the first payment now and lock in a start date, or you need a day or two to get set up your end. Which works better?", "note": "Get a start date even if payment comes later. A date = a commitment.", "options": [{"label": "Let's sort it now", "next": "booked_cmo"}, {"label": "Give me a couple of days", "next": "payment_link"}, {"label": "Still have questions", "next": "cmo_detail"}]}, "cant_afford": {"id": "cant_afford", "tab": "Objection", "title": "Can't Afford It \u2014 Diagnose First", "tactic": "Voss Calibrated Question", "voss": "Don't jump to a payment plan yet. Find out if it's money or value first. The fix is different depending on the answer.", "script": "Help me understand \u2014 is it that the money genuinely isn't there right now, or is it more that you haven't seen enough yet to feel confident it's actually going to work for you?", "note": "Stay quiet after this. Let them answer. The answer tells you everything.", "options": [{"label": "Money genuinely isn't there right now", "next": "money_genuine"}, {"label": "Not confident it'll work / not seen enough proof", "next": "value_issue"}]}, "money_genuine": {"id": "money_genuine", "tab": "Objection", "title": "Money Isn't There \u2014 Payment Plan", "tactic": "Hormozi Payment Plan Downsell", "voss": "Same product, same price, different timing. Hormozi: when do you get paid? Let's do some now and the rest over time.", "script": "Okay, that's fair. Here's one thing I can do \u2014 we break it into three payments of $500. First one today locks your spot, the other two come over the next two months. Does that make it more workable?", "note": "Don't apologise for offering it. Present it matter-of-factly.", "options": [{"label": "Yes, that works", "next": "close_workshop"}, {"label": "Still too much even at $500", "next": "downsell_session"}, {"label": "Need to check finances / think about it", "next": "think_about"}]}, "value_issue": {"id": "value_issue", "tab": "Objection", "title": "Not Confident It'll Work \u2014 De-Risk It", "tactic": "Hormozi Trial Downsell + Voss Label", "voss": "Label their hesitation before offering the solution. Makes them feel understood, not managed.", "script": "That makes complete sense \u2014 you don't know me yet. And I'd never expect you to hand over $1,500 based on a cold call. [pause] So here's what I'd suggest. Book a single session with me. One hour, $350. We go through your specific business \u2014 I show you exactly what your content system would look like, what videos you'd make, what would actually move the needle. You walk away with a full plan. If it's useful, you'll know straight away whether the workshop makes sense. If it's not, you're out $350 and an hour. Does that feel lower risk?", "note": "This is the $350 session as a proof-of-concept. Most people who take it come back for the workshop.", "options": [{"label": "Yes, let's do the session", "next": "close_session"}, {"label": "Even $350 is too much right now", "next": "graceful_exit"}, {"label": "I'll think about it", "next": "think_about"}]}, "downsell_session": {"id": "downsell_session", "tab": "Objection", "title": "Last Offer \u2014 $350 Session", "tactic": "Hormozi Feature Downsell \u2014 Last Line", "voss": "This is the floor. If they say no here, you let them go cleanly. No desperation.", "script": "Okay. Last thing I'll offer \u2014 and this is genuinely the lowest barrier I can give you. One strategy session with me, $350. One hour, your business, your specific situation. You walk away with a plan. Most people who take the session end up in the workshop not long after, but that's not a requirement. Want to lock that in today instead?", "note": "Offer it once. If they say no, go to graceful exit. Do not push again.", "options": [{"label": "Yes, let's do the session", "next": "close_session"}, {"label": "No, not today", "next": "graceful_exit"}]}, "close_session": {"id": "close_session", "tab": "Close", "title": "Close \u2014 $350 Session", "tactic": "This-or-That Close", "voss": "Same close structure. Make it easy to say yes by offering two concrete options.", "script": "Great. So same two options \u2014 I can send you the link right now and we lock in a time while we're here, or I send it through and you book in the next 24 hours. Which works better?", "note": "Send the booking link. Stripe or Stan Store. Have it ready before the call.", "options": [{"label": "Lock it in now", "next": "booked_session"}, {"label": "Send it through", "next": "payment_link"}]}, "think_about": {"id": "think_about", "tab": "Objection", "title": "Need to Think About It", "tactic": "Voss Calibrated Question \u2014 Surface the Real Objection", "voss": "'Think about it' is never the real objection. Ask what specifically they need to feel clearer on. That surfaces the actual blocker.", "script": "Of course. What's the main thing you'd need to feel clearer on before making a call?", "note": "Stay quiet. Their answer tells you which branch to go down.", "options": [{"label": "The money / budget", "next": "cant_afford"}, {"label": "Time \u2014 I'm really busy right now", "next": "time_objection"}, {"label": "I want to research more / look into it", "next": "research"}, {"label": "Not sure it'll work for my business", "next": "not_sure"}, {"label": "Need to talk to partner first", "next": "partner"}]}, "time_objection": {"id": "time_objection", "tab": "Objection", "title": "Too Busy", "tactic": "Voss Label + Reframe", "voss": "Label the busyness first. Then flip it \u2014 being busy is the symptom, not having a content system is the disease.", "script": "It sounds like the business is actually going really well \u2014 which usually means now is when getting visible matters most. [pause] Here's the thing \u2014 the reason you're flat out is probably because everything runs through you. The workshop is two half-days. That's the investment that builds the system that takes stuff off your plate. [pause] I only run one cohort a month. Next one is [DATE]. After that it's another month out. Is there a date that works, or does [DATE] actually fit?", "note": "Create real urgency \u2014 spots are capped, dates are fixed. This-or-that close on the dates.", "options": [{"label": "That date works, lock it in", "next": "close_workshop"}, {"label": "Neither date works right now", "next": "payment_link"}, {"label": "Still not sure", "next": "research"}]}, "research": {"id": "research", "tab": "Objection", "title": "Wants to Research More", "tactic": "Voss No Orientation + Scarcity", "voss": "Give them permission to say no \u2014 it opens them up. Then let scarcity do the work.", "script": "Totally understand \u2014 and I'd rather you feel completely sure than rushed into something. [pause] I'll be straight with you \u2014 spots are capped at 10 per cohort and [X] are already filled for [DATE]. I'm not going to chase you. If the timing's right, great. If not, the next one is a month out. What would help you make the call \u2014 is it seeing what past students have said, or is there something specific about how the workshop works that you want to know more about?", "note": "Answer their specific question, then go back to close.", "options": [{"label": "I want to see testimonials / case studies", "next": "proof_close"}, {"label": "I have a specific question", "next": "specific_q"}, {"label": "Just need to sit with it", "next": "graceful_exit"}]}, "proof_close": {"id": "proof_close", "tab": "Objection", "title": "Social Proof then Re-close", "tactic": "Hormozi Proof + Re-close", "voss": "Share the proof, then re-close. Don't leave proof hanging without a close attached.", "script": "Okay so let me tell you about [Mitchell / Daecian / recent client]. [Share relevant case study \u2014 what they were stuck on, what they built, what changed.] So the system works. The question is just whether now is the right time for you. [pause] Workshop \u2014 two half-days, $1,500, next one is [DATE]. Want to lock it in?", "note": "Keep the case study to 3-4 sentences. Then close immediately after.", "options": [{"label": "Yes, lock it in", "next": "close_workshop"}, {"label": "Still need more time", "next": "graceful_exit"}]}, "specific_q": {"id": "specific_q", "tab": "Objection", "title": "They Have a Specific Question", "tactic": "Listen then Answer then Re-close", "voss": "Answer it directly. No filler. Then re-close.", "script": "Go for it \u2014 what's the question?", "note": "Listen. Answer their question directly. Then: 'Does that answer it? [pause] So \u2014 workshop, [DATE], $1,500. Want to lock it in?'", "options": [{"label": "Question answered, they're keen \u2014 close", "next": "close_workshop"}, {"label": "Answer led to another concern", "next": "think_about"}]}, "partner": {"id": "partner", "tab": "Objection", "title": "Need to Talk to Partner", "tactic": "Voss 3-Way Call + Tactical Empathy", "voss": "Don't fight it. Offer to be on the call with the partner \u2014 you close them instead of relying on your prospect to re-pitch.", "script": "Completely makes sense to loop them in. Two options \u2014 easiest is I jump on a quick call with both of you, 20 minutes, and they can ask me anything directly. Or if that's hard to schedule, I can send you something they can look through in their own time. Which is easier?", "note": "The 3-way call is gold. You close the partner yourself instead of your prospect re-pitching badly.", "options": [{"label": "3-way call works \u2014 schedule it", "next": "close_3way"}, {"label": "Send them info instead", "next": "payment_link"}]}, "close_3way": {"id": "close_3way", "tab": "Close", "title": "Schedule the 3-Way Call", "tactic": "This-or-That Close", "voss": "Get a specific time locked in before the call ends. 'I'll check with them' rarely leads anywhere.", "script": "Perfect. Two times that work for me \u2014 [DAY/TIME 1] or [DAY/TIME 2]. Which works better for both of you?", "note": "Treat this like any other close. Get a time. Send a calendar invite immediately after.", "options": [{"label": "Time locked in \u2014 follow up", "next": "payment_link"}, {"label": "Nothing works yet, send info", "next": "payment_link"}]}, "not_sure": {"id": "not_sure", "tab": "Objection", "title": "Not Sure It'll Work for My Business", "tactic": "Voss Calibrated Question + Hormozi Trial", "voss": "Don't defend before you understand the fear. Ask what specifically worries them \u2014 then address it precisely.", "script": "That's a fair thing to say. What is it about your business that makes you think it might not translate?", "note": "Let them explain fully. Label their concern. Then offer the $350 session as zero-risk proof.", "options": [{"label": "They explained their concern \u2014 address it then offer session", "next": "value_issue"}, {"label": "They're in a niche you've worked with before \u2014 use case study", "next": "proof_close"}, {"label": "Their concern is about time/effort", "next": "time_objection"}]}, "agency": {"id": "agency", "tab": "Objection", "title": "Already Using an Agency", "tactic": "Voss Label + Reframe \u2014 You Own vs They Own", "voss": "Don't attack the agency. Label what's frustrating about it, then introduce the ownership reframe.", "script": "It sounds like you've got people working on it but something's not quite landing the way it should. [wait for response] [Mirror key words] [pause] Here's the thing with agencies \u2014 when they're done, they take the system with them. Everything they built is theirs. The workshop gives you the system. You own it. Your team can execute it. And if you ever walk away from the agency, you're not starting from zero. Does that distinction make sense?", "note": "Let them respond to the reframe before pitching.", "options": [{"label": "That makes sense, interested in workshop", "next": "pitch_workshop"}, {"label": "More interested in advisory instead", "next": "pitch_cmo"}, {"label": "Happy with agency, not interested", "next": "graceful_exit"}]}, "graceful_exit": {"id": "graceful_exit", "tab": "Close", "title": "Graceful Exit \u2014 Leave the Door Open", "tactic": "Voss Clean Close + Future Anchor", "voss": "Never burn a bridge. The no today is often a yes in 3 months. Plant the retrieval cue.", "script": "Completely understand \u2014 not every timing is right. Here's what I'll do \u2014 I'll send you a quick overview of both the workshop and the advisory so you've got it when the time does make sense. Best way to stay across what I'm doing is @talktosev on Instagram and YouTube. When things shift, you know where to find me.", "note": "Send the overview email immediately after the call. Follow up in 30 days.", "options": [{"label": "Send follow-up email", "next": "END_FOLLOW_UP"}, {"label": "They changed their mind \u2014 re-engage", "next": "think_about"}]}, "booked_workshop": {"id": "booked_workshop", "tab": "Done", "title": "BOOKED \u2014 Online Workshop $1,500", "tactic": "Confirm + Next Steps", "voss": "Confirm clearly. Reduce buyer's remorse immediately by telling them exactly what happens next.", "script": "Amazing. Sending you the link right now. Once payment's done you'll get a confirmation with the dates and a Zoom link. I'll also send you a short pre-workshop brief \u2014 takes about 15 minutes to fill in, just so I know your business before we start. Any questions before I let you go?", "note": "Send payment link. Send calendar invite. Send pre-brief. Do it all within the hour.", "options": [{"label": "All done \u2014 mark as Workshop Booked", "next": "END_BOOKED_WORKSHOP"}]}, "booked_cmo": {"id": "booked_cmo", "tab": "Done", "title": "BOOKED \u2014 Fractional CMO $2,500/mo", "tactic": "Confirm + Onboarding", "voss": "Lock in the start date. Make the first touchpoint concrete \u2014 they need to feel it's real.", "script": "Perfect. I'll send the invoice through now and we'll lock in your start date. First thing we do is a 90-minute onboarding call where I get deep into your business \u2014 where you're at, what you want to be known for, and what the first 90 days look like. I'll send you a calendar link for that too. [pause] Good decision.", "note": "'Good decision' \u2014 Voss. Affirm the choice after close to reduce post-purchase doubt.", "options": [{"label": "All done \u2014 mark as CMO Booked", "next": "END_BOOKED_CMO"}]}, "booked_session": {"id": "booked_session", "tab": "Done", "title": "BOOKED \u2014 Strategy Session $350", "tactic": "Confirm + Upsell Seed", "voss": "Plant the upsell seed without pressure. They'll think about it between now and the session.", "script": "Great. Sending the link through now. Once you've booked, you'll get a short intake form \u2014 just a few questions about your business so I'm not walking in cold. [pause] Come to the session with questions. Bring any content you've made so I can have a look. And if by the end of it you want to talk about the workshop, we can do that \u2014 but no pressure either way.", "note": "No pressure close on the workshop \u2014 but plant it. Most session clients convert.", "options": [{"label": "All done \u2014 mark as Session Booked", "next": "END_BOOKED_SESSION"}]}, "payment_link": {"id": "payment_link", "tab": "Done", "title": "Send Payment Link \u2014 24hr Follow-up", "tactic": "Soft Hold + Deadline", "voss": "Create a soft deadline. Not threatening \u2014 just a practical reason the link matters in the next 24 hours.", "script": "No problem. I'll send it through now. The spot isn't locked until payment goes through, and I do have people who've shown interest for [DATE]. So if you can sort it within the next 24 hours that'd be great \u2014 otherwise let me know and we can look at the following cohort. Sound good?", "note": "Send payment link immediately after call. Follow up in 24 hours if not paid.", "options": [{"label": "They confirmed they'll pay \u2014 follow up tomorrow", "next": "END_FOLLOW_UP"}, {"label": "They went cold \u2014 follow up with email sequence", "next": "END_FOLLOW_UP"}]}, "END_BOOKED_WORKSHOP": {"id": "END_BOOKED_WORKSHOP", "tab": "Done", "title": "Workshop Booked \u2014 $1,500", "tactic": "", "voss": "", "script": "Log this as Workshop Booked. Send confirmation + Zoom link + pre-brief within the hour.", "note": "", "options": []}, "END_BOOKED_CMO": {"id": "END_BOOKED_CMO", "tab": "Done", "title": "CMO Booked \u2014 $2,500/mo", "tactic": "", "voss": "", "script": "Log this as CMO Booked. Send invoice + onboarding call link within the hour.", "note": "", "options": []}, "END_BOOKED_SESSION": {"id": "END_BOOKED_SESSION", "tab": "Done", "title": "Session Booked \u2014 $350", "tactic": "", "voss": "", "script": "Log this as Session Booked. Send intake form. Prepare to upsell workshop at the session.", "note": "", "options": []}, "END_FOLLOW_UP": {"id": "END_FOLLOW_UP", "tab": "Done", "title": "Follow-up Required", "tactic": "", "voss": "", "script": "Send the overview email now. Follow up in 24 hours. If no response in 48 hours, send the no-orientation SMS: 'Hey [Name] \u2014 Sev here. Have you completely moved on from the idea of sorting your content, or is it still something you're thinking about?'", "note": "", "options": []}};
+const STAGE_COLOURS = {"New Lead": "#444", "Contacted": "#5a8ec8", "Qualified": "#8a6ec8", "Session Booked": "#c8a96e", "Workshop Interested": "#e8763a", "CMO Interested": "#c87a5a", "Closed \u2014 Session": "#c8a96e", "Closed \u2014 Workshop": "#4a9e6a", "Closed \u2014 CMO": "#2d7a50", "Nurturing": "#5a8ec8", "Dead": "#c85a4a"};
+const STAGES = ["New Lead", "Contacted", "Qualified", "Session Booked", "Workshop Interested", "CMO Interested", "Closed \u2014 Session", "Closed \u2014 Workshop", "Closed \u2014 CMO", "Nurturing", "Dead"];
+const XP_VALUES = {called:15,dm:8,session:300,workshop:800,cmo:2000,priced:50,dead:10};
+const REVENUE = {session:350,workshop:1500,cmo:2500};
+const LEVELS = [
+  {name:'Cold Start',min:0,max:500},{name:'First Calls',min:500,max:1500},
+  {name:'In The Zone',min:1500,max:4000},{name:'Momentum',min:4000,max:10000},
+  {name:'Closer',min:10000,max:25000},{name:'Legend',min:25000,max:99999},
+];
+
+function getLeads(){try{return JSON.parse(localStorage.getItem('tts_leads')||'[]')}catch{return[]}}
+function saveLeads(l){localStorage.setItem('tts_leads',JSON.stringify(l))}
+function getStats(){try{return JSON.parse(localStorage.getItem('tts_stats')||'null')||{xp:0,streak:0,lastDate:null,todayDate:null,recentActions:[],revenue:0}}catch{return{xp:0,streak:0,lastDate:null,todayDate:null,recentActions:[],revenue:0}}}
+function saveStats(s){localStorage.setItem('tts_stats',JSON.stringify(s))}
+function getLeadActions(id){try{return JSON.parse(localStorage.getItem('tts_la_'+id)||'{}')}catch{return{}}}
+function saveLeadActions(id,a){localStorage.setItem('tts_la_'+id,JSON.stringify(a))}
+
+let stats=getStats(),prevLevel=-1;
+let activeLeadId=null,sceneHistory=[],currentScene='open';
+
+function todayStr(){return new Date().toISOString().slice(0,10)}
+
+function renderStats(){
+  const today=todayStr();
+  if(stats.todayDate!==today){stats.todayDate=today}
+  document.getElementById('streak-val').textContent=stats.streak;
+  document.getElementById('total-xp').textContent=stats.xp.toLocaleString();
+  const leads=getLeads();
+  const closed=leads.filter(l=>l.stage&&(l.stage.includes('Closed')||l.stage==='Session Booked'));
+  document.getElementById('booked-val').textContent=closed.length;
+  const pipeline=leads.filter(l=>l.stage&&l.stage!=='New Lead'&&l.stage!=='Dead');
+  document.getElementById('pipeline-val').textContent=pipeline.length;
+  document.getElementById('revenue-val').textContent='$'+stats.revenue.toLocaleString();
+  const lv=LEVELS.find(l=>stats.xp>=l.min&&stats.xp<l.max)||LEVELS[LEVELS.length-1];
+  const lvIdx=LEVELS.indexOf(lv);
+  document.getElementById('level-name').textContent=lv.name;
+  const pctLv=Math.min((stats.xp-lv.min)/(lv.max-lv.min)*100,100);
+  document.getElementById('level-bar-fill').style.width=pctLv+'%';
+  document.getElementById('level-xp-text').textContent=stats.xp.toLocaleString()+' / '+lv.max.toLocaleString()+' XP';
+  if(prevLevel!==-1&&lvIdx>prevLevel)showLevelUp(lv.name);
+  prevLevel=lvIdx;
+  const now=Date.now(),recent=(stats.recentActions||[]).filter(t=>now-t<600000);
+  stats.recentActions=recent;
+  for(let i=0;i<5;i++)document.getElementById('mp'+i).classList.toggle('lit',i<recent.length);
+  if(recent.length>=5)showFireBanner();
+  saveStats(stats);
+}
+
+function updateStreak(){
+  const today=todayStr();
+  if(!stats.lastDate){stats.streak=1;stats.lastDate=today;return}
+  const diff=Math.round((new Date(today)-new Date(stats.lastDate))/864e5);
+  if(diff===0)return;
+  stats.streak=diff===1?stats.streak+1:1;
+  stats.lastDate=today;
+}
+
+function renderSidebar(){
+  const leads=getLeads();
+  const el=document.getElementById('sidebar');
+  if(!leads.length){el.innerHTML='<div style="padding:1.5rem 1rem;font-family:var(--mono);font-size:.68rem;color:var(--dim)">No leads yet.<br>Hit + Add Lead.</div>';return}
+  const byStage={};
+  leads.forEach(l=>{const s=l.stage||'New Lead';if(!byStage[s])byStage[s]=[];byStage[s].push(l)});
+  let h='';
+  STAGES.forEach(s=>{
+    const group=byStage[s];
+    if(!group||!group.length)return;
+    const col=STAGE_COLOURS[s]||'#555';
+    h+=`<div class="slabel"><span style="color:${col}">${s}</span><span style="color:var(--border2);font-size:.58rem">${group.length}</span></div>`;
+    group.forEach(l=>{
+      const isActive=l.id===activeLeadId?' active':'';
+      h+=`<div class="lead-card${isActive}" onclick="openLead('${l.id}')">
+        <div class="lc-name">${l.name}</div>
+        <div class="lc-biz">${l.business||l.source||''}</div>
+      </div>`;
+    });
+  });
+  el.innerHTML=h;
+}
+
+function openLead(id){
+  activeLeadId=id;
+  const lead=getLeads().find(l=>l.id===id);
+  if(!lead)return;
+  document.getElementById('empty-msg').style.display='none';
+  document.getElementById('lead-detail').style.display='flex';
+  document.getElementById('ld-name').textContent=lead.name+(lead.business?' — '+lead.business:'');
+  document.getElementById('ld-phone').innerHTML=lead.phone?`<a href="tel:${lead.phone}">${lead.phone}</a>`:'';
+  document.getElementById('ld-email').textContent=lead.email||'';
+  const offerLabel=lead.offer==='cmo'?'Lead: CMO ($2,500/mo)':lead.offer==='session'?'Lead: Session ($350)':'Lead: Workshop ($1,500)';
+  document.getElementById('ld-chips').innerHTML=
+    `<span class="chip" style="background:rgba(200,169,110,.1);color:var(--gold);border:1px solid rgba(200,169,110,.2)">${offerLabel}</span>`+
+    `<span class="chip" style="background:rgba(68,68,68,.15);color:var(--dim);border:1px solid var(--border)">${lead.source}</span>`;
+  const stageBtns=STAGES.map(s=>{
+    const isCurrent=(lead.stage||'New Lead')===s;
+    const sc=STAGE_COLOURS[s]||'#555';
+    return `<button class="stage-btn${isCurrent?' active-stage':''}" style="${isCurrent?`background:${sc};border-color:${sc};color:#0a0a0a`:''}" onclick="setStage('${id}','${s}')">${s}</button>`;
+  }).join('');
+  document.getElementById('stage-btns').innerHTML=stageBtns;
+  const acts=getLeadActions(id);
+  renderActionBtns(id,acts);
+  document.getElementById('ld-notes').value=lead.notes||'';
+  sceneHistory=[];
+  currentScene='open';
+  renderScene();
+  renderSidebar();
+}
+
+function renderActionBtns(id,acts){
+  const defs=[
+    {key:'called',label:'Called'},
+    {key:'dm',label:'DM Sent'},
+    {key:'session',label:'Session Booked'},
+    {key:'workshop',label:'Workshop Closed'},
+    {key:'cmo',label:'CMO Closed'},
+    {key:'priced',label:'Pricing Sent'},
+    {key:'dead',label:'Dead'},
+  ];
+  document.getElementById('ld-actions').innerHTML=defs.map(a=>
+    `<button class="act-btn${acts[a.key]?' on on-'+a.key:''}" onclick="toggleAct('${id}','${a.key}',event)">${a.label}</button>`
+  ).join('');
+}
+
+function setStage(id,stage){
+  const leads=getLeads();
+  const i=leads.findIndex(l=>l.id===id);
+  if(i<0)return;
+  leads[i].stage=stage;
+  if(stage==='Closed — Session'&&!leads[i]._rev_s){stats.xp+=XP_VALUES.session;stats.revenue+=REVENUE.session;updateStreak();stats.recentActions=[...(stats.recentActions||[]),Date.now()];leads[i]._rev_s=true}
+  if(stage==='Closed — Workshop'&&!leads[i]._rev_w){stats.xp+=XP_VALUES.workshop;stats.revenue+=REVENUE.workshop;updateStreak();stats.recentActions=[...(stats.recentActions||[]),Date.now()];leads[i]._rev_w=true}
+  if(stage==='Closed — CMO'&&!leads[i]._rev_c){stats.xp+=XP_VALUES.cmo;stats.revenue+=REVENUE.cmo;updateStreak();stats.recentActions=[...(stats.recentActions||[]),Date.now()];leads[i]._rev_c=true}
+  saveLeads(leads);renderStats();openLead(id);
+}
+
+function toggleAct(id,key,evt){
+  const acts=getLeadActions(id);
+  const xp=XP_VALUES[key]||0;
+  if(acts[key]){delete acts[key];stats.xp=Math.max(0,stats.xp-xp)}
+  else{acts[key]=true;stats.xp+=xp;updateStreak();stats.recentActions=[...(stats.recentActions||[]),Date.now()];if(xp)showXPPop(evt,'+'+xp+' XP')}
+  saveLeadActions(id,acts);renderStats();renderActionBtns(id,acts);
+}
+
+function saveNotes(val){
+  if(!activeLeadId)return;
+  const leads=getLeads();
+  const i=leads.findIndex(l=>l.id===activeLeadId);
+  if(i>=0){leads[i].notes=val;saveLeads(leads)}
+}
+
+function renderScene(){
+  const lead=getLeads().find(l=>l.id===activeLeadId);
+  const scene=SCENES[currentScene];
+  if(!scene)return;
+  const tabs=['Call','Pitch','Objection','Close','Done'];
+  document.getElementById('adv-tabs').innerHTML=tabs.map(t=>
+    `<button class="adv-tab${scene.tab===t?' active':''}">${t}</button>`
+  ).join('');
+  const firstName=lead?lead.name.split(' ')[0]:'Name';
+  let bcHtml='<div class="breadcrumb">';
+  sceneHistory.forEach((s,i)=>{
+    if(i>0)bcHtml+=`<span class="bc-sep">›</span>`;
+    bcHtml+=`<span class="bc-item" title="${SCENES[s]?.title||s}">${SCENES[s]?.title||s}</span>`;
+  });
+  if(sceneHistory.length)bcHtml+=`<span class="bc-sep">›</span>`;
+  bcHtml+=`<span class="bc-item" style="color:var(--text)">${scene.title}</span>`;
+  if(sceneHistory.length)bcHtml+=`<button class="bc-back" onclick="goBack()">← Back</button>`;
+  bcHtml+=`<button class="bc-reset" onclick="resetAdventure()" style="margin-left:${sceneHistory.length?'.35rem':'auto'}">↺ Restart</button>`;
+  bcHtml+='</div>';
+  const isEnd=scene.id.startsWith('END_');
+  let bodyHtml=bcHtml;
+  if(isEnd){
+    const icon=scene.id==='END_BOOKED_WORKSHOP'?'🏆':scene.id==='END_BOOKED_CMO'?'🤝':scene.id==='END_BOOKED_SESSION'?'⭐':'📬';
+    const endCol=scene.id.includes('BOOKED')?'var(--green)':'var(--blue)';
+    bodyHtml+=`<div class="end-card" style="border-color:${endCol}44;background:${endCol}11">
+      <div class="end-icon">${icon}</div>
+      <div class="end-title" style="color:${endCol}">${scene.title}</div>
+      <div class="end-script">${scene.script}</div>
+    </div>`;
+  } else {
+    const script=scene.script.replace(/\[Name\]/g,firstName);
+    bodyHtml+=`<div class="scene-card">
+      <div class="scene-head">
+        <div class="scene-title">${scene.title}</div>
+        ${scene.tactic?`<span class="tactic-badge">${scene.tactic}</span>`:''}
+      </div>
+      <div class="scene-body">
+        ${scene.voss?`<div class="voss-box"><div class="voss-label">Voss / Hormozi</div>${scene.voss}</div>`:''}
+        <textarea class="script-ta" id="adv-ta">${script}</textarea>
+        <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+        ${scene.note?`<div class="scene-note">💡 ${scene.note}</div>`:''}
+        ${scene.options.length?`<div class="options-label">How did they respond?</div>`+
+          scene.options.map(o=>`<button class="option-btn" onclick="goScene('${o.next}')">
+            ${o.label}<span class="option-arrow">→</span>
+          </button>`).join(''):''}
+      </div>
+    </div>`;
+  }
+  document.getElementById('adv-body').innerHTML=bodyHtml;
+  document.getElementById('adv-body').scrollTop=0;
+  // Auto-expand textarea to full content height
+  const ta=document.getElementById('adv-ta');
+  if(ta){ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';ta.addEventListener('input',()=>{ta.style.height='auto';ta.style.height=ta.scrollHeight+'px'})}
+}
+
+function goScene(nextId){sceneHistory.push(currentScene);currentScene=nextId;renderScene()}
+function goBack(){if(!sceneHistory.length)return;currentScene=sceneHistory.pop();renderScene()}
+function resetAdventure(){sceneHistory=[];currentScene='open';renderScene()}
+
+function copyScript(btn){
+  const ta=document.getElementById('adv-ta');
+  if(!ta)return;
+  const text=ta.value;
+  const el=document.createElement('div');
+  el.contentEditable='true';
+  el.style.cssText='position:fixed;left:-9999px;top:0;opacity:0;';
+  el.innerHTML='<span style="color:#000000">'+text.split(/\n\n+/).map(p=>p.replace(/\n/g,'<br>')).join('<br><br>')+'</span>';
+  document.body.appendChild(el);
+  const range=document.createRange();range.selectNodeContents(el);
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+  try{document.execCommand('copy')}catch{}
+  sel.removeAllRanges();document.body.removeChild(el);
+  const orig=btn.textContent;btn.textContent='Copied ✓';btn.classList.add('copied');
+  setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1600);
+}
+
+function showAddModal(){document.getElementById('add-modal').style.display='flex'}
+function hideModal(){document.getElementById('add-modal').style.display='none'}
+function saveLead(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){alert('Name is required');return}
+  const lead={
+    id:'lead_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),
+    name,business:document.getElementById('f-biz').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    source:document.getElementById('f-source').value,
+    offer:document.getElementById('f-offer').value,
+    notes:document.getElementById('f-notes').value.trim(),
+    stage:'New Lead',createdAt:Date.now(),
+  };
+  const leads=getLeads();leads.push(lead);saveLeads(leads);
+  hideModal();
+  ['f-name','f-biz','f-phone','f-email','f-notes'].forEach(id=>document.getElementById(id).value='');
+  renderSidebar();renderStats();openLead(lead.id);
+}
+document.getElementById('add-modal').addEventListener('click',function(e){if(e.target===this)hideModal()});
+
+function showXPPop(evt,text){
+  const el=document.createElement('div');el.className='xp-pop';el.textContent=text;
+  const rect=evt.target&&evt.target.getBoundingClientRect?evt.target.getBoundingClientRect():{left:200,top:200};
+  el.style.left=rect.left+'px';el.style.top=rect.top+'px';
+  document.body.appendChild(el);setTimeout(()=>el.remove(),1300);
+}
+let fireBannerActive=false;
+function showFireBanner(){
+  if(fireBannerActive)return;fireBannerActive=true;
+  const el=document.createElement('div');el.className='fire-banner';el.textContent='🔥 ON FIRE — CLOSE SOMETHING';
+  document.body.appendChild(el);setTimeout(()=>{el.remove();fireBannerActive=false},3500);
+}
+function showLevelUp(name){
+  const el=document.createElement('div');el.className='levelup-flash';
+  el.innerHTML=`LEVEL UP<br><span style="font-size:1.1rem">${name}</span>`;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),2200);
+}
+renderSidebar();renderStats();
+</script>
+</body>
+</html>

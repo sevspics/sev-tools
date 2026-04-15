@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>She Can't Decide 🔮</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:     #FBF6EF;
+    --ink:    #1C0F06;
+    --mid:    #8C7460;
+    --faint:  #E6DDD3;
+    --blush:  #E8B4A0;
+    --gold:   #B8832A;
+    --card:   #FFFFFF;
+    --warm:   #FFF4EC;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Lora', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Screens */
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadeUp .45s cubic-bezier(.22,1,.36,1) both; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleReveal {
+    from { opacity: 0; transform: scale(.94); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: .7; }
+    50%       { opacity: 1; }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes typeIn {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+  @keyframes orb {
+    0%, 100% { transform: scale(1) translate(0,0); }
+    33%       { transform: scale(1.08) translate(4px,-4px); }
+    66%       { transform: scale(.96) translate(-3px,3px); }
+  }
+
+  /* ── WELCOME ── */
+  .w-orb {
+    font-size: 64px;
+    display: block;
+    margin: 0 auto 20px;
+    width: fit-content;
+    animation: orb 4s ease-in-out infinite;
+  }
+  .w-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -.03em;
+    color: var(--ink);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .w-h1 em { color: var(--gold); font-style: italic; }
+  .w-sub {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.8;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .pill {
+    display: inline-block;
+    background: var(--warm);
+    border: 1px solid var(--blush);
+    border-radius: 99px;
+    padding: 7px 16px;
+    font-size: 12px;
+    color: var(--gold);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+  .cta {
+    display: block;
+    width: 100%;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: 16px;
+    padding: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: -.01em;
+    transition: background .15s, transform .1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cta:active { background: #3A2010; transform: scale(.98); }
+  .w-note {
+    text-align: center;
+    font-size: 11px;
+    color: #C4B5A5;
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* ── CATEGORY ── */
+  .cat-h { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--ink); margin-bottom:6px; }
+  .cat-sub { font-size:13px; color:var(--mid); margin-bottom:22px; }
+  .cat-list { display:flex; flex-direction:column; gap:10px; }
+  .cat-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--faint);
+    border-radius: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    text-align: left;
+    transition: all .14s;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Lora', serif;
+  }
+  .cat-btn:active { background: var(--ink); border-color: var(--ink); }
+  .cat-btn:active .cat-label { color: var(--bg); }
+  .cat-btn:active .cat-desc  { color: #7A6858; }
+  .cat-btn:active .cat-arr   { color: var(--bg); }
+  .cat-emoji  { font-size: 28px; flex-shrink: 0; }
+  .cat-label  { font-size: 15px; font-weight: 500; color: var(--ink); font-family:'Lora',serif; }
+  .cat-desc   { font-size: 12px; color: var(--mid); font-style: italic; }
+  .cat-arr    { margin-left: auto; color: #C4B5A5; font-size: 18px; }
+
+  /* ── QUIZ ── */
+  .progress-row { display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px; color:var(--mid); font-style:italic; }
+  .progress-bar { height:3px; background:var(--faint); border-radius:2px; margin-bottom:28px; }
+  .progress-fill { height:100%; border-radius:2px; background:var(--gold); transition:width .5s ease; }
+  .q-text {
+    font-family:'Playfair Display',serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.25;
+    margin-bottom:26px;
+    letter-spacing:-.01em;
+  }
+  .opts { display:flex; flex-direction:column; gap:11px; }
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--faint);
+    border-radius: 14px;
+    padding: 16px 18px;
+    font-size: 14px;
+    color: var(--ink);
+    font-family: 'Lora', serif;
+    cursor: pointer;
+    text-align: left;
+    transition: all .12s;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1.45;
+  }
+  .opt-btn:active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .opt-btn:active .opt-letter { background: rgba(255,255,255,.1); color: var(--bg); }
+  .opt-letter {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--mid);
+    transition: all .12s;
+  }
+
+  /* ── VERDICT ── */
+  .verdict-label {
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-align: center;
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .verdict-card {
+    background: var(--ink);
+    border-radius: 22px;
+    padding: 44px 28px 40px;
+    text-align: center;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    animation: scaleReveal .5s cubic-bezier(.22,1,.36,1) both;
+  }
+  .verdict-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 20%, rgba(184,131,42,.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(232,180,160,.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .verdict-emoji { font-size: 56px; display: block; margin-bottom: 20px; position: relative; }
+  .verdict-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--bg);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -.02em;
+    position: relative;
+  }
+  .verdict-reason {
+    font-size: 14px;
+    color: #8A7060;
+    line-height: 1.7;
+    position: relative;
+    font-style: italic;
+  }
+  .verdict-note {
+    background: var(--warm);
+    border: 1px solid var(--blush);
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 22px;
+    line-height: 1.65;
+    text-align: center;
+    font-style: italic;
+  }
+  .reset-btn {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid var(--faint);
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 14px;
+    color: var(--mid);
+    font-family: 'Lora', serif;
+    cursor: pointer;
+    transition: all .15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .reset-btn:active { background: var(--faint); }
+
+  .bmc-link {
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--mid);
+    text-align: center;
+  }
+  .bmc-link a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .bmc-link a:hover { text-decoration: underline; }
+
+  .text-center { text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- WELCOME -->
+  <div id="s-welcome" class="screen active text-center">
+    <span class="w-orb">🔮</span>
+    <h1 class="w-h1">She Can't<br/><em>Decide.</em></h1>
+    <p class="w-sub">
+      Sent with love by someone who has asked<br/>
+      <em>"what do you want?"</em> one too many times today.
+    </p>
+    <div><span class="pill">✨ A few questions. One definitive answer. No backsies.</span></div>
+    <button class="cta" onclick="showScreen('s-category')">Okay fine — let's just decide →</button>
+    <p class="w-note">More decisive than you. Always.</p>
+  </div>
+
+  <!-- CATEGORY -->
+  <div id="s-category" class="screen">
+    <h2 class="cat-h">What can't<br/>you decide?</h2>
+    <p class="cat-sub">Pick a category. The oracle does the rest.</p>
+    <div class="cat-list">
+      <button class="cat-btn" onclick="startCategory('food')">
+        <span class="cat-emoji">🍕</span>
+        <div><div class="cat-label">What to eat</div><div class="cat-desc">Hunger ends here</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('watch')">
+        <span class="cat-emoji">🎬</span>
+        <div><div class="cat-label">What to watch</div><div class="cat-desc">Netflix limbo, solved</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('wear')">
+        <span class="cat-emoji">👗</span>
+        <div><div class="cat-label">What to wear</div><div class="cat-desc">Close the wardrobe</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('tonight')">
+        <span class="cat-emoji">🌙</span>
+        <div><div class="cat-label">Tonight's plan</div><div class="cat-desc">Stop overthinking it</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('buy')">
+        <span class="cat-emoji">🛍️</span>
+        <div><div class="cat-label">Should I buy it</div><div class="cat-desc">Cart anxiety, gone</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('weekend')">
+        <span class="cat-emoji">☀️</span>
+        <div><div class="cat-label">Weekend plans</div><div class="cat-desc">Make it count</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('travel')">
+        <span class="cat-emoji">✈️</span>
+        <div><div class="cat-label">Where to go</div><div class="cat-desc">Pick a destination</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('relationship')">
+        <span class="cat-emoji">💌</span>
+        <div><div class="cat-label">Relationship stuff</div><div class="cat-desc">Say what you mean</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+      <button class="cat-btn" onclick="startCategory('other')">
+        <span class="cat-emoji">🤷</span>
+        <div><div class="cat-label">Something else</div><div class="cat-desc">Any decision, really</div></div>
+        <span class="cat-arr">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="s-quiz" class="screen">
+    <div class="progress-row">
+      <span id="q-counter"></span>
+      <span id="q-cat-label"></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="q-progress"></div></div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="opts" id="q-opts"></div>
+  </div>
+
+  <!-- VERDICT -->
+  <div id="s-verdict" class="screen text-center">
+    <p class="verdict-label">The Oracle Has Spoken</p>
+    <div class="verdict-card">
+      <span class="verdict-emoji" id="v-emoji"></span>
+      <div class="verdict-text" id="v-text"></div>
+      <div class="verdict-reason" id="v-reason"></div>
+    </div>
+    <div class="verdict-note" id="v-note"></div>
+    <button class="reset-btn" onclick="reset()">Decide something else</button>
+    <div class="bmc-link">Found this useful? <a href="https://buymeacoffee.com/seva" target="_blank" rel="noopener">Buy Me a Coffee ☕</a></div>
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+// Each verdict: [emoji, verdict text, reason, closing note]
+// Each option scores: array of weights, one per verdict (index matches)
+
+var DATA = {
+
+food: {
+  questions: [
+    { q: "How hungry are you right now?",
+      opts: [
+        { t: "Absolutely starving",         s: [3,0,2,0,0,1,0,0,0,0,0,0] },
+        { t: "Pretty hungry",               s: [0,2,0,1,1,0,2,0,0,0,0,0] },
+        { t: "Just a bit peckish",          s: [0,0,0,0,0,0,0,2,1,1,0,0] },
+        { t: "Not sure — bored, maybe",     s: [0,0,0,0,0,0,0,0,0,0,2,3] },
+      ]},
+    { q: "Cooking is...",
+      opts: [
+        { t: "Not happening tonight",       s: [3,2,0,1,0,0,0,0,0,0,1,0] },
+        { t: "Fine, something simple",      s: [0,0,0,0,2,1,0,3,0,0,0,0] },
+        { t: "Actually what I want to do",  s: [0,0,0,0,0,0,3,0,2,1,0,0] },
+        { t: "I could go either way",       s: [0,0,2,1,0,0,0,0,0,0,0,2] },
+      ]},
+    { q: "What sounds most appealing?",
+      opts: [
+        { t: "Warm and comforting",         s: [0,3,1,0,2,0,0,0,0,0,0,0] },
+        { t: "Something indulgent",         s: [3,0,0,0,0,2,0,0,1,0,0,0] },
+        { t: "Fresh and light",             s: [0,0,0,2,0,0,0,0,0,3,0,0] },
+        { t: "Just whatever is fast",       s: [0,0,2,1,0,0,0,2,0,0,1,0] },
+      ]},
+    { q: "Who are you feeding?",
+      opts: [
+        { t: "Just me",                     s: [0,0,2,0,0,1,0,3,0,0,2,1] },
+        { t: "Me and my partner",           s: [3,1,0,0,2,0,0,0,0,1,0,0] },
+        { t: "The whole family",            s: [0,2,0,0,0,0,2,0,3,0,0,0] },
+        { t: "A group of people",           s: [0,0,0,3,0,0,0,0,0,0,0,2] },
+      ]},
+    { q: "Budget right now?",
+      opts: [
+        { t: "Keep it cheap",               s: [0,0,2,0,0,0,0,3,1,0,2,0] },
+        { t: "Happy to spend a bit",        s: [2,1,0,0,2,0,1,0,0,0,0,0] },
+        { t: "Go all out, I deserve it",    s: [3,0,0,0,0,3,0,0,0,2,0,0] },
+        { t: "Whatever, not thinking about it", s:[0,2,0,3,1,0,2,0,0,0,0,1] },
+      ]},
+  ],
+  verdicts: [
+    ["🍣","Go out for proper sushi","You want to be looked after tonight. Let someone else do the work.", "No arguing. You opened the app. The oracle chose sushi. Now go."],
+    ["🍝","Make pasta — any pasta","Fast, satisfying, zero regret. It exists because it works.", "Cacio e pepe if you're feeling smart. Bolognese if you're not. Go."],
+    ["📱","Open UberEats, first result that looks good","Stop scrolling. Pick the first thing that makes you think yes. Done.", "You will scroll for 40 minutes and order it anyway. Skip the 40 minutes."],
+    ["🌮","Grab tacos or Mexican","Relaxed, social, flavourful. This is not complicated.", "Get the guac. Yes it's extra. Yes, get it."],
+    ["🍛","Make a simple stir-fry","Cheap, fast, genuinely satisfying if you stop overthinking it.", "Protein, noodles, sauce, done. You already have everything you need."],
+    ["🥩","Go to a proper sit-down dinner","You want an experience, not just food. Book it or walk in.", "Order the thing you always want but never get. Tonight is that night."],
+    ["🥘","Cook something from scratch","You actually want to. So do it properly and enjoy every step.", "Put some music on. This is your evening now."],
+    ["🍳","Toast with whatever is in the fridge","Quick, sufficient, zero judgment from anyone.", "Eggs if you have them. Cheese if you don't. Move on."],
+    ["🍕","Order a pizza and commit to it","The answer was always pizza. You were just looking for permission.", "Get the one you always get. It is still the right choice."],
+    ["🥗","Something fresh — salad or a bowl","Your body knows what it wants. This time, listen to it.", "You will feel better after. That's the whole point."],
+    ["🧀","A proper snack spread on the couch","Cheese, crackers, whatever's in the cupboard. Call it a charcuterie board.", "Light the candle, get the blanket. Dinner is a vibe tonight."],
+    ["🍜","Ramen or noodle soup","Deeply comforting. Underrated as an answer to almost everything.", "Find the best spot near you. Or make instant ramen and add an egg. No shame."],
+  ]
+},
+
+watch: {
+  questions: [
+    { q: "Energy check — where are you at?",
+      opts: [
+        { t: "Completely flat",             s: [3,0,0,0,1,0,0,0,2,0,0,0] },
+        { t: "Need a good laugh",           s: [0,3,0,0,0,2,0,0,0,0,1,0] },
+        { t: "Want to feel something real", s: [0,0,3,0,0,0,0,2,0,0,0,0] },
+        { t: "Need to be gripped",          s: [0,0,0,3,0,0,2,0,0,0,0,1] },
+      ]},
+    { q: "How long do you want to watch?",
+      opts: [
+        { t: "Just one episode",            s: [3,2,0,0,0,0,0,0,0,0,0,0] },
+        { t: "A full movie",                s: [0,0,2,1,0,3,0,0,0,2,0,0] },
+        { t: "I'm staying up for a binge",  s: [0,0,0,0,3,0,2,0,1,0,0,2] },
+        { t: "However long it takes",       s: [0,1,0,2,0,0,0,3,0,0,2,0] },
+      ]},
+    { q: "Who's watching with you?",
+      opts: [
+        { t: "Just me",                     s: [0,0,3,2,0,0,0,1,0,0,0,0] },
+        { t: "My partner",                  s: [2,0,0,0,1,3,0,0,0,2,0,0] },
+        { t: "Kids might wander in",        s: [0,3,0,0,0,0,0,0,2,0,1,0] },
+        { t: "Friends",                     s: [1,0,0,0,2,0,3,0,0,0,0,2] },
+      ]},
+    { q: "Last thing you watched that you loved?",
+      opts: [
+        { t: "A comfort rewatch",           s: [3,0,0,0,1,0,0,0,0,0,2,0] },
+        { t: "Something that made me cry",  s: [0,0,3,0,0,0,0,2,0,0,0,0] },
+        { t: "A comedy",                    s: [0,3,0,0,0,2,0,0,1,0,0,0] },
+        { t: "A thriller or crime show",    s: [0,0,0,3,0,0,2,0,0,0,0,1] },
+      ]},
+    { q: "How much do you care about plot right now?",
+      opts: [
+        { t: "I want zero thinking required",s:[3,2,0,0,1,0,0,0,0,0,0,0] },
+        { t: "Something with a bit of depth",s:[0,0,2,1,0,0,0,3,0,2,0,0] },
+        { t: "Give me plot twists",          s: [0,0,0,3,0,0,3,0,0,0,0,1] },
+        { t: "Background noise, honestly",   s: [0,0,0,0,2,0,0,0,3,0,2,1] },
+      ]},
+  ],
+  verdicts: [
+    ["📺","Rewatch your comfort show","You do not need to think tonight. Press play on what already loves you.", "You know every line. That is not a problem. That is the whole point."],
+    ["😂","Put on a classic comedy","Laughter is not a small thing. Go get some.", "The Office, Schitt's Creek, Parks and Rec. Pick your people and go."],
+    ["😭","A proper emotional movie","You need to feel something. Give yourself that tonight.", "Cry if you need to. There is nothing wrong with you."],
+    ["🫣","A thriller that keeps you guessing","You want to be hooked. You want to care who did it.", "Turn the lights off. Do not check your phone. This is it."],
+    ["🍿","A new drama series — pick one and commit","Stop rotating between tabs. One show. Episode one. Right now.", "You will thank yourself by episode three."],
+    ["💕","A romcom, the cheesier the better","You want to feel good. This is the most efficient path there.", "Pick one from the last five years. They got better. Trust the process."],
+    ["🔥","Something everyone's been talking about","You have been putting it off. Tonight is not complicated.", "Start it. If it's not for you, stop. But start it."],
+    ["🎭","An award-winning film you've never seen","You keep saying you will get to it. This is you getting to it.", "Pick something from a best-of list. Any list. Just go."],
+    ["🧸","Something gentle and kind","No drama. No tension. Just warmth on a screen.", "A cooking documentary, a nature series, something soft. You earned soft."],
+    ["🕵️","A documentary about something genuinely weird","You will learn something strange and be better for it.", "Three episodes in, you will be sending it to everyone you know."],
+    ["🎬","An old film you've always meant to see","The classics are classic for a reason. Tonight is the night.", "It will surprise you. They always do."],
+    ["🌙","Rewatch something from your teenage years","Pure nostalgia. Zero apologies. You deserve this completely.", "It will hold up better than you think. Or it won't. Either way, fun."],
+  ]
+},
+
+wear: {
+  questions: [
+    { q: "Where are you actually going today?",
+      opts: [
+        { t: "Nowhere, staying home",       s: [3,0,0,0,0,0,0,0,0,0,2,0] },
+        { t: "Errands and nothing fancy",   s: [0,3,0,0,0,1,0,0,0,0,0,0] },
+        { t: "Work or something professional",s:[0,0,3,0,0,0,0,0,0,2,0,0] },
+        { t: "Something you want to look good for",s:[0,0,0,0,3,0,0,2,1,0,0,0]},
+      ]},
+    { q: "What is the weather doing?",
+      opts: [
+        { t: "Hot",                         s: [0,2,0,3,0,0,0,1,0,0,0,0] },
+        { t: "Cold — need layers",          s: [2,0,1,0,0,0,3,0,0,2,0,0] },
+        { t: "Mild and actually nice",      s: [0,0,0,0,2,1,0,0,3,0,0,2] },
+        { t: "Inside all day, irrelevant",  s: [3,0,2,0,0,0,0,0,0,1,2,0] },
+      ]},
+    { q: "How much effort are you giving today?",
+      opts: [
+        { t: "I want to be invisible",      s: [3,1,0,0,0,0,0,0,0,0,2,0] },
+        { t: "Minimal but I'll look fine",  s: [0,3,0,0,0,1,0,0,0,0,0,2] },
+        { t: "I want to look put together", s: [0,0,3,0,0,0,2,0,0,3,0,0] },
+        { t: "I actually want to try",      s: [0,0,0,2,3,0,0,3,0,0,0,0] },
+      ]},
+    { q: "What do you want to feel in this outfit?",
+      opts: [
+        { t: "Comfortable above all",       s: [3,2,0,0,0,0,0,0,0,0,2,1] },
+        { t: "Professional and sharp",      s: [0,0,3,0,0,0,2,0,0,3,0,0] },
+        { t: "Confident and put-together",  s: [0,0,2,0,3,1,0,3,0,0,0,0] },
+        { t: "Myself, just nice",           s: [0,1,0,2,0,0,0,0,3,0,1,0] },
+      ]},
+    { q: "What's clean and actually available?",
+      opts: [
+        { t: "Pretty much everything",      s: [0,0,1,2,3,0,0,3,0,2,0,0] },
+        { t: "My usual rotation",           s: [2,3,0,0,0,2,0,0,1,0,0,0] },
+        { t: "Limited options today",       s: [3,0,2,0,0,0,2,0,0,0,1,3] },
+        { t: "I need to do laundry, honestly",s:[3,0,0,3,0,0,0,0,0,0,2,0] },
+      ]},
+  ],
+  verdicts: [
+    ["🩳","Tracksuit. No thoughts, no regrets","You are home. Comfort wins. This is not a character flaw.", "If anyone judges you, they are wrong."],
+    ["👖","Jeans and your nicest plain top","The universal answer. You will look completely fine. Go.", "Dark jeans preferred. Any colour top. Done in under three minutes."],
+    ["👔","That blazer with simple trousers","Sharp without effort. The combination that always works.", "If it fits well, it's polished. That is all that is required."],
+    ["🌸","Something flowy and light","Comfortable and pretty. Not mutually exclusive.", "Wear it like you chose it on purpose, because you did."],
+    ["✨","The outfit you keep saving for later","Stop waiting for a special occasion. Today is special enough.", "The one hanging there untouched. Put it on. Leave the house."],
+    ["👟","Your favourite everyday outfit","The one you always reach for because it always works.", "Trust the process. Your instincts got you here."],
+    ["🧥","Layers you can add or remove","Smart decision for anyone who actually has to survive a whole day.", "Start warm. The rest is flexible."],
+    ["👗","The dress you always get compliments in","You know the one. Stop overthinking it and just put it on.", "Other people notice that dress. It is doing something right."],
+    ["🤍","All neutrals — cream, beige, white","Effortless, cohesive, and better than it sounds.", "Nothing matches everything like nothing does. This is fashion logic."],
+    ["🖤","Black everything","It always works. It will always work. This is simply true.", "Head to toe. Accessories optional. Confidence mandatory."],
+    ["😌","Comfy trousers and a soft knit","You are not in the mood to be uncomfortable, and that is valid.", "Presentable enough for the outside world. Comfortable enough for you."],
+    ["💄","Something that makes you feel like a bit much","Go slightly overdressed. Own it. Watch how differently people treat you.", "There is no such thing as too much for a Tuesday."],
+  ]
+},
+
+tonight: {
+  questions: [
+    { q: "Honestly — how's your energy tonight?",
+      opts: [
+        { t: "Completely depleted",         s: [3,2,0,0,0,0,0,0,1,0,0,0] },
+        { t: "Low but persuadable",         s: [0,0,2,0,1,0,0,3,0,0,0,0] },
+        { t: "Medium, open to anything",    s: [0,0,0,2,0,1,0,0,0,3,0,0] },
+        { t: "Good — let's do something",   s: [0,0,0,0,2,0,3,0,0,0,2,1] },
+      ]},
+    { q: "Who are you with tonight?",
+      opts: [
+        { t: "Just me",                     s: [2,3,0,0,0,0,0,0,1,0,0,0] },
+        { t: "My partner",                  s: [0,0,3,2,0,1,0,0,0,0,0,0] },
+        { t: "Kids at home too",            s: [0,0,0,0,0,0,0,2,0,3,1,0] },
+        { t: "Friends",                     s: [0,0,0,0,3,0,2,0,0,0,0,2] },
+      ]},
+    { q: "In or out tonight?",
+      opts: [
+        { t: "Definitely staying in",       s: [3,3,1,0,0,0,0,0,0,0,0,0] },
+        { t: "Something easy and nearby",   s: [0,0,0,2,1,0,0,3,0,0,0,0] },
+        { t: "Want to actually go out",     s: [0,0,0,0,3,2,2,0,0,0,0,1] },
+        { t: "Either, genuinely",           s: [1,0,2,0,0,0,0,0,2,3,0,0] },
+      ]},
+    { q: "What does tonight need to give you?",
+      opts: [
+        { t: "Rest, nothing else",          s: [3,2,0,0,0,0,0,0,1,0,0,0] },
+        { t: "Fun without too much effort", s: [0,0,2,0,1,0,0,3,0,0,1,0] },
+        { t: "Something worth remembering", s: [0,0,0,0,3,2,1,0,0,0,0,2] },
+        { t: "Cosy and connected",          s: [1,1,3,0,0,0,0,0,0,2,0,0] },
+      ]},
+    { q: "How does the idea of making plans feel?",
+      opts: [
+        { t: "Genuinely exhausting",        s: [3,2,0,0,0,0,0,0,1,0,0,0] },
+        { t: "Fine if someone else does it",s: [0,0,2,3,0,0,0,1,0,0,0,0] },
+        { t: "I actually want to organise something",s:[0,0,0,0,2,1,3,0,0,0,0,2]},
+        { t: "Whatever happens, happens",   s: [1,0,0,0,0,0,0,2,0,3,2,0] },
+      ]},
+  ],
+  verdicts: [
+    ["🛁","Bath, food delivery, bed by nine","Your body is telling you something specific. Listen to it.", "This is not giving up. This is self-preservation. Very different."],
+    ["🍿","Movie night on the couch with proper snacks","Low effort, high reward. Exactly what tonight requires.", "Something good to watch, something good to eat. That is the whole plan."],
+    ["🍳","Cook something nice together at home","Simple and genuinely connecting. Better than most restaurants tonight.", "Pick a recipe you've been meaning to try. Open the wine first."],
+    ["🌙","Long walk, then dinner somewhere local","The combo that solves most things. Move first, then eat.", "No booking needed. Just start walking and see where you end up."],
+    ["🎉","Go out and properly go out","You have the energy. Use it. Stop making excuses.", "Text whoever you need to text right now. Make it happen."],
+    ["🍽️","That restaurant you keep saying you'll try","You have been putting this off long enough. Tonight is the night.", "Book it right now before you change your mind. Go."],
+    ["🎤","Do something completely different","Break the pattern. A live event, a class, something new.", "You will talk about tonight differently if you do something different."],
+    ["🎲","Games, snacks, easy company","Unstructured fun. No schedule, no pressure, no itinerary.", "Board games, cards, a puzzle. Competitive energy strongly encouraged."],
+    ["📚","A genuinely quiet evening — book, tea, early night","You do not need to justify this to anyone.", "The world will still be there tomorrow. Tonight is yours."],
+    ["🌳","Get outside for a bit first","Fresh air before anything else. Even twenty minutes changes everything.", "Then decide the rest of the night from a better headspace."],
+    ["🎨","A creative evening in","Cook something adventurous, do something with your hands, make something.", "The best nights sometimes have no audience and no plan."],
+    ["🥂","Dress up slightly more than necessary and go for it","The effort always pays back more than staying in plain clothes does.", "You will feel different when you look a bit different. Try it."],
+  ]
+},
+
+buy: {
+  questions: [
+    { q: "How long have you been thinking about this?",
+      opts: [
+        { t: "Just saw it right now",       s: [3,2,0,0,0,0,0,0,0,0,0,0] },
+        { t: "A few days",                  s: [0,0,3,1,0,0,0,0,0,0,0,0] },
+        { t: "A couple of weeks",           s: [0,0,0,0,2,1,0,0,3,0,0,0] },
+        { t: "Honestly, months",            s: [0,0,0,0,0,0,2,3,0,0,0,2] },
+      ]},
+    { q: "Can you genuinely afford it right now?",
+      opts: [
+        { t: "No, not really",              s: [3,2,0,0,0,0,0,0,0,0,0,0] },
+        { t: "Technically, but it's tight", s: [0,0,2,1,0,0,0,0,0,0,0,0] },
+        { t: "Yes, comfortably",            s: [0,0,0,0,0,2,1,3,0,2,0,0] },
+        { t: "Not even a question",         s: [0,0,0,0,0,0,0,0,3,2,3,0] },
+      ]},
+    { q: "How often would you actually use this?",
+      opts: [
+        { t: "Probably rarely",             s: [3,1,2,0,0,0,0,0,0,0,0,0] },
+        { t: "Maybe occasionally",          s: [0,0,0,3,1,0,0,0,0,0,0,0] },
+        { t: "Regularly",                   s: [0,0,0,0,0,2,0,3,1,0,0,0] },
+        { t: "I'd use it constantly",       s: [0,0,0,0,0,0,3,0,2,3,2,0] },
+      ]},
+    { q: "How do you feel imagining you don't buy it?",
+      opts: [
+        { t: "Fine, honestly",              s: [3,1,2,0,0,0,0,0,0,0,0,0] },
+        { t: "A bit disappointed",          s: [0,0,0,3,2,0,0,0,0,0,0,0] },
+        { t: "Genuinely annoyed",           s: [0,0,0,0,0,2,1,3,0,0,0,0] },
+        { t: "Like I'd regret it",          s: [0,0,0,0,0,0,3,0,2,3,1,0] },
+      ]},
+    { q: "What's driving the decision honestly?",
+      opts: [
+        { t: "Boredom or a bad day",        s: [3,2,0,0,0,0,0,0,0,0,0,0] },
+        { t: "It's genuinely useful",       s: [0,0,0,0,2,0,3,0,1,0,2,0] },
+        { t: "I've needed this for ages",   s: [0,0,0,0,0,3,0,2,0,3,0,0] },
+        { t: "It's a treat and I want it",  s: [0,0,2,3,0,0,0,0,0,0,0,3] },
+      ]},
+  ],
+  verdicts: [
+    ["🚫","No. Put the phone down","You do not want this. You want something else entirely.", "Go for a walk. Drink some water. Come back and see if you still care."],
+    ["❄️","Wait 48 hours — then check again","If you still want it in two days, that's real desire. Right now it's noise.", "Set a reminder. If you forget to check, you have your answer."],
+    ["🔍","Look for a discount code first","You are going to buy it. At least do it smarter.", "Google the brand name plus 'discount code'. Takes thirty seconds."],
+    ["🛒","Add to cart but sleep on it","One more night. If it's still in your cart tomorrow and you still care, go.", "The internet is not going anywhere. Neither is the item."],
+    ["💭","Ask yourself if you'd buy it at full price","If the answer is yes, buy it now. If no, it's just a good deal, not a good decision.", "Good deals on things you don't need are still a waste."],
+    ["✅","Yes. Get it","You have thought about this enough. This is a good decision. Trust yourself.", "Stop seeking permission. You already know."],
+    ["🎁","Buy it — it's an investment, not a splurge","This serves a real purpose in your actual life. That's exactly what money is for.", "The cost per use on this will be very low. You know this."],
+    ["💳","Buy it. Full stop","You have been waiting. You can afford it. You will use it. This is not complicated.", "Stop overthinking purchases you have already pre-approved in your head."],
+    ["🌟","Get it and don't look back","This is the kind of thing you will still be glad you bought in a year.", "Buy it. Close the tab. Move on."],
+    ["🎉","Yes — and get the better version if you can","If you're doing this, do it properly. The cheap version will frustrate you.", "Spend slightly more and stop thinking about it for years."],
+    ["🤌","It's yours. Stop asking for permission","You knew before you opened this app. You just needed someone to say it.", "Consider it said. Go."],
+    ["😌","Treat yourself — you've clearly earned it","Sometimes the only justification you need is wanting something.", "You are an adult. Buy the thing. Enjoy it completely."],
+  ]
+},
+
+weekend: {
+  questions: [
+    { q: "What does this weekend need to fix?",
+      opts: [
+        { t: "I need proper rest",          s: [3,2,0,0,0,0,0,0,1,0,0,0] },
+        { t: "I need to feel like a person again",s:[0,0,3,0,0,1,0,0,0,2,0,0]},
+        { t: "I want something to look forward to",s:[0,0,0,2,3,0,0,0,0,0,1,0]},
+        { t: "I honestly don't know",       s: [0,1,0,0,0,0,2,3,0,0,0,2] },
+      ]},
+    { q: "Who's part of this weekend?",
+      opts: [
+        { t: "Just me",                     s: [2,3,0,0,0,0,0,1,0,0,0,0] },
+        { t: "Me and my partner",           s: [0,0,3,1,0,2,0,0,0,0,0,0] },
+        { t: "The kids are home",           s: [0,0,0,0,0,0,0,0,3,2,1,0] },
+        { t: "A group of friends",          s: [0,0,0,3,2,0,1,0,0,0,0,2] },
+      ]},
+    { q: "How do you feel about leaving the house?",
+      opts: [
+        { t: "Strongly prefer not to",      s: [3,2,0,0,0,0,0,1,0,0,0,0] },
+        { t: "Short trips are fine",        s: [0,0,2,0,1,0,0,0,3,0,0,0] },
+        { t: "Yes, I want to be out",       s: [0,0,0,2,3,1,0,0,0,0,2,0] },
+        { t: "I want to go somewhere new",  s: [0,0,0,0,0,0,3,0,0,0,0,3] },
+      ]},
+    { q: "Budget-wise, this weekend?",
+      opts: [
+        { t: "Spending nothing",            s: [3,2,0,0,0,0,0,1,0,0,0,0] },
+        { t: "A little is fine",            s: [0,0,2,1,0,0,0,0,3,1,0,0] },
+        { t: "Happy to spend on something good",s:[0,0,0,0,2,3,0,0,0,0,2,0]},
+        { t: "Treating this weekend properly",s:[0,0,0,2,0,0,3,0,0,0,0,3]},
+      ]},
+    { q: "By Sunday night, what would make you feel good?",
+      opts: [
+        { t: "That I genuinely rested",     s: [3,2,0,0,0,0,0,1,0,0,0,0] },
+        { t: "That I did something",        s: [0,0,2,0,3,0,0,0,1,0,2,0] },
+        { t: "That I made a memory",        s: [0,0,0,3,0,2,1,0,0,0,0,2] },
+        { t: "That I got through the list", s: [0,1,0,0,0,0,0,0,2,3,0,0] },
+      ]},
+  ],
+  verdicts: [
+    ["🛏️","Total do-nothing weekend","Screens, sleep, no plans, no guilt. You have permission.", "The world will not end. Your energy will come back. This is the investment."],
+    ["📖","A slow, intentional weekend in","Cook properly, read something, tidy one corner, take your time.", "No rushing. No optimising. Just existing at your own pace."],
+    ["🌅","A weekend away — even just one night","Get out of your usual environment. Everything looks different somewhere else.", "Book it today. Even a short drive and a hotel changes everything."],
+    ["🎉","Organise something with people you like","Text whoever you've been meaning to text. Make the plan happen.", "You will always be glad you did. You never regret showing up."],
+    ["🏃","Active weekend — move your body","A hike, a swim, a long walk. Whatever gets you out of your head.", "Your energy after will be better than your energy before. Always."],
+    ["🍽️","A proper food experience","A restaurant you've been meaning to try, a food market, something good.", "You will talk about a great meal for weeks. Go get one."],
+    ["🗺️","Do something you've never done before","A class, an event, a place you've always meant to visit.", "New experiences are disproportionately memorable. Go collect one."],
+    ["🧘","A reset weekend — slow and restorative","Sauna, long bath, sleep, quiet. Your nervous system is asking nicely.", "This is maintenance. All high-performing things require it."],
+    ["👨‍👩‍👧","A proper family weekend","Leave the phones alone and just be together. Simple plans work best.", "A park, a film, cooking together. Presence is the whole thing."],
+    ["🎨","Make something this weekend","Cook an ambitious dish, start a project, do something creative.", "The weekends where you made something are always the ones you remember."],
+    ["🏙️","Explore your own city like a tourist","There is something near you that you have never done. Go find it.", "Walk a different way. Go to the area you always drive past. Look up."],
+    ["☀️","Get outside as much as possible","Fresh air is the answer to most weekend malaise. Start there.", "Walk without a destination. Something will suggest itself."],
+  ]
+},
+
+travel: {
+  questions: [
+    { q: "How long is this trip?",
+      opts: [
+        { t: "A long weekend (3-4 days)",   s: [3,0,0,0,0,1,0,0,2,0,0,0] },
+        { t: "About a week",                s: [0,2,0,0,1,0,3,0,0,2,0,0] },
+        { t: "Two weeks",                   s: [0,0,2,0,0,0,0,3,0,0,2,0] },
+        { t: "A month or more",             s: [0,0,0,3,0,0,0,0,0,0,0,2] },
+      ]},
+    { q: "What vibe are you after?",
+      opts: [
+        { t: "Beach and absolute rest",     s: [3,0,0,0,0,1,2,0,0,0,0,0] },
+        { t: "Explore cities and eat well", s: [0,3,0,0,1,0,0,2,0,0,0,0] },
+        { t: "Adventure and nature",        s: [0,0,0,2,0,0,0,0,3,0,1,0] },
+        { t: "Culture and experiences",     s: [0,0,3,0,0,0,0,1,0,2,0,0] },
+      ]},
+    { q: "Who's coming?",
+      opts: [
+        { t: "Just me",                     s: [0,0,0,3,0,0,0,0,0,2,0,1] },
+        { t: "Me and my partner",           s: [3,1,0,0,0,2,0,0,0,0,0,0] },
+        { t: "The kids as well",            s: [2,0,0,0,2,0,0,0,0,0,0,0] },
+        { t: "A group of friends",          s: [0,2,0,0,0,0,3,0,1,0,0,2] },
+      ]},
+    { q: "Budget?",
+      opts: [
+        { t: "Keeping it really tight",     s: [0,0,0,2,0,0,0,0,3,0,0,1] },
+        { t: "Moderate — being sensible",   s: [2,1,0,0,0,0,3,0,0,0,0,0] },
+        { t: "Comfortable — want it to feel good",s:[0,3,2,0,0,1,0,0,0,0,2,0]},
+        { t: "Not even thinking about it",  s: [0,0,0,0,3,0,0,3,0,0,0,2] },
+      ]},
+    { q: "What's the one thing you absolutely need from this trip?",
+      opts: [
+        { t: "To completely switch off",    s: [3,0,0,0,0,2,0,0,1,0,0,0] },
+        { t: "To eat something incredible", s: [0,3,0,0,0,0,2,0,0,0,0,1] },
+        { t: "To feel something new",       s: [0,0,2,3,0,0,0,0,0,2,0,0] },
+        { t: "To feel alive again",         s: [0,0,0,0,3,0,0,2,0,0,3,0] },
+      ]},
+  ],
+  verdicts: [
+    ["🌴","Bali","Warm, beautiful, genuinely affordable, and designed for exactly this kind of need.", "Ubud for jungle and calm. Seminyak if you want some life. You can't get it wrong."],
+    ["🍕","Italy — pick one region and go deep","Not a tour. One place. Eat everything. Walk everywhere. Take your time.", "Rome, Tuscany, Amalfi, Sicily. Any of them. Just commit to one."],
+    ["🗼","A European city you haven't done yet","Pick the one you keep saying 'one day' about. One day is now.", "Fly in on a Friday. Leave Sunday night. Eat your way through it."],
+    ["🌏","Southeast Asia — pick a country","Incredible food, incredible people, incredible value. The combination doesn't beat itself.", "Thailand, Vietnam, Cambodia, Japan. Any door you open will be worth it."],
+    ["🏔️","New Zealand or somewhere with proper nature","You need scale. You need to feel small against something big.", "Hike, drive, swim, breathe. The land there does something to you."],
+    ["🏖️","A quiet beach somewhere warm","You need to not think. This is the correct environment for that.", "Find somewhere with a good book and a hammock. Stay longer than you plan to."],
+    ["🇯🇵","Japan","You have been thinking about it. Stop thinking. Go.", "Tokyo alone is worth it. Everything else is a bonus."],
+    ["🌍","Somewhere completely new to you","Stop returning to the same places. Surprise yourself this time.", "Pick somewhere you know almost nothing about. That's often the best reason to go."],
+    ["🚗","A road trip close to home","Underrated, low stress, no airports, and often more memorable than a flight.", "Get in the car, pick a direction, stop when something looks good."],
+    ["🏜️","Morocco or somewhere North African","Colour, texture, food, warmth, and a completely different pace of life.", "Marrakech for a few days then somewhere slower. You will feel it immediately."],
+    ["🧗","An adventure trip — active and outdoors","You want to come home tired in a good way. That takes real effort.", "Peru, Patagonia, Iceland, Nepal. Pick the one that makes you nervous. That's the one."],
+    ["🛳️","Somewhere unexpected that no one you know has done","The best travel stories don't start with a well-trodden itinerary.", "Ask yourself where you've never even considered. Start there."],
+  ]
+},
+
+relationship: {
+  questions: [
+    { q: "What's actually going on?",
+      opts: [
+        { t: "We've been disconnected lately",s:[0,0,3,0,0,2,0,0,0,1,0,0]},
+        { t: "We had an argument",           s: [0,3,0,2,0,0,0,0,0,0,1,0] },
+        { t: "I need to say something I've been avoiding",s:[2,0,0,0,3,0,0,0,0,0,0,1]},
+        { t: "I want to do something nice", s: [0,0,0,0,0,0,3,2,0,0,0,0] },
+      ]},
+    { q: "Where are things between you two right now?",
+      opts: [
+        { t: "Good but could be better",    s: [0,0,2,0,0,3,1,0,0,0,0,0] },
+        { t: "A bit tense",                 s: [0,3,1,2,0,0,0,0,0,0,0,0] },
+        { t: "Really good actually",        s: [0,0,0,0,0,0,3,2,0,0,0,1] },
+        { t: "I'm not sure",                s: [2,0,0,0,3,0,0,0,1,0,0,0] },
+      ]},
+    { q: "What does your gut say you need to do?",
+      opts: [
+        { t: "Say what I've been sitting on",s:[2,0,0,0,3,0,0,0,0,0,0,1]},
+        { t: "Apologise first",              s: [0,3,0,2,0,0,0,0,0,0,0,0] },
+        { t: "Create a moment for us",      s: [0,0,2,0,0,3,1,0,0,0,0,0] },
+        { t: "Give it a bit of space",      s: [0,0,0,0,0,0,0,0,2,3,0,0] },
+      ]},
+    { q: "How long has this been sitting with you?",
+      opts: [
+        { t: "Just today",                  s: [0,2,0,1,0,0,0,0,3,0,0,0] },
+        { t: "A few days",                  s: [1,0,2,0,2,0,0,0,0,1,0,0] },
+        { t: "A couple of weeks or more",   s: [3,0,0,0,2,0,0,0,0,0,0,2] },
+        { t: "Honestly, ages",              s: [2,0,0,0,3,0,0,0,0,0,0,3] },
+      ]},
+    { q: "What outcome do you actually want?",
+      opts: [
+        { t: "To feel closer again",        s: [0,0,3,0,0,2,1,0,0,0,0,0] },
+        { t: "To resolve the tension",      s: [0,3,0,2,1,0,0,0,0,0,0,0] },
+        { t: "To be heard and understood",  s: [2,0,0,0,3,0,0,0,0,0,0,1] },
+        { t: "To do something good together",s:[0,0,0,0,0,0,3,2,0,0,1,0]},
+      ]},
+  ],
+  verdicts: [
+    ["💬","Say the thing you've been sitting on","The conversation you're avoiding is probably the one you need most.", "You do not have to do it perfectly. You just have to start it."],
+    ["🤍","Be the one who apologises first","You already know if you contributed. Being first costs nothing and fixes a lot.", "No conditions. No 'but you also...' Just the apology, clean."],
+    ["🕯️","Plan something intentional together","Reconnection is not accidental. It takes a small amount of deliberate effort.", "Dinner at home, a walk somewhere new, something you used to do. Pick one."],
+    ["☕","Ask for a calm conversation — not a big talk","'Can we just talk for ten minutes tonight?' is enough to open a door.", "Keep it small. The big stuff follows when the small stuff is open."],
+    ["📝","Write down what you actually want to say first","Spoken words get emotional. Written words get honest. Start there.", "You do not have to send it. Just writing it tells you what you mean."],
+    ["🌹","Do something unexpectedly kind","The temperature changes when someone shows up without being asked.", "A small gesture with real intention is more effective than most conversations."],
+    ["🎁","Organise something they'd love","You know them. You know what would make them smile. Do that thing.", "It does not need to be big. It needs to be specific to them."],
+    ["💌","Send a message that is just affection — no agenda","Sometimes people need to be told out loud. Even a text counts.", "Say the thing you probably think but don't say enough."],
+    ["🧘","Give it one more day before acting","Strong feelings sometimes need one night to become clearer.", "Not avoidance. Just 24 hours of not reacting. See what remains."],
+    ["🚶","Go for a walk together — no phones","Side-by-side is an easier place to talk than face-to-face.", "Things get said on walks that would never get said sitting across a table."],
+    ["🌙","Have the conversation tonight — not tomorrow","You have waited long enough. It will not get easier with more time.", "Open with: 'I've been wanting to talk about something.' That is enough."],
+    ["🫶","Remind yourself what you love about them","Before anything else, that. It changes the tone of everything that follows.", "Write three things. Real ones. Then decide what to do next."],
+  ]
+},
+
+other: {
+  questions: [
+    { q: "How long have you been stuck on this?",
+      opts: [
+        { t: "Just came up today",          s: [0,2,0,0,0,0,0,1,0,0,0,0] },
+        { t: "A few days",                  s: [0,0,2,0,0,0,0,0,1,0,2,0] },
+        { t: "Over a week",                 s: [0,0,0,2,0,0,1,0,0,3,0,0] },
+        { t: "Honestly, way too long",      s: [0,0,0,0,2,3,0,0,0,0,0,2] },
+      ]},
+    { q: "Who does this decision mostly affect?",
+      opts: [
+        { t: "Just me",                     s: [2,1,0,0,0,3,0,0,0,0,0,0] },
+        { t: "Me and someone I love",       s: [0,0,2,1,0,0,0,0,3,0,0,0] },
+        { t: "A wider group",               s: [0,0,0,0,0,0,2,1,0,2,0,0] },
+        { t: "My whole life trajectory",    s: [0,0,0,3,2,0,0,0,0,0,0,2] },
+      ]},
+    { q: "What does your gut say right now?",
+      opts: [
+        { t: "Option A feels right",        s: [0,0,0,0,0,3,0,0,0,0,2,0] },
+        { t: "Option B feels right",        s: [0,0,0,0,0,0,3,2,0,0,0,1] },
+        { t: "Both seem equally valid",     s: [0,2,1,0,0,0,0,0,2,0,0,0] },
+        { t: "My gut is the problem",       s: [2,0,0,2,1,0,0,0,0,1,0,0] },
+      ]},
+    { q: "If you get it wrong, how bad is that?",
+      opts: [
+        { t: "Not actually a big deal",     s: [2,1,0,0,0,3,0,0,0,0,2,0] },
+        { t: "Annoying but completely fixable",s:[0,2,1,0,0,0,2,0,0,0,0,0]},
+        { t: "Significant but survivable",  s: [0,0,0,2,0,0,0,1,2,0,0,3] },
+        { t: "Very serious consequences",   s: [0,0,0,3,2,0,0,0,0,2,0,0] },
+      ]},
+    { q: "What do you think you need to actually move forward?",
+      opts: [
+        { t: "Just to make a call",         s: [2,0,0,0,0,3,0,0,0,2,0,0] },
+        { t: "One more conversation",       s: [0,0,2,1,0,0,0,0,3,0,0,0] },
+        { t: "To write it all out",         s: [0,1,0,2,0,0,0,2,0,0,3,0] },
+        { t: "To accept that it's okay not to know yet",s:[0,0,0,0,3,0,2,0,0,0,0,2]},
+      ]},
+  ],
+  verdicts: [
+    ["✅","Just make a call — any call","Overthinking this is now costing you more than a wrong answer would.", "Decide. Commit. Adjust if needed. That is the whole process."],
+    ["📝","Write out the pros and cons properly","Not on your phone. On paper, slowly. The answer usually surfaces.", "Give it twenty minutes of actual focused thought. Then decide."],
+    ["💬","Talk it through with one person you trust","Not to get their answer. To hear yourself say it out loud.", "Pick the person who will ask you hard questions, not just agree with you."],
+    ["🌙","Sleep on it — one more night","Strong feelings sometimes need to settle before you can see them clearly.", "Not avoidance. Just 24 hours. See what it looks like tomorrow morning."],
+    ["🧭","Accept that there is no perfect option","Both paths have costs. Choose the one whose costs you can live with.", "That is not settling. That is wisdom."],
+    ["🎯","Go with your gut — you already know","You opened this app because you wanted permission, not an answer.", "Your gut had the answer before question one. Trust it."],
+    ["🔄","Get more information before deciding","You are not stuck because you're indecisive. You're stuck because you need data.", "Name one thing you don't know that would help. Then go find it."],
+    ["💡","Go with the option that future-you would thank you for","Ask what the version of you in five years would say. That person usually knows.", "Short-term discomfort, long-term right decision. Pick that one."],
+    ["🤝","This is a conversation, not a solo decision","It affects more than you. Bring the right people in before you decide.", "The right answer might come from the conversation itself."],
+    ["⏰","Set a deadline and commit to it","Give yourself until a specific time. When the time comes, decide. Done.", "An imperfect decision made is worth more than a perfect one pending."],
+    ["🔎","Break it into one smaller decision first","The big choice is overwhelming. What is the next single step only?", "Take that step. The rest becomes clearer from there."],
+    ["😌","It is okay that you don't know yet","Not every decision has an obvious moment. Pressure makes it worse, not better.", "Trust that the answer will become clearer. In the meantime, be kind to yourself."],
+  ]
+}
+
+}; // end DATA
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+var state = {
+  catId: null,
+  catLabel: null,
+  catEmoji: null,
+  qi: 0,
+  scores: [],
+  answers: []
+};
+
+// ─────────────────────────────────────────────
+//  SCREEN MANAGEMENT
+// ─────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  var el = document.getElementById(id);
+  el.classList.add('active');
+  // re-trigger animation
+  el.style.animation = 'none';
+  el.offsetHeight; // reflow
+  el.style.animation = '';
+  window.scrollTo(0, 0);
+}
+
+// ─────────────────────────────────────────────
+//  QUIZ LOGIC
+// ─────────────────────────────────────────────
+function startCategory(catId) {
+  var catBtn = document.querySelector('[onclick="startCategory(\'' + catId + '\')"]');
+  var label = catBtn.querySelector('.cat-label').innerText;
+  var emoji = catBtn.querySelector('.cat-emoji').innerText;
+
+  var cat = DATA[catId];
+  state.catId    = catId;
+  state.catLabel = label;
+  state.catEmoji = emoji;
+  state.qi       = 0;
+  state.scores   = new Array(cat.verdicts.length).fill(0);
+  state.answers  = [];
+
+  renderQuestion();
+  showScreen('s-quiz');
+}
+
+function renderQuestion() {
+  var cat   = DATA[state.catId];
+  var total = cat.questions.length;
+  var qi    = state.qi;
+  var q     = cat.questions[qi];
+  var pct   = (qi / total) * 100;
+
+  document.getElementById('q-counter').innerText   = 'Question ' + (qi + 1) + ' of ' + total;
+  document.getElementById('q-cat-label').innerText = state.catEmoji + ' ' + state.catLabel;
+  document.getElementById('q-progress').style.width = pct + '%';
+  document.getElementById('q-text').innerText = q.q;
+
+  var optsEl = document.getElementById('q-opts');
+  optsEl.innerHTML = '';
+  var letters = ['A','B','C','D'];
+
+  q.opts.forEach(function(opt, i) {
+    var btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML =
+      '<span class="opt-letter">' + letters[i] + '</span>' +
+      '<span>' + opt.t + '</span>';
+    btn.addEventListener('click', function() { pickAnswer(opt); });
+    optsEl.appendChild(btn);
+  });
+}
+
+function pickAnswer(opt) {
+  // Disable all buttons momentarily
+  document.querySelectorAll('.opt-btn').forEach(function(b) {
+    b.style.pointerEvents = 'none';
+  });
+
+  // Add scores
+  opt.s.forEach(function(val, vi) {
+    state.scores[vi] = (state.scores[vi] || 0) + val;
+  });
+
+  state.answers.push(opt.t);
+  state.qi++;
+
+  var cat = DATA[state.catId];
+  if (state.qi < cat.questions.length) {
+    setTimeout(function() { renderQuestion(); }, 120);
+  } else {
+    setTimeout(function() { showVerdict(); }, 150);
+  }
+}
+
+function showVerdict() {
+  var cat = DATA[state.catId];
+  // Find winner — among tied scores, pick randomly
+  var max = Math.max.apply(null, state.scores);
+  var winners = [];
+  state.scores.forEach(function(s, i) { if (s === max) winners.push(i); });
+  var pick = winners[Math.floor(Math.random() * winners.length)];
+  var v = cat.verdicts[pick];
+
+  var closings = [
+    "This is your answer. No second-guessing. No \"but what if...\" Just go. 💅",
+    "The oracle has decided. That's it. That's the whole thing. 🔮",
+    "You came here for an answer. There it is. Stop looking for another one. ✨",
+    "Decided. Done. You're welcome. Now go do it. 💫",
+    "The universe has spoken through a quiz. Respect that. 🌙",
+    "Final answer. Non-negotiable. The app has closed the discussion. ✅"
+  ];
+  var closing = closings[Math.floor(Math.random() * closings.length)];
+
+  document.getElementById('v-emoji').innerText  = v[0];
+  document.getElementById('v-text').innerText   = v[1];
+  document.getElementById('v-reason').innerText = v[2];
+  document.getElementById('v-note').innerText   = closing + '\n\n"' + v[3] + '"';
+
+  showScreen('s-verdict');
+}
+
+function reset() {
+  state = { catId: null, catLabel: null, catEmoji: null, qi: 0, scores: [], answers: [] };
+  showScreen('s-category');
+}
+</script>
+</body>
+</html>

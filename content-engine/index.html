@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Direction Engine</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); transition: background 0.25s ease; }
+
+    /* ── Dark mode (default) ── */
+    :root {
+      --bg:   #0C0B0A;
+      --s1:   #111009;
+      --s2:   #0E0D0B;
+      --s3:   #0A0908;
+      --b1:   #1E1C1A;
+      --b2:   #181614;
+      --b3:   #1A1816;
+      --pb:   #161412;
+      --lb:   #1A1815;
+      --lbd:  #2A2825;
+      --oh:   #1C1915;
+      --t1:   #F0EDE8;
+      --t2:   #D8D3CB;
+      --t3:   #B8B3AB;
+      --t4:   #908B83;
+      --t5:   #6A6460;
+      --t6:   #5A5650;
+      --t7:   #4A4640;
+      --t8:   #3E3C3A;
+      --t9:   #2E2C2A;
+      --t10:  #7A7670;
+      --t11:  #B0AB9F;
+      --t12:  #C8C3BB;
+      --t13:  #5D5A57;
+      --t14:  #4A4845;
+      --acc:  #F5A623;
+      --acc2: #C8831A;
+      --rhb:  #6A6460;
+      --rhc:  #A8A39B;
+    }
+
+    /* ── Light mode overrides ── */
+    .light-mode {
+      --bg:   #F7F4EF;
+      --s1:   #FFFFFF;
+      --s2:   #F0EDE6;
+      --s3:   #EAE6DF;
+      --b1:   #DDD9D1;
+      --b2:   #D5D1C9;
+      --b3:   #DDD9D1;
+      --pb:   #DDD9D1;
+      --lb:   #FFF5E8;
+      --lbd:  #FFE0A8;
+      --oh:   #FEF8F0;
+      --t1:   #1A1815;
+      --t2:   #2A2826;
+      --t3:   #4A4845;
+      --t4:   #5A5652;
+      --t5:   #6A6460;
+      --t6:   #7A7670;
+      --t7:   #8A8682;
+      --t8:   #9A9692;
+      --t9:   #B0ACA8;
+      --t10:  #6A6460;
+      --t11:  #4A4845;
+      --t12:  #2A2826;
+      --t13:  #7A7670;
+      --t14:  #8A8682;
+      --acc:  #E8921A;
+      --acc2: #C8721A;
+      --rhb:  #9A9692;
+      --rhc:  #6A6460;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const QUESTIONS = [
+      {
+        id: 1,
+        question: "Which best describes what you're actually building?",
+        hint: "Be honest. There's no wrong answer here.",
+        options: [
+          { id: "1a", text: "My personal brand my name, face, and story IS the brand", scores: { 1: 2, 6: 2, 8: 1 } },
+          { id: "1b", text: "A business or service I'm the expert behind it, not always front-facing", scores: { 3: 2, 5: 2, 7: 1 } },
+          { id: "1c", text: "Both I'm the face of my business but I want it to scale beyond me", scores: { 7: 2, 8: 2, 4: 1 } },
+          { id: "1d", text: "Still figuring that out honestly", scores: { 6: 2, 1: 1, 2: 1 } },
+        ],
+      },
+      {
+        id: 2,
+        question: "What is your primary content goal right now?",
+        hint: "Pick the one that matters most this quarter.",
+        options: [
+          { id: "2a", text: "Get discovered more people need to know I exist", scores: { 1: 2, 6: 2 } },
+          { id: "2b", text: "Convert I want viewers turning into paying clients or customers", scores: { 7: 3, 5: 2 } },
+          { id: "2c", text: "Build authority become the obvious choice in my niche", scores: { 8: 2, 4: 2, 3: 1 } },
+          { id: "2d", text: "All three I want the whole package", scores: { 3: 2, 7: 1, 1: 1 } },
+        ],
+      },
+      {
+        id: 3,
+        question: "How many hours per week can you realistically dedicate to content?",
+        hint: "Not the ideal number. The real one.",
+        options: [
+          { id: "3a", text: "1-2 hours it has to fit around everything else in my life", scores: { 1: 2, 2: 2, 6: 3 } },
+          { id: "3b", text: "3-5 hours I can build a consistent routine around this", scores: { 7: 2, 8: 2, 4: 1 } },
+          { id: "3c", text: "6-10 hours this is a serious priority investment right now", scores: { 3: 3, 4: 2 } },
+          { id: "3d", text: "I have a team, VA, or editor helping me already", scores: { 3: 2, 5: 2, 7: 1 } },
+        ],
+      },
+      {
+        id: 4,
+        question: "Your honest relationship with being on camera is...",
+        hint: "No judgement. Self-awareness wins here.",
+        options: [
+          { id: "4a", text: "Avoid it not happening right now, full stop", scores: { 2: 3, 4: 2, 5: 2 } },
+          { id: "4b", text: "I will do it but need structure scripts or prompts help me commit", scores: { 7: 2, 8: 2 } },
+          { id: "4c", text: "Comfortable the camera is not the issue, distribution is", scores: { 1: 2, 7: 1, 8: 1 } },
+          { id: "4d", text: "Natural camera confidence is genuinely not my barrier", scores: { 1: 2, 3: 1, 6: 2 } },
+        ],
+      },
+      {
+        id: 5,
+        question: "Your biggest content block right now is...",
+        hint: "Be specific. The right format solves the right problem.",
+        options: [
+          { id: "5a", text: "I do not know what to say no clear topic or angle I own", scores: { 6: 2, 1: 2 } },
+          { id: "5b", text: "I do not have the gear or setup to create decent-looking content", scores: { 2: 3, 4: 2 } },
+          { id: "5c", text: "I know what to make I just never start or stay consistent", scores: { 1: 2, 6: 2 } },
+          { id: "5d", text: "I post already but nothing gets real traction or converts", scores: { 7: 3, 3: 2 } },
+        ],
+      },
+      {
+        id: 6,
+        question: "Where does your target audience actually spend their time?",
+        hint: "Where they are is where you need to be.",
+        options: [
+          { id: "6a", text: "Instagram and TikTok they scroll, discover, and engage visually", scores: { 1: 3, 6: 2 } },
+          { id: "6b", text: "LinkedIn professionals, decision-makers, B2B buyers", scores: { 5: 3, 8: 2 } },
+          { id: "6c", text: "YouTube they search for answers and watch to actually learn", scores: { 3: 3, 7: 2 } },
+          { id: "6d", text: "Not sure yet I have not committed to a platform", scores: { 1: 1, 6: 2, 2: 1 } },
+        ],
+      },
+      {
+        id: 7,
+        question: "How would you describe your content experience so far?",
+        hint: "Honest starting point equals better recommendation.",
+        options: [
+          { id: "7a", text: "Zero I have not created or posted anything yet", scores: { 6: 3, 2: 2 } },
+          { id: "7b", text: "Beginner I have tried a few things but nothing consistent", scores: { 1: 2, 6: 2 } },
+          { id: "7c", text: "Intermediate I post regularly but want better results", scores: { 7: 2, 8: 1 } },
+          { id: "7d", text: "Producing content already but it is not converting to leads", scores: { 7: 3, 3: 2 } },
+        ],
+      },
+      {
+        id: 8,
+        question: "What content do you actually enjoy consuming most?",
+        hint: "What you gravitate toward, you will produce more naturally.",
+        options: [
+          { id: "8a", text: "Short punchy videos personality-led, fast-paced, entertaining", scores: { 1: 2, 6: 1 } },
+          { id: "8b", text: "In-depth tutorials or how-to content real education, no fluff", scores: { 3: 2, 7: 2 } },
+          { id: "8c", text: "Podcasts or long conversations depth over everything else", scores: { 4: 3 } },
+          { id: "8d", text: "Written posts, carousels, articles words over video every time", scores: { 2: 2, 5: 2 } },
+        ],
+      },
+      {
+        id: 9,
+        question: "What do you actually do the thing you'd teach or sell?",
+        hint: "This helps match your format to your content topic, not just your style.",
+        options: [
+          { id: "9a", text: "I sell a service coaching, consulting, freelancing, trades, professional services", scores: { 7: 2, 8: 2, 5: 1 } },
+          { id: "9b", text: "I sell a product physical, digital, or e-commerce", scores: { 1: 2, 6: 2, 2: 1 } },
+          { id: "9c", text: "I run a business and I am building my brand as the face of it", scores: { 8: 2, 3: 1, 4: 1 } },
+          { id: "9d", text: "I am building a personal brand first the monetisation comes later", scores: { 6: 3, 1: 2 } },
+        ],
+      },
+    ];
+
+    const RECOMMENDATIONS = {
+      1: {
+        emoji: "🎬",
+        title: "Short-Form Personality Reels",
+        platform: "Instagram · TikTok",
+        tagline: "Your face is your brand. Start using it.",
+        commitment: "3-4 hrs/week",
+        gear: "Phone only",
+        accentColor: "#F5A623",
+        action: "This week, pick one moment from your day, your take on something in your industry, or a mistake you see people making all the time and talk to camera for 30-60 seconds. Post it three times this week. That is the entire strategy for now.",
+        steps: [
+          "Film 30-90 seconds. One take or two max. No elaborate setup, no script.",
+          "Hook in the first 2 seconds: state the problem or your opinion, then explain it.",
+          "Post three times this week. Consistency beats production quality at this stage.",
+        ],
+        why: "You do not need a studio, a script, or a content strategy to start this. You need reps. Your personality is the differentiator, and the algorithm rewards authenticity over production value every single time. The creators who win in this format are not the most polished they are the most consistent and the most themselves. This is your lowest-friction, highest-upside entry point into content that compounds.",
+        next: "At 90 days and 30+ posts, layer in FAQ Answer Videos start answering the 5 questions your audience asks most. 80% personality reels, 20% search-led answers. That is when your content starts converting, not just attracting.",
+      },
+      2: {
+        emoji: "📊",
+        title: "Educational Carousels",
+        platform: "Instagram · LinkedIn",
+        tagline: "No camera required. Just your knowledge in a format people save.",
+        commitment: "2-3 hrs/week",
+        gear: "Laptop or phone + Canva (free)",
+        accentColor: "#4A90E2",
+        action: "Write down the top 3 questions your audience or clients ask you most. Turn each one into a 7-10 slide carousel: hook on slide 1, your answer in the middle, a clear CTA on the final slide. Design it in Canva and post the first one this week.",
+        steps: [
+          "List 3 questions your audience asks most often. These become your first 3 carousels.",
+          "Build in Canva: hook slide, 5-7 answer slides, one CTA slide. Keep it clean and readable.",
+          "Post with a strong caption. Engage every comment in the first 60 minutes after posting.",
+        ],
+        why: "Carousels are the highest-saved format on both Instagram and LinkedIn. Every save tells the algorithm your content is worth distributing further. You never need to show your face, and this format compounds older carousels that get reshared will keep bringing you followers months after you originally posted them. This is how you build an audience on expertise alone, without ever pressing record.",
+        next: "After 90 days and 12+ carousels posted, introduce a short talking-head video once a week. You will have already built the audience and the trust the video adds the face behind the expertise. Most people commit to camera once they have already built some momentum without it.",
+      },
+      3: {
+        emoji: "📹",
+        title: "YouTube Educational Long-Form",
+        platform: "YouTube → clip to Reels, TikTok, LinkedIn",
+        tagline: "One video. Four assets. Compound interest in content form.",
+        commitment: "6-10 hrs/week",
+        gear: "Camera or phone + mic + basic editing",
+        accentColor: "#E24A4A",
+        action: "Identify the single most common question your clients or audience asks before they trust you. Script a 10-minute video answering it completely. Film it, add chapters and captions, optimise the title as a real search query. Then clip three short-form pieces from it for other platforms.",
+        steps: [
+          "Choose the question. Say it verbatim in the first 10 seconds of your video.",
+          "Script it, film it, add chapters and captions, title it as the exact search query someone would type.",
+          "Clip three Reels or Shorts from it. One production session produces a full week of content.",
+        ],
+        why: "YouTube is the only platform that pays you back forever. A video you upload today can bring you qualified leads in 18 months because it ranks in both YouTube and Google search. Combine that with a clipping workflow that turns every long-form video into multiple short assets, and you have built a compound content engine that keeps working while you sleep. This is the 80/20 of content maximum output from minimum recording sessions.",
+        next: "At 90 days and 12 videos live, build your Evergreen Content Library: identify your top 3 performing topics and create a full series around each. Those become your content pillars your TV shows. Everything else feeds them.",
+      },
+      4: {
+        emoji: "🎙️",
+        title: "Podcast or Video Podcast",
+        platform: "Spotify · YouTube · Apple Podcasts",
+        tagline: "Authority through conversation. No camera confidence required.",
+        commitment: "3-5 hrs/week",
+        gear: "Mic + quiet room (a $50 setup is enough)",
+        accentColor: "#9B4AE2",
+        action: "Plan 6 episodes. Either interview guests your audience wants to learn from, or answer the 6 biggest questions clients ask before they hire you. Record audio-first. Upload to Spotify and YouTube. Title every episode as a real search question.",
+        steps: [
+          "Pick 6 episode topics from real questions your audience is actively searching for.",
+          "Record audio in a quiet room with a basic mic. Video is optional, not required.",
+          "Upload to Spotify and YouTube. Optimise every episode title as the exact question someone would type.",
+        ],
+        why: "A podcast builds authority without requiring camera confidence. It compounds in search, positions you as the connector or expert in your space, and creates long-form trust that short-form content simply cannot replicate. A listener who finishes a 30-minute episode is far more ready to buy than someone who watched a 60-second reel. You do not need a studio a quiet room and a basic mic produces something professional enough to compete in any market.",
+        next: "After 20 episodes, clip your best 60-second moments and post them as standalone short-form content. The clips bring new people in. The full episodes convert them. That is a complete content funnel built from one recording session per week.",
+      },
+      5: {
+        emoji: "💼",
+        title: "LinkedIn Written Content + Short Video",
+        platform: "LinkedIn",
+        tagline: "B2B trust is built through clarity and consistency. This is your format.",
+        commitment: "2-4 hrs/week",
+        gear: "Phone only",
+        accentColor: "#0A84D4",
+        action: "Write 3 LinkedIn posts this week. Each one: a 5-part story built around one real insight from your work hook, problem, turn, lesson, CTA. Then film a 60-second selfie video of the same insight and post both together.",
+        steps: [
+          "Write one post: hook line, the problem you observed, how you addressed it, the lesson, the next step.",
+          "Film a 60-second selfie video of the same insight. Post the video and the written post together.",
+          "Engage every comment in the first hour. That is the signal LinkedIn uses to push the post further.",
+        ],
+        why: "LinkedIn rewards original thinking, not volume. One post that makes a professional nod and think 'that is exactly my problem' is worth more than ten generic ones. The written plus video combination works because LinkedIn's algorithm gives extra reach to native video, while the written post captures the people who will not click play. One action, two content pieces, one platform that puts you directly in front of decision-makers.",
+        next: "After 90 days of consistent posting, build a simple lead magnet a checklist, template, or short guide tied directly to your most-engaged topic. Link it in your profile and in your best-performing posts. LinkedIn traffic turns into email subscribers, which turns into clients.",
+      },
+      6: {
+        emoji: "📱",
+        title: "Behind-the-Scenes Story Content",
+        platform: "Instagram · TikTok",
+        tagline: "Document, do not perform. Your journey is already the content.",
+        commitment: "1-2 hrs/week",
+        gear: "Phone only",
+        accentColor: "#2AB573",
+        action: "Film 60 seconds of what you actually did today in your business or life a result, a challenge, a decision, a lesson learned. Caption it with the one clear takeaway. Post it this week without waiting until it is perfect.",
+        steps: [
+          "Open your camera. Film what you are doing, building, or working through right now.",
+          "Caption it with one clear lesson or honest observation. Keep it direct and real.",
+          "Post it this week. Imperfect and posted beats perfect and sitting in your drafts.",
+        ],
+        why: "This is the lowest-barrier entry into content creation because nothing is scripted you are documenting what is already happening. Your audience does not want a highlight reel. They want to see the process, the real decisions, the moments before the result. That is what builds trust faster than any produced video. It is also sustainable because it requires zero additional time beyond pressing record on your phone during moments that are already part of your day.",
+        next: "After 30 posts you will start to notice which topics your audience responds to most. Those become your content pillars your first 3 TV shows. At 90 days, shift from pure documentation to intentional content: 80% your proven topics, 20% new experiments. That is when the brand starts taking a real shape.",
+      },
+      7: {
+        emoji: "❓",
+        title: "Short FAQ Answer Videos",
+        platform: "YouTube Shorts · Reels · TikTok",
+        tagline: "Answer what they are already searching for. Let content close the sale.",
+        commitment: "2-3 hrs/week",
+        gear: "Phone + decent lighting",
+        accentColor: "#F5A623",
+        action: "List the 10 most common questions clients or customers ask before they buy from you. Film a 60-90 second video answering each one direct and no filler. Post one per week. Title each video exactly as someone would type the question into a search bar.",
+        steps: [
+          "Write out the 10 objections or questions you hear most before someone buys or books.",
+          "Film each answer as a 60-90 second video. Confident, direct, no waffle.",
+          "Title it as the exact search query. Post one per week for 10 weeks straight.",
+        ],
+        why: "These are not viral videos they are conversion machines. When a warm lead finds your FAQ video at 11pm the night before they decide whether to book you, that is content doing the selling so you do not have to. This format is evergreen, search-optimised, and directly tied to revenue. It answers the objection before the sales call even happens. And the library gets more powerful every week as you add to it.",
+        next: "Once you have 10 FAQ videos live, build a longer-form video that answers the biggest question in depth 8 to 12 minutes, fully optimised for YouTube search. That becomes your anchor content. The short videos feed traffic to it. The long video converts that traffic into action.",
+      },
+      8: {
+        emoji: "🎤",
+        title: "Talking Head Authority Reels",
+        platform: "LinkedIn · Instagram",
+        tagline: "State your position. Filter your audience. Attract the right clients.",
+        commitment: "2-3 hrs/week",
+        gear: "Phone + decent lighting",
+        accentColor: "#E24A4A",
+        action: "Pick one strong opinion you hold about your industry something most people get wrong, or a belief you publicly disagree with. Film a 60-second talking head video stating your position and backing it with one piece of evidence or a real story. Post it with a strong written caption. Do this once a week.",
+        steps: [
+          "Find your opinion. What do you believe that most people in your space do not say out loud?",
+          "Film 60 seconds: state the position, give one piece of evidence or a real story, land the point clearly.",
+          "Post with a caption that reinforces the POV. Once a week, every week, without fail.",
+        ],
+        why: "Authority content works faster than any other format because it filters your audience to exactly the people who think like you which means they are already pre-sold before they ever contact you. You are not trying to reach everyone. You are trying to be unmissable to the right people. One strong opinion, clearly expressed and consistently repeated, will do more for your positioning in 3 months than a year of safe, uncontroversial content that tries to please everybody.",
+        next: "After 12 authority reels, identify which 2-3 topics drove the most engagement and DMs. Those are your content pillars your TV shows. Build a series around each. That is where you go from being someone with opinions to being someone with a recognisable point of view that people seek out.",
+      },
+    };
+
+    const LABELS = ["A", "B", "C", "D"];
+
+    const FORMAT_META = {
+      1: { name: "Personality Reels",  color: "#F5A623" },
+      2: { name: "Carousels",          color: "#4A90E2" },
+      3: { name: "YouTube Long-Form",  color: "#E24A4A" },
+      4: { name: "Podcast",            color: "#9B4AE2" },
+      5: { name: "LinkedIn",           color: "#0A84D4" },
+      6: { name: "BTS Stories",        color: "#2AB573" },
+      7: { name: "FAQ Videos",         color: "#E8921A" },
+      8: { name: "Authority Reels",    color: "#C23535" },
+    };
+
+    function ContentDecisionApp() {
+      const [phase, setPhase] = useState("start");
+      const [currentQ, setCurrentQ] = useState(0);
+      const [scores, setScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 });
+      const [transitioning, setTransitioning] = useState(false);
+      const [result, setResult] = useState(null);
+      const [runnerUp, setRunnerUp] = useState(null);
+      const [visible, setVisible] = useState(true);
+      const [cameraAvoid, setCameraAvoid] = useState(false);
+      const [history, setHistory] = useState([]);
+      const [darkMode, setDarkMode] = useState(true);
+
+      const handleAnswer = (optionScores, questionIndex, optionId) => {
+        if (transitioning) return;
+        setTransitioning(true);
+        setVisible(false);
+
+        setHistory(h => [...h, { scores: { ...scores }, cameraAvoid }]);
+
+        if (questionIndex === 3 && optionId === "4a") setCameraAvoid(true);
+
+        const newScores = { ...scores };
+        Object.entries(optionScores).forEach(([key, val]) => {
+          newScores[parseInt(key)] = (newScores[parseInt(key)] || 0) + val;
+        });
+        setScores(newScores);
+
+        setTimeout(() => {
+          if (currentQ < QUESTIONS.length - 1) {
+            setCurrentQ(currentQ + 1);
+            setVisible(true);
+            setTransitioning(false);
+          } else {
+            const finalScores = { ...newScores };
+            if (cameraAvoid || optionId === "4a") {
+              [1, 6, 7, 8].forEach(k => { finalScores[k] = Math.max(0, finalScores[k] - 3); });
+              [2, 4, 5].forEach(k => { finalScores[k] += 2; });
+            }
+            const sorted = Object.entries(finalScores).sort((a, b) => b[1] - a[1]);
+            setResult(parseInt(sorted[0][0]));
+            setRunnerUp(parseInt(sorted[1][0]));
+            setPhase("analysing");
+            setTimeout(() => {
+              setPhase("result");
+              setVisible(true);
+              setTransitioning(false);
+            }, 1400);
+          }
+        }, 280);
+      };
+
+      const handleBack = () => {
+        if (transitioning || history.length === 0) return;
+        setVisible(false);
+        setTimeout(() => {
+          const prev = history[history.length - 1];
+          setHistory(h => h.slice(0, -1));
+          setScores(prev.scores);
+          setCameraAvoid(prev.cameraAvoid);
+          setCurrentQ(q => q - 1);
+          setVisible(true);
+        }, 250);
+      };
+
+      const reset = () => {
+        setVisible(false);
+        setTimeout(() => {
+          setPhase("start");
+          setCurrentQ(0);
+          setScores({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 });
+          setResult(null);
+          setRunnerUp(null);
+          setCameraAvoid(false);
+          setTransitioning(false);
+          setHistory([]);
+          setVisible(true);
+        }, 250);
+      };
+
+      const rec = result ? RECOMMENDATIONS[result] : null;
+      const runnerUpRec = runnerUp ? RECOMMENDATIONS[runnerUp] : null;
+
+      return (
+        <div
+          className={darkMode ? "" : "light-mode"}
+          style={{
+            minHeight: "100vh",
+            background: "var(--bg)",
+            fontFamily: "'DM Sans', sans-serif",
+            color: "var(--t1)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "24px 20px",
+            boxSizing: "border-box",
+            transition: "background 0.25s ease, color 0.25s ease",
+          }}
+        >
+          <style>{`
+            @keyframes fadeUp {
+              from { opacity: 0; transform: translateY(14px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeDown {
+              from { opacity: 1; transform: translateY(0); }
+              to { opacity: 0; transform: translateY(-8px); }
+            }
+            @keyframes pulse {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0.5; }
+            }
+            @keyframes slideRight {
+              from { opacity: 0; transform: translateX(-12px); }
+              to { opacity: 1; transform: translateX(0); }
+            }
+            .opt-btn {
+              transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
+            }
+            .opt-btn:hover {
+              background: var(--oh) !important;
+              border-color: var(--acc) !important;
+              transform: translateX(5px) !important;
+            }
+            .opt-btn:active {
+              transform: translateX(2px) !important;
+            }
+            .start-btn {
+              transition: all 0.2s ease !important;
+            }
+            .start-btn:hover {
+              transform: translateY(-2px) !important;
+              box-shadow: 0 8px 24px rgba(245, 166, 35, 0.3) !important;
+            }
+            .reset-btn {
+              transition: all 0.2s ease !important;
+            }
+            .reset-btn:hover {
+              border-color: var(--rhb) !important;
+              color: var(--rhc) !important;
+            }
+            .theme-btn {
+              transition: all 0.2s ease !important;
+            }
+            .theme-btn:hover {
+              border-color: var(--acc) !important;
+              color: var(--acc) !important;
+            }
+            ::-webkit-scrollbar { width: 4px; }
+            ::-webkit-scrollbar-track { background: var(--bg); }
+            ::-webkit-scrollbar-thumb { background: var(--b3); border-radius: 2px; }
+          `}</style>
+
+          {/* Theme toggle — always visible */}
+          <button
+            className="theme-btn"
+            onClick={() => setDarkMode(!darkMode)}
+            style={{
+              position: "fixed",
+              top: 16,
+              right: 16,
+              background: "var(--s2)",
+              border: "1px solid var(--b1)",
+              borderRadius: 20,
+              padding: "6px 14px",
+              cursor: "pointer",
+              fontSize: 11,
+              color: "var(--t8)",
+              fontFamily: "'DM Sans', sans-serif",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              zIndex: 100,
+              fontWeight: 500,
+            }}
+          >
+            {darkMode ? "☀ Light" : "🌙 Dark"}
+          </button>
+
+          <div style={{
+            width: "100%",
+            maxWidth: 620,
+            animation: visible ? "fadeUp 0.4s ease both" : "fadeDown 0.25s ease both",
+          }}>
+            {phase === "start" && <StartScreen onStart={() => setPhase("quiz")} onMatrix={() => setPhase("matrix")} />}
+            {phase === "matrix" && <MatrixScreen onBack={() => setPhase("start")} />}
+            {phase === "quiz" && (
+              <QuizScreen
+                question={QUESTIONS[currentQ]}
+                questionIndex={currentQ}
+                total={QUESTIONS.length}
+                onAnswer={handleAnswer}
+                onBack={handleBack}
+                canGoBack={history.length > 0}
+                disabled={transitioning}
+              />
+            )}
+            {phase === "analysing" && <AnalysingScreen />}
+            {phase === "result" && rec && (
+              <ResultScreen rec={rec} runnerUpRec={runnerUpRec} onReset={reset} />
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function StartScreen({ onStart, onMatrix }) {
+      return (
+        <div style={{ textAlign: "center", padding: "20px 0" }}>
+          <div style={{ fontSize: 52, marginBottom: 20, animation: "pulse 4s ease infinite" }}>🧭</div>
+          <div style={{
+            fontSize: 10,
+            letterSpacing: "0.3em",
+            color: "var(--acc)",
+            fontWeight: 600,
+            textTransform: "uppercase",
+            marginBottom: 20,
+          }}>
+            Content Direction Engine
+          </div>
+          <h1 style={{
+            fontFamily: "'Syne', sans-serif",
+            fontSize: "clamp(34px, 7vw, 54px)",
+            fontWeight: 800,
+            lineHeight: 1.05,
+            letterSpacing: "-0.025em",
+            margin: "0 0 24px 0",
+            color: "var(--t1)",
+          }}>
+            Find your<br />
+            <span style={{ color: "var(--acc)" }}>content format.</span>
+          </h1>
+          <p style={{
+            fontSize: 16,
+            color: "var(--t10)",
+            lineHeight: 1.75,
+            fontWeight: 300,
+            maxWidth: 400,
+            margin: "0 auto 44px auto",
+          }}>
+            8 questions. One clear recommendation.<br />
+            No "it depends." Just the right format for<br />
+            where you are right now.
+          </p>
+          <button
+            className="start-btn"
+            onClick={onStart}
+            style={{
+              background: "var(--acc)",
+              color: "#0C0B0A",
+              border: "none",
+              padding: "17px 52px",
+              fontSize: 14,
+              fontWeight: 700,
+              fontFamily: "'Syne', sans-serif",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              borderRadius: 3,
+              cursor: "pointer",
+              display: "inline-block",
+            }}
+          >
+            Begin →
+          </button>
+          <p style={{ marginTop: 20, marginBottom: 0 }}>
+            <button
+              onClick={onMatrix}
+              style={{
+                background: "transparent",
+                border: "none",
+                color: "var(--t8)",
+                fontSize: 11,
+                cursor: "pointer",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                fontFamily: "'DM Sans', sans-serif",
+                textDecoration: "underline",
+                textDecorationColor: "var(--b1)",
+                padding: 0,
+              }}
+            >
+              See scoring logic
+            </button>
+          </p>
+          <p style={{
+            marginTop: 20,
+            fontSize: 10,
+            color: "var(--t14)",
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+          }}>
+            Based on Sev's Frictionless Content Creative Workshop
+          </p>
+        </div>
+      );
+    }
+
+    function QuizScreen({ question, questionIndex, total, onAnswer, onBack, canGoBack, disabled }) {
+      const nextProgress = ((questionIndex + 1) / total) * 100;
+
+      return (
+        <div>
+          <div style={{ marginBottom: 36 }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 10,
+            }}>
+              <span style={{
+                fontSize: 10,
+                color: "var(--t8)",
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                fontWeight: 500,
+              }}>
+                Question {questionIndex + 1} of {total}
+              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                {canGoBack && (
+                  <button
+                    onClick={onBack}
+                    disabled={disabled}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "var(--t13)",
+                      fontSize: 10,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      cursor: disabled ? "default" : "pointer",
+                      padding: 0,
+                      fontFamily: "'DM Sans', sans-serif",
+                    }}
+                  >
+                    ← Back
+                  </button>
+                )}
+                <span style={{ fontSize: 10, color: "var(--t8)" }}>
+                  {Math.round(nextProgress)}%
+                </span>
+              </div>
+            </div>
+            <div style={{ height: 2, background: "var(--pb)", borderRadius: 2, overflow: "hidden" }}>
+              <div style={{
+                height: "100%",
+                width: `${nextProgress}%`,
+                background: "linear-gradient(90deg, var(--acc2), var(--acc))",
+                borderRadius: 2,
+                transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+              }} />
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 28 }}>
+            <h2 style={{
+              fontFamily: "'Syne', sans-serif",
+              fontSize: "clamp(20px, 4vw, 27px)",
+              fontWeight: 700,
+              lineHeight: 1.25,
+              letterSpacing: "-0.015em",
+              margin: "0 0 8px 0",
+              color: "var(--t1)",
+            }}>
+              {question.question}
+            </h2>
+            {question.hint && (
+              <p style={{
+                fontSize: 13,
+                color: "var(--t6)",
+                fontStyle: "italic",
+                margin: 0,
+                fontWeight: 300,
+              }}>
+                {question.hint}
+              </p>
+            )}
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {question.options.map((option, i) => (
+              <button
+                key={option.id}
+                className="opt-btn"
+                onClick={() => !disabled && onAnswer(option.scores, questionIndex, option.id)}
+                disabled={disabled}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 14,
+                  background: "var(--s1)",
+                  border: "1px solid var(--b1)",
+                  borderRadius: 5,
+                  padding: "16px 18px",
+                  cursor: disabled ? "default" : "pointer",
+                  color: "var(--t2)",
+                  textAlign: "left",
+                  width: "100%",
+                  opacity: disabled ? 0.4 : 1,
+                  animation: `slideRight 0.35s ease ${i * 0.06}s both`,
+                }}
+              >
+                <span style={{
+                  flexShrink: 0,
+                  width: 26,
+                  height: 26,
+                  background: "var(--lb)",
+                  border: "1px solid var(--lbd)",
+                  borderRadius: 4,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 10,
+                  fontWeight: 800,
+                  color: "var(--acc)",
+                  letterSpacing: "0.06em",
+                  fontFamily: "'Syne', sans-serif",
+                  marginTop: 1,
+                }}>
+                  {LABELS[i]}
+                </span>
+                <span style={{ fontSize: 14, lineHeight: 1.6, fontWeight: 400 }}>{option.text}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    function AnalysingScreen() {
+      const [dots, setDots] = useState(1);
+      useEffect(() => {
+        const interval = setInterval(() => setDots(d => d === 3 ? 1 : d + 1), 380);
+        return () => clearInterval(interval);
+      }, []);
+      return (
+        <div style={{ textAlign: "center", padding: "60px 0" }}>
+          <div style={{ fontSize: 36, marginBottom: 28, animation: "pulse 1.2s ease infinite" }}>🧭</div>
+          <p style={{
+            fontFamily: "'Syne', sans-serif",
+            fontSize: 18,
+            fontWeight: 600,
+            color: "var(--t6)",
+            letterSpacing: "0.04em",
+          }}>
+            Working out your format{".".repeat(dots)}
+          </p>
+          <p style={{ fontSize: 12, color: "var(--t9)", marginTop: 12, fontWeight: 300 }}>
+            Cross-referencing your answers
+          </p>
+        </div>
+      );
+    }
+
+    function ResultScreen({ rec, runnerUpRec, onReset }) {
+      return (
+        <div>
+          <div style={{ textAlign: "center", marginBottom: 30 }}>
+            <div style={{
+              display: "inline-block",
+              background: `${rec.accentColor}14`,
+              border: `1px solid ${rec.accentColor}30`,
+              borderRadius: 3,
+              padding: "6px 16px",
+              fontSize: 10,
+              fontWeight: 600,
+              color: rec.accentColor,
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              marginBottom: 20,
+            }}>
+              Your Content Format
+            </div>
+
+            <div style={{ fontSize: 44, marginBottom: 14 }}>{rec.emoji}</div>
+
+            <h1 style={{
+              fontFamily: "'Syne', sans-serif",
+              fontSize: "clamp(24px, 5.5vw, 38px)",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              lineHeight: 1.1,
+              margin: "0 0 10px 0",
+              color: "var(--t1)",
+            }}>
+              {rec.title}
+            </h1>
+
+            <div style={{
+              fontSize: 11,
+              color: rec.accentColor,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              fontWeight: 500,
+              marginBottom: 14,
+            }}>
+              {rec.platform}
+            </div>
+
+            <p style={{
+              fontSize: 15,
+              color: "var(--t5)",
+              fontStyle: "italic",
+              margin: 0,
+              lineHeight: 1.5,
+              fontWeight: 300,
+            }}>
+              "{rec.tagline}"
+            </p>
+          </div>
+
+          <div style={{ height: 1, background: "var(--b2)", margin: "0 0 26px 0" }} />
+
+          <div style={{
+            background: "var(--s2)",
+            borderLeft: `3px solid ${rec.accentColor}`,
+            borderRadius: "0 5px 5px 0",
+            padding: "18px 22px",
+            marginBottom: 22,
+          }}>
+            <div style={{
+              fontSize: 9,
+              letterSpacing: "0.22em",
+              color: rec.accentColor,
+              textTransform: "uppercase",
+              fontWeight: 600,
+              marginBottom: 10,
+            }}>
+              What to do this week
+            </div>
+            <p style={{
+              fontSize: 14,
+              lineHeight: 1.75,
+              color: "var(--t3)",
+              margin: 0,
+              fontWeight: 300,
+            }}>
+              {rec.action}
+            </p>
+          </div>
+
+          <div style={{ marginBottom: 22 }}>
+            <div style={{
+              fontSize: 9,
+              letterSpacing: "0.22em",
+              color: "var(--t8)",
+              textTransform: "uppercase",
+              fontWeight: 600,
+              marginBottom: 14,
+            }}>
+              The 3 steps
+            </div>
+            {rec.steps.map((step, i) => (
+              <div key={i} style={{
+                display: "flex",
+                gap: 14,
+                marginBottom: 14,
+                animation: `slideRight 0.4s ease ${i * 0.12 + 0.1}s both`,
+              }}>
+                <div style={{
+                  flexShrink: 0,
+                  width: 24,
+                  height: 24,
+                  background: `${rec.accentColor}12`,
+                  border: `1px solid ${rec.accentColor}30`,
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: rec.accentColor,
+                  fontFamily: "'Syne', sans-serif",
+                  marginTop: 1,
+                }}>
+                  {i + 1}
+                </div>
+                <p style={{
+                  fontSize: 13,
+                  lineHeight: 1.65,
+                  color: "var(--t4)",
+                  margin: 0,
+                  fontWeight: 300,
+                }}>
+                  {step}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{
+            background: "var(--s3)",
+            border: "1px solid var(--b2)",
+            borderRadius: 5,
+            padding: "18px 22px",
+            marginBottom: 20,
+          }}>
+            <div style={{
+              fontSize: 9,
+              letterSpacing: "0.22em",
+              color: "var(--t8)",
+              textTransform: "uppercase",
+              fontWeight: 600,
+              marginBottom: 12,
+            }}>
+              Why this is right for you
+            </div>
+            <p style={{
+              fontSize: 13,
+              lineHeight: 1.8,
+              color: "var(--t5)",
+              margin: 0,
+              fontWeight: 300,
+            }}>
+              {rec.why}
+            </p>
+          </div>
+
+          <div style={{ display: "flex", gap: 10, marginBottom: 30 }}>
+            {[
+              { label: "Weekly Commitment", value: rec.commitment },
+              { label: "Gear Required", value: rec.gear },
+            ].map(item => (
+              <div key={item.label} style={{
+                flex: 1,
+                background: "var(--s2)",
+                border: "1px solid var(--b2)",
+                borderRadius: 5,
+                padding: "14px 16px",
+                textAlign: "center",
+              }}>
+                <div style={{
+                  fontSize: 9,
+                  color: "var(--t8)",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  marginBottom: 7,
+                  fontWeight: 500,
+                }}>
+                  {item.label}
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: "var(--t11)" }}>{item.value}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{
+            background: "var(--s3)",
+            border: "1px solid var(--b2)",
+            borderRadius: 5,
+            padding: "18px 22px",
+            marginBottom: 20,
+          }}>
+            <div style={{
+              fontSize: 9,
+              letterSpacing: "0.22em",
+              color: "var(--t8)",
+              textTransform: "uppercase",
+              fontWeight: 600,
+              marginBottom: 12,
+            }}>
+              After 90 days — your next move
+            </div>
+            <p style={{
+              fontSize: 13,
+              lineHeight: 1.8,
+              color: "var(--t5)",
+              margin: 0,
+              fontWeight: 300,
+            }}>
+              {rec.next}
+            </p>
+          </div>
+
+          {runnerUpRec && (
+            <div style={{
+              background: "var(--bg)",
+              border: "1px solid var(--b3)",
+              borderRadius: 5,
+              padding: "16px 20px",
+              marginBottom: 20,
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 14,
+            }}>
+              <div style={{ fontSize: 22, flexShrink: 0, marginTop: 2 }}>{runnerUpRec.emoji}</div>
+              <div>
+                <div style={{
+                  fontSize: 9,
+                  color: "var(--t9)",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                  marginBottom: 6,
+                }}>
+                  Close second — layer in later
+                </div>
+                <div style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "var(--t7)",
+                  fontFamily: "'Syne', sans-serif",
+                  marginBottom: 4,
+                }}>
+                  {runnerUpRec.title}
+                </div>
+                <div style={{ fontSize: 12, color: "var(--t9)", lineHeight: 1.6, fontWeight: 300 }}>
+                  {runnerUpRec.platform} add this once your primary format is consistent.
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div style={{ height: 1, background: "var(--b2)", margin: "0 0 24px 0" }} />
+
+          <div style={{ textAlign: "center", padding: "0 0 32px 0" }}>
+            <p style={{
+              fontSize: 13,
+              color: "var(--t7)",
+              lineHeight: 1.7,
+              fontWeight: 300,
+              fontStyle: "italic",
+              marginBottom: 20,
+            }}>
+              Stop searching for a better answer.<br />
+              This is your format. Commit to it for 90 days.
+            </p>
+            <a
+              href="https://stan.store/talktosev/p/content-strategy-btog74qc"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-block",
+                background: "var(--acc)",
+                color: "#0C0B0A",
+                border: "none",
+                padding: "17px 36px",
+                fontSize: 14,
+                fontWeight: 700,
+                fontFamily: "'Syne', sans-serif",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                borderRadius: 3,
+                cursor: "pointer",
+                textDecoration: "none",
+                marginBottom: 14,
+              }}
+            >
+              Work with Sev 1-on-1 →
+            </a>
+            <br />
+            <button
+              className="reset-btn"
+              onClick={onReset}
+              style={{
+                background: "transparent",
+                border: "1px solid var(--b1)",
+                color: "var(--t7)",
+                padding: "11px 28px",
+                borderRadius: 3,
+                fontSize: 12,
+                cursor: "pointer",
+                letterSpacing: "0.08em",
+                fontFamily: "'DM Sans', sans-serif",
+                textTransform: "uppercase",
+              }}
+            >
+              ↩ Start Over
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    function MatrixScreen({ onBack }) {
+      return (
+        <div style={{ padding: "8px 0 40px 0" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
+            <button
+              onClick={onBack}
+              style={{
+                background: "transparent", border: "none", color: "var(--t13)",
+                fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase",
+                cursor: "pointer", padding: 0, fontFamily: "'DM Sans', sans-serif",
+              }}
+            >
+              ← Back
+            </button>
+            <div style={{ fontSize: 10, letterSpacing: "0.3em", color: "var(--acc)", fontWeight: 600, textTransform: "uppercase" }}>
+              Scoring Logic
+            </div>
+            <div style={{ width: 40 }} />
+          </div>
+
+          <h2 style={{
+            fontFamily: "'Syne', sans-serif", fontSize: "clamp(20px, 4vw, 28px)",
+            fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.15,
+            margin: "0 0 8px 0", color: "var(--t1)",
+          }}>
+            How each answer<br />shapes your result
+          </h2>
+          <p style={{ fontSize: 13, color: "var(--t6)", fontWeight: 300, margin: "0 0 32px 0", lineHeight: 1.6 }}>
+            Every option adds points to one or more formats. The format with the highest total wins.
+          </p>
+
+          <div style={{
+            background: "var(--s2)", border: "1px solid var(--b3)", borderRadius: 5,
+            padding: "16px 18px", marginBottom: 28,
+          }}>
+            <div style={{ fontSize: 9, letterSpacing: "0.22em", color: "var(--t8)", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>
+              The 8 formats
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {Object.entries(FORMAT_META).map(([id, f]) => (
+                <div key={id} style={{
+                  display: "flex", alignItems: "center", gap: 6,
+                  background: `${f.color}10`, border: `1px solid ${f.color}30`,
+                  borderRadius: 3, padding: "4px 10px",
+                }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: f.color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 11, color: f.color, fontWeight: 500 }}>{f.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {QUESTIONS.map((q) => (
+            <div key={q.id} style={{ marginBottom: 24 }}>
+              <div style={{ fontSize: 9, letterSpacing: "0.2em", color: "var(--t8)", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>
+                Q{q.id}
+              </div>
+              <div style={{
+                fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 600,
+                color: "var(--t12)", marginBottom: 12, lineHeight: 1.4,
+              }}>
+                {q.question}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {q.options.map((opt, i) => (
+                  <div key={opt.id} style={{
+                    display: "flex", alignItems: "flex-start", gap: 12,
+                    background: "var(--s2)", border: "1px solid var(--b3)",
+                    borderRadius: 4, padding: "10px 14px",
+                  }}>
+                    <span style={{
+                      flexShrink: 0, width: 20, height: 20,
+                      background: "var(--lb)", border: "1px solid var(--lbd)",
+                      borderRadius: 3, display: "flex", alignItems: "center",
+                      justifyContent: "center", fontSize: 9, fontWeight: 800,
+                      color: "var(--acc)", fontFamily: "'Syne', sans-serif", marginTop: 1,
+                    }}>
+                      {LABELS[i]}
+                    </span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 12, color: "var(--t5)", fontWeight: 300, marginBottom: 8, lineHeight: 1.5 }}>
+                        {opt.text}
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                        {Object.entries(opt.scores).map(([fid, pts]) => {
+                          const fmt = FORMAT_META[parseInt(fid)];
+                          return (
+                            <div key={fid} style={{
+                              display: "flex", alignItems: "center", gap: 4,
+                              background: `${fmt.color}12`, border: `1px solid ${fmt.color}25`,
+                              borderRadius: 3, padding: "2px 8px",
+                            }}>
+                              <div style={{ width: 5, height: 5, borderRadius: "50%", background: fmt.color, flexShrink: 0 }} />
+                              <span style={{ fontSize: 10, color: fmt.color, fontWeight: 500 }}>{fmt.name}</span>
+                              <span style={{ fontSize: 10, color: `${fmt.color}99`, fontWeight: 400 }}>+{pts}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div style={{ height: 1, background: "var(--b2)", margin: "8px 0 24px 0" }} />
+          <div style={{ textAlign: "center" }}>
+            <p style={{ fontSize: 12, color: "var(--t8)", fontWeight: 300, fontStyle: "italic", marginBottom: 16, lineHeight: 1.6 }}>
+              Camera avoidance (Q4-A) applies a -3 penalty to video-heavy formats<br />and a +2 boost to no-camera formats at the end.
+            </p>
+            <button
+              onClick={onBack}
+              className="reset-btn"
+              style={{
+                background: "transparent", border: "1px solid var(--b1)",
+                color: "var(--t7)", padding: "11px 28px", borderRadius: 3,
+                fontSize: 12, cursor: "pointer", letterSpacing: "0.08em",
+                fontFamily: "'DM Sans', sans-serif", textTransform: "uppercase",
+              }}
+            >
+              ← Back to start
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<ContentDecisionApp />);
+  </script>
+</body>
+</html>

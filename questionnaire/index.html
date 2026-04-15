@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Meeting Questionnaire</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ocean-deep: #0a1628;
+  --ocean-mid: #0e2240;
+  --ocean-ink: #132d55;
+  --ocean-teal: #0d7a7a;
+  --ocean-bright: #17b8a6;
+  --ocean-glow: #2de0cb;
+  --sand: #f5ede0;
+  --sand-light: #fdf8f2;
+  --text-primary: #0f1e33;
+  --text-muted: #566680;
+  --tab-1: #2563eb;
+  --tab-2: #059669;
+  --tab-3: #d97706;
+  --tab-4: #7c3aed;
+  --tab-5: #dc2626;
+  --tab-6: #0d7a7a;
+  --tab-7: #ea580c;
+  --tab-8: #64748b;
+  --tab-9: #a855f7;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand-light);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ocean-deep);
+  position: relative;
+  overflow: hidden;
+  padding: 56px 40px 44px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(13,122,122,.35) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 85% 20%, rgba(23,184,166,.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .06;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40L40 0M-10 10L10-10M30 50L50 30' stroke='%23fff' stroke-width='.5'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ocean-glow);
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 4.5vw, 48px);
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+.hero h1 em { font-style: italic; color: var(--ocean-glow); }
+.hero-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,.55);
+  max-width: 620px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.hero-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.client-name-input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  padding: 12px 20px;
+  color: #fff;
+  width: 320px;
+  max-width: 100%;
+  outline: none;
+  transition: border-color .2s;
+}
+.client-name-input::placeholder { color: rgba(255,255,255,.3); }
+.client-name-input:focus { border-color: var(--ocean-glow); }
+.meeting-date-input {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  outline: none;
+  transition: border-color .2s;
+  color-scheme: dark;
+}
+.meeting-date-input:focus { border-color: var(--ocean-glow); }
+
+/* ── PROGRESS BAR ── */
+.progress-wrap {
+  background: var(--ocean-mid);
+  padding: 12px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.progress-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,.08);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ocean-bright), var(--ocean-glow));
+  border-radius: 100px;
+  transition: width .4s ease;
+}
+.progress-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  white-space: nowrap;
+  min-width: 90px;
+  text-align: right;
+}
+
+/* ── TAB BAR ── */
+.tab-bar {
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 40px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 14px 18px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .2s;
+  position: relative;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--text-primary); font-weight: 700; }
+.tab-btn .tab-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  background: rgba(0,0,0,.06);
+  padding: 2px 6px;
+  border-radius: 100px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tab-btn.has-answers .tab-count { background: rgba(5,150,105,.12); color: #059669; }
+
+/* Tab colours */
+.tab-btn[data-tab="opening"].active { border-bottom-color: var(--tab-1); }
+.tab-btn[data-tab="money"].active { border-bottom-color: var(--tab-2); }
+.tab-btn[data-tab="clients"].active { border-bottom-color: var(--tab-3); }
+.tab-btn[data-tab="content"].active { border-bottom-color: var(--tab-4); }
+.tab-btn[data-tab="competition"].active { border-bottom-color: var(--tab-5); }
+.tab-btn[data-tab="operations"].active { border-bottom-color: var(--tab-6); }
+.tab-btn[data-tab="proof"].active { border-bottom-color: var(--tab-7); }
+.tab-btn[data-tab="goals"].active { border-bottom-color: var(--tab-8); }
+.tab-btn[data-tab="wrap"].active { border-bottom-color: var(--tab-9); }
+
+/* ── CONTENT AREA ── */
+.content-area { max-width: 860px; margin: 0 auto; padding: 32px 40px 120px; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-intro {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+.section-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+/* ── QUESTION CARDS ── */
+.q-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  transition: box-shadow .2s;
+  border-left: 4px solid transparent;
+}
+.q-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.q-card.answered { border-left-color: var(--ocean-bright); }
+.q-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.q-text {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.q-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+.q-answer {
+  width: 100%;
+  min-height: 80px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--sand-light);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 8px;
+  padding: 14px 18px;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.q-answer:focus { border-color: var(--ocean-bright); background: #fff; }
+.q-answer::placeholder { color: rgba(0,0,0,.2); }
+
+/* ── ADVISOR NOTES SECTION ── */
+.advisor-section {
+  background: rgba(168,85,247,.04);
+  border: 1px solid rgba(168,85,247,.12);
+  border-radius: 12px;
+  padding: 28px;
+  margin-top: 8px;
+}
+.advisor-section .section-title { font-size: 22px; margin-bottom: 4px; }
+.advisor-section .section-intro { color: #a855f7; }
+
+/* ── NAV BUTTONS ── */
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 36px;
+  gap: 12px;
+}
+.nav-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+.nav-btn-back {
+  background: rgba(0,0,0,.05);
+  color: var(--text-muted);
+}
+.nav-btn-back:hover { background: rgba(0,0,0,.08); color: var(--text-primary); }
+.nav-btn-next {
+  background: var(--ocean-deep);
+  color: #fff;
+}
+.nav-btn-next:hover { background: var(--ocean-ink); }
+
+/* ── EXPORT BAR ── */
+.export-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ocean-deep);
+  padding: 16px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  z-index: 200;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.15);
+}
+.export-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .3px;
+}
+.export-txt {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.15);
+}
+.export-txt:hover { background: rgba(255,255,255,.18); }
+.export-pdf {
+  background: var(--ocean-bright);
+  color: var(--ocean-deep);
+  font-weight: 600;
+}
+.export-pdf:hover { background: var(--ocean-glow); }
+.export-clear {
+  background: transparent;
+  color: rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.export-clear:hover { color: rgba(255,255,255,.6); border-color: rgba(255,255,255,.2); }
+.save-status {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,.35);
+  margin-right: auto;
+}
+
+/* ── PRINT STYLES ── */
+@media print {
+  .hero, .progress-wrap, .tab-bar, .export-bar, .nav-row { display: none !important; }
+  body { background: #fff; }
+  .content-area { padding: 0; max-width: 100%; }
+  .tab-pane { display: block !important; page-break-inside: avoid; margin-bottom: 24px; }
+  .tab-pane .section-title { font-size: 22px; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 16px; }
+  .q-card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; margin-bottom: 10px; border-left: 3px solid var(--ocean-bright); }
+  .q-card:not(.answered) { border-left-color: #ddd; }
+  .q-answer { background: #fff; border: none; padding: 8px 0; min-height: auto; resize: none; }
+  .q-answer:empty::after { content: '—'; color: #ccc; }
+  .advisor-section { border: 1px solid #a855f7; }
+  .print-header { display: block !important; text-align: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--ocean-deep); }
+  .print-header h1 { font-family: 'DM Serif Display', serif; font-size: 28px; }
+  .print-header p { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-muted); }
+}
+.print-header { display: none; }
+
+@media (max-width: 600px) {
+  .hero { padding: 32px 20px 28px; }
+  .tab-bar { padding: 0 12px; }
+  .content-area { padding: 20px 16px 120px; }
+  .client-name-input { width: 100%; }
+  .q-card { padding: 18px 20px; }
+  .export-bar { padding: 12px 16px; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- Print header (only visible when printing) -->
+<div class="print-header">
+  <h1>First Meeting Notes</h1>
+  <p><span id="print-client"></span> &bull; <span id="print-date"></span></p>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Client Discovery</div>
+    <h1>First Meeting <em>Questionnaire</em></h1>
+    <p class="hero-sub">Fill in answers during or after the meeting. Everything auto-saves to your browser. Export as text or PDF when you're done.</p>
+    <div class="hero-row">
+      <input type="text" class="client-name-input" id="clientName" placeholder="Client / Business Name" oninput="autoSave()">
+      <input type="date" class="meeting-date-input" id="meetingDate" oninput="autoSave()">
+    </div>
+  </div>
+</div>
+
+<!-- ── PROGRESS ── -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 38 answered</div>
+  </div>
+</div>
+
+<!-- ── TABS ── -->
+<div class="tab-bar" id="tabBar"></div>
+
+<!-- ── CONTENT ── -->
+<div class="content-area" id="contentArea"></div>
+
+<!-- ── EXPORT BAR ── -->
+<div class="export-bar">
+  <div class="save-status" id="saveStatus">Auto-saved</div>
+  <button class="export-btn export-clear" onclick="clearAll()">Clear All</button>
+  <button class="export-btn export-txt" onclick="exportTxt()">Download .txt</button>
+  <button class="export-btn export-pdf" onclick="exportPdf()">Save as PDF</button>
+</div>
+
+<script>
+// ── DATA ──
+const SECTIONS = [
+  {
+    id: 'opening', title: 'Opening', time: '2-3 mins', color: 'var(--tab-1)',
+    questions: [
+      { num: 1, text: 'Tell me about the business in your own words. What do you do and who do you do it for?' },
+      { num: 2, text: 'How long have you been operating?' },
+      { num: 3, text: 'Is it just you, or do you have a team? Who does what?' }
+    ]
+  },
+  {
+    id: 'money', title: 'The Money', time: '5-7 mins', color: 'var(--tab-2)',
+    questions: [
+      { num: 4, text: 'What\'s your current revenue (ballpark is fine)?' },
+      { num: 5, text: 'What\'s your pricing range — cheapest thing someone can buy through to your most expensive?' },
+      { num: 6, text: 'What does your average client/project/deal look like in dollar terms?' },
+      { num: 7, text: 'Where do you want revenue to be in 12 months? What about 3 years?' },
+      { num: 8, text: 'How many active clients or projects do you have right now?' }
+    ]
+  },
+  {
+    id: 'clients', title: 'How Clients Find You', time: '5-7 mins', color: 'var(--tab-3)',
+    questions: [
+      { num: 9, text: 'Where are your clients coming from right now?', hint: 'Referrals, Google, social, ads, word of mouth, partnerships?' },
+      { num: 10, text: 'If referrals dried up tomorrow, what happens?' },
+      { num: 11, text: 'Are you running any paid advertising? If yes, what and how\'s it going?' },
+      { num: 12, text: 'What\'s your sales process look like from first enquiry to signed deal? Walk me through the steps.' },
+      { num: 13, text: 'How long does that process typically take?' },
+      { num: 14, text: 'What\'s your close rate?', hint: 'Even a rough guess helps.' },
+      { num: 15, text: 'Where do people drop off or ghost you? What\'s the most common objection you hear?' }
+    ]
+  },
+  {
+    id: 'content', title: 'Content & Marketing', time: '3-5 mins', color: 'var(--tab-4)',
+    questions: [
+      { num: 16, text: 'What platforms are you active on? Which ones are actually working?' },
+      { num: 17, text: 'Are you producing any content right now — blog, video, podcast, social? How often?' },
+      { num: 18, text: 'Do you have a website you\'re happy with, or is it more of a placeholder?' },
+      { num: 19, text: 'Have you ever invested in marketing or content before? What happened?' }
+    ]
+  },
+  {
+    id: 'competition', title: 'The Competition', time: '3-5 mins', color: 'var(--tab-5)',
+    questions: [
+      { num: 20, text: 'Who are your top 2-3 competitors?' },
+      { num: 21, text: 'What do they do better than you? (Be honest.)' },
+      { num: 22, text: 'What do you do better than them? What\'s the thing that\'s genuinely different about how you operate?' },
+      { num: 23, text: 'If a prospect is comparing you to a competitor right now, what are they seeing online from each of you?' }
+    ]
+  },
+  {
+    id: 'operations', title: 'Operations & Capacity', time: '3-5 mins', color: 'var(--tab-6)',
+    questions: [
+      { num: 24, text: 'How many hours a week are you working right now?' },
+      { num: 25, text: 'Where does most of your time go?' },
+      { num: 26, text: 'What\'s the thing that would break first if you doubled your client load tomorrow?' },
+      { num: 27, text: 'Is there anyone on your team who could be on camera or involved in content, or is it all on you?' }
+    ]
+  },
+  {
+    id: 'proof', title: 'Proof & Results', time: '3-5 mins', color: 'var(--tab-7)',
+    questions: [
+      { num: 28, text: 'What\'s the single best result you\'ve delivered for a client? Give me the story with numbers if you\'ve got them.' },
+      { num: 29, text: 'Do you have testimonials, case studies, or reviews? Where do they live?' },
+      { num: 30, text: 'Any awards, certifications, press, or credibility markers worth knowing about?' }
+    ]
+  },
+  {
+    id: 'goals', title: 'Goals & Pain', time: '3-5 mins', color: 'var(--tab-8)',
+    questions: [
+      { num: 31, text: 'What\'s the number one thing keeping you up at night in the business right now?' },
+      { num: 32, text: 'If we could fix one thing in the next 90 days, what would make the biggest difference?' },
+      { num: 33, text: 'What does success look like for you working with someone like me? How will you know it\'s been worth it?' },
+      { num: 34, text: 'Is there a budget range you\'re working with, or are you more focused on ROI?' },
+      { num: 35, text: 'What\'s your timeline — is this urgent, or are you planning ahead?' }
+    ]
+  },
+  {
+    id: 'wrap', title: 'Wrap-Up', time: '2-3 mins', color: 'var(--tab-9)',
+    questions: [
+      { num: 36, text: 'Is there anything I haven\'t asked that you think I should know?' },
+      { num: 37, text: 'Who else is involved in this decision?', hint: 'Partner, business partner, board, spouse?' },
+      { num: 38, text: 'What\'s the best way to communicate with you — email, text, call?' }
+    ],
+    advisorNotes: [
+      { id: 'an1', text: 'Communication style?', hint: 'Data-driven, emotional, direct, cautious?' },
+      { id: 'an2', text: 'Energy level around this?', hint: 'All-in, sceptical, tyre-kicker, overwhelmed?' },
+      { id: 'an3', text: 'Any red flags?', hint: 'Unrealistic expectations, budget mismatch, control issues?' },
+      { id: 'an4', text: 'What\'s the strategic play?', hint: 'Content-first, offer restructure, sales enablement, full ecosystem?' },
+      { id: 'an5', text: 'Anything specific to research before next conversation?' }
+    ]
+  }
+];
+
+const TOTAL_Q = 38;
+
+// ── BUILD UI ──
+function buildTabs() {
+  const bar = document.getElementById('tabBar');
+  SECTIONS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.dataset.tab = s.id;
+    btn.innerHTML = `${s.title}<span class="tab-count" id="count-${s.id}">0/${s.questions.length}</span>`;
+    btn.addEventListener('click', () => switchTab(s.id));
+    bar.appendChild(btn);
+  });
+}
+
+function buildContent() {
+  const area = document.getElementById('contentArea');
+  SECTIONS.forEach((s, i) => {
+    let html = `<div class="tab-pane${i === 0 ? ' active' : ''}" id="pane-${s.id}">`;
+    html += `<div class="section-intro">Section ${i + 1} of ${SECTIONS.length}</div>`;
+    html += `<div class="section-title">${s.title}</div>`;
+    html += `<div class="section-time">${s.time}</div>`;
+
+    s.questions.forEach(q => {
+      html += `
+        <div class="q-card" id="card-${q.num}">
+          <div class="q-number">Q${q.num}</div>
+          <div class="q-text">${q.text}</div>
+          ${q.hint ? `<div class="q-hint">${q.hint}</div>` : ''}
+          <textarea class="q-answer" id="q${q.num}" placeholder="Type answer here..." oninput="onAnswer(this, ${q.num})" rows="3"></textarea>
+        </div>`;
+    });
+
+    // Advisor notes (wrap-up section only)
+    if (s.advisorNotes) {
+      html += `<div class="advisor-section">`;
+      html += `<div class="section-intro" style="color:#a855f7">Your Eyes Only</div>`;
+      html += `<div class="section-title">Advisor Notes</div>`;
+      html += `<div class="section-time">Fill in after the meeting</div>`;
+      s.advisorNotes.forEach(n => {
+        html += `
+          <div class="q-card" id="card-${n.id}">
+            <div class="q-text">${n.text}</div>
+            ${n.hint ? `<div class="q-hint">${n.hint}</div>` : ''}
+            <textarea class="q-answer" id="${n.id}" placeholder="Type notes here..." oninput="onAdvisorNote(this)" rows="2"></textarea>
+          </div>`;
+      });
+      html += `</div>`;
+    }
+
+    // Nav buttons
+    html += `<div class="nav-row">`;
+    if (i > 0) html += `<button class="nav-btn nav-btn-back" onclick="switchTab('${SECTIONS[i - 1].id}')">← ${SECTIONS[i - 1].title}</button>`;
+    else html += `<div></div>`;
+    if (i < SECTIONS.length - 1) html += `<button class="nav-btn nav-btn-next" onclick="switchTab('${SECTIONS[i + 1].id}')">${SECTIONS[i + 1].title} →</button>`;
+    else html += `<div></div>`;
+    html += `</div>`;
+
+    html += `</div>`;
+    area.innerHTML += html;
+  });
+}
+
+// ── TAB SWITCHING ──
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  document.getElementById(`pane-${id}`).classList.add('active');
+  // Scroll tab into view on mobile
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── ANSWER HANDLING ──
+function onAnswer(el, num) {
+  const card = document.getElementById(`card-${num}`);
+  if (el.value.trim()) {
+    card.classList.add('answered');
+  } else {
+    card.classList.remove('answered');
+  }
+  updateProgress();
+  autoSave();
+}
+
+function onAdvisorNote(el) {
+  const card = el.closest('.q-card');
+  if (el.value.trim()) card.classList.add('answered');
+  else card.classList.remove('answered');
+  autoSave();
+}
+
+function updateProgress() {
+  let answered = 0;
+  for (let i = 1; i <= TOTAL_Q; i++) {
+    if (document.getElementById(`q${i}`).value.trim()) answered++;
+  }
+  const pct = Math.round((answered / TOTAL_Q) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${answered} / ${TOTAL_Q} answered`;
+
+  // Update tab counts
+  SECTIONS.forEach(s => {
+    let sAnswered = 0;
+    s.questions.forEach(q => {
+      if (document.getElementById(`q${q.num}`).value.trim()) sAnswered++;
+    });
+    const countEl = document.getElementById(`count-${s.id}`);
+    countEl.textContent = `${sAnswered}/${s.questions.length}`;
+    const btn = document.querySelector(`.tab-btn[data-tab="${s.id}"]`);
+    if (sAnswered > 0) btn.classList.add('has-answers');
+    else btn.classList.remove('has-answers');
+  });
+}
+
+// ── AUTO-SAVE ──
+function autoSave() {
+  const data = {
+    clientName: document.getElementById('clientName').value,
+    meetingDate: document.getElementById('meetingDate').value,
+    answers: {},
+    advisorNotes: {}
+  };
+  for (let i = 1; i <= TOTAL_Q; i++) {
+    data.answers[`q${i}`] = document.getElementById(`q${i}`).value;
+  }
+  // Advisor notes
+  const lastSection = SECTIONS[SECTIONS.length - 1];
+  if (lastSection.advisorNotes) {
+    lastSection.advisorNotes.forEach(n => {
+      data.advisorNotes[n.id] = document.getElementById(n.id).value;
+    });
+  }
+  try {
+    localStorage.setItem('questionnaire_data', JSON.stringify(data));
+    const status = document.getElementById('saveStatus');
+    status.textContent = 'Auto-saved ✓';
+    setTimeout(() => { status.textContent = 'Auto-saved'; }, 1500);
+  } catch(e) {}
+}
+
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem('questionnaire_data');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.clientName) document.getElementById('clientName').value = data.clientName;
+    if (data.meetingDate) document.getElementById('meetingDate').value = data.meetingDate;
+    if (data.answers) {
+      Object.entries(data.answers).forEach(([key, val]) => {
+        const el = document.getElementById(key);
+        if (el && val) {
+          el.value = val;
+          const num = parseInt(key.replace('q', ''));
+          const card = document.getElementById(`card-${num}`);
+          if (card) card.classList.add('answered');
+        }
+      });
+    }
+    if (data.advisorNotes) {
+      Object.entries(data.advisorNotes).forEach(([key, val]) => {
+        const el = document.getElementById(key);
+        if (el && val) {
+          el.value = val;
+          el.closest('.q-card').classList.add('answered');
+        }
+      });
+    }
+    updateProgress();
+  } catch(e) {}
+}
+
+// ── EXPORT: TXT ──
+function exportTxt() {
+  const clientName = document.getElementById('clientName').value || 'Unnamed Client';
+  const meetingDate = document.getElementById('meetingDate').value || 'No date set';
+  let txt = `FIRST MEETING NOTES\n`;
+  txt += `${'='.repeat(50)}\n`;
+  txt += `Client: ${clientName}\n`;
+  txt += `Date: ${meetingDate}\n`;
+  txt += `${'='.repeat(50)}\n\n`;
+
+  SECTIONS.forEach(s => {
+    txt += `${'─'.repeat(50)}\n`;
+    txt += `${s.title.toUpperCase()}\n`;
+    txt += `${'─'.repeat(50)}\n\n`;
+    s.questions.forEach(q => {
+      const answer = document.getElementById(`q${q.num}`).value.trim();
+      txt += `Q${q.num}: ${q.text}\n`;
+      txt += `${answer || '(no answer)'}\n\n`;
+    });
+    if (s.advisorNotes) {
+      txt += `\n${'─'.repeat(50)}\n`;
+      txt += `ADVISOR NOTES (INTERNAL)\n`;
+      txt += `${'─'.repeat(50)}\n\n`;
+      s.advisorNotes.forEach(n => {
+        const val = document.getElementById(n.id).value.trim();
+        txt += `${n.text}\n`;
+        txt += `${val || '(no notes)'}\n\n`;
+      });
+    }
+  });
+
+  const blob = new Blob([txt], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${clientName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}-first-meeting-${meetingDate || 'undated'}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── EXPORT: PDF (via print) ──
+function exportPdf() {
+  // Set print header info
+  document.getElementById('print-client').textContent = document.getElementById('clientName').value || 'Unnamed Client';
+  document.getElementById('print-date').textContent = document.getElementById('meetingDate').value || 'No date set';
+  window.print();
+}
+
+// ── CLEAR ALL ──
+function clearAll() {
+  if (!confirm('Clear all answers? This cannot be undone.')) return;
+  for (let i = 1; i <= TOTAL_Q; i++) {
+    document.getElementById(`q${i}`).value = '';
+    const card = document.getElementById(`card-${i}`);
+    if (card) card.classList.remove('answered');
+  }
+  const lastSection = SECTIONS[SECTIONS.length - 1];
+  if (lastSection.advisorNotes) {
+    lastSection.advisorNotes.forEach(n => {
+      document.getElementById(n.id).value = '';
+      document.getElementById(n.id).closest('.q-card').classList.remove('answered');
+    });
+  }
+  document.getElementById('clientName').value = '';
+  document.getElementById('meetingDate').value = '';
+  localStorage.removeItem('questionnaire_data');
+  updateProgress();
+}
+
+// ── INIT ──
+buildTabs();
+buildContent();
+loadSaved();
+// Set today's date if empty
+if (!document.getElementById('meetingDate').value) {
+  document.getElementById('meetingDate').value = new Date().toISOString().split('T')[0];
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Tool Hub | Talk To Sev</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f527;</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --bg2: #161b22; --bg3: #1a1f29; --border: #21262d;
+  --gold: #c9a227; --gold-dim: rgba(201,162,39,0.2); --gold-glow: rgba(201,162,39,0.4);
+  --text: #e6edf3; --dim: #7d8590; --white: #fff;
+  --green: #22c55e; --red: #ef4444; --yellow: #f59e0b; --cyan: #06b6d4;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.header {
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border); padding: 32px 24px 28px; position: relative; overflow: hidden; text-align: center;
+}
+.header::before {
+  content: ''; position: absolute; top: -60%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%); pointer-events: none;
+}
+.header-brand { position: relative; z-index: 1; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.header-title { position: relative; z-index: 1; font-family: 'DM Serif Display', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; color: var(--white); margin-bottom: 8px; }
+.header-sub { position: relative; z-index: 1; font-size: 14px; color: var(--dim); }
+
+.content { padding: 24px; max-width: 720px; margin: 0 auto; }
+
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--dim); margin-bottom: 16px; margin-top: 32px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.section-label:first-child { margin-top: 0; }
+
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+
+.tool-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px; text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.15s;
+  display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden;
+}
+.tool-card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+.tool-card::before {
+  content: ''; position: absolute; top: -30px; right: -30px; width: 80px; height: 80px; border-radius: 50%;
+  background: var(--gold-dim); opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.tool-card:hover::before { opacity: 0.5; }
+
+.tool-icon { font-size: 28px; line-height: 1; }
+.tool-name { font-weight: 600; font-size: 15px; }
+.tool-desc { font-size: 12px; color: var(--dim); line-height: 1.5; }
+.tool-badge {
+  display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-top: auto; width: fit-content;
+}
+.badge-live { background: rgba(34,197,94,0.15); color: var(--green); }
+.badge-demo { background: var(--gold-dim); color: var(--gold); }
+
+.quick-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); justify-content: center; }
+.quick-link {
+  font-family: 'DM Mono', monospace; font-size: 11px; color: var(--dim); text-decoration: none;
+  padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s;
+}
+.quick-link:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+.footer { text-align: center; padding: 32px 24px; color: var(--dim); font-size: 11px; font-family: 'DM Mono', monospace; letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">Talk To Sev</div>
+  <h1 class="header-title">Tool Hub</h1>
+  <p class="header-sub">All tools and apps in one place</p>
+</div>
+
+<div class="content">
+
+  <div class="section-label">Tools</div>
+  <div class="tool-grid">
+    <a href="war-room/" class="tool-card">
+      <div class="tool-icon">&#9876;</div>
+      <div class="tool-name">War Room</div>
+      <div class="tool-desc">Strategic planning and content war room dashboard</div>
+      <span class="tool-badge badge-live">Live</span>
+    </a>
+    <a href="content-engine/" class="tool-card">
+      <div class="tool-icon">&#9881;</div>
+      <div class="tool-name">Content Direction Engine</div>
+      <div class="tool-desc">Content ideation and direction planning tool</div>
+      <span class="tool-badge badge-live">Live</span>
+    </a>
+    <a href="command-centre/" class="tool-card">
+      <div class="tool-icon">&#9678;</div>
+      <div class="tool-name">Command Centre</div>
+      <div class="tool-desc">Central command dashboard for operations</div>
+      <span class="tool-badge badge-live">Live</span>
+    </a>
+    <a href="questionnaire/" class="tool-card">
+      <div class="tool-icon">&#9997;</div>
+      <div class="tool-name">First Meeting Questionnaire</div>
+      <div class="tool-desc">Client onboarding questionnaire for first meetings</div>
+      <span class="tool-badge badge-live">Live</span>
+    </a>
+    <a href="she-cant-decide/" class="tool-card">
+      <div class="tool-icon">&#127922;</div>
+      <div class="tool-name">She Can't Decide</div>
+      <div class="tool-desc">Decision-making helper app</div>
+      <span class="tool-badge badge-live">Live</span>
+    </a>
+    <a href="knowledge-hub/" class="tool-card">
+      <div class="tool-icon">&#128218;</div>
+      <div class="tool-name">Knowledge Hub</div>
+      <div class="tool-desc">Sev's personal knowledge base and reference hub</div>
+      <span class="tool-badge badge-live">Live</span>
+    </a>
+  </div>
+
+  <div class="quick-links">
+    <a href="https://sevspics.github.io/talk-to-sev/" class="quick-link">Proposals Hub</a>
+    <a href="https://sevspics.github.io/command-centre/" class="quick-link">Command Centre (Main)</a>
+  </div>
+
+</div>
+
+<div class="footer">sevspics &middot; Tool Hub</div>
+
+</body>
+</html>
