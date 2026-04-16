@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shotlist — Nobel Biocare 16 April 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0e0d0c;--ink-mid:#2e2c28;--ink-soft:#6b6560;
+  --bg:#f5f3f0;--bg-card:#fff;--border:#e2ddd7;
+  --gold:#b8946a;--gold-light:#d4b48a;--gold-faint:#faf3ea;
+  --green:#2a7a4e;--green-bg:#eaf6f0;--green-border:#aaddc4;
+  --amber:#8a5c0a;--amber-bg:#fef5e6;--amber-border:#eecb7a;
+  --red:#a82c2c;--red-bg:#fdf0f0;--red-border:#eaadad;
+  --blue:#1756a0;--blue-bg:#edf2fc;--blue-border:#adc4ee;
+  --purple:#5535a8;--purple-bg:#f0ecfb;--purple-border:#c0b0ec;
+}
+html{font-size:14px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+.header{background:var(--ink);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.header-left{}
+.header-eyebrow{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.header-title{font-size:18px;font-weight:500;color:#fff}
+.header-meta{font-size:11px;font-weight:300;color:rgba(255,255,255,.35);margin-top:3px}
+.header-stats{display:flex;gap:20px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:20px;font-weight:500;color:var(--gold);font-family:'DM Mono',monospace;line-height:1}
+.stat-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:2px}
+
+/* TABS */
+.tab-bar{background:var(--ink);border-top:1px solid rgba(255,255,255,.08);display:flex;padding:0 28px}
+.tab{font-size:12px;font-weight:400;letter-spacing:.06em;color:rgba(255,255,255,.35);padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;user-select:none}
+.tab:hover{color:rgba(255,255,255,.7)}
+.tab.active{color:#fff;border-bottom-color:var(--gold)}
+.tab-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:1px}
+.tab-name{font-size:13px;font-weight:500}
+
+/* PANELS */
+.panel{display:none;padding:24px 28px 80px}
+.panel.active{display:block}
+
+/* PROGRESS BAR */
+.progress-bar-wrap{background:rgba(0,0,0,.06);border-radius:4px;height:4px;margin-bottom:24px;overflow:hidden}
+.progress-bar{background:var(--gold);height:100%;border-radius:4px;transition:width .3s;width:0%}
+.progress-label{font-size:11px;color:var(--ink-soft);text-align:right;margin-top:5px;margin-bottom:20px;font-family:'DM Mono',monospace}
+
+/* BLOCK HEADERS */
+.block{margin-bottom:32px}
+.block-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.block-time{font-size:11px;font-weight:500;color:var(--ink-soft);font-family:'DM Mono',monospace;background:var(--bg);border:1px solid var(--border);padding:3px 9px;border-radius:4px;white-space:nowrap}
+.block-title{font-size:14px;font-weight:500;color:var(--ink)}
+.block-desc{font-size:12px;font-weight:300;color:var(--ink-soft);margin-left:auto;text-align:right}
+.block-tag{font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px}
+.bt-interview{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.bt-hero{background:var(--gold-faint);color:var(--gold);border:1px solid var(--gold-light)}
+.bt-broll{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.bt-setup{background:var(--bg);color:var(--ink-soft);border:1px solid var(--border)}
+.bt-warn{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+
+/* SHOT ROWS */
+.shot-list{display:flex;flex-direction:column;gap:6px}
+.shot{display:grid;grid-template-columns:28px 52px 1fr auto;gap:0 12px;align-items:start;background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px 14px;transition:background .12s,border-color .12s;cursor:pointer}
+.shot:hover{border-color:var(--gold-light)}
+.shot.done{background:var(--green-bg);border-color:var(--green-border)}
+.shot.done .shot-text{text-decoration:line-through;color:var(--ink-soft)}
+.shot-check input{width:16px;height:16px;accent-color:var(--green);cursor:pointer;margin-top:2px}
+.shot-num{font-size:10px;font-weight:500;color:var(--ink-soft);font-family:'DM Mono',monospace;padding-top:2px}
+.shot-body{}
+.shot-text{font-size:13px;font-weight:400;color:var(--ink);line-height:1.5;margin-bottom:5px}
+.shot-note{font-size:11.5px;font-weight:300;color:var(--ink-soft);line-height:1.5}
+.shot-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.stag{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid}
+.stag-q{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-border)}
+.stag-dir{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-border)}
+.stag-ahpra{background:var(--red-bg);color:var(--red);border-color:var(--red-border)}
+.stag-wide{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border)}
+.stag-close{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.stag-medium{background:var(--bg);color:var(--ink-soft);border-color:var(--border)}
+.stag-macro{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-border)}
+.stag-gimbal{background:var(--gold-faint);color:var(--gold);border-color:var(--gold-light)}
+.stag-static{background:var(--bg);color:var(--ink-soft);border-color:var(--border)}
+.stag-rack{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-border)}
+
+/* B-ROLL CATEGORIES */
+.bcat{margin-bottom:36px}
+.bcat-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:10px 14px;background:var(--ink);border-radius:7px}
+.bcat-icon{font-size:16px}
+.bcat-title{font-size:13px;font-weight:500;color:#fff}
+.bcat-count{font-size:10px;font-weight:300;color:rgba(255,255,255,.35);margin-left:auto;font-family:'DM Mono',monospace}
+.bcat-note{font-size:11px;font-weight:300;color:rgba(255,255,255,.4);margin-top:1px}
+
+.b-shot{display:grid;grid-template-columns:28px 52px 1fr;gap:0 12px;align-items:start;background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px 14px;margin-bottom:6px;transition:background .12s,border-color .12s;cursor:pointer}
+.b-shot:hover{border-color:var(--gold-light)}
+.b-shot.done{background:var(--green-bg);border-color:var(--green-border)}
+.b-shot.done .shot-text{text-decoration:line-through;color:var(--ink-soft)}
+
+/* FILTER ROW */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.fbtn{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg-card);color:var(--ink-soft);cursor:pointer;transition:all .12s}
+.fbtn:hover{border-color:var(--ink-soft);color:var(--ink)}
+.fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* PRINT STYLES */
+@media print{
+  .tab-bar,.progress-bar-wrap,.progress-label,.filter-row{display:none!important}
+  .panel{display:block!important;padding:0}
+  .panel:not(.active){display:none!important}
+  .shot,.b-shot{break-inside:avoid}
+  .header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bcat-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(max-width:640px){
+  .header{padding:16px 16px}
+  .panel{padding:16px 16px 60px}
+  .shot{grid-template-columns:24px 44px 1fr}
+  .b-shot{grid-template-columns:24px 44px 1fr}
+  .header-stats{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-eyebrow">Bright Tsar Studios — Shoot Shotlist</div>
+    <div class="header-title">Nobel Biocare &nbsp;·&nbsp; 16 April 2025</div>
+    <div class="header-meta">Sev (A-Roll lead) &nbsp;+&nbsp; JT (B-Roll) &nbsp;·&nbsp; 1:00 PM to 4:00 PM hard stop &nbsp;·&nbsp; All-on-4 Patient Story</div>
+  </div>
+  <div class="header-stats">
+    <div class="stat"><div class="stat-num" id="a-total">0</div><div class="stat-label">A-Roll shots</div></div>
+    <div class="stat"><div class="stat-num" id="b-total">0</div><div class="stat-label">B-Roll shots</div></div>
+    <div class="stat"><div class="stat-num" id="done-count">0</div><div class="stat-label">Checked off</div></div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab('aroll',this)">
+    <span class="tab-label">Sev</span>
+    <span class="tab-name">A-Roll — Interviews + Hero Moments</span>
+  </div>
+  <div class="tab" onclick="switchTab('broll',this)">
+    <span class="tab-label">JT</span>
+    <span class="tab-name">B-Roll — Cinematic Library</span>
+  </div>
+</div>
+
+<!-- ══ A-ROLL PANEL ══ -->
+<div class="panel active" id="aroll">
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="a-progress"></div></div>
+  <div class="progress-label" id="a-progress-label">0 / 0 shots checked</div>
+
+  <!-- 1:00 PM SETUP -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">1:00 PM</span>
+      <span class="block-tag bt-setup">Setup</span>
+      <span class="block-title">Arrive, scout, set interview position</span>
+      <span class="block-desc">~15 min</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A01</div>
+        <div class="shot-body">
+          <div class="shot-text">Walk the full clinic with Kyra and Lizzie — identify best interview chair position (natural light, clean background, manageable room tone)</div>
+          <div class="shot-note">Look for a position where you can see enough of the clinic without busy clutter. Avoid anything with a window directly behind talent.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A02</div>
+        <div class="shot-body">
+          <div class="shot-text">Set interview position once — lock it in and do not reset between Kyra, Britt, and Dr. Jarryd unless the background is seriously wrong for a different talent</div>
+          <div class="shot-note">Consistent framing across team interviews creates a cohesive feel in the edit. Minor chair/angle adjustments per talent are fine.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A03</div>
+        <div class="shot-body">
+          <div class="shot-text">Brief JT on B-roll priorities for the first 45 minutes — lab first, then OPG/Cerec, back to you before team interviews begin</div>
+          <div class="shot-note">Coordinate so JT is not in your interview frame when you start at 1:45 PM.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1:45 PM KYRA -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">1:45 PM</span>
+      <span class="block-tag bt-interview">Interview</span>
+      <span class="block-title">Kyra Yun — Business Development Manager</span>
+      <span class="block-desc">~12 min</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A04</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide establishing shot of Kyra in interview position — 10 seconds before first question. Do not cut.</div>
+          <div class="shot-note">This frame is used as the edit intro for her segment. Make sure it is clean and composed before rolling questions.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A05</div>
+        <div class="shot-body">
+          <div class="shot-text">T02 — Take me through the patient journey from the very first consultation call through to the day of surgery. What can someone expect at each stage?</div>
+          <div class="shot-note">This is Kyra's strongest question — she runs this process daily. Let her go into detail. Do not interrupt even if the answer runs 3+ minutes.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A06</div>
+        <div class="shot-body">
+          <div class="shot-text">T07 — What would you say to someone who is nervous about taking that first step and booking a consultation?</div>
+          <div class="shot-note">Empathy-driven. Let her speak naturally. This is a social clip — keep it warm and unhurried.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A07</div>
+        <div class="shot-body">
+          <div class="shot-text">T04 — What do you find most rewarding about your role in supporting patients through this kind of treatment?</div>
+          <div class="shot-note">Review first. Keep answers about the role and feeling of the work — not about specific patients or cases. Redirect gently if she starts describing a particular patient outcome.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-ahpra">Review first</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2:00 PM BRITT -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">~2:00 PM</span>
+      <span class="block-tag bt-interview">Interview</span>
+      <span class="block-title">Britt Lynch — Oral Health Therapist</span>
+      <span class="block-desc">~12 min</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A08</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide establishing shot of Britt in interview position before first question.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A09</div>
+        <div class="shot-body">
+          <div class="shot-text">T05 — What does a patient need emotionally and practically on the day of their procedure, and how does the team help make that experience as comfortable as possible?</div>
+          <div class="shot-note">Britt's strongest question — this is her clinical lane. She will be natural and specific here. Let her go.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A10</div>
+        <div class="shot-body">
+          <div class="shot-text">T01 — Why is ongoing hygiene maintenance so important after All-on-4, and what does that care routine actually look like for a patient?</div>
+          <div class="shot-note">Oral health therapist territory — she owns this answer. Highly specific, practical content.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A11</div>
+        <div class="shot-body">
+          <div class="shot-text">T04 — What do you find most rewarding about your role in supporting patients through this kind of treatment? (repeat for Britt)</div>
+          <div class="shot-note">Same question, different person — two different perspectives in the edit. Same redirect rule: role and feeling, not specific patient cases.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-ahpra">Review first</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2:00 PM RICHARD PRE -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">2:00 PM</span>
+      <span class="block-tag bt-hero">Hero Patient</span>
+      <span class="block-title">Richard — Denture footage + pre-insert interview</span>
+      <span class="block-desc">~25 min</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A12</div>
+        <div class="shot-body">
+          <div class="shot-text">Film Richard's current denture before anything else — on a clean surface, handled, shown falling or moving loosely. Do not start the interview yet.</div>
+          <div class="shot-note">This is the physical "before." Get close-up and medium shots of the denture itself. Signal to JT to get a second angle on this simultaneously if possible.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span><span class="stag stag-close">Close</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A13</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide establishing of Richard in interview position before first question.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A14</div>
+        <div class="shot-body">
+          <div class="shot-text">P01 — Richard, how long have you been dealing with your denture situation, and what has day-to-day life actually been like because of it?</div>
+          <div class="shot-note">Let him talk. Do not cut him off. Have the denture physically nearby or in his hands if it helps him talk. This is the emotional foundation of the entire piece.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A15</div>
+        <div class="shot-body">
+          <div class="shot-text">P02 — What kinds of things have you avoided or stopped doing because of your teeth?</div>
+          <div class="shot-note">This is where real cost surfaces — eating, social situations, laughing, photos. The audience will see themselves in his answer. Do not prompt or fill pauses.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A16</div>
+        <div class="shot-body">
+          <div class="shot-text">P05 — What has the process been like so far — from your first appointment through to today? What surprised you about it?</div>
+          <div class="shot-note">Review first. Fine to film. If he says anything like "I knew it would fix everything" or makes a guaranteed outcome claim, do not include in published edit.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-ahpra">Review first</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A17</div>
+        <div class="shot-body">
+          <div class="shot-text">P04 — What are you most looking forward to today, and how are you feeling right now sitting here before it happens?</div>
+          <div class="shot-note">Ask this last in the pre-reveal sequence. This is the moment the edit cuts away from. Hold on his face for 5 seconds after he finishes answering before cutting.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2:30 PM DR JARRYD -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">2:30 PM</span>
+      <span class="block-tag bt-interview">Interview</span>
+      <span class="block-title">Dr. Jarryd — All-on-4 Lead Clinician</span>
+      <span class="block-desc">~18 min</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A18</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide establishing of Dr. Jarryd in interview position. Hold 10 seconds before first question.</div>
+          <div class="shot-note">He may be coming straight from a patient — give him 2 minutes to decompress and get comfortable. Do not rush to the first question.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A19</div>
+        <div class="shot-body">
+          <div class="shot-text">D01 — What does it mean to be an All-on-4 Centre of Excellence, and what does a practice have to do to earn and keep that certification?</div>
+          <div class="shot-note">Strong opener — factual and credibility-building. This is the trust anchor of the entire dentist segment.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A20</div>
+        <div class="shot-body">
+          <div class="shot-text">D03 — Are patients typically coming to you already knowing they want All-on-4, or are they discovering it through you during consultation?</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A21</div>
+        <div class="shot-body">
+          <div class="shot-text">D07 — Are there patients who come in hoping for All-on-4 but are not actually suitable candidates? What makes someone not the right fit?</div>
+          <div class="shot-note">This builds enormous trust — a clinician who says "not everyone qualifies" reads as honest, not salesy.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A22</div>
+        <div class="shot-body">
+          <div class="shot-text">D14 — What are the most common fears or concerns patients bring into their first consultation about All-on-4, and how do you address them?</div>
+          <div class="shot-note">Let him be specific — generic reassurance is flat. The best answers name the actual fear (pain, cost, permanence, failure) and address it directly.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A23</div>
+        <div class="shot-body">
+          <div class="shot-text">D15 — How does All-on-4 compare to traditional dentures and conventional implants — what are the genuine pros and cons of each approach?</div>
+          <div class="shot-note">Encourage trade-off language — "here is when dentures still make sense, here is when All-on-4 is the better option." Honest comparison builds far more trust than pure promotion.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A24</div>
+        <div class="shot-body">
+          <div class="shot-text">D16 — Walk me through what actually happens on the day of an All-on-4 procedure — from when the patient arrives to when they leave the chair.</div>
+          <div class="shot-note">Encourage him to be step-by-step and specific. The more detail, the more useful the content. This is one of the most searched queries in the space.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A25</div>
+        <div class="shot-body">
+          <div class="shot-text">D11 — If a patient has been told by their dentist that All-on-4 is the right option for them, what are the three most important questions they should ask before saying yes?</div>
+          <div class="shot-note">Strong closer for his interview. Patient empowerment framing. Keep it in raw footage too — works as a standalone clip independently of the hero edit.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A26</div>
+        <div class="shot-body">
+          <div class="shot-text">D05 — Was there a particular patient story and outcome that had a significant effect on you? (AHPRA caution — raw footage only)</div>
+          <div class="shot-note">Film it. Do not cut it short. But do not include in published advertising edit without legal review. Goes in raw delivery for the client to use at their own discretion.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-ahpra">Caution — raw only</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2:50 PM INSERT -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">2:50 PM</span>
+      <span class="block-tag bt-hero">Hero Moment</span>
+      <span class="block-title">Prosthesis insert — Dr. Jarryd + Richard</span>
+      <span class="block-desc">~30 min</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A27</div>
+        <div class="shot-body">
+          <div class="shot-text">Sev holds medium-close on Richard's face throughout the procedure — both eyes, expression, any involuntary reactions</div>
+          <div class="shot-note">JT holds the wide procedural angle. You do not move from Richard's face. This is where the edit lives. Do not cut to check your screen — trust the frame.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A28</div>
+        <div class="shot-body">
+          <div class="shot-text">Capture Dr. Jarryd's hands and the prosthesis at the moment of placement — ask JT to get this in his wide coverage if possible</div>
+          <div class="shot-note">The edit will cut between hands, procedure, and Richard's face. The more angles across both cameras, the better.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A29</div>
+        <div class="shot-body">
+          <div class="shot-text">The reveal moment — Richard's first look at himself. Do not speak. Do not prompt. Do not ask "how do you feel?" Hold on his face for a minimum of 15 seconds after the mirror is presented.</div>
+          <div class="shot-note">This is the single most important shot of the entire day. No direction. No talking. Silence from everyone in the room. Let it happen.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3:20 PM POST REVEAL -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">3:20 PM</span>
+      <span class="block-tag bt-hero">Post-Reveal</span>
+      <span class="block-title">Richard — reaction interview</span>
+      <span class="block-desc">~20 min</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A30</div>
+        <div class="shot-body">
+          <div class="shot-text">P06 — Richard — take a look. What is going through your mind right now?</div>
+          <div class="shot-note">Do not ask about the clinical result. Let the emotion happen first — silence, laughter, tears, whatever comes. Do not fill it. AHPRA review required if used in clinic advertising.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-ahpra">Review first</span><span class="stag stag-close">Close</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A31</div>
+        <div class="shot-body">
+          <div class="shot-text">P07 — Compared to how you walked in this morning, how do you feel right now?</div>
+          <div class="shot-note">Keep framing emotional, not clinical. "I feel different" is fine. "My teeth are perfect" is not for advertising.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-ahpra">Review first</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A32</div>
+        <div class="shot-body">
+          <div class="shot-text">P08 — Is there anything you wish you had known before starting this process — or anything you would tell someone who is in the same position you were in a year ago?</div>
+          <div class="shot-note">Most shareable post-reveal moment. Speaks directly to the viewer. Educational, not a clinical claim. Let him be specific.</div>
+          <div class="shot-tags"><span class="stag stag-q">Selected Q</span><span class="stag stag-medium">Medium</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3:50 PM ADDITIONAL -->
+  <div class="block">
+    <div class="block-head">
+      <span class="block-time">3:50 PM</span>
+      <span class="block-tag bt-warn">Tight — 10 min</span>
+      <span class="block-title">Additional patients — B-roll and introductions only</span>
+      <span class="block-desc">Hard stop 4:00 PM</span>
+    </div>
+    <div class="shot-list">
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A33</div>
+        <div class="shot-body">
+          <div class="shot-text">Brief on-camera intro with previous All-on-4 patient — name, how long ago treatment was, one sentence on how things are going now. No full interview.</div>
+          <div class="shot-note">With only 10 minutes there is no time for structured questions. Capture their face, a smile, a natural moment. This is B-roll quality content, not hero content. JT handles wide while Sev runs a quick handheld close.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span><span class="stag stag-close">Close</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A34</div>
+        <div class="shot-body">
+          <div class="shot-text">Same for veneer/ortho patient(s) — quick natural moment on camera. Capture smiling if possible.</div>
+          <div class="shot-note">Dr. Jarryd noted these are not his strongest cases — manage the client's expectation that this content may not make the primary edit.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Direction</span></div>
+        </div>
+      </div>
+      <div class="shot" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">A35</div>
+        <div class="shot-body">
+          <div class="shot-text">4:00 PM — confirm delivery timeline verbally with Angela or Kyra before leaving. Raw footage within 5 business days. Draft edit within 14 business days.</div>
+          <div class="shot-tags"><span class="stag stag-dir">Wrap</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /aroll panel -->
+
+<!-- ══ B-ROLL PANEL ══ -->
+<div class="panel" id="broll">
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="b-progress"></div></div>
+  <div class="progress-label" id="b-progress-label">0 / 0 shots checked</div>
+
+  <div class="filter-row">
+    <button class="fbtn on" onclick="filterBroll('all',this)">All shots</button>
+    <button class="fbtn" onclick="filterBroll('lab',this)">Lab</button>
+    <button class="fbtn" onclick="filterBroll('clinic',this)">Clinic</button>
+    <button class="fbtn" onclick="filterBroll('equipment',this)">Equipment</button>
+    <button class="fbtn" onclick="filterBroll('people',this)">People</button>
+    <button class="fbtn" onclick="filterBroll('procedure',this)">Procedure</button>
+    <button class="fbtn" onclick="filterBroll('detail',this)">Detail/Macro</button>
+  </div>
+
+  <!-- LAB -->
+  <div class="bcat" data-cat="lab">
+    <div class="bcat-head">
+      <span class="bcat-icon">🔬</span>
+      <div>
+        <div class="bcat-title">Lab — Kat and the prosthesis</div>
+        <div class="bcat-note">1:15 PM onward. Focus on hands, craft, and process. Kat prefers not to be featured prominently — keep her face out or briefly seen.</div>
+      </div>
+      <span class="bcat-count">B01–B12</span>
+    </div>
+    <div class="shot-list">
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B01</div>
+        <div class="shot-body">
+          <div class="shot-text">Extreme macro — prosthesis teeth surface with staining tools being applied. Fill the frame with texture.</div>
+          <div class="shot-note">Use a macro lens or closest focus distance available. Rack focus from the tool to the tooth surface. Slow deliberate movement.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-rack">Rack focus</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B02</div>
+        <div class="shot-body">
+          <div class="shot-text">Kat's hands only — medium-close, both hands working on the prosthesis at the mid-finishing stage. Steady, deliberate, no rush.</div>
+          <div class="shot-note">This is the shot that makes the craft feel real. No face. Just hands doing skilled work. Hold for at least 20 seconds continuous.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B03</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide of the full lab bench — equipment, materials, lighting, the prosthesis in its working environment. Everything in frame that tells the story of the lab.</div>
+          <div class="shot-note">Shoot this as an establishing shot. Slow push-in from wide to medium over 8–10 seconds.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Slow push-in</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B04</div>
+        <div class="shot-body">
+          <div class="shot-text">Prosthesis alone on the bench — lit cleanly, no hands in frame. Slow 360-degree orbit if space allows. Otherwise a slow lateral slide from one side to the other.</div>
+          <div class="shot-note">This is a product shot. Treat it like one. Get the light right before you roll. This cut goes between the lab footage and the procedure.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-gimbal">Orbit / lateral</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B05</div>
+        <div class="shot-body">
+          <div class="shot-text">Over-the-shoulder of Kat — camera looking over her shoulder down at the work on the bench. Shallow depth of field, her blurred in foreground, prosthesis sharp.</div>
+          <div class="shot-note">The shallow DOF makes it feel immersive. This framing is cinematic and gives the edit a perspective it would not otherwise have.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B06</div>
+        <div class="shot-body">
+          <div class="shot-text">Macro on the staining tools — brushes, pigments, containers. Rack focus between objects. Slow pan across the workbench surface left to right.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-rack">Rack focus</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B07</div>
+        <div class="shot-body">
+          <div class="shot-text">The 3D printer (if accessible) — medium wide of it running or a completed print being removed. Slow push-in toward the build plate.</div>
+          <div class="shot-note">If there is no active print, a slow orbit around the machine itself is enough. Technology in a dental lab is visually compelling — audiences are not used to seeing this.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-gimbal">Slow push-in</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B08</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide of the full lab space — bench height angle looking across the room. Hold 15 seconds static, then a slow drift right.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Slow drift</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B09</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard's old denture on the lab bench beside the new prosthesis — the visual before/after comparison in a single frame.</div>
+          <div class="shot-note">This is a powerful edit moment if you can get both on the bench simultaneously. Discuss with Dr. Jarryd or Kat. Rack focus between the two.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-rack">Rack focus</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B10</div>
+        <div class="shot-body">
+          <div class="shot-text">Detail on lab reference materials — shade guides, colour charts, technical diagrams on the bench. Slow lateral across them.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-gimbal">Lateral</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B11</div>
+        <div class="shot-body">
+          <div class="shot-text">Low angle looking up at Kat's hands from below bench height — unusual perspective that makes even a familiar action feel cinematic.</div>
+          <div class="shot-note">Put the camera on the bench surface and shoot upward at her hands working overhead. This angle does not need to be long — 8 seconds is enough.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Low angle</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="lab" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B12</div>
+        <div class="shot-body">
+          <div class="shot-text">Final beauty shot — the finished prosthesis being lifted and held up to the light. Slow orbit. Maximum quality frame — this may end up in the hero edit title sequence.</div>
+          <div class="shot-note">Get the best light in the lab for this one. Take your time. This is the shot that bookends the lab section.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-gimbal">Orbit</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLINIC ENVIRONMENT -->
+  <div class="bcat" data-cat="clinic">
+    <div class="bcat-head">
+      <span class="bcat-icon">🏥</span>
+      <div>
+        <div class="bcat-title">Clinic — Environment and atmosphere</div>
+        <div class="bcat-note">1:00 PM onward throughout the day. Build the world the patient steps into.</div>
+      </div>
+      <span class="bcat-count">B13–B24</span>
+    </div>
+    <div class="shot-list">
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B13</div>
+        <div class="shot-body">
+          <div class="shot-text">Exterior of the building — wide establishing shot from across the street or car park. Slow push toward the entrance.</div>
+          <div class="shot-note">This is how the hero edit opens. Give the viewer a sense of arrival. If there is signage visible, include it.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Push-in</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B14</div>
+        <div class="shot-body">
+          <div class="shot-text">Reception desk — wide, clean, no patients in frame unless consented. Slow pan across the desk surface from left to right.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Pan</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B15</div>
+        <div class="shot-body">
+          <div class="shot-text">Waiting area — natural patient activity if consented, or empty with clean composition. Look for depth — something interesting in the foreground and background simultaneously.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B16</div>
+        <div class="shot-body">
+          <div class="shot-text">Nobel Biocare Centre of Excellence signage or certification — close-up, in focus, held for 5 seconds. Wide of it in context of the clinic space.</div>
+          <div class="shot-note">This is a narrative device — it is the visual proof of the credibility Dr. Jarryd describes in his interview. Shoot it both close and wide.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B17</div>
+        <div class="shot-body">
+          <div class="shot-text">Hallway — low camera angle looking down the corridor toward an operatory door. Slow push forward on gimbal.</div>
+          <div class="shot-note">This shot creates suspense and forward motion in the edit. It is the visual transition between the outside world and the treatment space.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Push-in</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B18</div>
+        <div class="shot-body">
+          <div class="shot-text">Operatory — wide of the full room with the dental chair as the centrepiece. No patient in chair yet. Slow orbit around the chair.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Orbit</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B19</div>
+        <div class="shot-body">
+          <div class="shot-text">Looking out of the operatory window (if applicable) — or looking in through the door from the corridor. Depth and perspective shot.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B20</div>
+        <div class="shot-body">
+          <div class="shot-text">Framed wall art, diplomas, certifications, or awards in the clinic. Close enough to read, wide enough to show context.</div>
+          <div class="shot-note">These are visual proof points. Shallow depth of field and slight tilt-shift movement makes them look intentional rather than incidental.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B21</div>
+        <div class="shot-body">
+          <div class="shot-text">Staff at work — Kyra or Lizzie on the phone, at a computer, or walking through reception. Candid, natural. Do not direct them.</div>
+          <div class="shot-note">These are B-roll cutaways for team interview segments. Shoot from a distance so they do not perform for the camera.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Candid</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B22</div>
+        <div class="shot-body">
+          <div class="shot-text">Patient walking in through the front door — from behind, watching them arrive. Do not use Richard for this shot (preserve the reveal). Use another consenting patient or a staff member walking the route.</div>
+          <div class="shot-note">The viewer needs to experience the journey of arrival. This shot puts them in the patient's position before they meet Dr. Jarryd.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Follow — behind</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B23</div>
+        <div class="shot-body">
+          <div class="shot-text">Dr. Jarryd walking purposefully through the clinic — from behind, then from the side, then a low angle looking up as he passes. Three separate takes.</div>
+          <div class="shot-note">These are the intro cuts for his interview segment. He should look like he knows exactly where he is going. Walk slightly faster than feels natural on camera.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-gimbal">Follow</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="clinic" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B24</div>
+        <div class="shot-body">
+          <div class="shot-text">Dr. Jarryd and Kyra or Britt in conversation — candid, natural, neither looking at camera. Shoot from across the room with compression. Do not direct this scene.</div>
+          <div class="shot-note">Team interaction footage humanises the clinical environment. Shoot long and let the conversation develop.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Candid</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUIPMENT -->
+  <div class="bcat" data-cat="equipment">
+    <div class="bcat-head">
+      <span class="bcat-icon">⚙️</span>
+      <div>
+        <div class="bcat-title">Equipment — OPG, Cerec, instruments, chair</div>
+        <div class="bcat-note">1:30 PM block primarily. Make the technology feel impressive without being clinical or cold.</div>
+      </div>
+      <span class="bcat-count">B25–B36</span>
+    </div>
+    <div class="shot-list">
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B25</div>
+        <div class="shot-body">
+          <div class="shot-text">OPG machine — wide establishing of the full machine in room context. Then a slow push toward the imaging head.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Push-in</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B26</div>
+        <div class="shot-body">
+          <div class="shot-text">OPG in use — patient (consented or dummy setup with Richard) positioned, machine moving around the head. Capture from three angles: front, 45 degrees side, close on the rotating arm.</div>
+          <div class="shot-note">If using Richard for the dummy OPG, this is a good B-roll anchor for the "process of treatment" section of the edit.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-wide">Wide</span><span class="stag stag-close">Close</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B27</div>
+        <div class="shot-body">
+          <div class="shot-text">OPG result on screen — the X-ray image itself, close enough to see the jaw structure clearly. Slow rack focus from the screen to out of focus background.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-rack">Rack focus</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B28</div>
+        <div class="shot-body">
+          <div class="shot-text">Cerec scanner — wide establishing, then a macro on the wand tip. Then the 3D model being built on screen in real time.</div>
+          <div class="shot-note">The 3D scan building on screen is one of the most visually compelling things in modern dentistry. Get the screen clearly. Shoot over the shoulder of the operator toward the screen.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-macro">Macro</span><span class="stag stag-close">Close</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B29</div>
+        <div class="shot-body">
+          <div class="shot-text">Cerec scan wand inside mouth (consented patient or Richard for dummy scan) — close on the scan tip moving across the teeth. External view from side.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B30</div>
+        <div class="shot-body">
+          <div class="shot-text">Dental chair — empty, lit, slow orbit. This is the centrepiece of the treatment space. Treat it cinematically.</div>
+          <div class="shot-note">Low angle looking up makes it feel impressive. Overhead if possible. Try multiple framings — wide room, medium chair, close detail on the headrest.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-close">Close</span><span class="stag stag-gimbal">Orbit</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B31</div>
+        <div class="shot-body">
+          <div class="shot-text">Instrument tray being laid out — gloved hands placing instruments in order. Top-down angle, slow pan across the tray.</div>
+          <div class="shot-note">Overhead shot shows organisation and precision. Borrow a tripod arm or hold camera directly overhead. 15 seconds minimum.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Overhead</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B32</div>
+        <div class="shot-body">
+          <div class="shot-text">Individual instruments — macro on surgical tools, implant components, screwdrivers, torque wrenches. Rack focus between objects arranged on the tray.</div>
+          <div class="shot-note">These cutaways support the "what actually happens on the day" segment of Dr. Jarryd's interview. Every instrument he mentions needs a visual.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-rack">Rack focus</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B33</div>
+        <div class="shot-body">
+          <div class="shot-text">Gloved hands snapping gloves on — close shot, one clean take. Universal clinical shorthand that immediately signals the procedure is about to begin.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B34</div>
+        <div class="shot-body">
+          <div class="shot-text">Overhead operatory light — power on, light flaring into the lens. Frame slightly off-centre. Hold 5 seconds.</div>
+          <div class="shot-note">Classic cinematic medical shorthand. Works as a visual beat between sections. Shoot it wide and tight.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B35</div>
+        <div class="shot-body">
+          <div class="shot-text">Sterilisation area — instruments being removed from pouches, autoclave in use, or packaged instruments arranged. Clinical cleanliness as a visual trust signal.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="equipment" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B36</div>
+        <div class="shot-body">
+          <div class="shot-text">Implant components — the Nobel Biocare implant itself if one is available, held up to the light. Extreme macro. Slow rack focus.</div>
+          <div class="shot-note">This is the product at the centre of everything. If Dr. Jarryd can hold one up for 30 seconds between procedures, get this shot. It is worth making time for.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-rack">Rack focus</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEOPLE -->
+  <div class="bcat" data-cat="people">
+    <div class="bcat-head">
+      <span class="bcat-icon">👤</span>
+      <div>
+        <div class="bcat-title">People — Candid moments and reactions</div>
+        <div class="bcat-note">Throughout the day. Shoot from a distance. Never direct. The best people B-roll is invisible to the subject.</div>
+      </div>
+      <span class="bcat-count">B37–B46</span>
+    </div>
+    <div class="shot-list">
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B37</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard arriving — from behind, walking into the clinic. Do not film his face yet. This preserves the reveal. Just shoes, then a wide of him entering.</div>
+          <div class="shot-note">This is the patient arrival sequence that opens Richard's storyline in the edit. Capture it clean before approaching him for the interview setup.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Follow — behind</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B38</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard's hands — close on his hands in his lap before the procedure. Still, maybe nervous. This is a pre-procedure tension shot.</div>
+          <div class="shot-note">Hands tell an emotional story without showing a face. Capture this while he is waiting or during the pre-interview setup. Do not ask permission — just shoot it quietly.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B39</div>
+        <div class="shot-body">
+          <div class="shot-text">Dr. Jarryd in consultation with Richard — medium wide, side angle, neither looking at camera. The natural interaction before the procedure begins.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Candid</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B40</div>
+        <div class="shot-body">
+          <div class="shot-text">Kyra Yun at work in reception — on the phone, reviewing something on screen, greeting a patient. Long lens from across the room, candid.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Candid</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B41</div>
+        <div class="shot-body">
+          <div class="shot-text">Britt Lynch preparing the operatory — setting up, checking instruments, the pre-procedure ritual. From outside the door or a corner of the room.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Candid</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B42</div>
+        <div class="shot-body">
+          <div class="shot-text">Dr. Jarryd's face during the procedure — concentration, precision, total focus. Close, from slightly above. His eyes tell the story of expertise.</div>
+          <div class="shot-note">This is one of the most powerful procedure shots available. A surgeon's face says more than 100 words about competence.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B43</div>
+        <div class="shot-body">
+          <div class="shot-text">Dr. Jarryd's gloved hands working — close on the hands during the procedure. Deliberate, precise movement. Hold for 15 seconds minimum without cutting.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B44</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard post-reveal — candid shots of him in the clinic after everything is done. Talking to Dr. Jarryd, walking out, looking in a mirror. Natural and unposed.</div>
+          <div class="shot-note">The edit ends with these moments. They need to feel genuinely happy, not performed. Shoot from a distance and do not ask him to do anything.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Candid</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B45</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard smiling — the first genuine, unguarded smile post-reveal. Wide, medium, and close. This is a hero image frame, not just B-roll.</div>
+          <div class="shot-note">Do not ask him to smile. Wait for it. When it happens, hold the shot and do not cut. You can always trim it later — you cannot go back and get it again.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="people" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B46</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard walking out of the clinic — from behind, same framing as when he arrived (B37). He walked in one person. He walks out another. This is the closing visual of the hero edit.</div>
+          <div class="shot-note">If you get nothing else on the B-roll list, get this one. It is the visual callback that closes the story.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-gimbal">Follow — behind</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCEDURE -->
+  <div class="bcat" data-cat="procedure">
+    <div class="bcat-head">
+      <span class="bcat-icon">🦷</span>
+      <div>
+        <div class="bcat-title">Procedure — The insert (2:50 PM)</div>
+        <div class="bcat-note">JT holds the wide procedural angle while Sev holds Richard's face close. These are JT's primary responsibilities during the hero moment block.</div>
+      </div>
+      <span class="bcat-count">B47–B54</span>
+    </div>
+    <div class="shot-list">
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B47</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide of the full operatory during the procedure — Dr. Jarryd, nurse, and Richard in the chair. All four walls of the clinical story visible in one frame. Hold static throughout.</div>
+          <div class="shot-note">This is JT's primary angle during the hero moment block. Do not move from this until after the reveal. Static wide gives the editor freedom.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static — hold entire procedure</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B48</div>
+        <div class="shot-body">
+          <div class="shot-text">Medium of Dr. Jarryd working — from the side, slightly elevated, prosthesis and hands in frame. Not inside the mouth. External view of precision work.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B49</div>
+        <div class="shot-body">
+          <div class="shot-text">The prosthesis at the moment it is placed — close on Dr. Jarryd's hands and the arch at the point of seating. This is the money shot of the procedure.</div>
+          <div class="shot-note">You may only get one chance at this. Be in position before 2:50 PM. Know where your frame is before the procedure begins.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B50</div>
+        <div class="shot-body">
+          <div class="shot-text">Nurse/assistant during the procedure — handing instruments, suctioning, supporting. Medium from the opposite side to JT's wide angle.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B51</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard's hands during the procedure — close on his hands gripping the chair or resting in his lap. The patient's perspective without his face.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B52</div>
+        <div class="shot-body">
+          <div class="shot-text">The mirror being handed to Richard — close on the moment the mirror changes hands. This is the pivot moment of the edit.</div>
+          <div class="shot-note">Be ready for this. It happens fast. Pre-focus on where the mirror will be. Do not miss this shot.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B53</div>
+        <div class="shot-body">
+          <div class="shot-text">Wide reaction shot at the reveal — pull back to see Dr. Jarryd, nurse, and Richard simultaneously. Their collective reaction in one frame.</div>
+          <div class="shot-note">Sev is on Richard's face close. JT pulls wide to capture the whole room's reaction. This is the edit's emotional peak from the environment perspective.</div>
+          <div class="shot-tags"><span class="stag stag-wide">Wide</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="procedure" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B54</div>
+        <div class="shot-body">
+          <div class="shot-text">Post-procedure — Richard in the chair looking at the completed work. Dr. Jarryd beside him. Natural conversation, no direction. Candid medium wide.</div>
+          <div class="shot-tags"><span class="stag stag-medium">Medium</span><span class="stag stag-static">Candid</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL / MACRO -->
+  <div class="bcat" data-cat="detail">
+    <div class="bcat-head">
+      <span class="bcat-icon">🔍</span>
+      <div>
+        <div class="bcat-title">Detail + Macro — The shots that make an edit look expensive</div>
+        <div class="bcat-note">Shoot these opportunistically throughout the day. Each one is short — 8 to 15 seconds. Build a library of 30+ of these and the edit will thank you.</div>
+      </div>
+      <span class="bcat-count">B55–B68</span>
+    </div>
+    <div class="shot-list">
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B55</div>
+        <div class="shot-body">
+          <div class="shot-text">Nobel Biocare logo — close on the logo on the implant packaging, a certificate, or any branded surface. Sharp, well-lit, held for 8 seconds.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B56</div>
+        <div class="shot-body">
+          <div class="shot-text">Gloved hand picking up an implant component — macro, from above, slow lift.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B57</div>
+        <div class="shot-body">
+          <div class="shot-text">Implant packaging being opened — the sterile peel, the reveal of the component inside. Close. One clean take.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B58</div>
+        <div class="shot-body">
+          <div class="shot-text">Keyboard and screen in reception — staff using the practice management software. Close on the typing hands, then rack to the screen.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-rack">Rack focus</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B59</div>
+        <div class="shot-body">
+          <div class="shot-text">Dental mirror reflecting the inside of a model jaw — macro, beautiful and unexpected. This is an artistic B-roll shot that elevates the edit.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B60</div>
+        <div class="shot-body">
+          <div class="shot-text">Study models or jaw model on a bench — slow orbit, macro on teeth structure. Use for the "how it works" section of the edit.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-gimbal">Orbit</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B61</div>
+        <div class="shot-body">
+          <div class="shot-text">A clock or watch — time pressure, narrative device. Close on the face. Optional but adds cinematic grammar.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B62</div>
+        <div class="shot-body">
+          <div class="shot-text">Suction tip, scaler, or mirror being placed neatly on a tray — ordered precision, clinical care as a visual.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B63</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard's denture — alone on a surface, close and still. Then again after the prosthesis is in — the old denture beside the new smile. Visual metaphor for the transformation.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B64</div>
+        <div class="shot-body">
+          <div class="shot-text">Shade guide — held up to the light, fan of colours. Macro on the individual shade tabs. Rack through focus slowly.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-rack">Rack focus</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B65</div>
+        <div class="shot-body">
+          <div class="shot-text">Consent form or patient file being reviewed — hands on paper, close on printed text (not personally identifiable). Visual of due diligence.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B66</div>
+        <div class="shot-body">
+          <div class="shot-text">Window light falling across a surface or instrument — natural light as texture. Hold static 10 seconds. These are the filler cuts that hold an edit together aesthetically.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B67</div>
+        <div class="shot-body">
+          <div class="shot-text">The prosthesis arch alone — on a dark surface, lit from one side, close. Five seconds. This is a potential title card image for the edit.</div>
+          <div class="shot-tags"><span class="stag stag-close">Close</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+      <div class="b-shot" data-cat="detail" onclick="toggleShot(this)">
+        <div class="shot-check"><input type="checkbox" onclick="e=>{e.stopPropagation()}"></div>
+        <div class="shot-num">B68</div>
+        <div class="shot-body">
+          <div class="shot-text">Richard's smile — macro or very tight close-up on just his teeth and smile post-reveal. The visual payoff that everything else has been building toward.</div>
+          <div class="shot-note">Get this shot. It is the thumbnail. It is the last frame. It is the money. Do not leave without it.</div>
+          <div class="shot-tags"><span class="stag stag-macro">Macro</span><span class="stag stag-static">Static</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /broll panel -->
+
+<script>
+let doneCount = 0;
+
+function countShots() {
+  const aShots = document.querySelectorAll('#aroll .shot, #aroll .b-shot').length;
+  const bShots = document.querySelectorAll('#broll .b-shot').length;
+  document.getElementById('a-total').textContent = document.querySelectorAll('#aroll .shot').length;
+  document.getElementById('b-total').textContent = bShots;
+  updateProgress();
+}
+
+function toggleShot(el) {
+  el.classList.toggle('done');
+  const chk = el.querySelector('input[type="checkbox"]');
+  if (chk) chk.checked = el.classList.contains('done');
+  updateProgress();
+}
+
+function updateProgress() {
+  const aShots = document.querySelectorAll('#aroll .shot');
+  const bShots = document.querySelectorAll('#broll .b-shot');
+  const aDone = document.querySelectorAll('#aroll .shot.done').length;
+  const bDone = document.querySelectorAll('#broll .b-shot.done').length;
+  const totalDone = aDone + bDone;
+  const totalAll = aShots.length + bShots.length;
+  document.getElementById('done-count').textContent = totalDone;
+
+  const aTotal = aShots.length;
+  const aPct = aTotal ? Math.round(aDone/aTotal*100) : 0;
+  document.getElementById('a-progress').style.width = aPct + '%';
+  document.getElementById('a-progress-label').textContent = aDone + ' / ' + aTotal + ' shots checked';
+
+  const bTotal = bShots.length;
+  const bPct = bTotal ? Math.round(bDone/bTotal*100) : 0;
+  document.getElementById('b-progress').style.width = bPct + '%';
+  document.getElementById('b-progress-label').textContent = bDone + ' / ' + bTotal + ' shots checked';
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function filterBroll(cat, btn) {
+  document.querySelectorAll('#broll .fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('#broll .bcat').forEach(c=>{
+    if (cat==='all') { c.style.display=''; return; }
+    c.style.display = c.getAttribute('data-cat')===cat ? '' : 'none';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('a-total').textContent = document.querySelectorAll('#aroll .shot').length;
+  document.getElementById('b-total').textContent = document.querySelectorAll('#broll .b-shot').length;
+  updateProgress();
+});
+</script>
+</body>
+</html>
