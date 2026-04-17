@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Matthew & Tamika — Wedding Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface-2: #1c1c1c;
+    --surface-3: #242424;
+    --border: #2a2a2a;
+    --border-bright: #3a3a3a;
+    --text: #f5f0e8;
+    --text-dim: #9a9490;
+    --text-mute: #6a6560;
+    --accent: #d4a574;
+    --accent-hot: #e8b887;
+    --live: #ff4d4d;
+    --done: #4a5a3e;
+    --soon: #c89457;
+    --sans: 'Inter Tight', sans-serif;
+    --serif: 'Fraunces', serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    padding-bottom: 120px;
+    background-image:
+      radial-gradient(at 20% 0%, rgba(212,165,116,0.08) 0%, transparent 50%),
+      radial-gradient(at 80% 100%, rgba(212,165,116,0.04) 0%, transparent 50%);
+  }
+
+  /* HEADER */
+  .header {
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .couple {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .couple .amp {
+    color: var(--accent);
+    font-weight: 300;
+    margin: 0 4px;
+  }
+  .date-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .clock {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* NOW BANNER */
+  .now-banner {
+    margin: 16px 20px 0;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, #1a1410 0%, #2a1f15 100%);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .now-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent);
+  }
+  .now-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .now-label .dot {
+    width: 6px; height: 6px;
+    background: var(--live);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .now-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 6px;
+  }
+  .now-meta {
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+  }
+  .now-meta span strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .next-up {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(212,165,116,0.2);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .next-up strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin: 16px 20px 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-mute);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* PANEL */
+  .panel {
+    padding: 20px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .panel.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADER */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .section-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+  }
+
+  /* TIMELINE ITEM */
+  .tl-item {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .tl-item:active {
+    background: var(--surface);
+  }
+  .tl-item.done { opacity: 0.4; }
+  .tl-item.done .tl-title { text-decoration: line-through; }
+  .tl-item.current {
+    background: linear-gradient(90deg, rgba(212,165,116,0.08), transparent);
+    border-left: 3px solid var(--accent);
+    padding-left: 12px;
+    margin-left: -12px;
+    border-radius: 0 8px 8px 0;
+  }
+  .tl-time {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .tl-item.done .tl-time { color: var(--text-mute); }
+  .tl-content {
+    min-width: 0;
+  }
+  .tl-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .tl-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  .tl-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 6px;
+    margin-right: 4px;
+  }
+  .tag-travel { background: #1a2a3a; color: #7ab8e8; }
+  .tag-shoot { background: #2a1a2a; color: #e87ad4; }
+  .tag-key { background: #3a2a1a; color: var(--accent-hot); }
+  .tag-ceremony { background: #1a3a2a; color: #7ae8a8; }
+
+  .check {
+    position: absolute;
+    top: 16px;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border-bright);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .tl-item.done .check {
+    background: var(--done);
+    border-color: var(--done);
+  }
+  .tl-item.done .check::after {
+    content: '✓';
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* LOCATION CARD */
+  .loc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .loc-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+  .loc-name {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .loc-addr {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  .loc-note {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-style: italic;
+  }
+  .loc-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .btn {
+    flex: 1;
+    padding: 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-bright);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent);
+  }
+
+  /* CONTACT */
+  .contact-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-info {
+    flex: 1;
+  }
+  .contact-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .contact-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .contact-num {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+  .call-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  /* SHOT LIST */
+  .shot-group {
+    margin-bottom: 24px;
+  }
+  .shot-group-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .shot {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border);
+    cursor: pointer;
+  }
+  .shot-check {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border-bright);
+    background: transparent;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .shot.done .shot-check {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .shot.done .shot-check::after {
+    content: '✓';
+    color: #0a0a0a;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .shot-text {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .shot.done .shot-text {
+    color: var(--text-mute);
+    text-decoration: line-through;
+  }
+  .shot-detail {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* GROUP PHOTO */
+  .gp-num {
+    display: inline-block;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    background: var(--surface-3);
+    border-radius: 8px;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--accent);
+    text-align: center;
+    line-height: 28px;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  .gp-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .gp-item.done { opacity: 0.5; }
+  .gp-item.done .gp-title { text-decoration: line-through; }
+  .gp-content { flex: 1; }
+  .gp-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .gp-who {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .gp-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+
+  /* SONGS */
+  .song {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .song-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--surface-2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+    font-size: 18px;
+  }
+  .song-content { flex: 1; }
+  .song-moment {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .song-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .song-artist {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .song-note {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--surface-3);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  /* PROGRESS BAR */
+  .progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 14px 20px 20px;
+    z-index: 40;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+  .progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .progress-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .progress-pct {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .progress-bar {
+    height: 4px;
+    background: var(--surface-3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-hot));
+    transition: width 0.4s ease;
+    border-radius: 2px;
+  }
+
+  /* COUNTDOWN */
+  .countdown {
+    display: inline-block;
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--accent-hot);
+  }
+  .countdown.urgent {
+    color: var(--live);
+    animation: pulse 1.5s infinite;
+  }
+
+  /* RESET BTN */
+  .reset-wrap {
+    padding: 24px 20px 0;
+    text-align: center;
+  }
+  .reset-btn {
+    background: transparent;
+    color: var(--text-mute);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* INTRO */
+  .intro-card {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .intro-card h3 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .intro-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .key-moment {
+    background: linear-gradient(135deg, rgba(212,165,116,0.1), transparent);
+    border-left: 2px solid var(--accent);
+    padding-left: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="couple">Matthew <span class="amp">&</span> Tamika</div>
+  <div class="date-row">
+    <span>Wedding Day · Caversham House</span>
+    <span class="clock" id="clock">—:—</span>
+  </div>
+</div>
+
+<div class="now-banner" id="nowBanner">
+  <div class="now-label"><span class="dot"></span>Right Now</div>
+  <div class="now-title" id="nowTitle">Loading…</div>
+  <div class="now-meta" id="nowMeta"></div>
+  <div class="next-up" id="nextUp"></div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="timeline">Timeline</button>
+  <button class="tab" data-tab="locations">Locations</button>
+  <button class="tab" data-tab="shots">Shot List</button>
+  <button class="tab" data-tab="groups">Group Photos</button>
+  <button class="tab" data-tab="contacts">Contacts</button>
+  <button class="tab" data-tab="songs">Songs</button>
+  <button class="tab" data-tab="ceremony">Ceremony</button>
+  <button class="tab" data-tab="reception">Reception</button>
+</div>
+
+<!-- TIMELINE -->
+<div class="panel active" id="panel-timeline">
+  <div class="section-head">
+    <div class="section-title">Your Day</div>
+    <div class="section-count" id="tl-count">0 of 0</div>
+  </div>
+  <div id="timeline"></div>
+</div>
+
+<!-- LOCATIONS -->
+<div class="panel" id="panel-locations">
+  <div class="section-head">
+    <div class="section-title">Where to Be</div>
+  </div>
+  <div id="locations"></div>
+</div>
+
+<!-- SHOTS -->
+<div class="panel" id="panel-shots">
+  <div class="section-head">
+    <div class="section-title">Must-Get Shots</div>
+    <div class="section-count" id="shots-count">0 of 0</div>
+  </div>
+  <div id="shots"></div>
+</div>
+
+<!-- GROUP PHOTOS -->
+<div class="panel" id="panel-groups">
+  <div class="section-head">
+    <div class="section-title">Group Photos</div>
+    <div class="section-count" id="groups-count">0 of 12</div>
+  </div>
+  <div class="intro-card">
+    <h3>5:00 PM – 5:30 PM window</h3>
+    <p>After family photos (4:30–5:00) and before Bride & Groom couple photos (5:30–6:15). Keep the list moving — pull each group up as you go.</p>
+  </div>
+  <div id="groups"></div>
+</div>
+
+<!-- CONTACTS -->
+<div class="panel" id="panel-contacts">
+  <div class="section-head">
+    <div class="section-title">Key Contacts</div>
+  </div>
+  <div id="contacts"></div>
+</div>
+
+<!-- SONGS -->
+<div class="panel" id="panel-songs">
+  <div class="section-head">
+    <div class="section-title">Song Cues</div>
+  </div>
+  <div class="intro-card">
+    <h3>Listen for these</h3>
+    <p>Each song signals a key moment. Be ready to roll before the track starts — these are the non-negotiable captures.</p>
+  </div>
+  <div id="songs"></div>
+</div>
+
+<!-- CEREMONY -->
+<div class="panel" id="panel-ceremony">
+  <div class="section-head">
+    <div class="section-title">Ceremony Flow</div>
+  </div>
+  <div class="intro-card">
+    <h3>4:00 PM — Walk down the aisle</h3>
+    <p>Position yourself for the bride's entrance by 3:55 PM. Groom arrives at 3:00 PM — grab reaction shots of him as Tamika appears.</p>
+  </div>
+  <div id="ceremony"></div>
+</div>
+
+<!-- RECEPTION -->
+<div class="panel" id="panel-reception">
+  <div class="section-head">
+    <div class="section-title">Reception Flow</div>
+  </div>
+  <div class="intro-card">
+    <h3>Video & Photo finish at 8:50 PM</h3>
+    <p>Last hard shot is the Dance at 8:50 PM. Final wrap by 9:00 PM per contract.</p>
+  </div>
+  <div id="reception"></div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" onclick="resetAll()">Reset All Checks</button>
+</div>
+
+<div class="progress">
+  <div class="progress-row">
+    <span class="progress-label">Day Progress</span>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+</div>
+
+<script>
+  // ============ DATA ============
+  const timeline = [
+    { id: 't1', time: '13:00', label: '1:00 PM', title: 'Arrive at Groom — 5 Instrument St, Brabham', sub: 'Matthew getting dressed. Candids, details, rings, shoes, tie. Groomsmen banter.', tag: 'shoot', key: true },
+    { id: 't2', time: '14:00', label: '2:00 PM', title: 'Leave Groom, head to Bride', sub: '15 min drive to The Vines Resort, 51 Verdelho Dr.', tag: 'travel' },
+    { id: 't3', time: '14:15', label: '2:15 PM', title: 'Arrive at Bride — Vines Resort', sub: 'CALL Tameeka or bride when you arrive so someone can come get you. Dress hanging, florals, rings, makeup finals.', tag: 'shoot', key: true },
+    { id: 't4', time: '14:30', label: '2:30 PM', title: 'Bride gets into dress', sub: 'Mother of Bride + Maid of Honor helping. First look with bridesmaids, then FOB first look.', tag: 'key', key: true },
+    { id: 't5', time: '15:10', label: '3:10 PM', title: 'Leave Bride', sub: 'Head to Caversham House (Garden House side). ~15 min drive.', tag: 'travel' },
+    { id: 't6', time: '15:15', label: '3:15 PM', title: 'Bride leaves for venue', sub: 'She arrives 3:50 PM. You arrive 3:30.', tag: 'travel' },
+    { id: 't7', time: '15:30', label: '3:30 PM', title: 'Arrive at Venue — Caversham House', sub: 'Garden House side. Scout ceremony setup, check light, position for Groom arrival.', tag: 'shoot' },
+    { id: 't8', time: '15:00', label: '3:00 PM', title: 'Groom arrives at venue', sub: 'Catch Matthew arriving — reaction shots as he settles in.', tag: 'shoot' },
+    { id: 't9', time: '15:50', label: '3:50 PM', title: 'Bride arrives at venue', sub: 'Be ready at the car door. Get the reveal before the walk.', tag: 'key', key: true },
+    { id: 't10', time: '16:00', label: '4:00 PM', title: 'CEREMONY — Walk down the aisle', sub: 'Matthew\'s face as Tamika appears. Vows. Rings. Kiss.', tag: 'ceremony', key: true },
+    { id: 't11', time: '16:30', label: '4:30 PM', title: 'Ceremony ends · Family photos start', sub: 'Family photos 4:30–5:00. Guests get ice cream & drinks at 5:00.', tag: 'shoot', key: true },
+    { id: 't12', time: '17:00', label: '5:00 PM', title: 'Bridal Party photos', sub: '5:00–5:30. Full wedding party, then group photos (see Group Photos tab).', tag: 'shoot' },
+    { id: 't13', time: '17:30', label: '5:30 PM', title: 'Bride & Groom couple photos', sub: '5:30–6:15. Golden hour window. Transport shots. Photo w/ Karon & Leigh. Groom being lifted.', tag: 'key', key: true },
+    { id: 't14', time: '18:00', label: '6:00 PM', title: 'Reception opens to guests', sub: 'Room details, tablescapes, guests arriving.', tag: 'shoot' },
+    { id: 't15', time: '18:15', label: '6:15 PM', title: 'Joey: house rules & intro', sub: 'MC Joey sets the room. Grab wides of the full reception.', tag: 'shoot' },
+    { id: 't16', time: '18:20', label: '6:20 PM', title: 'Bridal party entry · First Dance', sub: 'Entry to Shut Up and Dance. First dance to Perfect (Ed Sheeran/Beyoncé). Party joins after 1 min.', tag: 'key', key: true },
+    { id: 't17', time: '18:30', label: '6:30 PM', title: 'Entrée served', sub: 'Clean-up at 6:50. Grab plated shots before guests dig in.', tag: 'shoot' },
+    { id: 't18', time: '19:00', label: '7:00 PM', title: 'Rebecca\'s speech · Shoe Game', sub: 'Both happening around 7:00. Watch reactions from bride & groom.', tag: 'shoot' },
+    { id: 't19', time: '19:10', label: '7:10 PM', title: 'Ashley\'s speech', sub: 'Reaction shots on couple.', tag: 'shoot' },
+    { id: 't20', time: '19:15', label: '7:15 PM', title: 'Father Daughter Dance', sub: 'Song: Stay — Post Malone. Tight on faces, wide for room.', tag: 'key', key: true },
+    { id: 't21', time: '19:20', label: '7:20 PM', title: 'Dinner served', sub: 'Clean up by 8:10.', tag: 'shoot' },
+    { id: 't22', time: '20:00', label: '8:00 PM', title: 'Aleesha\'s speech', sub: 'Joey introduces next speech before.', tag: 'shoot' },
+    { id: 't23', time: '20:05', label: '8:05 PM', title: 'Pipes\'s speech', sub: '', tag: 'shoot' },
+    { id: 't24', time: '20:10', label: '8:10 PM', title: 'Joey — Find the item game', sub: '', tag: 'shoot' },
+    { id: 't25', time: '20:15', label: '8:15 PM', title: 'Groom\'s speech · Thanks to everyone', sub: 'Matthew\'s speech. Capture reactions on Tamika.', tag: 'key', key: true },
+    { id: 't26', time: '20:20', label: '8:20 PM', title: 'Bouquet Toss', sub: 'Position behind Tamika for the girls\' reactions.', tag: 'key', key: true },
+    { id: 't27', time: '20:30', label: '8:30 PM', title: 'Dessert bar opens', sub: 'Clean up 9:10. Grab dessert details.', tag: 'shoot' },
+    { id: 't28', time: '20:50', label: '8:50 PM', title: 'Dance floor opens · WRAP', sub: 'Final hard shots. Party shots, candids on the floor. Video & photo go home.', tag: 'key', key: true },
+    { id: 't29', time: '21:00', label: '9:00 PM', title: 'FINISH — Pack down', sub: 'Contracted end time. You\'re done. Well done, Sev.', tag: 'travel' }
+  ];
+
+  const locations = [
+    {
+      label: 'Stop 1 · 1:00 PM',
+      name: 'Matthew (Groom)',
+      addr: '5 Instrument Street, Brabham',
+      note: 'Getting-ready location. Park on street. Check in with groomsmen.',
+      maps: 'https://maps.apple.com/?q=5+Instrument+Street+Brabham',
+      gmaps: 'https://www.google.com/maps/search/?api=1&query=5+Instrument+Street+Brabham'
+    },
+    {
+      label: 'Stop 2 · 2:15 PM',
+      name: 'Tamika (Bride)',
+      addr: 'The Vines Resort, 51 Verdelho Drive, The Vines',
+      note: 'CALL Tameeka or the bride on arrival so someone can come get you. Resort is big.',
+      maps: 'https://maps.apple.com/?q=51+Verdelho+Drive+The+Vines',
+      gmaps: 'https://www.google.com/maps/search/?api=1&query=51+Verdelho+Drive+The+Vines'
+    },
+    {
+      label: 'Stop 3 · 3:30 PM',
+      name: 'Caversham House (Venue)',
+      addr: 'Garden House side, Caversham',
+      note: 'Ceremony, reception, and all photos. Wrap at 9:00 PM.',
+      maps: 'https://maps.apple.com/?q=Caversham+House+Perth',
+      gmaps: 'https://www.google.com/maps/search/?api=1&query=Caversham+House+Perth'
+    }
+  ];
+
+  const contacts = [
+    { role: 'Bride', name: 'Tamika', num: '0431 707 104' },
+    { role: 'Groom', name: 'Matthew', num: '0477 145 915' },
+    { role: 'Mother of Bride', name: 'MOB', num: '0400 010 595' },
+    { role: 'Maid of Honor', name: 'MOH', num: '0456 784 045' },
+    { role: 'Coordinator', name: 'Tameeka Deacon', num: '' }
+  ];
+
+  const shots = [
+    {
+      group: 'Bride Prep · Vines Resort',
+      items: [
+        { id: 's1', text: 'Dress hanging (find clean backdrop)' },
+        { id: 's2', text: 'Rings, shoes, florals, invites flat lay', detail: 'Collect everything first, shoot together' },
+        { id: 's3', text: 'Bride putting on dress' },
+        { id: 's4', text: 'First look with bridesmaids', detail: 'Key moment — reactions' },
+        { id: 's5', text: 'First look with FOB (Father of Bride)', detail: 'Key moment — tears likely' },
+        { id: 's6', text: 'MOB helping bride', detail: 'Mother of Bride moments' },
+        { id: 's7', text: 'Bride portrait in full dress' }
+      ]
+    },
+    {
+      group: 'Groom Prep · Brabham',
+      items: [
+        { id: 's8', text: 'Matthew getting ready candids' },
+        { id: 's9', text: 'Tie / cufflinks / watch details' },
+        { id: 's10', text: 'Groomsmen banter / cheers' },
+        { id: 's11', text: 'Matthew portrait — final look' }
+      ]
+    },
+    {
+      group: 'Ceremony · 4:00 PM',
+      items: [
+        { id: 's12', text: 'Matthew\'s face as Tamika appears', detail: 'THE shot — get this' },
+        { id: 's13', text: 'Tamika walking down aisle w/ FOB' },
+        { id: 's14', text: 'Vows — tight on faces' },
+        { id: 's15', text: 'Ring exchange' },
+        { id: 's16', text: 'The Kiss' },
+        { id: 's17', text: 'Signing of register' },
+        { id: 's18', text: 'Recessional — walking back down aisle' }
+      ]
+    },
+    {
+      group: 'Specific Requests',
+      items: [
+        { id: 's19', text: 'First look with the bridesmaid', detail: 'Listed in Bride prep requests' },
+        { id: 's20', text: 'First look with FOB', detail: 'Listed in Bride prep requests' },
+        { id: 's21', text: 'Photos with the transport', detail: 'During couple photos 5:30–6:15' },
+        { id: 's22', text: 'Photo with Karon and Leigh (at the Venue)', detail: 'Bride\'s grandparents — prioritise' },
+        { id: 's23', text: 'Groom being lifted', detail: 'Groomsmen — arrange it' }
+      ]
+    },
+    {
+      group: 'Reception Key Moments',
+      items: [
+        { id: 's24', text: 'Grand entrance (Shut Up and Dance)' },
+        { id: 's25', text: 'First Dance — Perfect' },
+        { id: 's26', text: 'Father Daughter Dance — Stay (Post Malone)' },
+        { id: 's27', text: 'Cake / dessert details' },
+        { id: 's28', text: 'Every speech — speaker + couple reaction' },
+        { id: 's29', text: 'Bouquet Toss' },
+        { id: 's30', text: 'Dance floor energy shots' }
+      ]
+    }
+  ];
+
+  const groups = [
+    { id: 'g1', title: 'Bride whole family', role: 'Parents, Siblings, Cousins, Aunty, Uncles, Grandparents, Whitfields', who: 'Rebecca, Ashley, Shane, Joey, Aleesha, Jacob, Bailey, Ameelia, Matilda, Caleb, Tash, Jess, Christine, Liam, Shane, Kaylena, Evalyn, Graeme, Karon, Leigh, Seona' },
+    { id: 'g2', title: 'Bride Parents', role: 'Parents', who: 'Rebecca, Shane. Then just Ashely. Then Rebecca and Ashley.' },
+    { id: 'g3', title: 'Bride immediate family', role: 'Parents and Siblings', who: 'Ashley, Rebecca, Shane, Joey, Aleesha, Jacob, Bailey, Ameelia, Matilda' },
+    { id: 'g4', title: 'Bride siblings', role: 'Siblings', who: 'Joey, Aleesha, Jacob, Bailey, Ameelia, Matilda' },
+    { id: 'g5', title: 'Bride Cheer Family', role: 'Evolution Family', who: 'Tracy, Graham, Sophia, Caity, Shaniah, Lily, Sarah' },
+    { id: 'g6', title: 'Bride Grandparents', role: 'Grandparents and Step Grandparents', who: 'Evalyn and Graeme, then Karon and Leigh' },
+    { id: 'g7', title: 'Bridal party and partners', role: 'Bridal party and Partners', who: 'Aleesha, Joey, Tahlia, Adam, Shaniah, Lilly, Pipes, Meg, Alex, Nash, Ethan, Emma, Jordan' },
+    { id: 'g8', title: 'Groom whole family', role: 'Parents, Siblings, Kids, Partners, Grandparents', who: 'Katrina, Julie, Bill, Michael, Harry, Shona, Charlotte, Will, Keith, Amy, Michael, Seth, Ryan, Deanna, Megan, Sean' },
+    { id: 'g9', title: 'Groom grandparents', role: 'Grandparents', who: 'Julie, Bill' },
+    { id: 'g10', title: 'Groom immediate family', role: 'Parents, Siblings, Partners, Kids', who: 'Katrina, Keith, Amy, Michael, Ryan, Deanna, Amy, Michael' },
+    { id: 'g11', title: 'Groom Friends', role: 'Friends', who: 'Alex, Pipes, Mathi, Kaylan, Ibraheem, Ethan, Jerry, Kenrick, Richard, Brandon, Jordan, Tahlia, Nash, Meg' },
+    { id: 'g12', title: 'Groom parents', role: 'Parents', who: 'Katrina, Keith' }
+  ];
+
+  const songs = [
+    { moment: 'Bridesmaids down the aisle', title: 'Take Forever', artist: 'Cooper Alan', note: '' },
+    { moment: 'Bride down the aisle', title: "It's Always Been You", artist: 'Caleb Hearn', note: 'BE IN POSITION' },
+    { moment: 'Signing the registry', title: 'Growing Old With You / Life With You', artist: 'Restless Road / Kelsey Hart', note: '' },
+    { moment: 'Ceremony recessional', title: 'Carry You Home', artist: 'Alex Warren', note: 'Start from 0:40' },
+    { moment: 'Reception entry', title: 'Shut Up and Dance', artist: 'Walk the Moon', note: 'Grand entrance' },
+    { moment: 'First Dance', title: 'Perfect', artist: 'Ed Sheeran & Beyoncé', note: 'THE moment' },
+    { moment: 'Father Daughter Dance', title: 'Stay', artist: 'Post Malone', note: '7:15 PM' }
+  ];
+
+  const ceremony = [
+    { time: '3:00 PM', title: 'Groom arrives' },
+    { time: '3:50 PM', title: 'Bride arrives' },
+    { time: '4:00 PM', title: 'Introduction', key: true },
+    { time: '', title: 'Processional', sub: 'Songs: Take Forever → then It\'s Always Been You' },
+    { time: '', title: 'Welcome' },
+    { time: '', title: 'Introduction' },
+    { time: '', title: 'Reading' },
+    { time: '', title: 'Legal stuff' },
+    { time: '', title: 'I Dos', key: true },
+    { time: '', title: 'Vows', key: true },
+    { time: '', title: 'Rings', key: true },
+    { time: '', title: 'Conclusion' },
+    { time: '', title: 'Declaration' },
+    { time: '', title: 'The Kiss', key: true },
+    { time: '', title: 'Signing of the register', sub: 'Songs: Growing Old With You / Life With You' },
+    { time: '', title: 'Congrats and presentation' },
+    { time: '4:30 PM', title: 'Recessional', key: true, sub: 'Song: Carry You Home (from 0:40)' }
+  ];
+
+  const reception = [
+    { time: '6:00 PM', title: 'Reception opens to guests' },
+    { time: '6:15 PM', title: 'Joey — house rules & intro' },
+    { time: '6:20 PM', title: 'Bridal party enters · First Dance', key: true, sub: 'Shut Up and Dance → Perfect. Bridal party joins after 1 min. Then guests.' },
+    { time: '6:30 PM', title: 'Entrée served', sub: 'Clean up 6:50 PM' },
+    { time: '7:00 PM', title: "Rebecca's speech · Shoe Game" },
+    { time: '7:10 PM', title: "Ashley's speech" },
+    { time: '7:15 PM', title: 'Father Daughter Dance', key: true, sub: 'Stay — Post Malone' },
+    { time: '7:20 PM', title: 'Dinner served', sub: 'Clean up 8:10 PM' },
+    { time: '8:00 PM', title: "Aleesha's speech", sub: 'Joey intros next speech before' },
+    { time: '8:05 PM', title: "Pipes\'s speech" },
+    { time: '8:10 PM', title: 'Joey — Find the item game' },
+    { time: '8:15 PM', title: "Groom's speech / Thanks", key: true },
+    { time: '8:20 PM', title: 'Bouquet Toss', key: true },
+    { time: '8:30 PM', title: 'Dessert bar opens', sub: 'Clean up 9:10 PM' },
+    { time: '8:50 PM', title: 'Dance floor · PHOTOGRAPHER WRAPS', key: true },
+    { time: '10:45 PM', title: 'Last call (guests)' },
+    { time: '11:00 PM', title: 'Bar closed' },
+    { time: '11:15 PM', title: 'Wedding recessional' }
+  ];
+
+  // ============ STATE ============
+  const STORAGE = 'mattamika_wedding_' + (new Date().toDateString());
+  let state = loadState();
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE);
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    return { timeline: {}, shots: {}, groups: {} };
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STORAGE, JSON.stringify(state)); } catch(e) {}
+  }
+
+  // ============ RENDER ============
+  function renderTimeline() {
+    const c = document.getElementById('timeline');
+    const sorted = [...timeline].sort((a,b) => a.time.localeCompare(b.time));
+    const now = currentMinutes();
+    let current = null;
+    for (let i = 0; i < sorted.length; i++) {
+      const t = sorted[i];
+      const m = timeToMinutes(t.time);
+      const next = sorted[i+1] ? timeToMinutes(sorted[i+1].time) : 9999;
+      if (now >= m && now < next) { current = t.id; break; }
+    }
+
+    c.innerHTML = sorted.map(t => {
+      const done = state.timeline[t.id];
+      const isCurrent = t.id === current;
+      const tagClass = 'tag-' + t.tag;
+      return `
+        <div class="tl-item ${done ? 'done' : ''} ${isCurrent ? 'current' : ''}" data-tl="${t.id}">
+          <div class="tl-time">${t.label}</div>
+          <div class="tl-content">
+            <div class="tl-title">${t.title}</div>
+            ${t.sub ? `<div class="tl-sub">${t.sub}</div>` : ''}
+            <span class="tl-tag ${tagClass}">${t.tag}</span>
+            ${t.key ? '<span class="tl-tag tag-key">key moment</span>' : ''}
+          </div>
+          <div class="check"></div>
+        </div>
+      `;
+    }).join('');
+
+    c.querySelectorAll('.tl-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.dataset.tl;
+        state.timeline[id] = !state.timeline[id];
+        saveState();
+        renderTimeline();
+        updateProgress();
+      });
+    });
+
+    const totalDone = Object.values(state.timeline).filter(Boolean).length;
+    document.getElementById('tl-count').textContent = `${totalDone} of ${timeline.length}`;
+  }
+
+  function renderNow() {
+    const sorted = [...timeline].sort((a,b) => a.time.localeCompare(b.time));
+    const now = currentMinutes();
+    let currentIdx = -1;
+    for (let i = 0; i < sorted.length; i++) {
+      const m = timeToMinutes(sorted[i].time);
+      const nextM = sorted[i+1] ? timeToMinutes(sorted[i+1].time) : 9999;
+      if (now >= m && now < nextM) { currentIdx = i; break; }
+    }
+
+    const banner = document.getElementById('nowBanner');
+    const titleEl = document.getElementById('nowTitle');
+    const metaEl = document.getElementById('nowMeta');
+    const nextEl = document.getElementById('nextUp');
+
+    if (currentIdx === -1) {
+      // Before start
+      const first = sorted[0];
+      const minsUntil = timeToMinutes(first.time) - now;
+      if (minsUntil > 0 && minsUntil < 1440) {
+        titleEl.textContent = 'Before start';
+        metaEl.innerHTML = `<span>First stop in <strong class="countdown ${minsUntil < 60 ? 'urgent' : ''}">${formatCountdown(minsUntil)}</strong></span>`;
+        nextEl.innerHTML = `<strong>${first.label}</strong> — ${first.title}`;
+      } else {
+        titleEl.textContent = 'Day complete 🎉';
+        metaEl.innerHTML = '';
+        nextEl.innerHTML = 'All done. Nice work.';
+      }
+      return;
+    }
+
+    const curr = sorted[currentIdx];
+    const next = sorted[currentIdx + 1];
+    titleEl.textContent = curr.title;
+
+    let meta = `<span><strong>${curr.label}</strong></span>`;
+    if (next) {
+      const minsToNext = timeToMinutes(next.time) - now;
+      meta += `<span>Next in <strong class="countdown ${minsToNext < 15 ? 'urgent' : ''}">${formatCountdown(minsToNext)}</strong></span>`;
+    }
+    if (curr.key) meta += `<span style="color:var(--accent-hot);"><strong>★ KEY MOMENT</strong></span>`;
+    metaEl.innerHTML = meta;
+
+    if (next) {
+      nextEl.innerHTML = `<strong>Next — ${next.label}</strong> · ${next.title}`;
+    } else {
+      nextEl.innerHTML = 'Last item of the day.';
+    }
+  }
+
+  function renderLocations() {
+    const c = document.getElementById('locations');
+    c.innerHTML = locations.map(l => `
+      <div class="loc-card">
+        <div class="loc-label">${l.label}</div>
+        <div class="loc-name">${l.name}</div>
+        <div class="loc-addr">${l.addr}</div>
+        <div class="loc-note">${l.note}</div>
+        <div class="loc-actions">
+          <a href="${l.maps}" class="btn btn-primary">Apple Maps</a>
+          <a href="${l.gmaps}" target="_blank" class="btn">Google Maps</a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderContacts() {
+    const c = document.getElementById('contacts');
+    c.innerHTML = contacts.map(p => `
+      <div class="contact-row">
+        <div class="contact-info">
+          <div class="contact-role">${p.role}</div>
+          <div class="contact-name">${p.name}</div>
+          ${p.num ? `<div class="contact-num">${p.num}</div>` : '<div class="contact-num" style="color:var(--text-mute)">no number on file</div>'}
+        </div>
+        ${p.num ? `<a href="tel:${p.num.replace(/\s/g,'')}" class="call-btn">📞</a>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function renderShots() {
+    const c = document.getElementById('shots');
+    c.innerHTML = shots.map(g => `
+      <div class="shot-group">
+        <div class="shot-group-title">${g.group}</div>
+        ${g.items.map(s => `
+          <div class="shot ${state.shots[s.id] ? 'done' : ''}" data-shot="${s.id}">
+            <div class="shot-check"></div>
+            <div class="shot-text">
+              ${s.text}
+              ${s.detail ? `<div class="shot-detail">${s.detail}</div>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+
+    c.querySelectorAll('.shot').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.dataset.shot;
+        state.shots[id] = !state.shots[id];
+        saveState();
+        renderShots();
+        updateCounts();
+      });
+    });
+  }
+
+  function renderGroups() {
+    const c = document.getElementById('groups');
+    c.innerHTML = groups.map((g, i) => `
+      <div class="gp-item ${state.groups[g.id] ? 'done' : ''}" data-group="${g.id}">
+        <div class="gp-num">${i + 1}</div>
+        <div class="gp-content">
+          <div class="gp-title">${g.title}</div>
+          <div class="gp-role">${g.role}</div>
+          <div class="gp-who">${g.who}</div>
+        </div>
+      </div>
+    `).join('');
+
+    c.querySelectorAll('.gp-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.dataset.group;
+        state.groups[id] = !state.groups[id];
+        saveState();
+        renderGroups();
+        updateCounts();
+      });
+    });
+  }
+
+  function renderSongs() {
+    const c = document.getElementById('songs');
+    c.innerHTML = songs.map(s => `
+      <div class="song">
+        <div class="song-icon">♪</div>
+        <div class="song-content">
+          <div class="song-moment">${s.moment}</div>
+          <div class="song-title">${s.title}</div>
+          <div class="song-artist">${s.artist}</div>
+          ${s.note ? `<div class="song-note">${s.note}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderCeremony() {
+    const c = document.getElementById('ceremony');
+    c.innerHTML = ceremony.map(i => `
+      <div class="tl-item ${i.key ? 'key-moment' : ''}" style="cursor:default;">
+        <div class="tl-time">${i.time || '·'}</div>
+        <div class="tl-content">
+          <div class="tl-title">${i.title}</div>
+          ${i.sub ? `<div class="tl-sub">${i.sub}</div>` : ''}
+          ${i.key ? '<span class="tl-tag tag-key">key</span>' : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderReception() {
+    const c = document.getElementById('reception');
+    c.innerHTML = reception.map(i => `
+      <div class="tl-item ${i.key ? 'key-moment' : ''}" style="cursor:default;">
+        <div class="tl-time">${i.time}</div>
+        <div class="tl-content">
+          <div class="tl-title">${i.title}</div>
+          ${i.sub ? `<div class="tl-sub">${i.sub}</div>` : ''}
+          ${i.key ? '<span class="tl-tag tag-key">key</span>' : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function updateCounts() {
+    const shotsDone = Object.values(state.shots).filter(Boolean).length;
+    const shotsTotal = shots.reduce((sum, g) => sum + g.items.length, 0);
+    document.getElementById('shots-count').textContent = `${shotsDone} of ${shotsTotal}`;
+
+    const groupsDone = Object.values(state.groups).filter(Boolean).length;
+    document.getElementById('groups-count').textContent = `${groupsDone} of ${groups.length}`;
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const tDone = Object.values(state.timeline).filter(Boolean).length;
+    const sDone = Object.values(state.shots).filter(Boolean).length;
+    const gDone = Object.values(state.groups).filter(Boolean).length;
+    const total = timeline.length + shots.reduce((s,g) => s+g.items.length, 0) + groups.length;
+    const done = tDone + sDone + gDone;
+    const pct = total > 0 ? Math.round((done/total) * 100) : 0;
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ UTILS ============
+  function timeToMinutes(t) {
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + m;
+  }
+  function currentMinutes() {
+    const d = new Date();
+    return d.getHours() * 60 + d.getMinutes();
+  }
+  function formatCountdown(mins) {
+    if (mins <= 0) return 'NOW';
+    if (mins < 60) return mins + ' min';
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return h + 'h ' + m + 'm';
+  }
+  function updateClock() {
+    const d = new Date();
+    const h = d.getHours();
+    const m = String(d.getMinutes()).padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const hh = h % 12 || 12;
+    document.getElementById('clock').textContent = `${hh}:${m} ${ampm}`;
+  }
+
+  function resetAll() {
+    if (confirm('Clear every tick? Start fresh?')) {
+      state = { timeline: {}, shots: {}, groups: {} };
+      saveState();
+      renderAll();
+    }
+  }
+
+  function renderAll() {
+    renderTimeline();
+    renderNow();
+    renderLocations();
+    renderContacts();
+    renderShots();
+    renderGroups();
+    renderSongs();
+    renderCeremony();
+    renderReception();
+    updateCounts();
+  }
+
+  // ============ TABS ============
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      const tab = t.dataset.tab;
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // ============ INIT ============
+  updateClock();
+  renderAll();
+  setInterval(() => {
+    updateClock();
+    renderNow();
+    renderTimeline();
+  }, 30000);
+</script>
+
+</body>
+</html>
