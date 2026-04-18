@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Matrix · Client Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_assets/styles.css">
+<style>
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.client-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 28px 24px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.15s;
+  display: block;
+}
+.client-card:hover {
+  background: var(--surface-2);
+  border-color: var(--accent-dim);
+}
+.client-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+  margin-bottom: 20px;
+}
+.client-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.client-card p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+.client-card-footer {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 24px;
+  color: var(--text-dim);
+  border: 1px dashed var(--border);
+}
+.empty-state .muted {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body class="view-client">
+<div class="shell">
+
+<header class="masthead">
+  <div class="masthead-top">
+    <span class="label">Content Matrix · Directory</span>
+    <span>0 clients · Updated 18 Apr 2026</span>
+  </div>
+  <div class="masthead-main">
+    <div>
+      <h1 class="client-name">Client Matrices</h1>
+      <div class="client-tagline">6×6 Content Systems · Sev's Advisory</div>
+    </div>
+  </div>
+</header>
+
+<div class="directory-grid">
+
+      <div class="empty-state">
+        <p>No client matrices yet.</p>
+        <p class="muted">Run "new client [slug]" in Claude Code to start.</p>
+      </div>
+    
+</div>
+
+<footer class="meta-footer" style="margin-top: 80px;">
+  <span>sev-tools / matrix · auto-generated index</span>
+  <span>Built on the 6×6 methodology</span>
+</footer>
+
+</div>
+</body>
+</html>

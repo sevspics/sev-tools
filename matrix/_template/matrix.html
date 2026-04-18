@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{CLIENT_NAME}} — Content Matrix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/styles.css">
+</head>
+<body class="view-client">
+
+<div class="shell">
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-top">
+    <span class="label">Content Matrix · 6×6</span>
+    <span>Generated {{DATE}} · 36 Concepts · 7 Authority Videos · V{{VERSION}}</span>
+  </div>
+  <div class="masthead-main">
+    <div>
+      <h1 class="client-name">{{CLIENT_NAME}}</h1>
+      <div class="client-tagline">{{CLIENT_TAGLINE}}</div>
+    </div>
+    <div class="view-toggle">
+      <button data-view="client" class="active">Client View</button>
+      <button data-view="internal">Internal</button>
+    </div>
+  </div>
+</header>
+
+<!-- RESEARCH -->
+<div class="section-header">
+  <h2 class="section-title">What Your Audience Is Already Asking</h2>
+  <span class="section-label">01 · Research</span>
+</div>
+
+<div class="research-grid">
+  <div class="research-block">
+    <h3>Top Pain Points</h3>
+    <ul>
+      <!-- {{PAIN_POINTS}} -->
+      <!-- Each: <li><strong>"Quote"</strong> Explanation.</li> -->
+    </ul>
+  </div>
+  <div class="research-block">
+    <h3>Questions Your Audience Is Searching</h3>
+    <ul>
+      <!-- {{AUDIENCE_QUESTIONS}} -->
+      <!-- Each: <li>"Plain language search query"</li> -->
+    </ul>
+  </div>
+</div>
+
+<div class="research-block internal-only" style="margin-top: 24px;">
+  <h3>Research Methodology</h3>
+  <ul>
+    <!-- {{METHODOLOGY_NOTES}} -->
+  </ul>
+</div>
+
+<!-- PILLAR THESES -->
+<div class="section-header">
+  <h2 class="section-title">Your 6 Pillars, Your Angle</h2>
+  <span class="section-label">02 · Pillars</span>
+</div>
+
+<div class="pillar-grid">
+  <!-- {{PILLAR_CARDS}} -->
+  <!-- 6 cards, each:
+  <div class="pillar-card">
+    <div class="pillar-num">Pillar 0X</div>
+    <h4>Name</h4>
+    <p>Client-specific thesis.</p>
+  </div>
+  -->
+</div>
+
+<!-- SELLING 7 -->
+<div class="section-header">
+  <h2 class="section-title">The YouTube Authority Stack</h2>
+  <span class="section-label">03 · Selling 7 · GEO Layer</span>
+</div>
+
+<p style="color: var(--text-dim); font-size: 14px; margin-bottom: 24px; max-width: 720px;">
+Seven videos. Always on YouTube, always embedded on the website. These are
+the assets AI search engines cite when someone asks about {{INDUSTRY}}.
+Produced once, work forever.
+</p>
+
+<div class="selling-seven-grid">
+  <!-- {{SELLING_SEVEN_CARDS}} -->
+</div>
+
+<!-- MATRIX -->
+<div class="section-header">
+  <h2 class="section-title">The 36 Concepts</h2>
+  <span class="section-label">04 · Matrix · 6 × 6</span>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter</span>
+  <button class="filter-btn active">All 36</button>
+  <button class="filter-btn">Costs</button>
+  <button class="filter-btn">Pain Points</button>
+  <button class="filter-btn">Success</button>
+  <button class="filter-btn">Comparisons</button>
+  <button class="filter-btn">Best-of</button>
+  <button class="filter-btn">Journey</button>
+  <button class="filter-btn">GEO Only</button>
+</div>
+
+<div class="matrix-grid">
+  <div class="matrix-corner"></div>
+  <div class="matrix-col-header">Faceless</div>
+  <div class="matrix-col-header">Memes</div>
+  <div class="matrix-col-header">Candid</div>
+  <div class="matrix-col-header">Framed</div>
+  <div class="matrix-col-header">Visual</div>
+  <div class="matrix-col-header">Talking</div>
+
+  <!-- {{MATRIX_ROWS}} -->
+  <!-- 6 rows, each starts with matrix-row-header, then 6 concept-cells -->
+</div>
+
+<div class="internal-notes internal-only">
+  <h4>Internal Production Notes</h4>
+  <ul>
+    <!-- {{PRODUCTION_NOTES}} -->
+  </ul>
+</div>
+
+<!-- CALENDAR -->
+<div class="section-header">
+  <h2 class="section-title">30-Day Calendar</h2>
+  <span class="section-label">05 · Distribution</span>
+</div>
+
+<div class="calendar-grid">
+  <div class="cal-day-header"></div>
+  <div class="cal-day-header">Mon</div>
+  <div class="cal-day-header">Tue</div>
+  <div class="cal-day-header">Wed</div>
+  <div class="cal-day-header">Thu</div>
+  <div class="cal-day-header">Fri</div>
+  <div class="cal-day-header">Sat</div>
+  <div class="cal-day-header">Sun</div>
+
+  <!-- {{CALENDAR_ROWS}} -->
+</div>
+
+<!-- MATH -->
+<div class="section-header">
+  <h2 class="section-title">Distribution Math</h2>
+  <span class="section-label">06 · Projection</span>
+</div>
+
+<p style="color: var(--text-dim); font-size: 14px; margin-bottom: 24px; max-width: 720px;">
+Three scenarios. Conservative assumptions. Based on {{VIDEOS_PER_MONTH}}
+short-form posts + {{LONG_FORM_PER_MONTH}} long-form uploads per month.
+Client value baseline: ${{AVG_CLIENT_VALUE}} annual average.
+</p>
+
+<table class="math-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Worst Case</th>
+      <th>Realistic</th>
+      <th>Best Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- {{MATH_ROWS}} -->
+  </tbody>
+</table>
+
+<!-- FOOTER -->
+<footer class="meta-footer">
+  <span>{{CLIENT_NAME}} · Content Matrix · V{{VERSION}}</span>
+  <span>Built on the 6×6 methodology · {{DATE}}</span>
+</footer>
+
+</div>
+
+<script>
+window.MATRIX_DATA = {
+  client: {
+    slug: "{{CLIENT_SLUG}}",
+    name: "{{CLIENT_NAME}}",
+    url: "{{CLIENT_URL}}",
+    industry: "{{INDUSTRY}}"
+  },
+  pillars: [
+    { id: 1, name: "Costs" },
+    { id: 2, name: "Pain Points" },
+    { id: 3, name: "Success Stories" },
+    { id: 4, name: "Comparisons" },
+    { id: 5, name: "Best-of Lists" },
+    { id: 6, name: "Practitioner Journey" }
+  ],
+  formats: [
+    { id: 'faceless', name: "Faceless" },
+    { id: 'memes', name: "Memes" },
+    { id: 'candid', name: "Candid" },
+    { id: 'framed', name: "Framed" },
+    { id: 'visual', name: "Visual Storyteller" },
+    { id: 'talking', name: "Talking Head" }
+  ],
+  concepts: [
+    /* {{CONCEPTS_JSON}} */
+  ]
+};
+</script>
+<script src="../../_assets/matrix.js"></script>
+
+</body>
+</html>
