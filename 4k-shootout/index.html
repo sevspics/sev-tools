@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 4K Shootout — Pocket 3 vs Pocket 4 vs iPhone 17 Pro Max</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-elev: #131313;
+    --bg-card: #181818;
+    --bg-hover: #1f1f1f;
+    --border: #262626;
+    --border-strong: #3a3a3a;
+    --text: #ededed;
+    --text-dim: #999;
+    --text-faint: #5c5c5c;
+    --accent: #ff5722;
+    --accent-dim: #c2410c;
+    --accent-bg: rgba(255, 87, 34, 0.08);
+    --pocket3: #4ade80;
+    --pocket4: #f59e0b;
+    --iphone: #60a5fa;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --sans: "IBM Plex Sans", -apple-system, sans-serif;
+    --display: "Fraunces", Georgia, serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ==================== HEADER ==================== */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .logo strong { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* ==================== HERO ==================== */
+  .hero {
+    padding: 120px 0 80px;
+    position: relative;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-bg) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(48px, 8vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    margin-bottom: 32px;
+    font-variation-settings: "opsz" 144;
+  }
+
+  .hero h1 .italic {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin-bottom: 48px;
+    line-height: 1.6;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero-meta span strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ==================== CONTENDERS ==================== */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin-bottom: 48px;
+    max-width: 800px;
+  }
+
+  .contenders {
+    padding: 80px 0;
+  }
+
+  .contender-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .contender-grid { grid-template-columns: 1fr; }
+  }
+
+  .contender {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .contender:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+
+  .contender-tag {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+
+  .contender-tag.p3 { color: var(--pocket3); border-color: var(--pocket3); }
+  .contender-tag.p4 { color: var(--pocket4); border-color: var(--pocket4); }
+  .contender-tag.ip { color: var(--iphone); border-color: var(--iphone); }
+
+  .contender h3 {
+    font-family: var(--display);
+    font-size: 28px;
+    line-height: 1.1;
+    margin: 32px 0 8px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .contender-price {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  .contender-blurb {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .contender-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .contender-stat:last-child { border-bottom: none; }
+
+  .contender-stat-label {
+    font-family: var(--mono);
+    color: var(--text-faint);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .contender-stat-value {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ==================== COMPARISON TABLE ==================== */
+  .comparison {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 10px 18px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+
+  .tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+  }
+
+  .table-wrap {
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 720px;
+  }
+
+  th, td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    background: var(--bg-elev);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 500;
+    position: sticky;
+    top: 0;
+  }
+
+  th.spec-col { width: 28%; }
+
+  th.p3-col { color: var(--pocket3); border-bottom: 2px solid var(--pocket3); }
+  th.p4-col { color: var(--pocket4); border-bottom: 2px solid var(--pocket4); }
+  th.ip-col { color: var(--iphone); border-bottom: 2px solid var(--iphone); }
+
+  td:first-child {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  td .winner {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  tbody tr:hover { background: var(--bg-hover); }
+
+  .table-pane { display: none; }
+  .table-pane.active { display: block; }
+
+  /* ==================== QUIZ ==================== */
+  .quiz-section {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+    position: relative;
+    background:
+      radial-gradient(ellipse at top left, rgba(255, 87, 34, 0.03) 0%, transparent 50%);
+  }
+
+  .quiz-intro {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 64px;
+  }
+
+  .quiz-intro .section-label {
+    justify-content: center;
+  }
+
+  .quiz-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 48px;
+    max-width: 780px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  @media (max-width: 640px) {
+    .quiz-box { padding: 28px 20px; }
+  }
+
+  .quiz-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--accent);
+    width: 0;
+    transition: width 0.4s ease;
+  }
+
+  .question-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .question-text {
+    font-family: var(--display);
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.2;
+    font-weight: 700;
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+
+  .options {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    width: 100%;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .option:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+    transform: translateX(4px);
+  }
+
+  .option.selected {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+  .option-marker {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    flex-shrink: 0;
+    padding-top: 2px;
+    letter-spacing: 0.1em;
+  }
+
+  .option.selected .option-marker { color: var(--accent); }
+
+  .option-text { flex: 1; }
+
+  .option-text strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .option-text span {
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn {
+    padding: 14px 28px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn:hover:not(:disabled) {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 600;
+  }
+
+  .btn.primary:hover:not(:disabled) {
+    background: #ff7043;
+    border-color: #ff7043;
+    color: #000;
+  }
+
+  /* ==================== RESULT ==================== */
+  .result {
+    display: none;
+  }
+
+  .result.active { display: block; }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .result-winner-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #000;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .result-name {
+    font-family: var(--display);
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .result-tagline {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 580px;
+    margin: 0 auto 40px;
+  }
+
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 640px) {
+    .scorecard { grid-template-columns: 1fr; }
+  }
+
+  .score-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+  }
+
+  .score-card.winner {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+  .score-card-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+
+  .score-card-number {
+    font-family: var(--display);
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .score-card.winner .score-card-number { color: var(--accent); }
+
+  .score-bar {
+    height: 4px;
+    background: var(--border);
+    margin-top: 12px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    background: var(--text-dim);
+    transition: width 1s ease;
+  }
+
+  .score-card.winner .score-bar-fill { background: var(--accent); }
+
+  .reasoning {
+    background: var(--bg-elev);
+    border-left: 2px solid var(--accent);
+    padding: 32px 36px;
+    margin-bottom: 32px;
+  }
+
+  .reasoning h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .reasoning p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .reasoning p:last-child { margin-bottom: 0; }
+
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ==================== VERDICT ==================== */
+  .verdict {
+    padding: 80px 0 120px;
+    border-top: 1px solid var(--border);
+  }
+
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .verdict-card {
+    padding: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+
+  .verdict-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .verdict-card-header::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .verdict-card.p3 .verdict-card-header::before { background: var(--pocket3); }
+  .verdict-card.p3 .verdict-card-header { color: var(--pocket3); }
+  .verdict-card.p4 .verdict-card-header::before { background: var(--pocket4); }
+  .verdict-card.p4 .verdict-card-header { color: var(--pocket4); }
+  .verdict-card.ip .verdict-card-header::before { background: var(--iphone); }
+  .verdict-card.ip .verdict-card-header { color: var(--iphone); }
+
+  .verdict-card h4 {
+    font-family: var(--display);
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .verdict-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  /* ==================== FOOTER ==================== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  /* ==================== ANIMATIONS ==================== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in {
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  /* Stagger delay classes */
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  /* Crosshatch decorative */
+  .corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--accent);
+  }
+  .corner.tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+  .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="nav">
+      <div class="logo">4K / <strong>SHOOTOUT</strong> / 2026</div>
+      <div class="nav-links">
+        <a href="#contenders">Contenders</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#quiz">Take the Quiz</a>
+        <a href="#verdict">Verdict</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">A buyer's decision engine</div>
+    <h1>
+      Three cameras.<br>
+      One pocket.<br>
+      <span class="italic">One right answer</span> for you.
+    </h1>
+    <p class="hero-sub">
+      The DJI Osmo Pocket 3, the brand-new Osmo Pocket 4, and the iPhone 17 Pro Max.
+      All three can shoot stunning 4K video. Only one is the right buy for how you actually film.
+      Compare the specs, take the quiz, get the answer.
+    </p>
+    <div class="hero-meta">
+      <span>SPECS SOURCED <strong>Apr 2026</strong></span>
+      <span>SOURCES <strong>DJI, Apple, Engadget, CineD, DPReview</strong></span>
+      <span>READING TIME <strong>~4 min</strong></span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTENDERS ==================== -->
+<section class="contenders" id="contenders">
+  <div class="container">
+    <div class="section-label">The Contenders</div>
+    <h2 class="section-title">Same mission, radically different tools.</h2>
+
+    <div class="contender-grid">
+      <div class="contender">
+        <div class="contender-tag p3">Pocket 3 · 2023</div>
+        <h3>DJI Osmo Pocket 3</h3>
+        <div class="contender-price">From ~$519 USD / ~$799 AUD</div>
+        <p class="contender-blurb">
+          The camera that ate the vlogging world. 1-inch sensor, 3-axis mechanical gimbal, 4K at up to 120fps.
+          Two and a half years old, still excellent, and now a serious value play.
+        </p>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Sensor</span>
+          <span class="contender-stat-value">1-inch CMOS</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Max 4K</span>
+          <span class="contender-stat-value">4K/120fps</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Log Profile</span>
+          <span class="contender-stat-value">10-bit D-Log M</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Stabilisation</span>
+          <span class="contender-stat-value">3-axis gimbal</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Weight</span>
+          <span class="contender-stat-value">179g</span>
+        </div>
+      </div>
+
+      <div class="contender">
+        <div class="contender-tag p4">Pocket 4 · 2026</div>
+        <h3>DJI Osmo Pocket 4</h3>
+        <div class="contender-price">From £445 / €499 / ~$749 AUD</div>
+        <p class="contender-blurb">
+          The evolution, not the revolution. Same 1-inch sensor platform, but 4K now runs to 240fps, dynamic range jumps to 14 stops, and 107GB of storage lives inside the body. Not for sale in the US.
+        </p>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Sensor</span>
+          <span class="contender-stat-value">1-inch CMOS (new)</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Max 4K</span>
+          <span class="contender-stat-value">4K/240fps</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Log Profile</span>
+          <span class="contender-stat-value">Full 10-bit D-Log</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Stabilisation</span>
+          <span class="contender-stat-value">3-axis gimbal</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Weight</span>
+          <span class="contender-stat-value">190.5g</span>
+        </div>
+      </div>
+
+      <div class="contender">
+        <div class="contender-tag ip">iPhone 17 Pro Max · 2025</div>
+        <h3>iPhone 17 Pro Max</h3>
+        <div class="contender-price">From $1,999 AUD / $1,199 USD</div>
+        <p class="contender-blurb">
+          The everything device. Three 48MP cameras, 4K Dolby Vision to 120fps, ProRes RAW, Apple Log 2, Genlock. It makes calls, runs your business, and shoots broadcast-spec video.
+        </p>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Main Sensor</span>
+          <span class="contender-stat-value">48MP Fusion (~1/1.28")</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Max 4K</span>
+          <span class="contender-stat-value">4K/120fps Dolby Vision</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Log Profile</span>
+          <span class="contender-stat-value">Apple Log 2 + ProRes RAW</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Stabilisation</span>
+          <span class="contender-stat-value">Sensor-shift + electronic</span>
+        </div>
+        <div class="contender-stat">
+          <span class="contender-stat-label">Weight</span>
+          <span class="contender-stat-value">233g</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPARISON TABLE ==================== -->
+<section class="comparison" id="comparison">
+  <div class="container">
+    <div class="section-label">Spec Sheet / Side By Side</div>
+    <h2 class="section-title">The numbers that matter for 4K video.</h2>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="video">Video</button>
+      <button class="tab" data-tab="image">Image Quality</button>
+      <button class="tab" data-tab="handling">Handling &amp; Audio</button>
+      <button class="tab" data-tab="workflow">Workflow &amp; Price</button>
+    </div>
+
+    <!-- VIDEO TAB -->
+    <div class="table-pane active" data-pane="video">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="spec-col">Spec</th>
+              <th class="p3-col">Osmo Pocket 3</th>
+              <th class="p4-col">Osmo Pocket 4</th>
+              <th class="ip-col">iPhone 17 Pro Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Max 4K frame rate</td>
+              <td>4K / 120fps (slow-mo mode)</td>
+              <td>4K / 240fps <span class="winner">Winner</span></td>
+              <td>4K / 120fps Dolby Vision</td>
+            </tr>
+            <tr>
+              <td>Standard 4K rates</td>
+              <td>24 / 25 / 30 / 48 / 50 / 60</td>
+              <td>24 / 25 / 30 / 48 / 50 / 60</td>
+              <td>24 / 25 / 30 / 60 / 100 / 120</td>
+            </tr>
+            <tr>
+              <td>Log profile</td>
+              <td>10-bit D-Log M (light flat)</td>
+              <td>Full 10-bit D-Log</td>
+              <td>Apple Log 2 + ProRes RAW <span class="winner">Pro</span></td>
+            </tr>
+            <tr>
+              <td>Dynamic range (claimed)</td>
+              <td>Not officially stated</td>
+              <td>14 stops in D-Log</td>
+              <td>~14 stops in Log 2</td>
+            </tr>
+            <tr>
+              <td>Max bitrate</td>
+              <td>130 Mbps (H.265)</td>
+              <td>180 Mbps (H.265)</td>
+              <td>ProRes: 1.5+ Gbps (ext. SSD)</td>
+            </tr>
+            <tr>
+              <td>Codec</td>
+              <td>H.264 + H.265</td>
+              <td>H.265 only</td>
+              <td>HEVC, ProRes, ProRes RAW</td>
+            </tr>
+            <tr>
+              <td>HDR mode</td>
+              <td>10-bit HLG</td>
+              <td>D-Log only (HLG removed)</td>
+              <td>Dolby Vision HDR <span class="winner">Winner</span></td>
+            </tr>
+            <tr>
+              <td>Vertical 4K</td>
+              <td>Cropped 3K</td>
+              <td>Cropped 3K</td>
+              <td>Full 4K via Open Gate</td>
+            </tr>
+            <tr>
+              <td>Pro features</td>
+              <td>ActiveTrack 6.0</td>
+              <td>ActiveTrack 7.0, lossless 2x zoom</td>
+              <td>Genlock, ACES, ProDock sync</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- IMAGE QUALITY TAB -->
+    <div class="table-pane" data-pane="image">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="spec-col">Attribute</th>
+              <th class="p3-col">Osmo Pocket 3</th>
+              <th class="p4-col">Osmo Pocket 4</th>
+              <th class="ip-col">iPhone 17 Pro Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sensor size</td>
+              <td>1-inch (9.4MP)</td>
+              <td>1-inch (37MP stacked)</td>
+              <td>~1/1.28" (48MP)</td>
+            </tr>
+            <tr>
+              <td>Lens</td>
+              <td>Fixed 20mm f/2.0</td>
+              <td>Fixed 20mm f/2.0</td>
+              <td>Tri-lens: 13mm, 24mm, 100mm (4x optical)</td>
+            </tr>
+            <tr>
+              <td>Focal length flexibility</td>
+              <td>Fixed only</td>
+              <td>Fixed + 2x lossless zoom</td>
+              <td>0.5x / 1x / 4x / 8x optical <span class="winner">Winner</span></td>
+            </tr>
+            <tr>
+              <td>Low-light (real-world)</td>
+              <td>Cleaner files, less noise reduction</td>
+              <td>~2 stops better than Pocket 3</td>
+              <td>Heavier processing, aggressive NR</td>
+            </tr>
+            <tr>
+              <td>Skin tone rendering</td>
+              <td>Natural, cinematic</td>
+              <td>Improved (DJI claim) <span class="winner">Winner</span></td>
+              <td>Polished but punchy/saturated</td>
+            </tr>
+            <tr>
+              <td>Colour science</td>
+              <td>DJI (neutral-warm)</td>
+              <td>DJI (refined)</td>
+              <td>Apple computational (cooler)</td>
+            </tr>
+            <tr>
+              <td>Best suited for</td>
+              <td>Straight-out-of-camera grade</td>
+              <td>Grading in post with D-Log</td>
+              <td>Pro pipelines, multi-cam work</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- HANDLING TAB -->
+    <div class="table-pane" data-pane="handling">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="spec-col">Attribute</th>
+              <th class="p3-col">Osmo Pocket 3</th>
+              <th class="p4-col">Osmo Pocket 4</th>
+              <th class="ip-col">iPhone 17 Pro Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Stabilisation type</td>
+              <td>3-axis mechanical gimbal <span class="winner">Winner</span></td>
+              <td>3-axis mechanical gimbal <span class="winner">Winner</span></td>
+              <td>Sensor-shift + electronic</td>
+            </tr>
+            <tr>
+              <td>Low-light stabilisation</td>
+              <td>Unaffected by shutter speed</td>
+              <td>Unaffected by shutter speed</td>
+              <td>Degrades below 1/60</td>
+            </tr>
+            <tr>
+              <td>Weight</td>
+              <td>179g</td>
+              <td>190.5g</td>
+              <td>233g</td>
+            </tr>
+            <tr>
+              <td>Built-in screen</td>
+              <td>2" OLED (rotatable)</td>
+              <td>2" OLED (rotatable)</td>
+              <td>6.9" ProMotion OLED</td>
+            </tr>
+            <tr>
+              <td>Battery (4K60)</td>
+              <td>~116 min</td>
+              <td>~150 min (20% bigger cell)</td>
+              <td>All-day (shared device)</td>
+            </tr>
+            <tr>
+              <td>One-handed operation</td>
+              <td>Excellent</td>
+              <td>Excellent (new zoom button)</td>
+              <td>Awkward for long sessions</td>
+            </tr>
+            <tr>
+              <td>Internal mic</td>
+              <td>3-mic array (stereo)</td>
+              <td>3-mic array + spatial audio</td>
+              <td>3-mic + spatial + wind NR</td>
+            </tr>
+            <tr>
+              <td>Wireless mic integration</td>
+              <td>Direct to DJI Mic 2</td>
+              <td>Direct to DJI Mic 2 / 3 / Mini</td>
+              <td>AirPods as mic, Bluetooth only</td>
+            </tr>
+            <tr>
+              <td>Waterproof</td>
+              <td>No</td>
+              <td>No</td>
+              <td>IP68 (6m, 30 min)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- WORKFLOW TAB -->
+    <div class="table-pane" data-pane="workflow">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="spec-col">Attribute</th>
+              <th class="p3-col">Osmo Pocket 3</th>
+              <th class="p4-col">Osmo Pocket 4</th>
+              <th class="ip-col">iPhone 17 Pro Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Launch price (AUD approx)</td>
+              <td>~$799 AUD</td>
+              <td>~$749 AUD</td>
+              <td>$1,999 AUD <span class="winner">Premium</span></td>
+            </tr>
+            <tr>
+              <td>Storage</td>
+              <td>microSD only (512GB max)</td>
+              <td>107GB internal + microSD (1TB)</td>
+              <td>256GB-2TB internal</td>
+            </tr>
+            <tr>
+              <td>Transfer speed</td>
+              <td>USB 2.0</td>
+              <td>USB 3.1 at 800 MB/s</td>
+              <td>USB 3 at 10 Gb/s</td>
+            </tr>
+            <tr>
+              <td>Editing on device</td>
+              <td>No (needs phone/computer)</td>
+              <td>No (needs phone/computer)</td>
+              <td>Yes (Final Cut, Premiere, CapCut)</td>
+            </tr>
+            <tr>
+              <td>Direct upload to social</td>
+              <td>Via Mimo app transfer</td>
+              <td>Via Mimo app transfer</td>
+              <td>Native, one-tap <span class="winner">Winner</span></td>
+            </tr>
+            <tr>
+              <td>Cloud sync</td>
+              <td>Manual</td>
+              <td>Manual</td>
+              <td>iCloud, Photos, automatic</td>
+            </tr>
+            <tr>
+              <td>Lifespan / upgrade path</td>
+              <td>Single-purpose tool</td>
+              <td>Single-purpose tool</td>
+              <td>Replaces your current phone</td>
+            </tr>
+            <tr>
+              <td>Australia availability</td>
+              <td>Widely available</td>
+              <td>Available from Apr 22, 2026</td>
+              <td>Widely available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== QUIZ ==================== -->
+<section class="quiz-section" id="quiz">
+  <div class="container">
+    <div class="quiz-intro">
+      <div class="section-label">The Decision Engine</div>
+      <h2 class="section-title" style="margin-bottom: 16px;">Answer 6 questions. Get one clear answer.</h2>
+      <p style="color: var(--text-dim); font-size: 16px;">
+        No weasel words. No "it depends." The quiz weighs your answers against what each camera actually does best, and lands on the single right pick for you.
+      </p>
+    </div>
+
+    <div class="quiz-box">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+
+      <!-- QUIZ CONTENT -->
+      <div id="quiz-content">
+        <div class="quiz-progress">
+          <span id="progress-label">Question 1 of 6</span>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+
+        <div id="question-container">
+          <!-- Dynamically rendered -->
+        </div>
+
+        <div class="quiz-nav">
+          <button class="btn" id="back-btn" disabled>← Back</button>
+          <button class="btn primary" id="next-btn" disabled>Next →</button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="result" id="result">
+        <div class="result-header">
+          <div class="result-winner-tag" id="result-tag">Your Match</div>
+          <div class="result-name" id="result-name">—</div>
+          <p class="result-tagline" id="result-tagline">—</p>
+        </div>
+
+        <div class="scorecard" id="scorecard">
+          <!-- dynamically rendered -->
+        </div>
+
+        <div class="reasoning">
+          <h4>Why This Wins For You</h4>
+          <div id="reasoning-body"></div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn" id="restart-btn">Retake Quiz</button>
+          <button class="btn primary" id="share-btn">Copy Result</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FINAL VERDICT ==================== -->
+<section class="verdict" id="verdict">
+  <div class="container">
+    <div class="section-label">The Short Version</div>
+    <h2 class="section-title">If you skipped the quiz, read this.</h2>
+
+    <div class="verdict-grid">
+      <div class="verdict-card p3">
+        <div class="verdict-card-header">Best Value Play</div>
+        <h4>Osmo Pocket 3</h4>
+        <p>
+          Two and a half years on, this is still the gold standard for cinematic solo-creator video.
+          Now that the Pocket 4 is out, Pocket 3 prices will soften, and for anyone on a budget who
+          wants the gimbal magic without the 4K/240fps flex, this is the smart buy.
+        </p>
+      </div>
+
+      <div class="verdict-card p4">
+        <div class="verdict-card-header">Best Pure Vlogging Tool</div>
+        <h4>Osmo Pocket 4</h4>
+        <p>
+          If your primary job is shooting yourself or someone else walking, talking, and moving through
+          a space, nothing touches it. 4K/240fps, 14 stops, 107GB internal, mechanical gimbal. The
+          ultimate single-purpose tool. Not available in the US.
+        </p>
+      </div>
+
+      <div class="verdict-card ip">
+        <div class="verdict-card-header">Best All-Round Device</div>
+        <h4>iPhone 17 Pro Max</h4>
+        <p>
+          The only camera here that's also a phone, an editor, a streaming rig, and a business
+          computer. ProRes RAW, Log 2, Genlock, three focal lengths. For client work and travel where
+          you can't justify a second device, it wins on pure versatility.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>© 2026 / Built for creators deciding what to film with next</div>
+      <div>Specs verified April 2026 · DJI, Apple, Engadget, CineD, DPReview</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ==================== DATA ====================
+
+const questions = [
+  {
+    id: 'primary_use',
+    label: 'The Big One',
+    question: "What's the single biggest reason you're buying a new camera?",
+    options: [
+      {
+        text: "Run-and-gun vlogging",
+        subtext: "Walking, talking, filming myself, travel content",
+        scores: { p3: 3, p4: 5, ip: 2 }
+      },
+      {
+        text: "Sit-down talking head or podcast B-roll",
+        subtext: "Studio content, interviews, static angles",
+        scores: { p3: 3, p4: 4, ip: 3 }
+      },
+      {
+        text: "Travel and family",
+        subtext: "Capturing life, holidays, kids, things I'll actually look back on",
+        scores: { p3: 2, p4: 3, ip: 5 }
+      },
+      {
+        text: "Client and commercial work",
+        subtext: "I get paid to shoot and need pro-grade output",
+        scores: { p3: 2, p4: 3, ip: 5 }
+      }
+    ]
+  },
+  {
+    id: 'budget',
+    label: 'The Money',
+    question: "What's your realistic budget, all-in?",
+    options: [
+      {
+        text: "Under $800",
+        subtext: "Tight. I want the most camera for the least money.",
+        scores: { p3: 5, p4: 2, ip: 0 }
+      },
+      {
+        text: "$800 to $1,200",
+        subtext: "I can stretch for the right tool.",
+        scores: { p3: 3, p4: 5, ip: 1 }
+      },
+      {
+        text: "$1,200 to $2,000",
+        subtext: "Budget isn't the main thing.",
+        scores: { p3: 2, p4: 4, ip: 4 }
+      },
+      {
+        text: "Over $2,000",
+        subtext: "I want the right answer regardless of price.",
+        scores: { p3: 1, p4: 3, ip: 5 }
+      }
+    ]
+  },
+  {
+    id: 'phone_now',
+    label: 'The Reality Check',
+    question: "What phone do you currently use?",
+    options: [
+      {
+        text: "iPhone 15 Pro, 16 Pro, or older",
+        subtext: "An upgrade to 17 Pro Max would replace it.",
+        scores: { p3: 3, p4: 3, ip: 4 }
+      },
+      {
+        text: "iPhone 17 Pro or Pro Max already",
+        subtext: "I've already got the best phone camera available.",
+        scores: { p3: 4, p4: 5, ip: 0 }
+      },
+      {
+        text: "Android, any model",
+        subtext: "Switching ecosystems is a bigger deal.",
+        scores: { p3: 4, p4: 5, ip: 2 }
+      },
+      {
+        text: "I'll keep my phone regardless",
+        subtext: "This is an additional camera, not a replacement.",
+        scores: { p3: 4, p4: 5, ip: 1 }
+      }
+    ]
+  },
+  {
+    id: 'workflow',
+    label: 'The Workflow',
+    question: "How do you actually get your videos out the door?",
+    options: [
+      {
+        text: "Straight from camera to social, same day",
+        subtext: "Speed matters. I need to post fast.",
+        scores: { p3: 2, p4: 3, ip: 5 }
+      },
+      {
+        text: "Import to computer, edit properly, publish",
+        subtext: "I cut in Premiere, Resolve, or Final Cut.",
+        scores: { p3: 4, p4: 5, ip: 3 }
+      },
+      {
+        text: "Shoot once, edit later in bulk",
+        subtext: "I batch my editing workflow.",
+        scores: { p3: 4, p4: 5, ip: 2 }
+      },
+      {
+        text: "Pass footage to an editor",
+        subtext: "Someone else cuts. I just need good source files.",
+        scores: { p3: 3, p4: 4, ip: 4 }
+      }
+    ]
+  },
+  {
+    id: 'shooting_env',
+    label: 'The Conditions',
+    question: "Where do you shoot most often?",
+    options: [
+      {
+        text: "Walking and moving, indoors and out",
+        subtext: "I need stabilisation to do the heavy lifting.",
+        scores: { p3: 4, p4: 5, ip: 2 }
+      },
+      {
+        text: "Low light, evenings, clubs, dim rooms",
+        subtext: "My content lives after sunset.",
+        scores: { p3: 4, p4: 5, ip: 2 }
+      },
+      {
+        text: "Daylight, mixed conditions",
+        subtext: "Mostly good light, sometimes tricky.",
+        scores: { p3: 3, p4: 3, ip: 4 }
+      },
+      {
+        text: "Controlled studio or planned shoots",
+        subtext: "I set the environment.",
+        scores: { p3: 3, p4: 4, ip: 4 }
+      }
+    ]
+  },
+  {
+    id: 'versatility',
+    label: 'The Philosophy',
+    question: "How many devices do you actually want to carry?",
+    options: [
+      {
+        text: "As few as possible. One device, many jobs.",
+        subtext: "Phone-as-camera is the whole point.",
+        scores: { p3: 0, p4: 0, ip: 6 }
+      },
+      {
+        text: "I don't mind a dedicated tool for a specific job",
+        subtext: "Specialist gear earns its place.",
+        scores: { p3: 4, p4: 5, ip: 2 }
+      },
+      {
+        text: "I already carry a full kit",
+        subtext: "One more thing doesn't faze me.",
+        scores: { p3: 5, p4: 5, ip: 1 }
+      }
+    ]
+  }
+];
+
+const cameras = {
+  p3: {
+    name: "DJI Osmo Pocket 3",
+    color: "var(--pocket3)",
+    tagline: "The value pick. The gimbal magic you came for, without paying for last week's launch."
+  },
+  p4: {
+    name: "DJI Osmo Pocket 4",
+    color: "var(--pocket4)",
+    tagline: "The best pure vlogging camera money can buy in April 2026. Nothing else is close for this specific job."
+  },
+  ip: {
+    name: "iPhone 17 Pro Max",
+    color: "var(--iphone)",
+    tagline: "The Swiss Army knife that shoots broadcast-spec video. One device, many jobs, in your pocket already."
+  }
+};
+
+// ==================== STATE ====================
+let currentQuestion = 0;
+let answers = {};
+let scores = { p3: 0, p4: 0, ip: 0 };
+
+// Load from localStorage if present
+try {
+  const saved = localStorage.getItem('4kShootoutState');
+  if (saved) {
+    const state = JSON.parse(saved);
+    if (state.answers) answers = state.answers;
+  }
+} catch (e) { /* ignore */ }
+
+// ==================== RENDER ====================
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  const container = document.getElementById('question-container');
+  const progress = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+  const backBtn = document.getElementById('back-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  progress.style.width = `${((currentQuestion) / questions.length) * 100}%`;
+  progressLabel.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+
+  backBtn.disabled = currentQuestion === 0;
+  nextBtn.disabled = !answers[q.id];
+  nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Get Result →' : 'Next →';
+
+  const markers = ['A', 'B', 'C', 'D'];
+
+  container.innerHTML = `
+    <div class="question-label">${q.label}</div>
+    <div class="question-text">${q.question}</div>
+    <div class="options" id="options">
+      ${q.options.map((opt, i) => `
+        <button class="option ${answers[q.id] === i ? 'selected' : ''}" data-index="${i}">
+          <span class="option-marker">${markers[i]}</span>
+          <span class="option-text">
+            <strong>${opt.text}</strong>
+            <span>${opt.subtext}</span>
+          </span>
+        </button>
+      `).join('')}
+    </div>
+  `;
+
+  // Animate in
+  container.querySelectorAll('.option').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.animation = `fadeUp 0.4s ease ${i * 0.05}s forwards`;
+  });
+
+  // Attach click handlers
+  container.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = parseInt(btn.dataset.index);
+      answers[q.id] = index;
+      saveState();
+      // Update UI
+      container.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      nextBtn.disabled = false;
+    });
+  });
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('4kShootoutState', JSON.stringify({ answers }));
+  } catch (e) { /* ignore */ }
+}
+
+// ==================== SCORING ====================
+function calculateResult() {
+  // Reset
+  scores = { p3: 0, p4: 0, ip: 0 };
+
+  // Sum scores from answers
+  questions.forEach(q => {
+    const answerIndex = answers[q.id];
+    if (answerIndex !== undefined) {
+      const optionScores = q.options[answerIndex].scores;
+      scores.p3 += optionScores.p3;
+      scores.p4 += optionScores.p4;
+      scores.ip += optionScores.ip;
+    }
+  });
+
+  // Find winner
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  let winner = sorted[0][0];
+  const top = sorted[0][1];
+  const second = sorted[1][1];
+
+  // Versatility tiebreaker: if top two are within 2 points,
+  // and the versatility answer was "one device, many jobs",
+  // give iPhone the edge because that's the decision bias.
+  if ((top - second) <= 2 && answers.versatility === 0 && winner !== 'ip') {
+    winner = 'ip';
+  }
+
+  // Tie between Pocket 3 and Pocket 4: if close, favour Pocket 4 for anyone
+  // who picked client work or premium budget. Otherwise favour Pocket 3 for value.
+  if (winner === 'p3' && (top - scores.p4) <= 2) {
+    if (answers.budget >= 2 || answers.primary_use === 3) {
+      winner = 'p4';
+    }
+  }
+
+  return { winner, scores };
+}
+
+// ==================== RESULT RENDER ====================
+function showResult() {
+  const { winner, scores } = calculateResult();
+  document.getElementById('quiz-content').style.display = 'none';
+  document.getElementById('result').classList.add('active');
+
+  // Animate progress to 100%
+  document.getElementById('progress-fill').style.width = '100%';
+
+  const cam = cameras[winner];
+  document.getElementById('result-name').textContent = cam.name;
+  document.getElementById('result-tagline').textContent = cam.tagline;
+  document.getElementById('result-tag').textContent = `Your Match · ${Math.round((scores[winner] / 30) * 100)}% Fit`;
+
+  // Render scorecard
+  const maxScore = Math.max(...Object.values(scores));
+  const scorecardHTML = Object.entries(cameras).map(([key, camera]) => {
+    const score = scores[key];
+    const pct = (score / maxScore) * 100;
+    const isWinner = key === winner;
+    return `
+      <div class="score-card ${isWinner ? 'winner' : ''}">
+        <div class="score-card-name">${camera.name}</div>
+        <div class="score-card-number">${score}</div>
+        <div class="score-bar"><div class="score-bar-fill" style="width: 0%" data-target="${pct}"></div></div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('scorecard').innerHTML = scorecardHTML;
+
+  // Animate score bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.score-bar-fill').forEach(el => {
+      el.style.width = el.dataset.target + '%';
+    });
+  }, 100);
+
+  // Generate reasoning
+  const reasoning = generateReasoning(winner, answers, scores);
+  document.getElementById('reasoning-body').innerHTML = reasoning;
+
+  // Scroll result into view smoothly
+  setTimeout(() => {
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 200);
+}
+
+function generateReasoning(winner, answers, scores) {
+  const reasons = [];
+  const q = (id) => questions.find(x => x.id === id);
+  const pick = (id) => q(id).options[answers[id]];
+
+  if (winner === 'p4') {
+    if (answers.primary_use === 0) reasons.push(`You're buying this for run-and-gun vlogging, and that's exactly the job the Pocket 4 was built for. The 3-axis mechanical gimbal doesn't degrade in low light the way electronic stabilisation does, meaning your walking shots stay rock-solid from midday to midnight.`);
+    if (answers.primary_use === 1) reasons.push(`For sit-down talking-head work, the Pocket 4's combination of a 1-inch sensor, full 10-bit D-Log, and 14 stops of dynamic range gives you the grading latitude to nail skin tones in post. That's a step the Pocket 3's D-Log M couldn't quite reach.`);
+    if (answers.shooting_env === 0 || answers.shooting_env === 1) reasons.push(`You shoot in challenging conditions (movement, low light, or both), and mechanical stabilisation is the difference between footage that works and footage that jitters. The iPhone's sensor-shift stabilisation degrades as shutter speeds drop. The Pocket 4's gimbal doesn't care.`);
+    if (answers.workflow === 1 || answers.workflow === 2) reasons.push(`You edit properly in post, so the full 10-bit D-Log profile and 180 Mbps bitrate give you headroom the Pocket 3 and iPhone can't match at their default settings. Grade it like a cinema camera.`);
+    reasons.push(`<strong>The trade:</strong> This is a single-purpose tool. It won't replace your phone, and in the US it's only available via grey-market import for now. If those aren't dealbreakers, nothing else in this price bracket shoots like it.`);
+  }
+
+  else if (winner === 'p3') {
+    if (answers.budget === 0 || answers.budget === 1) reasons.push(`You've set a realistic budget, and the Pocket 3 delivers 90% of the Pocket 4's real-world output for significantly less money — especially now that the Pocket 4 has launched and Pocket 3 prices are softening. Unless you specifically need 4K/240fps slow motion or the new full D-Log profile, the Pocket 3 is still the smart buy.`);
+    if (answers.primary_use === 0) reasons.push(`For walking-and-talking vlog content, the Pocket 3 already beats everything except its successor. You get the same 1-inch sensor, the same 3-axis gimbal, the same 4K/120fps, and the same ActiveTrack subject following. The Pocket 4 refines these, but the Pocket 3 nails the job.`);
+    if (answers.shooting_env === 1) reasons.push(`In low light, the Pocket 3 holds up exceptionally well. Its mechanical gimbal doesn't drop frames or add blur at slow shutter speeds the way electronic stabilisation does. If your content lives after sunset, this is a genuinely cinematic pocket camera.`);
+    reasons.push(`<strong>The trade:</strong> You miss out on 4K/240fps slow motion, full D-Log (you get the lighter D-Log M), internal storage, and the newer ActiveTrack. For most creators, those aren't deal-breakers. For the price delta, the Pocket 3 is the value champion.`);
+  }
+
+  else if (winner === 'ip') {
+    if (answers.versatility === 0) reasons.push(`You explicitly want one device that does multiple jobs, and the iPhone 17 Pro Max is the only camera here that's also a phone, an editor, a messaging device, and a streaming rig. Every time you'd otherwise carry two things, you carry one.`);
+    if (answers.primary_use === 2) reasons.push(`For travel and family, the iPhone wins on a dimension specs can't capture: it's the camera that's already in your pocket. The moment your kid does something worth filming, the Pocket 4 is in a drawer at home. The iPhone is already recording.`);
+    if (answers.primary_use === 3) reasons.push(`For client commercial work, the iPhone 17 Pro Max is a genuine professional tool. ProRes RAW lets you record directly to external SSDs at cinema-camera bitrates. Apple Log 2 gives you full grading latitude. Genlock syncs multiple iPhones for multicam. ACES support drops iPhone footage into colour-managed pipelines alongside Arri and Sony cameras.`);
+    if (answers.workflow === 0) reasons.push(`Your workflow demands speed — camera to social, same day. The iPhone collapses three steps into one: shoot, edit in CapCut or iMovie, publish, all without a transfer step. That's a time-to-post advantage no dedicated camera can match.`);
+    if (answers.shooting_env === 2 || answers.shooting_env === 3) reasons.push(`You shoot mostly in good or controlled light, which is where the iPhone's computational photography and tri-camera system shine. Three real focal lengths (0.5x, 1x, 4x optical) give you framing flexibility the fixed-lens Pockets can't match without digital crops.`);
+    reasons.push(`<strong>The trade:</strong> Sensor-shift stabilisation is noticeably worse than a mechanical gimbal for walking shots in low light. If your primary job is vlogging while moving, you'll see the difference. For everything else, the versatility wins.`);
+  }
+
+  return reasons.map(r => `<p>${r}</p>`).join('');
+}
+
+// ==================== EVENT HANDLERS ====================
+document.getElementById('next-btn').addEventListener('click', () => {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+});
+
+document.getElementById('back-btn').addEventListener('click', () => {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+});
+
+document.getElementById('restart-btn').addEventListener('click', () => {
+  currentQuestion = 0;
+  answers = {};
+  scores = { p3: 0, p4: 0, ip: 0 };
+  try { localStorage.removeItem('4kShootoutState'); } catch (e) {}
+  document.getElementById('result').classList.remove('active');
+  document.getElementById('quiz-content').style.display = 'block';
+  renderQuestion();
+  document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+document.getElementById('share-btn').addEventListener('click', () => {
+  const { winner, scores } = calculateResult();
+  const cam = cameras[winner];
+  const text = `The 4K Shootout says: ${cam.name}
+
+${cam.tagline}
+
+My scores:
+· DJI Osmo Pocket 3: ${scores.p3}
+· DJI Osmo Pocket 4: ${scores.p4}
+· iPhone 17 Pro Max: ${scores.ip}`;
+
+  // Preserve paragraph breaks when pasting
+  const blob = new Blob([text], { type: 'text/plain' });
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('share-btn');
+    const original = btn.textContent;
+    btn.textContent = '✓ Copied';
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  });
+});
+
+// ==================== TABS ====================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.table-pane').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector(`.table-pane[data-pane="${target}"]`).classList.add('active');
+  });
+});
+
+// ==================== INITIAL RENDER ====================
+renderQuestion();
+</script>
+
+</body>
+</html>
