@@ -1,0 +1,3002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Production Pipeline | Bright Tsar Studios</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BTS Pipeline">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f3ac;</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --bg2: #161b22; --bg3: #1a1f29; --border: #21262d;
+  --gold: #c9a227; --gold-dim: rgba(201,162,39,0.2); --gold-glow: rgba(201,162,39,0.4);
+  --text: #e6edf3; --dim: #7d8590; --white: #fff;
+  --green: #22c55e; --green-dim: rgba(34,197,94,0.15);
+  --red: #ef4444; --red-dim: rgba(239,68,68,0.15);
+  --yellow: #f59e0b; --yellow-dim: rgba(245,158,11,0.15);
+  --orange: #f97316; --purple: #8b5cf6; --purple-dim: rgba(139,92,246,0.15);
+  --cyan: #06b6d4; --cyan-dim: rgba(6,182,212,0.15);
+  --blue: #3b82f6; --blue-dim: rgba(59,130,246,0.15);
+  --amber: #d97706; --amber-dim: rgba(217,119,6,0.15);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; overscroll-behavior-y: contain; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+input, textarea, select { font-family: inherit; }
+input:focus, textarea:focus, select:focus { border-color: var(--gold) !important; outline: none; }
+button { font-family: inherit; cursor: pointer; }
+button:hover { opacity: 0.85; }
+a { color: var(--gold); text-decoration: none; }
+
+.lock-screen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+.lock-box { text-align: center; width: 300px; }
+
+.header { background: linear-gradient(135deg, var(--bg2) 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-back { background: none; border: 1px solid var(--border); color: var(--dim); border-radius: 6px; padding: 4px 10px; font-size: 12px; display: none; }
+.header-back:hover { border-color: var(--gold-dim); color: var(--gold); }
+.header-title { font-weight: 800; font-size: 18px; color: var(--gold); }
+.header-sub { color: var(--dim); font-size: 11px; font-family: 'DM Mono', monospace; }
+.header-right { display: flex; gap: 8px; align-items: center; }
+
+.tabs { display: flex; overflow-x: auto; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+.tab { flex: 0 0 auto; padding: 10px 14px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--dim); font-weight: 400; cursor: pointer; font-size: 12px; white-space: nowrap; transition: all 0.2s; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--gold); font-weight: 700; border-bottom-color: var(--gold); }
+.tab .badge { background: var(--gold); color: var(--bg); border-radius: 10px; padding: 1px 6px; font-size: 10px; margin-left: 4px; font-weight: 600; }
+.tab .badge-red { background: var(--red); color: var(--white); }
+
+.content { padding: 16px; max-width: 900px; margin: 0 auto; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.card-accent { border-color: var(--gold-dim); }
+.label { color: var(--dim); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-family: 'DM Mono', monospace; }
+.dim { color: var(--dim); }
+.gold { color: var(--gold); }
+
+.btn { background: var(--gold); color: var(--bg); border: none; border-radius: 6px; padding: 8px 16px; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+.btn-ghost { background: transparent; color: var(--gold); border: 1px solid var(--border); border-radius: 6px; padding: 8px 16px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+.btn-ghost:hover { border-color: var(--gold-dim); }
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+.btn-danger { color: var(--red); border-color: rgba(239,68,68,0.3); }
+.btn-danger:hover { border-color: var(--red); }
+.btn-icon { background: none; border: none; color: var(--dim); padding: 4px; display: inline-flex; }
+.btn-icon:hover { color: var(--gold); }
+
+.input { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 14px; }
+.select { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 14px; }
+.textarea { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 14px; min-height: 60px; resize: vertical; line-height: 1.6; }
+
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-center { display: flex; align-items: center; }
+.gap-4 { gap: 4px; } .gap-6 { gap: 6px; } .gap-8 { gap: 8px; } .gap-10 { gap: 10px; } .gap-12 { gap: 12px; }
+.flex-1 { flex: 1; } .flex-wrap { flex-wrap: wrap; }
+.mb-4 { margin-bottom: 4px; } .mb-8 { margin-bottom: 8px; } .mb-12 { margin-bottom: 12px; } .mb-16 { margin-bottom: 16px; } .mb-24 { margin-bottom: 24px; }
+.mt-8 { margin-top: 8px; } .mt-12 { margin-top: 12px; } .mt-16 { margin-top: 16px; }
+.text-center { text-align: center; }
+.hidden { display: none !important; }
+
+.progress { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.progress-bar { height: 100%; border-radius: 3px; transition: width 0.5s ease; background: var(--gold); }
+
+.tag { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+.grid-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+
+/* Stage stepper */
+.stepper { display: flex; align-items: center; gap: 0; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px; }
+.step { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 500; color: var(--dim); cursor: pointer; white-space: nowrap; transition: all 0.2s; border: 1px solid transparent; }
+.step:hover { color: var(--text); }
+.step.current { color: var(--gold); border-color: var(--gold-dim); background: var(--gold-dim); }
+.step.done { color: var(--green); }
+.step-arrow { color: var(--border); font-size: 14px; margin: 0 2px; }
+
+/* Project card on dashboard */
+.proj-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.2s, transform 0.15s; position: relative; }
+.proj-card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+.proj-card-name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.proj-card-client { font-size: 12px; color: var(--dim); margin-bottom: 8px; }
+.proj-card-stage { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+
+/* Shot list styles (adapted from Nobel) */
+.sl-header { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.sl-eyebrow { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; font-family: 'DM Mono', monospace; }
+.sl-title { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+.sl-meta { font-size: 11px; color: var(--dim); }
+.sl-stats { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px; }
+.sl-stat { text-align: center; }
+.sl-stat-num { font-size: 20px; font-weight: 600; color: var(--gold); font-family: 'DM Mono', monospace; line-height: 1; }
+.sl-stat-label { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--dim); margin-top: 2px; }
+
+.sl-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+.sl-tab { padding: 10px 18px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--dim); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.sl-tab:hover { color: var(--text); }
+.sl-tab.active { color: var(--white); border-bottom-color: var(--gold); }
+
+.sl-panel { display: none; }
+.sl-panel.active { display: block; }
+
+.sl-progress-wrap { background: var(--border); border-radius: 4px; height: 4px; margin-bottom: 8px; overflow: hidden; }
+.sl-progress-bar { background: var(--gold); height: 100%; border-radius: 4px; transition: width 0.3s; }
+.sl-progress-label { font-size: 11px; color: var(--dim); text-align: right; margin-bottom: 16px; font-family: 'DM Mono', monospace; }
+
+/* Blocks (time-based sections for A-Roll) */
+.sl-block { margin-bottom: 28px; }
+.sl-block-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.sl-block-time { font-size: 11px; font-weight: 500; color: var(--dim); font-family: 'DM Mono', monospace; background: var(--bg); border: 1px solid var(--border); padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
+.sl-block-title { font-size: 14px; font-weight: 500; color: var(--text); }
+.sl-block-desc { font-size: 12px; color: var(--dim); margin-left: auto; }
+.sl-block-tag { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; }
+.bt-setup { background: var(--bg); color: var(--dim); border: 1px solid var(--border); }
+.bt-interview { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+.bt-hero { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,162,39,0.3); }
+.bt-broll { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
+.bt-warn { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+.bt-reveal { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
+
+/* Shot rows */
+.sl-shots { display: flex; flex-direction: column; gap: 6px; }
+.sl-shot { display: grid; grid-template-columns: 28px 48px 1fr; gap: 0 10px; align-items: start; background: var(--bg2); border: 1px solid var(--border); border-radius: 7px; padding: 10px 12px; transition: all 0.15s; cursor: pointer; }
+.sl-shot:hover { border-color: var(--gold-dim); }
+.sl-shot.done { background: var(--green-dim); border-color: rgba(34,197,94,0.25); }
+.sl-shot.done .sl-shot-text { text-decoration: line-through; color: var(--dim); }
+.sl-shot-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--green); cursor: pointer; margin-top: 2px; }
+.sl-shot-num { font-size: 10px; font-weight: 500; color: var(--dim); font-family: 'DM Mono', monospace; padding-top: 2px; }
+.sl-shot-body { min-width: 0; }
+.sl-shot-text { font-size: 13px; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+.sl-shot-note { font-size: 11.5px; color: var(--dim); line-height: 1.5; }
+.sl-shot-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+.sl-shot-ts { font-size: 9px; color: var(--dim); font-family: 'DM Mono', monospace; margin-top: 4px; }
+
+/* Shot tags */
+.stag { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid; }
+.stag-q { background: var(--amber-dim); color: var(--amber); border-color: rgba(217,119,6,0.3); }
+.stag-dir { background: var(--purple-dim); color: var(--purple); border-color: rgba(139,92,246,0.3); }
+.stag-ahpra { background: var(--red-dim); color: var(--red); border-color: rgba(239,68,68,0.3); }
+.stag-wide { background: var(--blue-dim); color: var(--blue); border-color: rgba(59,130,246,0.3); }
+.stag-close { background: var(--green-dim); color: var(--green); border-color: rgba(34,197,94,0.3); }
+.stag-medium { background: rgba(125,133,144,0.15); color: var(--dim); border-color: rgba(125,133,144,0.3); }
+.stag-macro { background: var(--purple-dim); color: var(--purple); border-color: rgba(139,92,246,0.3); }
+.stag-gimbal { background: var(--gold-dim); color: var(--gold); border-color: rgba(201,162,39,0.3); }
+.stag-static { background: rgba(125,133,144,0.15); color: var(--dim); border-color: rgba(125,133,144,0.3); }
+.stag-rack { background: var(--amber-dim); color: var(--amber); border-color: rgba(217,119,6,0.3); }
+
+/* B-Roll categories */
+.sl-bcat { margin-bottom: 28px; }
+.sl-bcat-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 7px; margin-bottom: 10px; }
+.sl-bcat-icon { font-size: 16px; }
+.sl-bcat-title { font-size: 13px; font-weight: 500; color: var(--white); }
+.sl-bcat-note { font-size: 11px; color: var(--dim); margin-top: 1px; }
+.sl-bcat-count { font-size: 10px; color: var(--dim); margin-left: auto; font-family: 'DM Mono', monospace; }
+
+/* B-Roll filter row */
+.sl-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.sl-fbtn { font-size: 11px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg2); color: var(--dim); cursor: pointer; transition: all 0.12s; }
+.sl-fbtn:hover { border-color: var(--dim); color: var(--text); }
+.sl-fbtn.on { background: var(--gold-dim); color: var(--gold); border-color: rgba(201,162,39,0.3); }
+
+/* Add buttons for builder */
+.add-row { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px dashed var(--border); border-radius: 7px; color: var(--dim); font-size: 12px; cursor: pointer; transition: all 0.15s; margin-top: 8px; }
+.add-row:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; display: none; align-items: center; justify-content: center; padding: 16px; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto; }
+.modal-head { padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.modal-head h3 { font-size: 16px; font-weight: 600; }
+.modal-body { padding: 16px; }
+.modal-foot { padding: 12px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; font-weight: 500; color: var(--dim); margin-bottom: 4px; display: block; }
+
+/* Toast */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--bg); padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 13px; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.toast.show { opacity: 1; }
+
+/* Tag selector */
+.tag-selector { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-opt { padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; opacity: 0.5; }
+.tag-opt.selected { opacity: 1; border-width: 2px; }
+.tag-opt[data-tag="q"] { color: var(--amber); border-color: rgba(217,119,6,0.3); }
+.tag-opt[data-tag="q"].selected { background: var(--amber-dim); }
+.tag-opt[data-tag="dir"] { color: var(--purple); border-color: rgba(139,92,246,0.3); }
+.tag-opt[data-tag="dir"].selected { background: var(--purple-dim); }
+.tag-opt[data-tag="ahpra"] { color: var(--red); border-color: rgba(239,68,68,0.3); }
+.tag-opt[data-tag="ahpra"].selected { background: var(--red-dim); }
+.tag-opt[data-tag="wide"] { color: var(--blue); border-color: rgba(59,130,246,0.3); }
+.tag-opt[data-tag="wide"].selected { background: var(--blue-dim); }
+.tag-opt[data-tag="close"] { color: var(--green); border-color: rgba(34,197,94,0.3); }
+.tag-opt[data-tag="close"].selected { background: var(--green-dim); }
+.tag-opt[data-tag="medium"] { color: var(--dim); border-color: rgba(125,133,144,0.3); }
+.tag-opt[data-tag="medium"].selected { background: rgba(125,133,144,0.15); }
+.tag-opt[data-tag="macro"] { color: var(--purple); border-color: rgba(139,92,246,0.3); }
+.tag-opt[data-tag="macro"].selected { background: var(--purple-dim); }
+.tag-opt[data-tag="gimbal"] { color: var(--gold); border-color: rgba(201,162,39,0.3); }
+.tag-opt[data-tag="gimbal"].selected { background: var(--gold-dim); }
+.tag-opt[data-tag="static"] { color: var(--dim); border-color: rgba(125,133,144,0.3); }
+.tag-opt[data-tag="static"].selected { background: rgba(125,133,144,0.15); }
+.tag-opt[data-tag="rack"] { color: var(--amber); border-color: rgba(217,119,6,0.3); }
+.tag-opt[data-tag="rack"].selected { background: var(--amber-dim); }
+
+/* Shared/client view */
+.shared-banner { background: var(--gold-dim); border: 1px solid rgba(201,162,39,0.3); border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.shared-banner-text { font-size: 12px; color: var(--gold); }
+.shared-banner-label { font-weight: 600; }
+
+.sl-shot-editable { cursor: text; }
+.sl-shot-editable:hover { border-color: var(--gold); }
+.sl-shot-editable .sl-shot-text { cursor: text; }
+.sl-shot-editing { border-color: var(--gold) !important; background: var(--bg3) !important; }
+.sl-shot-editing .edit-field { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; width: 100%; font-size: 13px; font-family: inherit; line-height: 1.5; resize: vertical; margin-bottom: 4px; }
+.sl-shot-editing .edit-field:focus { border-color: var(--gold); outline: none; }
+.sl-shot-editing .edit-actions { display: flex; gap: 6px; margin-top: 6px; }
+
+.change-entry { border-left: 3px solid var(--gold); margin-bottom: 10px; }
+.change-entry.reviewed { border-left-color: var(--border); opacity: 0.6; }
+.change-old { font-size: 11px; color: var(--dim); text-decoration: line-through; line-height: 1.5; }
+.change-new { font-size: 13px; color: var(--text); margin-top: 4px; padding-left: 8px; border-left: 2px solid var(--gold); line-height: 1.5; }
+.change-entry.reviewed .change-new { border-left-color: var(--border); }
+
+.approval-bar { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 16px; margin-top: 20px; text-align: center; }
+.approval-bar.approved { background: rgba(34,197,94,0.08); }
+.approval-bar .btn { background: var(--green); font-size: 15px; padding: 10px 28px; }
+
+@media(max-width:640px) {
+  .header { padding: 12px 14px; }
+  .content { padding: 12px; }
+  .sl-shot { grid-template-columns: 24px 40px 1fr; }
+  .sl-block-head { gap: 6px; }
+  .sl-block-desc { display: none; }
+  .grid-projects { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Lock Screen -->
+<div class="lock-screen" id="lock-screen">
+  <div class="lock-box">
+    <div style="color:var(--gold);font-weight:800;font-size:20px;margin-bottom:4px">PRODUCTION PIPELINE</div>
+    <div class="dim" style="font-size:12px;margin-bottom:24px">Bright Tsar Studios</div>
+    <input class="input" id="pin-input" type="password" placeholder="Enter PIN" autocomplete="off" style="text-align:center;font-size:20px;letter-spacing:6px;padding:14px">
+    <div id="pin-error" style="color:var(--red);font-size:13px;min-height:24px;margin:8px 0"></div>
+    <button class="btn" id="pin-btn" style="width:100%;padding:12px;font-size:15px" onclick="unlockApp()">Unlock</button>
+  </div>
+</div>
+
+<!-- Main App (hidden until auth) -->
+<div id="app" class="hidden">
+  <div class="header">
+    <div class="header-left">
+      <button class="header-back" id="back-btn" onclick="goBack()">&#8592; Projects</button>
+      <div>
+        <div class="header-title" id="header-title">Production Pipeline</div>
+        <div class="header-sub" id="header-sub">All projects</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-ghost btn-sm" id="new-proj-btn" onclick="openNewProjectModal()">+ New Project</button>
+      <button class="btn-icon" onclick="downloadBackup()" title="Download backup">&#128190;</button>
+    </div>
+  </div>
+
+  <div class="tabs hidden" id="project-tabs">
+    <button class="tab active" data-tab="overview" onclick="switchProjectTab('overview',this)">Overview</button>
+    <button class="tab" data-tab="sales" onclick="switchProjectTab('sales',this)">Sales</button>
+    <button class="tab" data-tab="discovery" onclick="switchProjectTab('discovery',this)">Discovery</button>
+    <button class="tab" data-tab="shotlist" onclick="switchProjectTab('shotlist',this)">Shot List</button>
+    <button class="tab" data-tab="shoot" onclick="switchProjectTab('shoot',this)">Shoot Day</button>
+    <button class="tab" data-tab="post" onclick="switchProjectTab('post',this)">Post</button>
+    <button class="tab" data-tab="delivery" onclick="switchProjectTab('delivery',this)">Delivery</button>
+    <button class="tab" data-tab="comms" onclick="switchProjectTab('comms',this)">Comms</button>
+    <button class="tab" data-tab="changes" onclick="switchProjectTab('changes',this)">Changes</button>
+    <button class="tab" data-tab="share" onclick="switchProjectTab('share',this)">Share</button>
+  </div>
+
+  <div class="content" id="main-content"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Modal</h3>
+      <button class="btn-icon" onclick="closeModal()" style="font-size:18px">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot" id="modal-foot"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<script>
+// ═══════════════════════════════════════
+// CONFIG & CONSTANTS
+// ═��════════════════��════════════════════
+
+const STORAGE_KEY = 'bts-pipeline-v1';
+const OWNER_HASH = '869c1d77870789124ccd0c348d5d6bd9bf0c019836a53ebce6cd6ea3551b1702';
+
+const STAGE_NAMES = ['Sales', 'Discovery', 'Pre-Prod', 'Shoot', 'Post', 'Delivery'];
+const STAGE_COLORS = ['var(--dim)', 'var(--cyan)', 'var(--gold)', 'var(--green)', 'var(--purple)', 'var(--blue)'];
+const BLOCK_TYPES = ['setup', 'interview', 'hero', 'reveal', 'warn'];
+const BLOCK_TYPE_LABELS = { setup: 'Setup', interview: 'Interview', hero: 'Hero Moment', reveal: 'Post-Reveal', warn: 'Tight / Warning' };
+const SHOT_TAGS = ['q', 'dir', 'ahpra', 'wide', 'close', 'medium', 'macro', 'gimbal', 'static', 'rack'];
+const TAG_LABELS = { q: 'Question', dir: 'Direction', ahpra: 'Review First', wide: 'Wide', close: 'Close', medium: 'Medium', macro: 'Macro', gimbal: 'Gimbal', static: 'Static', rack: 'Rack Focus' };
+const BROLL_CATS = [
+  { key: 'lab', icon: '&#128300;', title: 'Lab', note: 'Lab / technical work' },
+  { key: 'clinic', icon: '&#127973;', title: 'Clinic', note: 'Environment and atmosphere' },
+  { key: 'equipment', icon: '&#9881;', title: 'Equipment', note: 'Tools and tech' },
+  { key: 'people', icon: '&#128101;', title: 'People', note: 'Candid moments and reactions' },
+  { key: 'procedure', icon: '&#129463;', title: 'Procedure', note: 'Live procedures' },
+  { key: 'detail', icon: '&#128269;', title: 'Detail', note: 'Macro detail shots' }
+];
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCZDHB2bOZ7XJfsdcQF_Jj8A_M8LuIE2ao",
+  authDomain: "sev-command-centre.firebaseapp.com",
+  databaseURL: "https://sev-command-centre-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sev-command-centre",
+  storageBucket: "sev-command-centre.firebasestorage.app",
+  messagingSenderId: "709383575800",
+  appId: "1:709383575800:web:77642c1f5812eba050830d"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ═══════════════════════════════════════
+// STATE
+// ═════════════════════���═════════════════
+
+let vaultPath = null;
+let projects = [];
+let currentProjectId = null;
+let currentTab = 'overview';
+let sharedMode = false;
+let sharedToken = null;
+let sharedScope = null;
+let sharedAllowEdit = false;
+let sharedProject = null;
+let editingShot = null; // {type, parentIdx, shotIdx} when client is inline-editing
+
+function uid() { return 'id-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5); }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function fmtDate(iso) { if (!iso) return ''; return new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }); }
+function fmtTime(t) { if (!t) return ''; const [h, m] = t.split(':'); const hr = parseInt(h); return (hr > 12 ? hr - 12 : hr) + ':' + m + (hr >= 12 ? ' PM' : ' AM'); }
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+function nowISO() { return new Date().toISOString(); }
+
+function defaultProject() {
+  return {
+    id: uid(),
+    version: 1,
+    createdAt: nowISO(),
+    updatedAt: nowISO(),
+    meta: {
+      clientName: '', clientContact: '', clientEmail: '', businessName: '',
+      shootType: '', currentStage: 0, status: 'active', value: 0, tags: [],
+      shareTokens: {}
+    },
+    stage0_sales: { leadSource: '', leadDate: todayStr(), fathomRecordingId: null, fathomSummary: '', decisionPath: [], buySignals: [], objections: [], outcome: '', notes: '', callNotes: '' },
+    stage1_discovery: { meetingDate: '', fathomRecordingId: null, fathomSummary: '', fathomTranscript: '', questionnaire: { answers: {}, advisorNotes: {} }, extractedDetails: { deliverables: [], talentNames: [], locations: [], complianceFlags: [], shootDate: '', timeRange: '', crew: { lead: 'Sev', second: '' } } },
+    stage2_preproduction: {
+      header: { clientName: '', date: '', crew: { lead: 'Sev', second: '' }, timeRange: { start: '', end: '' }, shootType: '', hardStop: false },
+      aroll: { blocks: [] },
+      broll: { categories: [] },
+      clientApproval: { approved: false, approvedAt: null, savedSnapshots: [] }
+    },
+    stage3_shoot: { liveMode: false, startedAt: null, endedAt: null, onTheFlyShots: [], deviceLog: [] },
+    stage4_post: { driveLink: '', frameioLink: '', deliverables: [], fileMapping: [], editorNotes: '' },
+    stage5_delivery: { clientReviewLink: '', approvals: [], wrapNotes: '', finalDeliveryDate: null },
+    comms: [],
+    changelog: []
+  };
+}
+
+// ═══════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════
+
+async function hashPIN(pin) {
+  const data = new TextEncoder().encode(pin);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function unlockApp() {
+  const pin = document.getElementById('pin-input').value;
+  if (!pin) return;
+  const hash = await hashPIN(pin);
+  if (hash !== OWNER_HASH) {
+    document.getElementById('pin-error').textContent = 'Wrong PIN.';
+    return;
+  }
+  vaultPath = 'pipeline/' + hash;
+  sessionStorage.setItem('bts-pipeline-vault', vaultPath);
+  document.getElementById('lock-screen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  await loadData();
+  route();
+}
+
+function checkSession() {
+  const saved = sessionStorage.getItem('bts-pipeline-vault');
+  if (saved) {
+    vaultPath = saved;
+    document.getElementById('lock-screen').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    return true;
+  }
+  return false;
+}
+
+document.getElementById('pin-input').addEventListener('keydown', e => { if (e.key === 'Enter') unlockApp(); });
+
+// ═══════════════════════════════════════
+// DATA PERSISTENCE
+// ═══════════════════════════════════════
+
+let saveTimer;
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(projects)); } catch (e) {}
+  if (!vaultPath) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    const index = {};
+    projects.forEach(p => {
+      index[p.id] = { clientName: p.meta.clientName, businessName: p.meta.businessName, currentStage: p.meta.currentStage, status: p.meta.status, updatedAt: p.updatedAt };
+    });
+    db.ref(vaultPath + '/_index').set(index).catch(e => console.warn('Firebase index save failed:', e));
+    projects.forEach(p => {
+      db.ref(vaultPath + '/projects/' + p.id + '/data').set(p).catch(e => console.warn('Firebase project save failed:', e));
+    });
+  }, 500);
+}
+
+async function loadData() {
+  // Try Firebase first
+  if (vaultPath) {
+    try {
+      const snap = await db.ref(vaultPath + '/_index').once('value');
+      const idx = snap.val();
+      if (idx) {
+        const ids = Object.keys(idx);
+        const snaps = await Promise.all(ids.map(id => db.ref(vaultPath + '/projects/' + id + '/data').once('value')));
+        projects = snaps.map(s => s.val()).filter(Boolean);
+        projects.forEach(fixProject);
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(projects)); } catch (e) {}
+        return;
+      }
+    } catch (e) { console.warn('Firebase load failed:', e); }
+  }
+  // Fallback to localStorage
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) { projects = JSON.parse(s); projects.forEach(fixProject); }
+  } catch (e) { projects = []; }
+}
+
+function fixProject(p) {
+  if (!p.meta) p.meta = defaultProject().meta;
+  if (!p.stage0_sales) p.stage0_sales = defaultProject().stage0_sales;
+  if (!p.stage1_discovery) p.stage1_discovery = defaultProject().stage1_discovery;
+  if (!p.stage2_preproduction) p.stage2_preproduction = defaultProject().stage2_preproduction;
+  if (!p.stage2_preproduction.aroll) p.stage2_preproduction.aroll = { blocks: [] };
+  if (!p.stage2_preproduction.broll) p.stage2_preproduction.broll = { categories: [] };
+  if (!Array.isArray(p.stage2_preproduction.aroll.blocks)) p.stage2_preproduction.aroll.blocks = [];
+  if (!Array.isArray(p.stage2_preproduction.broll.categories)) p.stage2_preproduction.broll.categories = [];
+  if (!p.stage3_shoot) p.stage3_shoot = defaultProject().stage3_shoot;
+  if (!p.stage4_post) p.stage4_post = defaultProject().stage4_post;
+  if (!p.stage5_delivery) p.stage5_delivery = defaultProject().stage5_delivery;
+  if (!Array.isArray(p.comms)) p.comms = [];
+  if (!Array.isArray(p.changelog)) p.changelog = [];
+  if (!p.meta.shareTokens) p.meta.shareTokens = {};
+}
+
+function getProject(id) { return projects.find(p => p.id === id); }
+
+function downloadBackup() {
+  const blob = new Blob([JSON.stringify({ projects, exportedAt: nowISO() }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'bts-pipeline-backup-' + todayStr() + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ═════════════���═════════════════════════
+// ROUTER
+// ═══════════════════════════════════════
+
+function route() {
+  const hash = location.hash || '#dashboard';
+  const parts = hash.replace('#', '').split('/');
+
+  if (parts[0] === 'project' && parts[1]) {
+    currentProjectId = parts[1];
+    currentTab = parts[2] || 'overview';
+    renderProjectView();
+  } else {
+    currentProjectId = null;
+    currentTab = null;
+    renderDashboard();
+  }
+}
+
+function goBack() {
+  location.hash = '#dashboard';
+}
+
+function openProject(id) {
+  location.hash = '#project/' + id;
+}
+
+window.addEventListener('hashchange', route);
+
+// ════���══════════════════��═══════════════
+// TOAST
+// ═══════���═══════════════════════════════
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ═══════════════���═══════���═══════════════
+// MODAL
+// ═══════════════════════��═══════════════
+
+function openModal(title, bodyHTML, footHTML) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHTML;
+  document.getElementById('modal-foot').innerHTML = footHTML || '';
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+}
+
+// ═════���═════════════════���═══════════════
+// DASHBOARD
+// ═��═════════════════════════════════════
+
+function renderDashboard() {
+  document.getElementById('header-title').textContent = 'Production Pipeline';
+  document.getElementById('header-sub').textContent = projects.length + ' project' + (projects.length !== 1 ? 's' : '');
+  document.getElementById('back-btn').style.display = 'none';
+  document.getElementById('new-proj-btn').classList.remove('hidden');
+  document.getElementById('project-tabs').classList.add('hidden');
+
+  const active = projects.filter(p => p.meta.status === 'active');
+  const archived = projects.filter(p => p.meta.status === 'archived');
+
+  let html = '';
+  if (projects.length === 0) {
+    html = '<div class="text-center" style="padding:60px 20px"><div style="font-size:48px;margin-bottom:16px">&#127916;</div><div style="font-size:16px;font-weight:500;margin-bottom:8px">No projects yet</div><div class="dim" style="margin-bottom:20px">Create your first project to get started</div><button class="btn" onclick="openNewProjectModal()">+ New Project</button></div>';
+  } else {
+    if (active.length) {
+      html += '<div class="label mb-12">Active Projects</div><div class="grid-projects mb-24">';
+      active.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).forEach(p => { html += projectCardHTML(p); });
+      html += '</div>';
+    }
+    if (archived.length) {
+      html += '<div class="label mb-12" style="margin-top:24px">Archived</div><div class="grid-projects">';
+      archived.forEach(p => { html += projectCardHTML(p); });
+      html += '</div>';
+    }
+  }
+  document.getElementById('main-content').innerHTML = html;
+}
+
+function projectCardHTML(p) {
+  const stage = p.meta.currentStage || 0;
+  const stageLabel = STAGE_NAMES[stage] || 'Sales';
+  const stageColor = STAGE_COLORS[stage];
+  const shotCount = countAllShots(p);
+  const date = p.stage2_preproduction.header.date;
+  return `<div class="proj-card" onclick="openProject('${p.id}')">
+    <div class="proj-card-name">${esc(p.meta.businessName || p.meta.clientName || 'Untitled')}</div>
+    <div class="proj-card-client">${esc(p.meta.clientName || '')}${date ? ' &middot; ' + fmtDate(date) : ''}</div>
+    <div class="flex-between flex-center">
+      <span class="proj-card-stage" style="background:${stageColor}22;color:${stageColor}">${stageLabel}</span>
+      ${shotCount > 0 ? '<span class="dim" style="font-size:11px;font-family:\'DM Mono\',monospace">' + shotCount + ' shots</span>' : ''}
+    </div>
+    ${p.meta.shootType ? '<div class="dim" style="font-size:11px;margin-top:6px">' + esc(p.meta.shootType) + '</div>' : ''}
+    ${(p.changelog || []).filter(c => !c.reviewed).length > 0 ? '<div style="margin-top:6px"><span class="tag" style="background:var(--gold-dim);color:var(--gold)">' + p.changelog.filter(c => !c.reviewed).length + ' unreviewed change' + (p.changelog.filter(c => !c.reviewed).length !== 1 ? 's' : '') + '</span></div>' : ''}
+    ${p.stage2_preproduction.clientApproval.approved ? '<div style="margin-top:4px"><span class="tag" style="background:var(--green-dim);color:var(--green)">Client approved</span></div>' : ''}
+  </div>`;
+}
+
+function countAllShots(p) {
+  let c = 0;
+  if (p.stage2_preproduction && p.stage2_preproduction.aroll) {
+    p.stage2_preproduction.aroll.blocks.forEach(b => { c += (b.shots || []).length; });
+  }
+  if (p.stage2_preproduction && p.stage2_preproduction.broll) {
+    p.stage2_preproduction.broll.categories.forEach(cat => { c += (cat.shots || []).length; });
+  }
+  return c;
+}
+
+// ═══════════════════════════════════════
+// NEW PROJECT MODAL
+// ═══════���═══════════════════════════════
+
+function openNewProjectModal() {
+  const body = `
+    <div class="form-group"><label class="form-label">Client Name *</label><input class="input" id="np-client" placeholder="e.g. Dr. Jarryd"></div>
+    <div class="form-group"><label class="form-label">Business Name</label><input class="input" id="np-business" placeholder="e.g. Nobel Biocare"></div>
+    <div class="form-group"><label class="form-label">Shoot Type</label><input class="input" id="np-type" placeholder="e.g. Patient Story, Brand Film"></div>
+    <div class="form-group"><label class="form-label">Shoot Date</label><input class="input" id="np-date" type="date"></div>
+    <div class="flex gap-12">
+      <div class="form-group flex-1"><label class="form-label">Lead Shooter</label><input class="input" id="np-lead" value="Sev"></div>
+      <div class="form-group flex-1"><label class="form-label">Second Shooter</label><input class="input" id="np-second" placeholder="e.g. JT"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Start with</label>
+      <select class="select" id="np-template" style="width:100%">
+        <option value="blank">Blank shot list</option>
+        <option value="nobel" selected>Nobel-style template (interviews + B-Roll)</option>
+      </select>
+    </div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="createProject()">Create Project</button>`;
+  openModal('New Project', body, foot);
+  setTimeout(() => document.getElementById('np-client').focus(), 100);
+}
+
+function createProject() {
+  const client = document.getElementById('np-client').value.trim();
+  if (!client) { toast('Client name is required'); return; }
+  const business = document.getElementById('np-business').value.trim();
+  const shootType = document.getElementById('np-type').value.trim();
+  const date = document.getElementById('np-date').value;
+  const lead = document.getElementById('np-lead').value.trim() || 'Sev';
+  const second = document.getElementById('np-second').value.trim();
+  const template = document.getElementById('np-template').value;
+
+  const p = defaultProject();
+  p.meta.clientName = client;
+  p.meta.businessName = business;
+  p.meta.shootType = shootType;
+  p.stage2_preproduction.header = {
+    clientName: business || client,
+    date: date,
+    crew: { lead, second },
+    timeRange: { start: '', end: '' },
+    shootType: shootType,
+    hardStop: false
+  };
+  p.stage1_discovery.extractedDetails.crew = { lead, second };
+  if (date) p.stage1_discovery.extractedDetails.shootDate = date;
+
+  if (template === 'nobel') {
+    applyNobelTemplate(p);
+  }
+
+  projects.push(p);
+  save();
+  closeModal();
+  toast('Project created');
+  openProject(p.id);
+}
+
+function applyNobelTemplate(p) {
+  const pre = p.stage2_preproduction;
+  pre.aroll.blocks = [
+    { id: uid(), type: 'setup', time: '', title: 'Arrive, scout, set positions', desc: '~15 min', shots: [
+      { id: 'A01', text: 'Walk the location — identify best interview position (natural light, clean background)', note: 'Avoid windows directly behind talent. Look for depth and texture.', tags: ['dir'], done: false, doneAt: null, doneBy: null, order: 0 },
+      { id: 'A02', text: 'Lock interview position — consistent framing across all interviews', note: 'Minor chair/angle adjustments per talent are fine. Do not reset completely between subjects.', tags: ['dir'], done: false, doneAt: null, doneBy: null, order: 1 },
+      { id: 'A03', text: 'Brief second shooter on B-roll priorities', note: 'Coordinate so second shooter is not in interview frame when interviews begin.', tags: ['dir'], done: false, doneAt: null, doneBy: null, order: 2 }
+    ]},
+    { id: uid(), type: 'interview', time: '', title: 'Interview 1', desc: '~12 min', shots: [
+      { id: 'A04', text: 'Wide establishing shot — 10 seconds before first question. Do not cut.', note: 'Used as the edit intro for this segment. Clean and composed before rolling.', tags: ['wide', 'static'], done: false, doneAt: null, doneBy: null, order: 0 },
+      { id: 'A05', text: 'Question 1 — [Add your question here]', note: '', tags: ['q', 'medium'], done: false, doneAt: null, doneBy: null, order: 1 },
+      { id: 'A06', text: 'Question 2 — [Add your question here]', note: '', tags: ['q', 'medium'], done: false, doneAt: null, doneBy: null, order: 2 },
+      { id: 'A07', text: 'Question 3 — [Add your question here]', note: '', tags: ['q', 'medium'], done: false, doneAt: null, doneBy: null, order: 3 }
+    ]},
+    { id: uid(), type: 'interview', time: '', title: 'Interview 2', desc: '~12 min', shots: [
+      { id: 'A08', text: 'Wide establishing shot before first question', note: '', tags: ['wide', 'static'], done: false, doneAt: null, doneBy: null, order: 0 },
+      { id: 'A09', text: 'Question 1 — [Add your question here]', note: '', tags: ['q', 'medium'], done: false, doneAt: null, doneBy: null, order: 1 },
+      { id: 'A10', text: 'Question 2 — [Add your question here]', note: '', tags: ['q', 'medium'], done: false, doneAt: null, doneBy: null, order: 2 }
+    ]},
+    { id: uid(), type: 'hero', time: '', title: 'Hero Moment', desc: '~20 min', shots: [
+      { id: 'A11', text: 'Wide establishing of hero subject in position', note: '', tags: ['wide', 'static'], done: false, doneAt: null, doneBy: null, order: 0 },
+      { id: 'A12', text: 'Hero Q1 — [Add your question here]', note: 'Let them talk. Do not interrupt.', tags: ['q', 'medium'], done: false, doneAt: null, doneBy: null, order: 1 },
+      { id: 'A13', text: 'Hero Q2 — [Add your question here]', note: '', tags: ['q', 'medium'], done: false, doneAt: null, doneBy: null, order: 2 }
+    ]}
+  ];
+
+  pre.broll.categories = BROLL_CATS.map((cat, i) => ({
+    id: uid(),
+    key: cat.key,
+    icon: cat.icon,
+    title: cat.title + ' — ' + cat.note,
+    note: '',
+    shots: [
+      { id: 'B' + String(i * 3 + 1).padStart(2, '0'), text: '[Describe shot]', note: '', tags: [], category: cat.key, done: false, doneAt: null, doneBy: null, order: 0 },
+      { id: 'B' + String(i * 3 + 2).padStart(2, '0'), text: '[Describe shot]', note: '', tags: [], category: cat.key, done: false, doneAt: null, doneBy: null, order: 1 },
+      { id: 'B' + String(i * 3 + 3).padStart(2, '0'), text: '[Describe shot]', note: '', tags: [], category: cat.key, done: false, doneAt: null, doneBy: null, order: 2 }
+    ]
+  }));
+}
+
+// ═��══════════════════════════���══════════
+// PROJECT VIEW
+// ═════��═════════════════════════════════
+
+function renderProjectView() {
+  const p = getProject(currentProjectId);
+  if (!p) { location.hash = '#dashboard'; return; }
+
+  document.getElementById('header-title').textContent = p.meta.businessName || p.meta.clientName || 'Untitled';
+  document.getElementById('header-sub').textContent = STAGE_NAMES[p.meta.currentStage || 0] + (p.stage2_preproduction.header.date ? ' — ' + fmtDate(p.stage2_preproduction.header.date) : '');
+  document.getElementById('back-btn').style.display = 'inline-flex';
+  document.getElementById('new-proj-btn').classList.add('hidden');
+  document.getElementById('project-tabs').classList.remove('hidden');
+
+  // Activate correct tab
+  document.querySelectorAll('#project-tabs .tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === currentTab);
+  });
+
+  // Update changes badge
+  const unreviewed = p.changelog.filter(c => !c.reviewed).length;
+  const changesTab = document.querySelector('#project-tabs .tab[data-tab="changes"]');
+  if (changesTab) {
+    changesTab.innerHTML = 'Changes' + (unreviewed > 0 ? ' <span class="badge badge-red">' + unreviewed + '</span>' : '');
+  }
+
+  const content = document.getElementById('main-content');
+  switch (currentTab) {
+    case 'overview': content.innerHTML = renderOverview(p); break;
+    case 'sales': content.innerHTML = renderSales(p); break;
+    case 'discovery': content.innerHTML = renderDiscovery(p); break;
+    case 'shotlist': content.innerHTML = renderShotList(p); break;
+    case 'shoot': content.innerHTML = renderShootDay(p); break;
+    case 'post': content.innerHTML = renderPost(p); break;
+    case 'delivery': content.innerHTML = renderDelivery(p); break;
+    case 'comms': content.innerHTML = renderComms(p); break;
+    case 'changes': content.innerHTML = renderChanges(p); break;
+    case 'share': content.innerHTML = renderShare(p); break;
+    default: content.innerHTML = renderOverview(p);
+  }
+}
+
+function switchProjectTab(tab, btn) {
+  if (sharedMode) {
+    currentTab = tab;
+    document.querySelectorAll('#project-tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    renderSharedView();
+    return;
+  }
+  if (currentProjectId) {
+    currentTab = tab;
+    location.hash = '#project/' + currentProjectId + '/' + tab;
+  }
+}
+
+// ════════════════════════════��══════════
+// OVERVIEW TAB
+// ══════════════════��════════════════════
+
+function renderOverview(p) {
+  const stage = p.meta.currentStage || 0;
+  let html = '';
+
+  // Stage stepper
+  html += '<div class="stepper">';
+  STAGE_NAMES.forEach((name, i) => {
+    if (i > 0) html += '<span class="step-arrow">&#8594;</span>';
+    const cls = i < stage ? 'done' : (i === stage ? 'current' : '');
+    html += `<div class="step ${cls}" onclick="setStage(${i})">${i < stage ? '&#10003; ' : ''}${name}</div>`;
+  });
+  html += '</div>';
+
+  // Key details card
+  html += '<div class="card card-accent mb-12"><div class="label mb-8">Project Details</div>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">';
+  html += detailRow('Client', p.meta.clientName);
+  html += detailRow('Business', p.meta.businessName);
+  html += detailRow('Shoot Type', p.meta.shootType);
+  html += detailRow('Date', fmtDate(p.stage2_preproduction.header.date));
+  html += detailRow('Lead', p.stage2_preproduction.header.crew.lead);
+  html += detailRow('Second Shooter', p.stage2_preproduction.header.crew.second || '—');
+  html += detailRow('Time', (p.stage2_preproduction.header.timeRange.start ? fmtTime(p.stage2_preproduction.header.timeRange.start) + ' – ' + fmtTime(p.stage2_preproduction.header.timeRange.end) : '—'));
+  html += '</div>';
+  html += '<div class="flex gap-8 mt-12"><button class="btn-ghost btn-sm" onclick="openEditProjectModal()">Edit Details</button>';
+  if (p.meta.status === 'active') html += '<button class="btn-ghost btn-sm btn-danger" onclick="archiveProject()">Archive</button>';
+  else html += '<button class="btn-ghost btn-sm" onclick="unarchiveProject()">Reactivate</button>';
+  html += '</div></div>';
+
+  // Shot list summary
+  const aCount = countAShots(p);
+  const bCount = countBShots(p);
+  const doneCount = countDoneShots(p);
+  if (aCount + bCount > 0) {
+    html += '<div class="card mb-12"><div class="label mb-8">Shot List</div>';
+    html += '<div class="flex gap-12 mb-8">';
+    html += `<div class="sl-stat"><div class="sl-stat-num">${aCount}</div><div class="sl-stat-label">A-Roll</div></div>`;
+    html += `<div class="sl-stat"><div class="sl-stat-num">${bCount}</div><div class="sl-stat-label">B-Roll</div></div>`;
+    html += `<div class="sl-stat"><div class="sl-stat-num">${doneCount}</div><div class="sl-stat-label">Done</div></div>`;
+    html += '</div>';
+    const total = aCount + bCount;
+    const pct = total > 0 ? Math.round(doneCount / total * 100) : 0;
+    html += `<div class="progress"><div class="progress-bar" style="width:${pct}%"></div></div>`;
+    html += `<div class="dim" style="font-size:11px;text-align:right;margin-top:4px;font-family:'DM Mono',monospace">${pct}% complete</div>`;
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function detailRow(label, value) {
+  return `<div style="padding:4px 0"><span class="dim" style="font-size:11px">${label}:</span> <span style="font-size:13px">${esc(value || '—')}</span></div>`;
+}
+
+function setStage(i) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.meta.currentStage = i;
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Stage updated to ' + STAGE_NAMES[i]);
+}
+
+function archiveProject() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.meta.status = 'archived';
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Project archived');
+}
+
+function unarchiveProject() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.meta.status = 'active';
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Project reactivated');
+}
+
+function openEditProjectModal() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const h = p.stage2_preproduction.header;
+  const body = `
+    <div class="form-group"><label class="form-label">Client Name</label><input class="input" id="ep-client" value="${esc(p.meta.clientName)}"></div>
+    <div class="form-group"><label class="form-label">Business Name</label><input class="input" id="ep-business" value="${esc(p.meta.businessName)}"></div>
+    <div class="form-group"><label class="form-label">Shoot Type</label><input class="input" id="ep-type" value="${esc(p.meta.shootType)}"></div>
+    <div class="form-group"><label class="form-label">Shoot Date</label><input class="input" id="ep-date" type="date" value="${h.date || ''}"></div>
+    <div class="flex gap-12">
+      <div class="form-group flex-1"><label class="form-label">Lead Shooter</label><input class="input" id="ep-lead" value="${esc(h.crew.lead)}"></div>
+      <div class="form-group flex-1"><label class="form-label">Second Shooter</label><input class="input" id="ep-second" value="${esc(h.crew.second)}"></div>
+    </div>
+    <div class="flex gap-12">
+      <div class="form-group flex-1"><label class="form-label">Start Time</label><input class="input" id="ep-start" type="time" value="${h.timeRange.start || ''}"></div>
+      <div class="form-group flex-1"><label class="form-label">End Time</label><input class="input" id="ep-end" type="time" value="${h.timeRange.end || ''}"></div>
+    </div>
+    <div class="form-group"><label class="form-label"><input type="checkbox" id="ep-hardstop" ${h.hardStop ? 'checked' : ''}> Hard stop</label></div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveEditProject()">Save</button>`;
+  openModal('Edit Project Details', body, foot);
+}
+
+function saveEditProject() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.meta.clientName = document.getElementById('ep-client').value.trim();
+  p.meta.businessName = document.getElementById('ep-business').value.trim();
+  p.meta.shootType = document.getElementById('ep-type').value.trim();
+  const h = p.stage2_preproduction.header;
+  h.clientName = p.meta.businessName || p.meta.clientName;
+  h.date = document.getElementById('ep-date').value;
+  h.crew.lead = document.getElementById('ep-lead').value.trim() || 'Sev';
+  h.crew.second = document.getElementById('ep-second').value.trim();
+  h.timeRange.start = document.getElementById('ep-start').value;
+  h.timeRange.end = document.getElementById('ep-end').value;
+  h.hardStop = document.getElementById('ep-hardstop').checked;
+  h.shootType = p.meta.shootType;
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  renderProjectView();
+  toast('Details saved');
+}
+
+// ══��════════════════════════════════════
+// SHOT COUNTS
+// ══════════════════���════════════════════
+
+function countAShots(p) {
+  let c = 0;
+  (p.stage2_preproduction.aroll.blocks || []).forEach(b => c += (b.shots || []).length);
+  return c;
+}
+
+function countBShots(p) {
+  let c = 0;
+  (p.stage2_preproduction.broll.categories || []).forEach(cat => c += (cat.shots || []).length);
+  return c;
+}
+
+function countDoneShots(p) {
+  let c = 0;
+  (p.stage2_preproduction.aroll.blocks || []).forEach(b => (b.shots || []).forEach(s => { if (s.done) c++; }));
+  (p.stage2_preproduction.broll.categories || []).forEach(cat => (cat.shots || []).forEach(s => { if (s.done) c++; }));
+  return c;
+}
+
+function countADone(p) {
+  let c = 0;
+  (p.stage2_preproduction.aroll.blocks || []).forEach(b => (b.shots || []).forEach(s => { if (s.done) c++; }));
+  return c;
+}
+
+function countBDone(p) {
+  let c = 0;
+  (p.stage2_preproduction.broll.categories || []).forEach(cat => (cat.shots || []).forEach(s => { if (s.done) c++; }));
+  return c;
+}
+
+// ══════��════════════════════════════════
+// SHOT LIST TAB (The Big One)
+// ���══════════════════════════════════════
+
+let slActivePanel = 'aroll';
+let brollFilter = 'all';
+
+function renderShotList(p) {
+  const pre = p.stage2_preproduction;
+  const h = pre.header;
+  const aTotal = countAShots(p);
+  const bTotal = countBShots(p);
+  const aDone = countADone(p);
+  const bDone = countBDone(p);
+
+  let html = '';
+
+  // Shot list header
+  html += '<div class="sl-header"><div class="flex-between flex-wrap gap-12">';
+  html += '<div>';
+  html += '<div class="sl-eyebrow">Bright Tsar Studios — Shoot Shotlist</div>';
+  html += `<div class="sl-title">${esc(h.clientName || p.meta.clientName || 'Untitled')}${h.date ? ' &middot; ' + fmtDate(h.date) : ''}</div>`;
+  html += `<div class="sl-meta">${esc(h.crew.lead || 'Sev')} (A-Roll lead)${h.crew.second ? ' + ' + esc(h.crew.second) + ' (B-Roll)' : ''}`;
+  if (h.timeRange.start) html += ` &middot; ${fmtTime(h.timeRange.start)} to ${fmtTime(h.timeRange.end)}${h.hardStop ? ' hard stop' : ''}`;
+  if (h.shootType) html += ` &middot; ${esc(h.shootType)}`;
+  html += '</div></div>';
+  html += '<div class="sl-stats">';
+  html += `<div class="sl-stat"><div class="sl-stat-num">${aTotal}</div><div class="sl-stat-label">A-Roll</div></div>`;
+  html += `<div class="sl-stat"><div class="sl-stat-num">${bTotal}</div><div class="sl-stat-label">B-Roll</div></div>`;
+  html += `<div class="sl-stat"><div class="sl-stat-num">${aDone + bDone}</div><div class="sl-stat-label">Done</div></div>`;
+  html += '</div></div></div>';
+
+  // Sub-tabs: A-Roll / B-Roll
+  html += '<div class="sl-tabs">';
+  html += `<button class="sl-tab${slActivePanel === 'aroll' ? ' active' : ''}" onclick="switchSLPanel('aroll')">${esc(h.crew.lead || 'Sev')} — A-Roll</button>`;
+  html += `<button class="sl-tab${slActivePanel === 'broll' ? ' active' : ''}" onclick="switchSLPanel('broll')">${h.crew.second ? esc(h.crew.second) : 'Second'} �� B-Roll</button>`;
+  html += '</div>';
+
+  // A-Roll Panel
+  html += `<div class="sl-panel${slActivePanel === 'aroll' ? ' active' : ''}" id="sl-aroll">`;
+  const aPct = aTotal > 0 ? Math.round(aDone / aTotal * 100) : 0;
+  html += `<div class="sl-progress-wrap"><div class="sl-progress-bar" style="width:${aPct}%"></div></div>`;
+  html += `<div class="sl-progress-label">${aDone} / ${aTotal} shots checked</div>`;
+
+  pre.aroll.blocks.forEach((block, bi) => {
+    html += renderABlock(block, bi);
+  });
+
+  html += `<div class="add-row" onclick="openAddBlockModal()">+ Add time block</div>`;
+  html += '</div>';
+
+  // B-Roll Panel
+  html += `<div class="sl-panel${slActivePanel === 'broll' ? ' active' : ''}" id="sl-broll">`;
+  const bPct = bTotal > 0 ? Math.round(bDone / bTotal * 100) : 0;
+  html += `<div class="sl-progress-wrap"><div class="sl-progress-bar" style="width:${bPct}%"></div></div>`;
+  html += `<div class="sl-progress-label">${bDone} / ${bTotal} shots checked</div>`;
+
+  // Filter row
+  html += '<div class="sl-filters">';
+  html += `<div class="sl-fbtn${brollFilter === 'all' ? ' on' : ''}" onclick="filterBroll('all')">All</div>`;
+  BROLL_CATS.forEach(cat => {
+    html += `<div class="sl-fbtn${brollFilter === cat.key ? ' on' : ''}" onclick="filterBroll('${cat.key}')">${cat.title}</div>`;
+  });
+  html += '</div>';
+
+  pre.broll.categories.forEach((cat, ci) => {
+    if (brollFilter !== 'all' && cat.key !== brollFilter) return;
+    html += renderBCategory(cat, ci);
+  });
+
+  html += `<div class="add-row" onclick="openAddCategoryModal()">+ Add B-Roll category</div>`;
+  html += '</div>';
+
+  return html;
+}
+
+function switchSLPanel(panel) {
+  slActivePanel = panel;
+  const p = getProject(currentProjectId);
+  if (p) document.getElementById('main-content').innerHTML = renderShotList(p);
+}
+
+function filterBroll(key) {
+  brollFilter = key;
+  const p = getProject(currentProjectId);
+  if (p) document.getElementById('main-content').innerHTML = renderShotList(p);
+}
+
+function renderABlock(block, bi) {
+  let html = '<div class="sl-block">';
+  html += '<div class="sl-block-head">';
+  if (block.time) html += `<span class="sl-block-time">${esc(fmtTime(block.time) || block.time)}</span>`;
+  html += `<span class="sl-block-tag bt-${block.type}">${BLOCK_TYPE_LABELS[block.type] || block.type}</span>`;
+  html += `<span class="sl-block-title">${esc(block.title)}</span>`;
+  if (block.desc) html += `<span class="sl-block-desc">${esc(block.desc)}</span>`;
+  html += `<button class="btn-icon" onclick="openEditBlockModal(${bi})" title="Edit block">&#9998;</button>`;
+  html += `<button class="btn-icon" onclick="deleteBlock(${bi})" title="Remove block" style="color:var(--red)">&#10005;</button>`;
+  html += '</div>';
+
+  html += '<div class="sl-shots">';
+  (block.shots || []).forEach((shot, si) => {
+    html += renderShot(shot, 'a', bi, si);
+  });
+  html += '</div>';
+
+  html += `<div class="add-row" onclick="openAddShotModal('a',${bi})">+ Add shot to ${esc(block.title)}</div>`;
+  html += '</div>';
+  return html;
+}
+
+function renderBCategory(cat, ci) {
+  let html = '<div class="sl-bcat">';
+  html += '<div class="sl-bcat-head">';
+  html += `<span class="sl-bcat-icon">${cat.icon}</span>`;
+  html += `<div><div class="sl-bcat-title">${esc(cat.title)}</div>`;
+  if (cat.note) html += `<div class="sl-bcat-note">${esc(cat.note)}</div>`;
+  html += '</div>';
+  const count = (cat.shots || []).length;
+  html += `<span class="sl-bcat-count">${count} shot${count !== 1 ? 's' : ''}</span>`;
+  html += `<button class="btn-icon" onclick="openEditCategoryModal(${ci})" title="Edit category">&#9998;</button>`;
+  html += `<button class="btn-icon" onclick="deleteCategory(${ci})" title="Remove category" style="color:var(--red)">&#10005;</button>`;
+  html += '</div>';
+
+  html += '<div class="sl-shots">';
+  (cat.shots || []).forEach((shot, si) => {
+    html += renderShot(shot, 'b', ci, si);
+  });
+  html += '</div>';
+
+  html += `<div class="add-row" onclick="openAddShotModal('b',${ci})">+ Add shot</div>`;
+  html += '</div>';
+  return html;
+}
+
+function renderShot(shot, type, parentIdx, shotIdx) {
+  const done = shot.done ? ' done' : '';
+  let html = `<div class="sl-shot${done}" onclick="toggleShot('${type}',${parentIdx},${shotIdx})">`;
+  html += `<div class="sl-shot-check"><input type="checkbox" ${shot.done ? 'checked' : ''} onclick="event.stopPropagation()"></div>`;
+  html += `<div class="sl-shot-num">${esc(shot.id)}</div>`;
+  html += '<div class="sl-shot-body">';
+  html += `<div class="sl-shot-text">${esc(shot.text)}</div>`;
+  if (shot.note) html += `<div class="sl-shot-note">${esc(shot.note)}</div>`;
+  if (shot.tags && shot.tags.length) {
+    html += '<div class="sl-shot-tags">';
+    shot.tags.forEach(t => { html += `<span class="stag stag-${t}">${TAG_LABELS[t] || t}</span>`; });
+    html += '</div>';
+  }
+  if (shot.doneAt) html += `<div class="sl-shot-ts">&#10003; ${new Date(shot.doneAt).toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>`;
+  html += `<div class="flex gap-4 mt-8">`;
+  html += `<button class="btn-icon btn-sm" onclick="event.stopPropagation();openEditShotModal('${type}',${parentIdx},${shotIdx})" title="Edit">&#9998;</button>`;
+  html += `<button class="btn-icon btn-sm" onclick="event.stopPropagation();deleteShot('${type}',${parentIdx},${shotIdx})" title="Delete" style="color:var(--red)">&#10005;</button>`;
+  html += '</div>';
+  html += '</div></div>';
+  return html;
+}
+
+// ═══════════════════════════════════════
+// SHOT INTERACTIONS
+// ═════════════════════════���═════════════
+
+function toggleShot(type, parentIdx, shotIdx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  let shot;
+  if (type === 'a') {
+    shot = p.stage2_preproduction.aroll.blocks[parentIdx].shots[shotIdx];
+  } else {
+    shot = p.stage2_preproduction.broll.categories[parentIdx].shots[shotIdx];
+  }
+  shot.done = !shot.done;
+  shot.doneAt = shot.done ? nowISO() : null;
+  shot.doneBy = shot.done ? 'sev' : null;
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+}
+
+function deleteShot(type, parentIdx, shotIdx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  if (type === 'a') {
+    p.stage2_preproduction.aroll.blocks[parentIdx].shots.splice(shotIdx, 1);
+  } else {
+    p.stage2_preproduction.broll.categories[parentIdx].shots.splice(shotIdx, 1);
+  }
+  renumberShots(p);
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Shot removed');
+}
+
+function deleteBlock(bi) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage2_preproduction.aroll.blocks.splice(bi, 1);
+  renumberShots(p);
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Block removed');
+}
+
+function deleteCategory(ci) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage2_preproduction.broll.categories.splice(ci, 1);
+  renumberShots(p);
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Category removed');
+}
+
+function renumberShots(p) {
+  let aNum = 1;
+  p.stage2_preproduction.aroll.blocks.forEach(b => {
+    (b.shots || []).forEach(s => {
+      s.id = 'A' + String(aNum).padStart(2, '0');
+      aNum++;
+    });
+  });
+  let bNum = 1;
+  p.stage2_preproduction.broll.categories.forEach(cat => {
+    (cat.shots || []).forEach(s => {
+      s.id = 'B' + String(bNum).padStart(2, '0');
+      bNum++;
+    });
+  });
+}
+
+// ═══════════════════════════════════════
+// ADD/EDIT MODALS
+// ═��═════════════════════���═══════════════
+
+function openAddBlockModal() {
+  const body = `
+    <div class="form-group"><label class="form-label">Block Type</label>
+      <select class="select" id="ab-type" style="width:100%">
+        ${BLOCK_TYPES.map(t => `<option value="${t}">${BLOCK_TYPE_LABELS[t]}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Time</label><input class="input" id="ab-time" type="time"></div>
+    <div class="form-group"><label class="form-label">Title *</label><input class="input" id="ab-title" placeholder="e.g. Interview — Dr. Smith"></div>
+    <div class="form-group"><label class="form-label">Duration</label><input class="input" id="ab-desc" placeholder="e.g. ~15 min"></div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="addBlock()">Add Block</button>`;
+  openModal('Add Time Block', body, foot);
+}
+
+function addBlock() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const title = document.getElementById('ab-title').value.trim();
+  if (!title) { toast('Title is required'); return; }
+  p.stage2_preproduction.aroll.blocks.push({
+    id: uid(),
+    type: document.getElementById('ab-type').value,
+    time: document.getElementById('ab-time').value,
+    title: title,
+    desc: document.getElementById('ab-desc').value.trim(),
+    shots: []
+  });
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  renderProjectView();
+  toast('Block added');
+}
+
+function openEditBlockModal(bi) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const block = p.stage2_preproduction.aroll.blocks[bi];
+  const body = `
+    <div class="form-group"><label class="form-label">Block Type</label>
+      <select class="select" id="eb-type" style="width:100%">
+        ${BLOCK_TYPES.map(t => `<option value="${t}" ${t === block.type ? 'selected' : ''}>${BLOCK_TYPE_LABELS[t]}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Time</label><input class="input" id="eb-time" type="time" value="${block.time || ''}"></div>
+    <div class="form-group"><label class="form-label">Title</label><input class="input" id="eb-title" value="${esc(block.title)}"></div>
+    <div class="form-group"><label class="form-label">Duration</label><input class="input" id="eb-desc" value="${esc(block.desc || '')}"></div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveEditBlock(${bi})">Save</button>`;
+  openModal('Edit Block', body, foot);
+}
+
+function saveEditBlock(bi) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const block = p.stage2_preproduction.aroll.blocks[bi];
+  block.type = document.getElementById('eb-type').value;
+  block.time = document.getElementById('eb-time').value;
+  block.title = document.getElementById('eb-title').value.trim();
+  block.desc = document.getElementById('eb-desc').value.trim();
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  renderProjectView();
+  toast('Block updated');
+}
+
+function openAddCategoryModal() {
+  const body = `
+    <div class="form-group"><label class="form-label">Category</label>
+      <select class="select" id="ac-key" style="width:100%" onchange="fillCatDefaults()">
+        ${BROLL_CATS.map(c => `<option value="${c.key}">${c.title}</option>`).join('')}
+        <option value="custom">Custom</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Title</label><input class="input" id="ac-title" value="${BROLL_CATS[0].title} — ${BROLL_CATS[0].note}"></div>
+    <div class="form-group"><label class="form-label">Note</label><input class="input" id="ac-note" placeholder="Timing or context"></div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="addCategory()">Add Category</button>`;
+  openModal('Add B-Roll Category', body, foot);
+}
+
+function fillCatDefaults() {
+  const key = document.getElementById('ac-key').value;
+  const cat = BROLL_CATS.find(c => c.key === key);
+  if (cat) {
+    document.getElementById('ac-title').value = cat.title + ' — ' + cat.note;
+  } else {
+    document.getElementById('ac-title').value = '';
+  }
+}
+
+function addCategory() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const key = document.getElementById('ac-key').value;
+  const cat = BROLL_CATS.find(c => c.key === key);
+  p.stage2_preproduction.broll.categories.push({
+    id: uid(),
+    key: key === 'custom' ? 'custom-' + Date.now() : key,
+    icon: cat ? cat.icon : '&#128247;',
+    title: document.getElementById('ac-title').value.trim() || 'New Category',
+    note: document.getElementById('ac-note').value.trim(),
+    shots: []
+  });
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  renderProjectView();
+  toast('Category added');
+}
+
+function openEditCategoryModal(ci) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const cat = p.stage2_preproduction.broll.categories[ci];
+  const body = `
+    <div class="form-group"><label class="form-label">Title</label><input class="input" id="ec-title" value="${esc(cat.title)}"></div>
+    <div class="form-group"><label class="form-label">Note</label><input class="input" id="ec-note" value="${esc(cat.note || '')}"></div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveEditCategory(${ci})">Save</button>`;
+  openModal('Edit Category', body, foot);
+}
+
+function saveEditCategory(ci) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const cat = p.stage2_preproduction.broll.categories[ci];
+  cat.title = document.getElementById('ec-title').value.trim();
+  cat.note = document.getElementById('ec-note').value.trim();
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  renderProjectView();
+  toast('Category updated');
+}
+
+function openAddShotModal(type, parentIdx) {
+  const body = `
+    <div class="form-group"><label class="form-label">Shot Description *</label><textarea class="textarea" id="as-text" rows="3" placeholder="Describe the shot..."></textarea></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="textarea" id="as-note" rows="2" placeholder="Director notes, context, warnings..."></textarea></div>
+    <div class="form-group"><label class="form-label">Tags</label>
+      <div class="tag-selector" id="as-tags">
+        ${SHOT_TAGS.map(t => `<div class="tag-opt" data-tag="${t}" onclick="this.classList.toggle('selected')">${TAG_LABELS[t]}</div>`).join('')}
+      </div>
+    </div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="addShot('${type}',${parentIdx})">Add Shot</button>`;
+  openModal('Add Shot', body, foot);
+  setTimeout(() => document.getElementById('as-text').focus(), 100);
+}
+
+function addShot(type, parentIdx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const text = document.getElementById('as-text').value.trim();
+  if (!text) { toast('Description is required'); return; }
+  const tags = Array.from(document.querySelectorAll('#as-tags .tag-opt.selected')).map(el => el.dataset.tag);
+  const shot = {
+    id: 'TMP',
+    text: text,
+    note: document.getElementById('as-note').value.trim(),
+    tags: tags,
+    done: false,
+    doneAt: null,
+    doneBy: null,
+    order: 0
+  };
+  if (type === 'a') {
+    const block = p.stage2_preproduction.aroll.blocks[parentIdx];
+    shot.order = (block.shots || []).length;
+    block.shots.push(shot);
+  } else {
+    const cat = p.stage2_preproduction.broll.categories[parentIdx];
+    shot.category = cat.key;
+    shot.order = (cat.shots || []).length;
+    cat.shots.push(shot);
+  }
+  renumberShots(p);
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  renderProjectView();
+  toast('Shot added');
+}
+
+function openEditShotModal(type, parentIdx, shotIdx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  let shot;
+  if (type === 'a') shot = p.stage2_preproduction.aroll.blocks[parentIdx].shots[shotIdx];
+  else shot = p.stage2_preproduction.broll.categories[parentIdx].shots[shotIdx];
+
+  const body = `
+    <div class="form-group"><label class="form-label">Shot ${esc(shot.id)}</label><textarea class="textarea" id="es-text" rows="3">${esc(shot.text)}</textarea></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="textarea" id="es-note" rows="2">${esc(shot.note || '')}</textarea></div>
+    <div class="form-group"><label class="form-label">Tags</label>
+      <div class="tag-selector" id="es-tags">
+        ${SHOT_TAGS.map(t => `<div class="tag-opt${(shot.tags || []).includes(t) ? ' selected' : ''}" data-tag="${t}" onclick="this.classList.toggle('selected')">${TAG_LABELS[t]}</div>`).join('')}
+      </div>
+    </div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveEditShot('${type}',${parentIdx},${shotIdx})">Save</button>`;
+  openModal('Edit Shot', body, foot);
+}
+
+function saveEditShot(type, parentIdx, shotIdx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  let shot;
+  if (type === 'a') shot = p.stage2_preproduction.aroll.blocks[parentIdx].shots[shotIdx];
+  else shot = p.stage2_preproduction.broll.categories[parentIdx].shots[shotIdx];
+
+  shot.text = document.getElementById('es-text').value.trim();
+  shot.note = document.getElementById('es-note').value.trim();
+  shot.tags = Array.from(document.querySelectorAll('#es-tags .tag-opt.selected')).map(el => el.dataset.tag);
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  renderProjectView();
+  toast('Shot updated');
+}
+
+// ═══════════════════════════════════════
+// SHOOT DAY — LIVE MODE
+// ═══════════════════════════════════════
+
+let liveListener = null;
+let presenceRef = null;
+let presenceInterval = null;
+let connectedDevices = {};
+let deviceId = 'dev-' + (localStorage.getItem('bts-device-id') || (() => { const id = Math.random().toString(36).substr(2, 8); localStorage.setItem('bts-device-id', id); return id; })());
+let liveSlPanel = 'aroll';
+
+function renderShootDay(p) {
+  const shoot = p.stage3_shoot;
+  const pre = p.stage2_preproduction;
+  const h = pre.header;
+  const aTotal = countAShots(p);
+  const bTotal = countBShots(p);
+  const aDone = countADone(p);
+  const bDone = countBDone(p);
+  const total = aTotal + bTotal;
+  const done = aDone + bDone;
+
+  let html = '';
+
+  // Live mode toggle
+  if (!shoot.liveMode) {
+    html += '<div class="card card-accent text-center" style="padding:32px">';
+    html += '<div style="font-size:40px;margin-bottom:12px">&#127916;</div>';
+    html += '<div style="font-size:18px;font-weight:600;margin-bottom:6px">Shoot Day — Live Mode</div>';
+    html += `<div class="dim mb-16">Real-time shot list synced across all connected devices.<br>${aTotal} A-Roll + ${bTotal} B-Roll shots ready.</div>`;
+    if (aTotal + bTotal === 0) {
+      html += '<div class="dim" style="color:var(--red);margin-bottom:12px">Add shots to your shot list before going live.</div>';
+    } else {
+      html += '<button class="btn" style="font-size:15px;padding:12px 32px" onclick="startLiveMode()">Go Live</button>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  // ── LIVE MODE ACTIVE ──
+
+  // Live header bar
+  html += '<div class="card" style="border-color:var(--green);border-width:2px;padding:12px 16px">';
+  html += '<div class="flex-between flex-wrap gap-8">';
+  html += '<div class="flex-center gap-8">';
+  html += '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green);animation:pulse 2s infinite"></span>';
+  html += '<span style="font-weight:600;color:var(--green);font-size:13px">LIVE</span>';
+  html += `<span class="dim" style="font-size:12px">${esc(h.clientName || p.meta.clientName)}</span>`;
+  if (h.date) html += `<span class="dim" style="font-size:11px;font-family:'DM Mono',monospace">${fmtDate(h.date)}</span>`;
+  html += '</div>';
+  html += '<div class="flex-center gap-8">';
+  html += `<span style="font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:var(--gold)">${done}/${total}</span>`;
+  html += `<span class="dim" style="font-size:11px">${total > 0 ? Math.round(done/total*100) : 0}%</span>`;
+  html += `<button class="btn-ghost btn-sm btn-danger" onclick="endLiveMode()">End</button>`;
+  html += '</div></div>';
+  // Full progress bar
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  html += `<div class="sl-progress-wrap" style="margin-top:10px"><div class="sl-progress-bar" style="width:${pct}%;background:var(--green)"></div></div>`;
+  html += '</div>';
+
+  // Connected devices
+  html += '<div class="flex gap-8 flex-wrap mb-12" style="margin-top:12px">';
+  const devs = Object.values(connectedDevices);
+  if (devs.length > 0) {
+    devs.forEach(d => {
+      const ago = Math.round((Date.now() - d.lastSeen) / 1000);
+      const online = ago < 45;
+      html += `<span class="tag" style="background:${online ? 'var(--green-dim)' : 'rgba(125,133,144,0.15)'};color:${online ? 'var(--green)' : 'var(--dim)'}">${esc(d.label)}${online ? '' : ' (offline)'}</span>`;
+    });
+  }
+  html += '</div>';
+
+  // Sub-tabs
+  html += '<div class="sl-tabs">';
+  html += `<button class="sl-tab${liveSlPanel === 'aroll' ? ' active' : ''}" onclick="switchLivePanel('aroll')">${esc(h.crew.lead || 'Sev')} — A-Roll <span style="font-family:'DM Mono',monospace;font-size:11px;margin-left:4px;color:var(--dim)">${aDone}/${aTotal}</span></button>`;
+  html += `<button class="sl-tab${liveSlPanel === 'broll' ? ' active' : ''}" onclick="switchLivePanel('broll')">${h.crew.second ? esc(h.crew.second) : 'B-Roll'} <span style="font-family:'DM Mono',monospace;font-size:11px;margin-left:4px;color:var(--dim)">${bDone}/${bTotal}</span></button>`;
+  html += '</div>';
+
+  // A-Roll live panel
+  html += `<div class="sl-panel${liveSlPanel === 'aroll' ? ' active' : ''}">`;
+  pre.aroll.blocks.forEach((block, bi) => {
+    const blockDone = (block.shots || []).filter(s => s.done).length;
+    const blockTotal = (block.shots || []).length;
+    const allDone = blockDone === blockTotal && blockTotal > 0;
+    html += '<div class="sl-block">';
+    html += '<div class="sl-block-head">';
+    if (block.time) html += `<span class="sl-block-time">${esc(fmtTime(block.time) || block.time)}</span>`;
+    html += `<span class="sl-block-tag bt-${block.type}">${BLOCK_TYPE_LABELS[block.type] || block.type}</span>`;
+    html += `<span class="sl-block-title">${esc(block.title)}</span>`;
+    html += `<span class="sl-block-desc" style="font-family:'DM Mono',monospace;${allDone ? 'color:var(--green)' : ''}">${blockDone}/${blockTotal}</span>`;
+    html += '</div><div class="sl-shots">';
+    (block.shots || []).forEach((shot, si) => {
+      html += renderLiveShot(shot, 'a', bi, si);
+    });
+    html += '</div>';
+    html += `<div class="add-row" onclick="openLiveAddShotModal('a',${bi})">+ Add shot on the fly</div>`;
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // B-Roll live panel
+  html += `<div class="sl-panel${liveSlPanel === 'broll' ? ' active' : ''}">`;
+  html += '<div class="sl-filters">';
+  html += `<div class="sl-fbtn${brollFilter === 'all' ? ' on' : ''}" onclick="filterBrollLive('all')">All</div>`;
+  BROLL_CATS.forEach(cat => {
+    html += `<div class="sl-fbtn${brollFilter === cat.key ? ' on' : ''}" onclick="filterBrollLive('${cat.key}')">${cat.title}</div>`;
+  });
+  html += '</div>';
+
+  pre.broll.categories.forEach((cat, ci) => {
+    if (brollFilter !== 'all' && cat.key !== brollFilter) return;
+    const catDone = (cat.shots || []).filter(s => s.done).length;
+    const catTotal = (cat.shots || []).length;
+    html += '<div class="sl-bcat">';
+    html += '<div class="sl-bcat-head">';
+    html += `<span class="sl-bcat-icon">${cat.icon}</span>`;
+    html += `<div><div class="sl-bcat-title">${esc(cat.title)}</div></div>`;
+    html += `<span class="sl-bcat-count" style="font-family:'DM Mono',monospace">${catDone}/${catTotal}</span>`;
+    html += '</div><div class="sl-shots">';
+    (cat.shots || []).forEach((shot, si) => {
+      html += renderLiveShot(shot, 'b', ci, si);
+    });
+    html += '</div>';
+    html += `<div class="add-row" onclick="openLiveAddShotModal('b',${ci})">+ Add shot on the fly</div>`;
+    html += '</div>';
+  });
+  html += '</div>';
+
+  return html;
+}
+
+function renderLiveShot(shot, type, parentIdx, shotIdx) {
+  const done = shot.done ? ' done' : '';
+  let html = `<div class="sl-shot${done}" onclick="toggleLiveShot('${type}',${parentIdx},${shotIdx})" style="cursor:pointer">`;
+  html += `<div class="sl-shot-check"><input type="checkbox" ${shot.done ? 'checked' : ''} onclick="event.stopPropagation()"></div>`;
+  html += `<div class="sl-shot-num">${esc(shot.id)}</div>`;
+  html += '<div class="sl-shot-body">';
+  html += `<div class="sl-shot-text">${esc(shot.text)}</div>`;
+  if (shot.note) html += `<div class="sl-shot-note">${esc(shot.note)}</div>`;
+  if (shot.tags && shot.tags.length) {
+    html += '<div class="sl-shot-tags">';
+    shot.tags.forEach(t => { html += `<span class="stag stag-${t}">${TAG_LABELS[t] || t}</span>`; });
+    html += '</div>';
+  }
+  if (shot.doneAt) {
+    html += `<div class="sl-shot-ts">&#10003; ${new Date(shot.doneAt).toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+    if (shot.doneBy) html += ` — ${esc(shot.doneBy)}`;
+    html += '</div>';
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function switchLivePanel(panel) {
+  liveSlPanel = panel;
+  const p = getProject(currentProjectId);
+  if (p) document.getElementById('main-content').innerHTML = renderShootDay(p);
+}
+
+function filterBrollLive(key) {
+  brollFilter = key;
+  const p = getProject(currentProjectId);
+  if (p) document.getElementById('main-content').innerHTML = renderShootDay(p);
+}
+
+function toggleLiveShot(type, parentIdx, shotIdx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  let shot;
+  if (type === 'a') shot = p.stage2_preproduction.aroll.blocks[parentIdx].shots[shotIdx];
+  else shot = p.stage2_preproduction.broll.categories[parentIdx].shots[shotIdx];
+
+  shot.done = !shot.done;
+  shot.doneAt = shot.done ? nowISO() : null;
+  shot.doneBy = shot.done ? (p.stage2_preproduction.header.crew.lead || 'Sev') : null;
+  p.updatedAt = nowISO();
+  save();
+  document.getElementById('main-content').innerHTML = renderShootDay(p);
+}
+
+function openLiveAddShotModal(type, parentIdx) {
+  const body = `
+    <div class="form-group"><label class="form-label">Shot Description *</label><textarea class="textarea" id="la-text" rows="2" placeholder="Quick description..."></textarea></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="textarea" id="la-note" rows="1" placeholder="Optional notes..."></textarea></div>
+    <div class="form-group"><label class="form-label">Tags</label>
+      <div class="tag-selector" id="la-tags">
+        ${SHOT_TAGS.map(t => `<div class="tag-opt" data-tag="${t}" onclick="this.classList.toggle('selected')">${TAG_LABELS[t]}</div>`).join('')}
+      </div>
+    </div>
+  `;
+  const foot = `<button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="addLiveShot('${type}',${parentIdx})">Add Shot</button>`;
+  openModal('Add Shot (Live)', body, foot);
+  setTimeout(() => document.getElementById('la-text').focus(), 100);
+}
+
+function addLiveShot(type, parentIdx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const text = document.getElementById('la-text').value.trim();
+  if (!text) { toast('Description required'); return; }
+  const tags = Array.from(document.querySelectorAll('#la-tags .tag-opt.selected')).map(el => el.dataset.tag);
+
+  const shot = {
+    id: 'LIVE', text, note: document.getElementById('la-note').value.trim(),
+    tags, done: false, doneAt: null, doneBy: null, order: 0
+  };
+
+  if (type === 'a') {
+    const block = p.stage2_preproduction.aroll.blocks[parentIdx];
+    shot.order = (block.shots || []).length;
+    block.shots.push(shot);
+  } else {
+    const cat = p.stage2_preproduction.broll.categories[parentIdx];
+    shot.category = cat.key;
+    shot.order = (cat.shots || []).length;
+    cat.shots.push(shot);
+  }
+  renumberShots(p);
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  document.getElementById('main-content').innerHTML = renderShootDay(p);
+  toast('Shot added');
+}
+
+// ── Live mode controls ──
+
+function startLiveMode() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage3_shoot.liveMode = true;
+  p.stage3_shoot.startedAt = nowISO();
+  p.meta.currentStage = Math.max(p.meta.currentStage, 3);
+  p.updatedAt = nowISO();
+  save();
+  startLiveSync(p);
+  renderProjectView();
+  toast('Live mode started');
+}
+
+function endLiveMode() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage3_shoot.liveMode = false;
+  p.stage3_shoot.endedAt = nowISO();
+  p.updatedAt = nowISO();
+  save();
+  stopLiveSync();
+  renderProjectView();
+  toast('Live mode ended');
+}
+
+// ── Firebase real-time sync ──
+
+function startLiveSync(p) {
+  if (!vaultPath) return;
+  stopLiveSync();
+
+  const projectPath = vaultPath + '/projects/' + p.id + '/data';
+
+  // Listen for remote changes
+  liveListener = db.ref(projectPath).on('value', (snap) => {
+    const remote = snap.val();
+    if (!remote) return;
+    const local = getProject(p.id);
+    if (!local) return;
+
+    // Only merge if remote is newer
+    if (remote.updatedAt > local.updatedAt) {
+      fixProject(remote);
+      const idx = projects.findIndex(x => x.id === p.id);
+      if (idx >= 0) projects[idx] = remote;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(projects)); } catch (e) {}
+
+      // Re-render if we're still on shoot day
+      if (currentProjectId === p.id && currentTab === 'shoot') {
+        document.getElementById('main-content').innerHTML = renderShootDay(remote);
+      }
+    }
+  });
+
+  // Register device presence
+  const presPath = vaultPath + '/projects/' + p.id + '/presence/' + deviceId;
+  presenceRef = db.ref(presPath);
+  presenceRef.set({
+    label: p.stage2_preproduction.header.crew.lead || 'Sev',
+    lastSeen: Date.now(),
+    role: 'owner'
+  });
+  presenceRef.onDisconnect().remove();
+
+  // Heartbeat every 15 seconds
+  presenceInterval = setInterval(() => {
+    if (presenceRef) presenceRef.update({ lastSeen: Date.now() });
+  }, 15000);
+
+  // Listen for other devices
+  db.ref(vaultPath + '/projects/' + p.id + '/presence').on('value', (snap) => {
+    connectedDevices = snap.val() || {};
+    // Re-render device roster if on shoot tab
+    if (currentProjectId === p.id && currentTab === 'shoot') {
+      const p2 = getProject(p.id);
+      if (p2) document.getElementById('main-content').innerHTML = renderShootDay(p2);
+    }
+  });
+}
+
+function stopLiveSync() {
+  if (liveListener && currentProjectId && vaultPath) {
+    db.ref(vaultPath + '/projects/' + currentProjectId + '/data').off('value', liveListener);
+    liveListener = null;
+  }
+  if (presenceRef) {
+    presenceRef.remove();
+    presenceRef = null;
+  }
+  if (presenceInterval) {
+    clearInterval(presenceInterval);
+    presenceInterval = null;
+  }
+  if (currentProjectId && vaultPath) {
+    db.ref(vaultPath + '/projects/' + currentProjectId + '/presence').off('value');
+  }
+  connectedDevices = {};
+}
+
+// ═══════════════════════════════════════
+// SALES CALL — Decision Tree (Phase 4)
+// ═══════════════════════════════════════
+
+const SALES_SCENES = {"open":{"id":"open","tab":"Call","title":"Opening","tactic":"Accusation Audit + Late Night FM Voice","voss":"Accusation audit disarms before they can put a wall up. Slow your pace by 20%. Don't pitch yet.","script":"Hey [Name], good to finally connect. So before I say anything — I just want to be upfront. This isn't one of those calls where I pitch you for 45 minutes. I just want to ask you a few questions, understand what's actually going on, and if there's something here that makes sense for you — great. If not, totally fine. Does that work?","note":"Pause after 'Does that work?' Let them confirm. Don't fill the silence.","options":[{"label":"Yeah, that sounds good","next":"qualify"},{"label":"What is this about exactly?","next":"what_is_this"}]},"what_is_this":{"id":"what_is_this","tab":"Call","title":"They want context first","tactic":"Label + Brief Frame","voss":"Don't defend. Label their need for clarity, then give a one-liner and redirect to qualify.","script":"Completely fair. I work with service-based business owners to build a content system that actually brings in leads — without relying on agencies or ads. I've got a 2-day online workshop and a monthly advisory setup. But before I go into any of that — tell me what's actually going on with your content right now. What made you get on this call?","note":"One sentence on what you do. Then flip it straight back to them.","options":[{"label":"I'm starting from zero","next":"qualify_zero"},{"label":"I'm creating but nothing's working","next":"qualify_stuck"},{"label":"I've got something but want to scale it","next":"qualify_scale"},{"label":"I just want someone to handle it","next":"qualify_dfy"}]},"qualify":{"id":"qualify","tab":"Call","title":"Qualify — Open Question","tactic":"Calibrated Question","voss":"Open with 'What' not 'Are you' — calibrated questions can't be answered yes/no and invite them to share.","script":"So tell me — what's actually going on with your content right now? What made you jump on a call today?","note":"Then stop talking. This is where you learn everything. Mirror key words back.","options":[{"label":"Starting from zero","next":"qualify_zero"},{"label":"Creating but no results","next":"qualify_stuck"},{"label":"Has system, wants to scale","next":"qualify_scale"},{"label":"Wants someone to handle it","next":"qualify_dfy"}]},"qualify_zero":{"id":"qualify_zero","tab":"Call","title":"Starting from Zero","tactic":"Mirror + Calibrated Question","voss":"Mirror their words back. Then ask what's kept them from starting — surfaces the real fear.","script":"Starting from zero. [pause] So how long has this been on the to-do list? [listen] And what's the main thing that's kept you from actually doing it?","note":"Two questions. Let them answer fully before going to pitch.","options":[{"label":"Pitch the workshop","next":"pitch_workshop"},{"label":"They want DFY","next":"qualify_dfy"}]},"qualify_stuck":{"id":"qualify_stuck","tab":"Call","title":"Creating but No Results","tactic":"Mirror + Calibrated Question","voss":"Acknowledge the frustration before asking anything. Label it first.","script":"Creating but nothing's working. [pause] It seems like you've put in the effort but the results just haven't matched it. [wait] What have you tried so far? [listen] And what does a good outcome actually look like for you?","note":"Let them paint the picture of the dream outcome.","options":[{"label":"Pitch workshop","next":"pitch_workshop"},{"label":"Pitch CMO","next":"pitch_cmo"}]},"qualify_scale":{"id":"qualify_scale","tab":"Call","title":"Has Something, Wants to Scale","tactic":"Calibrated Question","voss":"They're further along. CMO might be the right fit. Ask about the bottleneck.","script":"Okay so you've got something going — that's already more than most. What's the biggest bottleneck right now? Is it the strategy, the consistency, or actually knowing whether any of it's working?","note":"Strategy/knowing → CMO. Consistency/system → Workshop.","options":[{"label":"Strategy → CMO","next":"pitch_cmo"},{"label":"Consistency → Workshop","next":"pitch_workshop"}]},"qualify_dfy":{"id":"qualify_dfy","tab":"Call","title":"Wants Someone to Handle It","tactic":"Label + Anchor Upsell","voss":"Label what they're after. Then go straight to CMO — Hormozi anchor upsell.","script":"It sounds like you want the result without the learning curve — you'd rather have someone who knows what they're doing in your corner. Is that right? [wait] Yeah, that makes sense.","note":"Confirm they want DFY before pitching. Then lead with CMO.","options":[{"label":"Yes → pitch CMO","next":"pitch_cmo"},{"label":"They still want to learn → workshop","next":"pitch_workshop"}]},"pitch_workshop":{"id":"pitch_workshop","tab":"Pitch","title":"Workshop Pitch — Value Stack","tactic":"Hormozi Value Stack then Price Reveal","voss":"Stack everything they get before you say a number.","script":"Okay so here's what the workshop is. It's two half-days online with a week in between. By end of day one you've got your full content system built — your brand DNA locked in, 20-plus video ideas scripted, and your first videos filmed. Day two is editing and publishing. You leave with 10 videos ready to go live and a system you actually understand and own. [pause] On top of that, you get 30 days of direct access to me after — WhatsApp, accountability, I review what you're putting out. That's included. [pause] The investment for all of that is $1,500.","note":"Say $1,500 and stop. Don't justify it. Let them respond.","options":[{"label":"I'm in","next":"close_workshop"},{"label":"Can't afford it","next":"cant_afford"},{"label":"Need to think about it","next":"think_about"},{"label":"Need to talk to partner","next":"partner"},{"label":"Not sure it'll work","next":"not_sure"},{"label":"Already using an agency","next":"agency"}]},"pitch_cmo":{"id":"pitch_cmo","tab":"Pitch","title":"CMO Pitch — Anchor High","tactic":"Hormozi Anchor Upsell","voss":"Lead with the highest offer first. If they balk, move down to workshop.","script":"Based on what you're describing, honestly the workshop might be a step below where you need to be. What sounds like a better fit is the advisory side. I become your fractional CMO — weekly call with me, WhatsApp access anytime during business hours, I build your content system with you, I oversee whoever you've got doing creative, and we make sure the strategy is actually working. [pause] That's $2,500 a month.","note":"Say the price and let the silence sit.","options":[{"label":"Tell me more","next":"cmo_detail"},{"label":"That's too much","next":"cmo_too_much"},{"label":"I'm interested","next":"close_cmo"},{"label":"Need to think about it","next":"think_about"},{"label":"Need to talk to partner","next":"partner"}]},"cmo_detail":{"id":"cmo_detail","tab":"Pitch","title":"CMO — More Detail","tactic":"Value Elaboration","voss":"Spell out the deliverables clearly.","script":"Every week we've got a one-hour call. Non-compulsory because schedules move, but it's there. In between, I'm on WhatsApp. I also build your content system with you and stay across whatever creative team you've got. Three-month minimum — after that it goes month-to-month, cancel anytime.","note":"Minimum commitment = 3 months = $7,500 total. Say it clearly.","options":[{"label":"Okay, let's do it","next":"close_cmo"},{"label":"That's too much","next":"cmo_too_much"},{"label":"Need to think about it","next":"think_about"}]},"cmo_too_much":{"id":"cmo_too_much","tab":"Pitch","title":"CMO Too Expensive — Bridge to Workshop","tactic":"Hormozi Feature Downsell","voss":"Don't drop the price — change the offer.","script":"That's fair — the advisory is the full-service version. If that feels like too big a step right now, the workshop might actually be the smarter move. You spend two half-days with me, build the whole system yourself, and walk away knowing exactly what needs to happen. Then if you want me in your corner after that, we can have that conversation. [pause] The workshop is $1,500. Better fit right now?","note":"Reframe workshop as the smart entry point, not consolation prize.","options":[{"label":"Yes, let's do workshop","next":"close_workshop"},{"label":"Still too much","next":"cant_afford"},{"label":"Need to think","next":"think_about"}]},"close_workshop":{"id":"close_workshop","tab":"Close","title":"Close — This or That","tactic":"Voss This-or-That Close","voss":"Never ask 'do you want to book?' Two specific options only.","script":"Perfect. Two options — we can lock in your spot right now and I'll send you the payment link while we're on the call, or I can send it through and you sort it in the next 24 hours. Which works better?","note":"Send the payment link during the call if they say 'now'.","options":[{"label":"Lock it in now","next":"END_BOOKED_WORKSHOP"},{"label":"Send it through","next":"payment_link"},{"label":"Wait, I have a question","next":"think_about"}]},"close_cmo":{"id":"close_cmo","tab":"Close","title":"Close CMO","tactic":"This-or-That Close + Commitment Frame","voss":"Same close structure. Confirm start date so it feels real.","script":"Great. Minimum is three months — that's enough time to actually build something and see results. Two options — we sort out the first payment now and lock in a start date, or you need a day or two. Which works better?","note":"Get a start date even if payment comes later.","options":[{"label":"Let's sort it now","next":"END_BOOKED_CMO"},{"label":"Give me a couple days","next":"payment_link"},{"label":"Still have questions","next":"cmo_detail"}]},"cant_afford":{"id":"cant_afford","tab":"Objection","title":"Can't Afford It — Diagnose","tactic":"Voss Calibrated Question","voss":"Find out if it's money or value first.","script":"Help me understand — is it that the money genuinely isn't there right now, or is it more that you haven't seen enough yet to feel confident it's going to work?","note":"Stay quiet. The answer tells you everything.","options":[{"label":"Money isn't there","next":"money_genuine"},{"label":"Not confident it'll work","next":"value_issue"}]},"money_genuine":{"id":"money_genuine","tab":"Objection","title":"Money Isn't There — Payment Plan","tactic":"Hormozi Payment Plan Downsell","voss":"Same product, same price, different timing.","script":"Okay, fair. Here's one thing I can do — we break it into three payments of $500. First one today locks your spot, the other two over the next two months. Does that work?","note":"Present it matter-of-factly.","options":[{"label":"Yes, that works","next":"close_workshop"},{"label":"Still too much at $500","next":"downsell_session"},{"label":"Need to think","next":"think_about"}]},"value_issue":{"id":"value_issue","tab":"Objection","title":"Not Confident — De-Risk It","tactic":"Hormozi Trial Downsell + Voss Label","voss":"Label their hesitation before offering the solution.","script":"That makes complete sense — you don't know me yet. So here's what I'd suggest. Book a single session with me. One hour, $350. We go through your specific business — I show you exactly what your content system would look like. You walk away with a full plan. If it's useful, you'll know whether the workshop makes sense. If not, you're out $350 and an hour. Lower risk?","note":"$350 session as proof-of-concept. Most people come back for the workshop.","options":[{"label":"Yes, let's do the session","next":"close_session"},{"label":"Even $350 is too much","next":"graceful_exit"},{"label":"I'll think about it","next":"think_about"}]},"downsell_session":{"id":"downsell_session","tab":"Objection","title":"Last Offer — $350 Session","tactic":"Hormozi Feature Downsell — Last Line","voss":"This is the floor. If they say no, let them go cleanly.","script":"Last thing I'll offer — one strategy session with me, $350. One hour, your business. You walk away with a plan. Want to lock that in?","note":"Offer once. If no, graceful exit.","options":[{"label":"Yes, let's do it","next":"close_session"},{"label":"No, not today","next":"graceful_exit"}]},"close_session":{"id":"close_session","tab":"Close","title":"Close — $350 Session","tactic":"This-or-That Close","voss":"Same structure. Make it easy.","script":"Great. Two options — I send you the link now and we lock in a time, or I send it through and you book in the next 24 hours. Which works?","note":"Send the booking link. Have it ready.","options":[{"label":"Lock it in now","next":"END_BOOKED_SESSION"},{"label":"Send it through","next":"payment_link"}]},"think_about":{"id":"think_about","tab":"Objection","title":"Need to Think About It","tactic":"Voss Calibrated Question","voss":"'Think about it' is never the real objection. Surface the actual blocker.","script":"Of course. What's the main thing you'd need to feel clearer on before making a call?","note":"Stay quiet. Their answer tells you which branch to go down.","options":[{"label":"The money","next":"cant_afford"},{"label":"Time — too busy","next":"time_objection"},{"label":"Want to research more","next":"research"},{"label":"Not sure it'll work","next":"not_sure"},{"label":"Need to talk to partner","next":"partner"}]},"time_objection":{"id":"time_objection","tab":"Objection","title":"Too Busy","tactic":"Voss Label + Reframe","voss":"Being busy is the symptom, not having a system is the disease.","script":"It sounds like the business is actually going really well — which usually means now is when getting visible matters most. [pause] The workshop is two half-days. That's the investment that builds the system that takes stuff off your plate. I only run one cohort a month. Next one is [DATE]. After that it's another month out. Does that date work?","note":"Create real urgency — spots capped, dates fixed.","options":[{"label":"That date works","next":"close_workshop"},{"label":"Neither date works","next":"payment_link"},{"label":"Still not sure","next":"research"}]},"research":{"id":"research","tab":"Objection","title":"Wants to Research More","tactic":"Voss No Orientation + Scarcity","voss":"Give them permission to say no — it opens them up.","script":"Totally understand — and I'd rather you feel completely sure. [pause] Spots are capped at 10 per cohort and [X] are filled for [DATE]. I'm not going to chase you. What would help you make the call — seeing what past students said, or something specific about how it works?","note":"Answer their specific question, then go back to close.","options":[{"label":"Want testimonials","next":"proof_close"},{"label":"Specific question","next":"specific_q"},{"label":"Just need to sit with it","next":"graceful_exit"}]},"proof_close":{"id":"proof_close","tab":"Objection","title":"Social Proof then Re-close","tactic":"Hormozi Proof + Re-close","voss":"Share proof, then re-close immediately.","script":"Let me tell you about [client name]. [Share relevant case study — 3-4 sentences.] The system works. The question is just whether now is the right time. Workshop — two half-days, $1,500, next one is [DATE]. Want to lock it in?","note":"Keep case study to 3-4 sentences. Close immediately after.","options":[{"label":"Yes, lock it in","next":"close_workshop"},{"label":"Still need time","next":"graceful_exit"}]},"specific_q":{"id":"specific_q","tab":"Objection","title":"Specific Question","tactic":"Listen then Answer then Re-close","voss":"Answer directly. No filler. Then re-close.","script":"Go for it — what's the question?","note":"Listen. Answer. Then: 'Does that answer it? So — workshop, [DATE], $1,500. Want to lock it in?'","options":[{"label":"Question answered, keen","next":"close_workshop"},{"label":"Led to another concern","next":"think_about"}]},"partner":{"id":"partner","tab":"Objection","title":"Need to Talk to Partner","tactic":"Voss 3-Way Call","voss":"Offer to be on the call with the partner — you close them directly.","script":"Completely makes sense to loop them in. Two options — I jump on a quick call with both of you, 20 minutes, or I send you something they can look through. Which is easier?","note":"The 3-way call is gold.","options":[{"label":"3-way call","next":"close_3way"},{"label":"Send them info","next":"payment_link"}]},"close_3way":{"id":"close_3way","tab":"Close","title":"Schedule 3-Way Call","tactic":"This-or-That Close","voss":"Get a specific time locked in.","script":"Two times that work for me — [DAY/TIME 1] or [DAY/TIME 2]. Which works for both of you?","note":"Get a time. Send calendar invite immediately.","options":[{"label":"Time locked in","next":"payment_link"},{"label":"Send info instead","next":"payment_link"}]},"not_sure":{"id":"not_sure","tab":"Objection","title":"Not Sure It'll Work","tactic":"Voss Calibrated Question + Hormozi Trial","voss":"Ask what specifically worries them, then address it.","script":"What is it about your business that makes you think it might not translate?","note":"Let them explain. Label their concern. Then offer $350 session.","options":[{"label":"Address concern → session","next":"value_issue"},{"label":"Niche you've worked with → proof","next":"proof_close"},{"label":"Concern is time/effort","next":"time_objection"}]},"agency":{"id":"agency","tab":"Objection","title":"Already Using an Agency","tactic":"Voss Label + Reframe","voss":"Don't attack the agency. Introduce the ownership reframe.","script":"It sounds like you've got people on it but something's not quite landing. [wait] Here's the thing with agencies — when they're done, they take the system with them. The workshop gives you the system. You own it. Does that distinction make sense?","note":"Let them respond before pitching.","options":[{"label":"Interested in workshop","next":"pitch_workshop"},{"label":"More interested in CMO","next":"pitch_cmo"},{"label":"Happy with agency","next":"graceful_exit"}]},"graceful_exit":{"id":"graceful_exit","tab":"Close","title":"Graceful Exit — Leave Door Open","tactic":"Voss Clean Close + Future Anchor","voss":"Never burn a bridge. The no today is often a yes in 3 months.","script":"Completely understand — not every timing is right. I'll send you a quick overview so you've got it when the time does make sense. Best way to stay across what I'm doing is @talktosev on Instagram and YouTube. When things shift, you know where to find me.","note":"Send overview email immediately. Follow up in 30 days.","options":[{"label":"Send follow-up","next":"END_FOLLOW_UP"},{"label":"Changed their mind","next":"think_about"}]},"payment_link":{"id":"payment_link","tab":"Done","title":"Send Payment Link — 24hr Follow-up","tactic":"Soft Hold + Deadline","voss":"Create a soft deadline.","script":"No problem. I'll send it through now. The spot isn't locked until payment goes through, and I do have people who've shown interest for [DATE]. If you can sort it within 24 hours that'd be great. Sound good?","note":"Send payment link immediately. Follow up in 24 hours.","options":[{"label":"They'll pay — follow up tomorrow","next":"END_FOLLOW_UP"},{"label":"Went cold — email sequence","next":"END_FOLLOW_UP"}]},"END_BOOKED_WORKSHOP":{"id":"END_BOOKED_WORKSHOP","tab":"Done","title":"Workshop Booked — $1,500","tactic":"","voss":"","script":"Log as Workshop Booked. Send confirmation + Zoom link + pre-brief within the hour.","note":"","options":[]},"END_BOOKED_CMO":{"id":"END_BOOKED_CMO","tab":"Done","title":"CMO Booked — $2,500/mo","tactic":"","voss":"","script":"Log as CMO Booked. Send invoice + onboarding call link within the hour.","note":"","options":[]},"END_BOOKED_SESSION":{"id":"END_BOOKED_SESSION","tab":"Done","title":"Session Booked — $350","tactic":"","voss":"","script":"Log as Session Booked. Send intake form. Prepare to upsell workshop.","note":"","options":[]},"END_FOLLOW_UP":{"id":"END_FOLLOW_UP","tab":"Done","title":"Follow-up Required","tactic":"","voss":"","script":"Send overview email now. Follow up in 24 hours. If no response in 48 hours, send: 'Hey [Name] — Sev here. Have you completely moved on from sorting your content, or is it still something you're thinking about?'","note":"","options":[]}};
+
+let salesScene = 'open';
+let salesHistory = [];
+
+function goSalesScene(nextId) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  salesHistory.push(salesScene);
+  salesScene = nextId;
+  if (nextId.startsWith('END_')) {
+    p.stage0_sales.outcome = SALES_SCENES[nextId].title;
+    p.stage0_sales.decisionPath = [...salesHistory, nextId];
+    save();
+  }
+  document.getElementById('main-content').innerHTML = renderSales(p);
+}
+
+function goSalesBack() {
+  if (salesHistory.length === 0) return;
+  salesScene = salesHistory.pop();
+  const p = getProject(currentProjectId);
+  document.getElementById('main-content').innerHTML = renderSales(p);
+}
+
+function resetSalesAdventure() {
+  salesScene = 'open';
+  salesHistory = [];
+  const p = getProject(currentProjectId);
+  document.getElementById('main-content').innerHTML = renderSales(p);
+}
+
+function saveSalesField(field, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage0_sales[field] = value;
+  save();
+}
+
+function renderSales(p) {
+  const s0 = p.stage0_sales;
+  const scene = SALES_SCENES[salesScene];
+  const isEnd = salesScene.startsWith('END_');
+  const clientName = p.meta.clientName || 'Client';
+  const firstName = clientName.split(' ')[0];
+
+  let html = '<div class="card mb-16" style="padding:20px">';
+  html += '<div class="flex-between mb-16"><div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Lead Info</div></div>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+  html += `<div class="form-group"><label class="form-label">Lead Source</label><input class="input" value="${esc(s0.leadSource || '')}" onchange="saveSalesField('leadSource',this.value)" placeholder="Instagram DM, referral, website..."></div>`;
+  html += `<div class="form-group"><label class="form-label">Lead Date</label><input class="input" type="date" value="${esc(s0.leadDate || '')}" onchange="saveSalesField('leadDate',this.value)"></div>`;
+  html += '</div>';
+  html += `<div class="form-group"><label class="form-label">Pre-Call Notes</label><textarea class="textarea" rows="2" onchange="saveSalesField('callNotes',this.value)" placeholder="Anything to know before the call...">${esc(s0.callNotes || '')}</textarea></div>`;
+  if (s0.outcome) {
+    html += `<div style="margin-top:8px;padding:8px 12px;background:var(--green-dim);border:1px solid var(--green);border-radius:6px;font-size:13px;color:var(--green)">Outcome: ${esc(s0.outcome)}</div>`;
+  }
+  html += '</div>';
+
+  if (salesHistory.length > 0) {
+    html += '<div style="display:flex;gap:6px;align-items:center;margin-bottom:12px;flex-wrap:wrap">';
+    salesHistory.forEach((sid, i) => {
+      const sc = SALES_SCENES[sid];
+      html += `<span style="font-size:11px;color:var(--dim);cursor:pointer;text-decoration:underline" onclick="salesScene='${sid}';salesHistory=salesHistory.slice(0,${i});document.getElementById('main-content').innerHTML=renderSales(getProject(currentProjectId))">${esc(sc ? sc.title : sid)}</span>`;
+      html += '<span style="color:var(--dim);font-size:10px">&rarr;</span>';
+    });
+    html += `<span style="font-size:11px;color:var(--gold);font-weight:600">${esc(scene.title)}</span>`;
+    html += '</div>';
+  }
+
+  const borderColor = isEnd ? 'var(--green)' : scene.tab === 'Objection' ? 'var(--red)' : scene.tab === 'Pitch' ? 'var(--purple)' : scene.tab === 'Close' ? 'var(--gold)' : 'var(--border)';
+  html += `<div class="card" style="border-color:${borderColor};padding:20px">`;
+
+  const tabColors = { Call: 'var(--cyan)', Pitch: 'var(--purple)', Objection: 'var(--red)', Close: 'var(--gold)', Done: 'var(--green)' };
+  const tc = tabColors[scene.tab] || 'var(--dim)';
+  html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">`;
+  html += `<span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:color-mix(in srgb,${tc} 15%,transparent);color:${tc}">${esc(scene.tab)}</span>`;
+  html += `<span style="font-weight:700;font-size:16px">${esc(scene.title)}</span>`;
+  html += '</div>';
+
+  if (scene.tactic) {
+    html += `<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:8px">${esc(scene.tactic)}</div>`;
+    html += `<div style="font-size:12px;color:var(--dim);margin-bottom:16px;font-style:italic;line-height:1.5">${esc(scene.voss)}</div>`;
+  }
+
+  const scriptText = scene.script.replace(/\[Name\]/g, firstName);
+  html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px;font-size:13px;line-height:1.7;white-space:pre-wrap">${esc(scriptText)}</div>`;
+
+  if (scene.note) {
+    html += `<div style="font-size:12px;color:var(--yellow);margin-bottom:16px;padding:8px 12px;background:var(--yellow-dim);border-radius:6px">${esc(scene.note)}</div>`;
+  }
+
+  if (scene.options.length > 0) {
+    html += '<div style="display:flex;flex-direction:column;gap:8px">';
+    scene.options.forEach(opt => {
+      const nextScene = SALES_SCENES[opt.next];
+      const optColor = nextScene && nextScene.tab === 'Done' ? 'var(--green)' : nextScene && nextScene.tab === 'Objection' ? 'var(--red)' : nextScene && nextScene.tab === 'Close' ? 'var(--gold)' : 'var(--cyan)';
+      html += `<button onclick="goSalesScene('${opt.next}')" style="text-align:left;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;transition:border-color 0.2s" onmouseover="this.style.borderColor='${optColor}'" onmouseout="this.style.borderColor='var(--border)'">${esc(opt.label)}</button>`;
+    });
+    html += '</div>';
+  }
+
+  if (isEnd) {
+    html += `<div style="margin-top:16px;text-align:center">`;
+    html += `<button class="btn btn-gold" onclick="resetSalesAdventure()">Start New Call</button>`;
+    html += '</div>';
+  }
+
+  html += '</div>';
+
+  html += '<div style="display:flex;gap:8px;margin-top:12px">';
+  if (salesHistory.length > 0) html += `<button class="btn btn-outline" onclick="goSalesBack()">&larr; Back</button>`;
+  html += `<button class="btn btn-outline" onclick="resetSalesAdventure()" style="margin-left:auto">Reset</button>`;
+  html += '</div>';
+
+  html += '<div class="card mt-16" style="padding:16px">';
+  html += '<div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:8px">Call Notes</div>';
+  html += `<textarea class="textarea" rows="4" onchange="saveSalesField('notes',this.value)" placeholder="Notes during the call...">${esc(s0.notes || '')}</textarea>`;
+  html += '</div>';
+
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">';
+  html += '<div class="card" style="padding:16px">';
+  html += '<div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px">Buy Signals</div>';
+  html += `<textarea class="textarea" rows="3" onchange="saveSalesField('buySignals',this.value.split('\\n').filter(l=>l.trim()))" placeholder="One per line...">${Array.isArray(s0.buySignals) ? s0.buySignals.join('\\n') : ''}</textarea>`;
+  html += '</div>';
+  html += '<div class="card" style="padding:16px">';
+  html += '<div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px">Objections</div>';
+  html += `<textarea class="textarea" rows="3" onchange="saveSalesField('objections',this.value.split('\\n').filter(l=>l.trim()))" placeholder="One per line...">${Array.isArray(s0.objections) ? s0.objections.join('\\n') : ''}</textarea>`;
+  html += '</div></div>';
+
+  return html;
+}
+
+// ═══════════════════════════════════════
+// DISCOVERY — Questionnaire + Fathom (Phase 4)
+// ═══════════════════════════════════════
+
+const DISC_SECTIONS = [
+  { id:'opening', title:'Opening', time:'2-3 mins', questions:[
+    {num:1, text:'Tell me about the business in your own words. What do you do and who do you do it for?'},
+    {num:2, text:'How long have you been operating?'},
+    {num:3, text:'Is it just you, or do you have a team? Who does what?'}
+  ]},
+  { id:'money', title:'The Money', time:'5-7 mins', questions:[
+    {num:4, text:'What\'s your current revenue (ballpark is fine)?'},
+    {num:5, text:'What\'s your pricing range — cheapest through to most expensive?'},
+    {num:6, text:'What does your average client/project/deal look like in dollar terms?'},
+    {num:7, text:'Where do you want revenue to be in 12 months? What about 3 years?'},
+    {num:8, text:'How many active clients or projects do you have right now?'}
+  ]},
+  { id:'clients', title:'How Clients Find You', time:'5-7 mins', questions:[
+    {num:9, text:'Where are your clients coming from right now?', hint:'Referrals, Google, social, ads, word of mouth, partnerships?'},
+    {num:10, text:'If referrals dried up tomorrow, what happens?'},
+    {num:11, text:'Are you running any paid advertising? If yes, what and how\'s it going?'},
+    {num:12, text:'What\'s your sales process look like from first enquiry to signed deal?'},
+    {num:13, text:'How long does that process typically take?'},
+    {num:14, text:'What\'s your close rate?', hint:'Even a rough guess helps.'},
+    {num:15, text:'Where do people drop off or ghost you? Most common objection?'}
+  ]},
+  { id:'content', title:'Content & Marketing', time:'3-5 mins', questions:[
+    {num:16, text:'What platforms are you active on? Which ones are actually working?'},
+    {num:17, text:'Are you producing any content right now — blog, video, podcast, social? How often?'},
+    {num:18, text:'Do you have a website you\'re happy with, or is it more of a placeholder?'},
+    {num:19, text:'Have you ever invested in marketing or content before? What happened?'}
+  ]},
+  { id:'competition', title:'The Competition', time:'3-5 mins', questions:[
+    {num:20, text:'Who are your top 2-3 competitors?'},
+    {num:21, text:'What do they do better than you? (Be honest.)'},
+    {num:22, text:'What do you do better than them? What\'s genuinely different?'},
+    {num:23, text:'If a prospect is comparing you to a competitor, what are they seeing online from each of you?'}
+  ]},
+  { id:'operations', title:'Operations & Capacity', time:'3-5 mins', questions:[
+    {num:24, text:'How many hours a week are you working right now?'},
+    {num:25, text:'Where does most of your time go?'},
+    {num:26, text:'What would break first if you doubled your client load tomorrow?'},
+    {num:27, text:'Is there anyone on your team who could be on camera or involved in content?'}
+  ]},
+  { id:'proof', title:'Proof & Results', time:'3-5 mins', questions:[
+    {num:28, text:'What\'s the single best result you\'ve delivered for a client? Story with numbers.'},
+    {num:29, text:'Do you have testimonials, case studies, or reviews? Where do they live?'},
+    {num:30, text:'Any awards, certifications, press, or credibility markers?'}
+  ]},
+  { id:'goals', title:'Goals & Pain', time:'3-5 mins', questions:[
+    {num:31, text:'What\'s the number one thing keeping you up at night in the business?'},
+    {num:32, text:'If we could fix one thing in the next 90 days, what would make the biggest difference?'},
+    {num:33, text:'What does success look like for you working with someone like me?'},
+    {num:34, text:'Is there a budget range you\'re working with, or more focused on ROI?'},
+    {num:35, text:'What\'s your timeline — is this urgent, or planning ahead?'}
+  ]},
+  { id:'wrap', title:'Wrap-Up', time:'2-3 mins', questions:[
+    {num:36, text:'Is there anything I haven\'t asked that you think I should know?'},
+    {num:37, text:'Who else is involved in this decision?', hint:'Partner, business partner, board, spouse?'},
+    {num:38, text:'What\'s the best way to communicate with you — email, text, call?'}
+  ], advisorNotes:[
+    {id:'an1', text:'Communication style?', hint:'Data-driven, emotional, direct, cautious?'},
+    {id:'an2', text:'Energy level around this?', hint:'All-in, sceptical, tyre-kicker, overwhelmed?'},
+    {id:'an3', text:'Any red flags?', hint:'Unrealistic expectations, budget mismatch, control issues?'},
+    {id:'an4', text:'What\'s the strategic play?', hint:'Content-first, offer restructure, sales enablement, full ecosystem?'},
+    {id:'an5', text:'Anything specific to research before next conversation?'}
+  ]}
+];
+const DISC_TOTAL_Q = 38;
+
+let discSection = 'opening';
+
+function switchDiscSection(sectionId) {
+  discSection = sectionId;
+  const p = getProject(currentProjectId);
+  document.getElementById('main-content').innerHTML = renderDiscovery(p);
+}
+
+function saveDiscAnswer(num, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage1_discovery.questionnaire.answers['q' + num] = value;
+  save();
+}
+
+function saveDiscAdvisorNote(id, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage1_discovery.questionnaire.advisorNotes[id] = value;
+  save();
+}
+
+function saveDiscField(field, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const parts = field.split('.');
+  let obj = p.stage1_discovery;
+  for (let i = 0; i < parts.length - 1; i++) obj = obj[parts[i]];
+  obj[parts[parts.length - 1]] = value;
+  save();
+}
+
+function pullFromDiscovery() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const ext = p.stage1_discovery.extractedDetails;
+  const h = p.stage2_preproduction.header;
+  if (ext.shootDate) h.date = ext.shootDate;
+  if (ext.timeRange) h.timeRange = ext.timeRange;
+  if (ext.crew.lead) h.crew.lead = ext.crew.lead;
+  if (ext.crew.second) h.crew.second = ext.crew.second;
+  h.clientName = p.meta.clientName || h.clientName;
+  h.shootType = p.meta.shootType || h.shootType;
+  save();
+  toast('Shot list header updated from Discovery');
+  switchProjectTab('shotlist', null);
+  document.querySelectorAll('#project-tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === 'shotlist'));
+}
+
+function renderDiscovery(p) {
+  const s1 = p.stage1_discovery;
+  const answers = s1.questionnaire.answers || {};
+  const advNotes = s1.questionnaire.advisorNotes || {};
+
+  let totalAnswered = 0;
+  for (let i = 1; i <= DISC_TOTAL_Q; i++) { if ((answers['q' + i] || '').trim()) totalAnswered++; }
+  const pct = Math.round((totalAnswered / DISC_TOTAL_Q) * 100);
+
+  let html = '';
+
+  html += '<div class="card mb-16" style="padding:20px">';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">';
+  html += `<div class="form-group"><label class="form-label">Meeting Date</label><input class="input" type="date" value="${esc(s1.meetingDate || '')}" onchange="saveDiscField('meetingDate',this.value)"></div>`;
+  html += `<div class="form-group"><label class="form-label">Fathom Recording ID</label><input class="input" value="${esc(s1.fathomRecordingId || '')}" onchange="saveDiscField('fathomRecordingId',this.value)" placeholder="Paste Fathom ID..."></div>`;
+  html += '</div>';
+  html += `<div class="form-group"><label class="form-label">Fathom Summary</label><textarea class="textarea" rows="3" onchange="saveDiscField('fathomSummary',this.value)" placeholder="Paste Fathom meeting summary here or use Claude Code to auto-populate...">${esc(s1.fathomSummary || '')}</textarea></div>`;
+  html += `<div class="form-group"><label class="form-label">Fathom Transcript</label><textarea class="textarea" rows="3" onchange="saveDiscField('fathomTranscript',this.value)" placeholder="Paste full transcript here...">${esc(s1.fathomTranscript || '')}</textarea></div>`;
+  html += '</div>';
+
+  html += `<div class="card mb-16" style="padding:16px">`;
+  html += `<div class="flex-between mb-8"><span style="font-size:13px;font-weight:600">Questionnaire Progress</span><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--dim)">${totalAnswered} / ${DISC_TOTAL_Q}</span></div>`;
+  html += `<div style="height:6px;background:var(--bg);border-radius:3px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--gold);border-radius:3px;transition:width 0.3s"></div></div>`;
+  html += '</div>';
+
+  html += '<div style="display:flex;overflow-x:auto;gap:4px;margin-bottom:16px;padding-bottom:4px">';
+  DISC_SECTIONS.forEach(sec => {
+    let sAnswered = 0;
+    sec.questions.forEach(q => { if ((answers['q' + q.num] || '').trim()) sAnswered++; });
+    const isActive = discSection === sec.id;
+    const hasAns = sAnswered > 0;
+    html += `<button onclick="switchDiscSection('${sec.id}')" style="flex:0 0 auto;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:${isActive ? '700' : '400'};white-space:nowrap;border:1px solid ${isActive ? 'var(--gold)' : 'var(--border)'};background:${isActive ? 'var(--gold-dim)' : 'var(--bg2)'};color:${isActive ? 'var(--gold)' : hasAns ? 'var(--text)' : 'var(--dim)'};cursor:pointer">${esc(sec.title)} <span style="font-family:'DM Mono',monospace;font-size:10px;opacity:0.7">${sAnswered}/${sec.questions.length}</span></button>`;
+  });
+  html += '</div>';
+
+  const sec = DISC_SECTIONS.find(s => s.id === discSection);
+  if (sec) {
+    html += `<div style="font-size:11px;color:var(--dim);margin-bottom:4px;font-family:'DM Mono',monospace">${sec.time}</div>`;
+    html += `<div style="font-size:18px;font-weight:700;margin-bottom:16px">${esc(sec.title)}</div>`;
+
+    sec.questions.forEach(q => {
+      const val = answers['q' + q.num] || '';
+      const answered = val.trim() !== '';
+      html += `<div class="card mb-12" style="padding:16px;border-color:${answered ? 'var(--gold-dim)' : 'var(--border)'}">`;
+      html += `<div style="display:flex;gap:8px;margin-bottom:8px"><span style="font-family:'DM Mono',monospace;font-size:11px;color:${answered ? 'var(--gold)' : 'var(--dim)'}">Q${q.num}</span><span style="font-size:13px;font-weight:500">${esc(q.text)}</span></div>`;
+      if (q.hint) html += `<div style="font-size:11px;color:var(--dim);font-style:italic;margin-bottom:8px">${esc(q.hint)}</div>`;
+      html += `<textarea class="textarea" rows="2" onchange="saveDiscAnswer(${q.num},this.value)" placeholder="Answer...">${esc(val)}</textarea>`;
+      html += '</div>';
+    });
+
+    if (sec.advisorNotes) {
+      html += `<div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">`;
+      html += `<div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:12px">Advisor Notes (Internal)</div>`;
+      sec.advisorNotes.forEach(an => {
+        const val = advNotes[an.id] || '';
+        html += `<div class="card mb-12" style="padding:14px;border-color:${val.trim() ? 'var(--purple-dim)' : 'var(--border)'}">`;
+        html += `<div style="font-size:13px;font-weight:500;margin-bottom:4px">${esc(an.text)}</div>`;
+        if (an.hint) html += `<div style="font-size:11px;color:var(--dim);font-style:italic;margin-bottom:6px">${esc(an.hint)}</div>`;
+        html += `<textarea class="textarea" rows="1" onchange="saveDiscAdvisorNote('${an.id}',this.value)" placeholder="Notes...">${esc(val)}</textarea>`;
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    const secIdx = DISC_SECTIONS.findIndex(s => s.id === discSection);
+    html += '<div style="display:flex;gap:8px;margin-top:16px">';
+    if (secIdx > 0) html += `<button class="btn btn-outline" onclick="switchDiscSection('${DISC_SECTIONS[secIdx - 1].id}')">&larr; ${esc(DISC_SECTIONS[secIdx - 1].title)}</button>`;
+    if (secIdx < DISC_SECTIONS.length - 1) html += `<button class="btn btn-outline" style="margin-left:auto" onclick="switchDiscSection('${DISC_SECTIONS[secIdx + 1].id}')">${esc(DISC_SECTIONS[secIdx + 1].title)} &rarr;</button>`;
+    html += '</div>';
+  }
+
+  html += '<div class="card mt-16" style="padding:20px">';
+  html += '<div class="flex-between mb-12"><div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Extracted Details</div>';
+  html += '<button class="btn btn-gold btn-sm" onclick="pullFromDiscovery()">&rarr; Push to Shot List</button></div>';
+  const ext = s1.extractedDetails;
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+  html += `<div class="form-group"><label class="form-label">Shoot Date</label><input class="input" type="date" value="${esc(ext.shootDate || '')}" onchange="saveDiscField('extractedDetails.shootDate',this.value)"></div>`;
+  html += `<div class="form-group"><label class="form-label">Time Range</label><input class="input" value="${esc(ext.timeRange || '')}" onchange="saveDiscField('extractedDetails.timeRange',this.value)" placeholder="e.g. 7:00 AM - 2:00 PM"></div>`;
+  html += `<div class="form-group"><label class="form-label">Lead Shooter</label><input class="input" value="${esc(ext.crew.lead || '')}" onchange="saveDiscField('extractedDetails.crew.lead',this.value)"></div>`;
+  html += `<div class="form-group"><label class="form-label">Second Shooter</label><input class="input" value="${esc(ext.crew.second || '')}" onchange="saveDiscField('extractedDetails.crew.second',this.value)"></div>`;
+  html += '</div>';
+  html += `<div class="form-group"><label class="form-label">Deliverables</label><textarea class="textarea" rows="2" onchange="saveDiscField('extractedDetails.deliverables',this.value.split('\\n').filter(l=>l.trim()))" placeholder="One per line...">${Array.isArray(ext.deliverables) ? ext.deliverables.join('\\n') : ''}</textarea></div>`;
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+  html += `<div class="form-group"><label class="form-label">Talent / On-Camera</label><textarea class="textarea" rows="2" onchange="saveDiscField('extractedDetails.talentNames',this.value.split('\\n').filter(l=>l.trim()))" placeholder="One per line...">${Array.isArray(ext.talentNames) ? ext.talentNames.join('\\n') : ''}</textarea></div>`;
+  html += `<div class="form-group"><label class="form-label">Locations</label><textarea class="textarea" rows="2" onchange="saveDiscField('extractedDetails.locations',this.value.split('\\n').filter(l=>l.trim()))" placeholder="One per line...">${Array.isArray(ext.locations) ? ext.locations.join('\\n') : ''}</textarea></div>`;
+  html += '</div>';
+  html += `<div class="form-group"><label class="form-label">Compliance / AHPRA Flags</label><textarea class="textarea" rows="1" onchange="saveDiscField('extractedDetails.complianceFlags',this.value.split('\\n').filter(l=>l.trim()))" placeholder="Any compliance notes...">${Array.isArray(ext.complianceFlags) ? ext.complianceFlags.join('\\n') : ''}</textarea></div>`;
+  html += '</div>';
+
+  return html;
+}
+
+// ═══════════════════════════════════════
+// POST-PRODUCTION (Phase 5 placeholder)
+// ═══════════���═══════════════════════════
+
+function savePostField(field, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage4_post[field] = value;
+  save();
+}
+
+function addDeliverable() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage4_post.deliverables.push({
+    id: uid(), name: '', type: 'hero', status: 'not-started',
+    shotIds: [], notes: '', editorAssigned: ''
+  });
+  save();
+  document.getElementById('main-content').innerHTML = renderPost(p);
+}
+
+function updateDeliverable(idx, field, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage4_post.deliverables[idx][field] = value;
+  save();
+}
+
+function removeDeliverable(idx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage4_post.deliverables.splice(idx, 1);
+  save();
+  document.getElementById('main-content').innerHTML = renderPost(p);
+}
+
+function addFileMapping() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage4_post.fileMapping.push({ fileName: '', shotId: '', timestamp: '', confirmed: false });
+  save();
+  document.getElementById('main-content').innerHTML = renderPost(p);
+}
+
+function updateFileMapping(idx, field, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage4_post.fileMapping[idx][field] = value;
+  save();
+}
+
+function removeFileMapping(idx) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage4_post.fileMapping.splice(idx, 1);
+  save();
+  document.getElementById('main-content').innerHTML = renderPost(p);
+}
+
+function renderPost(p) {
+  const s4 = p.stage4_post;
+  let html = '';
+
+  // Links
+  html += '<div class="card mb-16" style="padding:20px">';
+  html += '<div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:12px">External Links</div>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+  html += `<div class="form-group"><label class="form-label">Google Drive Link</label><input class="input" value="${esc(s4.driveLink || '')}" onchange="savePostField('driveLink',this.value)" placeholder="Paste Drive folder URL..."></div>`;
+  html += `<div class="form-group"><label class="form-label">Frame.io Link</label><input class="input" value="${esc(s4.frameioLink || '')}" onchange="savePostField('frameioLink',this.value)" placeholder="Paste Frame.io project URL..."></div>`;
+  html += '</div>';
+  if (s4.driveLink || s4.frameioLink) {
+    html += '<div style="display:flex;gap:8px;margin-top:8px">';
+    if (s4.driveLink) html += `<a href="${esc(s4.driveLink)}" target="_blank" class="btn btn-outline btn-sm">Open Drive &nearr;</a>`;
+    if (s4.frameioLink) html += `<a href="${esc(s4.frameioLink)}" target="_blank" class="btn btn-outline btn-sm">Open Frame.io &nearr;</a>`;
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Editor notes
+  html += '<div class="card mb-16" style="padding:20px">';
+  html += '<div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:8px">Editor Handoff Notes</div>';
+  html += `<textarea class="textarea" rows="3" onchange="savePostField('editorNotes',this.value)" placeholder="General notes for the editor — style, pacing, music direction, brand guidelines...">${esc(s4.editorNotes || '')}</textarea>`;
+  html += '</div>';
+
+  // Deliverables
+  const DEL_TYPES = ['hero','social-clip','broll-library','highlight','testimonial','other'];
+  const DEL_STATUSES = [
+    {v:'not-started',l:'Not Started',c:'var(--dim)'},
+    {v:'editing',l:'Editing',c:'var(--yellow)'},
+    {v:'review',l:'In Review',c:'var(--cyan)'},
+    {v:'revision',l:'Revision',c:'var(--orange)'},
+    {v:'approved',l:'Approved',c:'var(--green)'},
+    {v:'delivered',l:'Delivered',c:'var(--green)'}
+  ];
+  html += '<div class="card mb-16" style="padding:20px">';
+  html += '<div class="flex-between mb-12"><div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Deliverables</div>';
+  html += '<button class="btn btn-gold btn-sm" onclick="addDeliverable()">+ Add</button></div>';
+
+  if (s4.deliverables.length === 0) {
+    html += '<div class="dim text-center" style="padding:20px">No deliverables yet</div>';
+  } else {
+    s4.deliverables.forEach((d, i) => {
+      const st = DEL_STATUSES.find(s => s.v === d.status) || DEL_STATUSES[0];
+      html += `<div class="card mb-12" style="padding:14px;border-color:${d.status === 'approved' || d.status === 'delivered' ? 'var(--green-dim)' : 'var(--border)'}">`;
+      html += '<div style="display:grid;grid-template-columns:1fr 120px 140px 30px;gap:8px;align-items:center;margin-bottom:8px">';
+      html += `<input class="input" value="${esc(d.name || '')}" onchange="updateDeliverable(${i},'name',this.value)" placeholder="Deliverable name..." style="font-weight:600">`;
+      html += `<select class="input" onchange="updateDeliverable(${i},'type',this.value)" style="font-size:11px">`;
+      DEL_TYPES.forEach(t => html += `<option value="${t}"${d.type === t ? ' selected' : ''}>${t}</option>`);
+      html += '</select>';
+      html += `<select class="input" onchange="updateDeliverable(${i},'status',this.value);document.getElementById('main-content').innerHTML=renderPost(getProject(currentProjectId))" style="font-size:11px;color:${st.c}">`;
+      DEL_STATUSES.forEach(s => html += `<option value="${s.v}"${d.status === s.v ? ' selected' : ''}>${s.l}</option>`);
+      html += '</select>';
+      html += `<button onclick="removeDeliverable(${i})" style="background:none;border:none;color:var(--red);font-size:14px;cursor:pointer">&times;</button>`;
+      html += '</div>';
+      html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">`;
+      html += `<input class="input" value="${esc(d.editorAssigned || '')}" onchange="updateDeliverable(${i},'editorAssigned',this.value)" placeholder="Editor assigned..." style="font-size:12px">`;
+      html += `<textarea class="textarea" rows="1" onchange="updateDeliverable(${i},'notes',this.value)" placeholder="Notes..." style="font-size:12px">${esc(d.notes || '')}</textarea>`;
+      html += '</div></div>';
+    });
+  }
+  html += '</div>';
+
+  // File mapping
+  html += '<div class="card" style="padding:20px">';
+  html += '<div class="flex-between mb-12"><div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">File Mapping</div>';
+  html += '<button class="btn btn-outline btn-sm" onclick="addFileMapping()">+ Add</button></div>';
+  html += '<div class="dim mb-12" style="font-size:11px">Map raw files to shots using check-off timestamps from shoot day.</div>';
+
+  if (s4.fileMapping.length === 0) {
+    html += '<div class="dim text-center" style="padding:16px">No file mappings yet</div>';
+  } else {
+    s4.fileMapping.forEach((fm, i) => {
+      html += '<div style="display:grid;grid-template-columns:1fr 80px 100px 30px;gap:8px;align-items:center;margin-bottom:8px">';
+      html += `<input class="input" value="${esc(fm.fileName || '')}" onchange="updateFileMapping(${i},'fileName',this.value)" placeholder="File name..." style="font-size:12px">`;
+      html += `<input class="input" value="${esc(fm.shotId || '')}" onchange="updateFileMapping(${i},'shotId',this.value)" placeholder="Shot ID" style="font-size:12px">`;
+      html += `<input class="input" value="${esc(fm.timestamp || '')}" onchange="updateFileMapping(${i},'timestamp',this.value)" placeholder="Timestamp" style="font-size:12px">`;
+      html += `<button onclick="removeFileMapping(${i})" style="background:none;border:none;color:var(--red);font-size:14px;cursor:pointer">&times;</button>`;
+      html += '</div>';
+    });
+  }
+  html += '</div>';
+
+  return html;
+}
+
+// ════��════════════���═════════════════════
+// DELIVERY (Phase 5 placeholder)
+// ══════════════��════════════════════════
+
+function saveDeliveryField(field, value) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.stage5_delivery[field] = value;
+  save();
+}
+
+function setDeliverableApproval(delIdx, approved) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const del = p.stage4_post.deliverables[delIdx];
+  if (!del) return;
+  let appr = p.stage5_delivery.approvals.find(a => a.deliverableId === del.id);
+  if (!appr) {
+    appr = { deliverableId: del.id, approved: false, feedback: '', approvedAt: null };
+    p.stage5_delivery.approvals.push(appr);
+  }
+  appr.approved = approved;
+  appr.approvedAt = approved ? nowISO() : null;
+  if (approved) del.status = 'approved';
+  save();
+  document.getElementById('main-content').innerHTML = renderDelivery(p);
+}
+
+function saveDeliverableFeedback(delIdx, feedback) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const del = p.stage4_post.deliverables[delIdx];
+  if (!del) return;
+  let appr = p.stage5_delivery.approvals.find(a => a.deliverableId === del.id);
+  if (!appr) {
+    appr = { deliverableId: del.id, approved: false, feedback: '', approvedAt: null };
+    p.stage5_delivery.approvals.push(appr);
+  }
+  appr.feedback = feedback;
+  save();
+}
+
+function renderDelivery(p) {
+  const s5 = p.stage5_delivery;
+  const deliverables = p.stage4_post.deliverables || [];
+  let html = '';
+
+  // Client review link
+  html += '<div class="card mb-16" style="padding:20px">';
+  html += '<div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:12px">Client Review</div>';
+  html += `<div class="form-group"><label class="form-label">Client Review Link</label><input class="input" value="${esc(s5.clientReviewLink || '')}" onchange="saveDeliveryField('clientReviewLink',this.value)" placeholder="Frame.io review link, Google Drive share link..."></div>`;
+  if (s5.clientReviewLink) {
+    html += `<a href="${esc(s5.clientReviewLink)}" target="_blank" class="btn btn-outline btn-sm">Open Review Link &nearr;</a>`;
+  }
+  html += '</div>';
+
+  // Per-deliverable approval
+  html += '<div class="card mb-16" style="padding:20px">';
+  const approvedCount = deliverables.filter(d => {
+    const a = s5.approvals.find(a => a.deliverableId === d.id);
+    return a && a.approved;
+  }).length;
+  html += `<div class="flex-between mb-12"><div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Deliverable Approvals</div>`;
+  html += `<span style="font-family:'DM Mono',monospace;font-size:12px;color:${approvedCount === deliverables.length && deliverables.length > 0 ? 'var(--green)' : 'var(--dim)'}">${approvedCount}/${deliverables.length}</span></div>`;
+
+  if (deliverables.length === 0) {
+    html += '<div class="dim text-center" style="padding:20px">No deliverables to review — add them in the Post tab first</div>';
+  } else {
+    deliverables.forEach((d, i) => {
+      const appr = s5.approvals.find(a => a.deliverableId === d.id) || { approved: false, feedback: '', approvedAt: null };
+      html += `<div class="card mb-12" style="padding:14px;border-color:${appr.approved ? 'var(--green-dim)' : 'var(--border)'}">`;
+      html += '<div class="flex-between mb-8">';
+      html += `<div><span style="font-weight:600">${esc(d.name || 'Untitled')}</span> <span class="dim" style="font-size:11px">${esc(d.type)}</span></div>`;
+      if (appr.approved) {
+        html += `<button onclick="setDeliverableApproval(${i},false)" style="background:var(--green-dim);border:1px solid var(--green);color:var(--green);border-radius:6px;padding:4px 12px;font-size:11px;cursor:pointer">Approved ✓</button>`;
+      } else {
+        html += `<button onclick="setDeliverableApproval(${i},true)" class="btn btn-gold btn-sm">Approve</button>`;
+      }
+      html += '</div>';
+      html += `<textarea class="textarea" rows="2" onchange="saveDeliverableFeedback(${i},this.value)" placeholder="Client feedback / revision notes...">${esc(appr.feedback || '')}</textarea>`;
+      if (appr.approvedAt) html += `<div class="dim" style="font-size:10px;margin-top:4px;font-family:'DM Mono',monospace">Approved ${new Date(appr.approvedAt).toLocaleString('en-AU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>`;
+      html += '</div>';
+    });
+  }
+  html += '</div>';
+
+  // Final delivery date
+  html += '<div class="card mb-16" style="padding:20px">';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+  html += `<div class="form-group"><label class="form-label">Final Delivery Date</label><input class="input" type="date" value="${esc(s5.finalDeliveryDate || '')}" onchange="saveDeliveryField('finalDeliveryDate',this.value)"></div>`;
+  html += '<div></div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Wrap notes
+  html += '<div class="card" style="padding:20px">';
+  html += '<div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:8px">Wrap Notes</div>';
+  html += `<textarea class="textarea" rows="4" onchange="saveDeliveryField('wrapNotes',this.value)" placeholder="Final notes, lessons learned, follow-up actions...">${esc(s5.wrapNotes || '')}</textarea>`;
+  html += '</div>';
+
+  return html;
+}
+
+// ═════════════════════���═════════════════
+// COMMS (Phase 6 placeholder)
+// ══════════��════════════════════════════
+
+function addCommsEntry() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  if (!p.comms) p.comms = [];
+  const body = `
+    <div class="form-group"><label class="form-label">Type</label>
+      <select class="input" id="ce-type">
+        <option value="email">Email</option>
+        <option value="call">Phone Call</option>
+        <option value="meeting">Meeting</option>
+        <option value="fathom">Fathom Recording</option>
+        <option value="note">Note</option>
+      </select></div>
+    <div class="form-group"><label class="form-label">Date</label><input class="input" type="date" id="ce-date" value="${todayStr()}"></div>
+    <div class="form-group"><label class="form-label">Subject</label><input class="input" id="ce-subject" placeholder="Brief subject line..."></div>
+    <div class="form-group"><label class="form-label">Summary / Content</label><textarea class="textarea" id="ce-summary" rows="4" placeholder="Paste email content, call notes, meeting summary..."></textarea></div>
+    <div class="form-group"><label class="form-label">Extracted Changes (if any)</label><textarea class="textarea" id="ce-changes" rows="2" placeholder="Date changes, talent changes, scope changes..."></textarea></div>
+  `;
+  openModal('Add Communication', body, 'saveCommsEntry()');
+}
+
+function saveCommsEntry() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const type = document.getElementById('ce-type').value;
+  const date = document.getElementById('ce-date').value;
+  const subject = document.getElementById('ce-subject').value.trim();
+  const summary = document.getElementById('ce-summary').value.trim();
+  const changes = document.getElementById('ce-changes').value.trim();
+  if (!summary && !subject) { toast('Add a subject or summary'); return; }
+  if (!p.comms) p.comms = [];
+  p.comms.push({
+    id: uid(), type, date: date || todayStr(), subject, summary, source: 'manual',
+    extractedChanges: changes ? changes.split('\n').filter(l => l.trim()) : [],
+    createdAt: nowISO()
+  });
+  p.updatedAt = nowISO();
+  save();
+  closeModal();
+  toast('Communication added');
+  document.getElementById('main-content').innerHTML = renderComms(p);
+}
+
+function removeCommsEntry(entryId) {
+  const p = getProject(currentProjectId);
+  if (!p || !p.comms) return;
+  p.comms = p.comms.filter(c => c.id !== entryId);
+  save();
+  document.getElementById('main-content').innerHTML = renderComms(p);
+}
+
+function renderComms(p) {
+  const comms = (p.comms || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.createdAt || '').localeCompare(a.createdAt || ''));
+  let html = '';
+
+  html += '<div class="flex-between mb-16"><div style="font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Communications Log</div>';
+  html += '<button class="btn btn-gold btn-sm" onclick="addCommsEntry()">+ Add Entry</button></div>';
+
+  if (comms.length === 0) {
+    html += '<div class="card text-center" style="padding:40px"><div style="font-size:28px;margin-bottom:8px">&#128172;</div>';
+    html += '<div class="dim mb-8">No communications logged yet</div>';
+    html += '<div class="dim" style="font-size:11px">Add email summaries, call notes, Fathom transcripts, or general notes.</div></div>';
+    return html;
+  }
+
+  const COMM_ICONS = { email: '&#9993;', call: '&#128222;', meeting: '&#128101;', fathom: '&#127908;', note: '&#128221;' };
+  const COMM_COLORS = { email: 'var(--cyan)', call: 'var(--green)', meeting: 'var(--purple)', fathom: 'var(--gold)', note: 'var(--dim)' };
+
+  comms.forEach(c => {
+    const icon = COMM_ICONS[c.type] || '&#128172;';
+    const color = COMM_COLORS[c.type] || 'var(--dim)';
+    html += `<div class="card mb-12" style="padding:16px">`;
+    html += '<div class="flex-between mb-8">';
+    html += `<div style="display:flex;align-items:center;gap:8px">`;
+    html += `<span style="font-size:16px">${icon}</span>`;
+    html += `<span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:3px;background:color-mix(in srgb,${color} 15%,transparent);color:${color}">${esc(c.type)}</span>`;
+    if (c.subject) html += `<span style="font-weight:600;font-size:13px">${esc(c.subject)}</span>`;
+    html += '</div>';
+    html += `<div style="display:flex;align-items:center;gap:8px">`;
+    html += `<span class="dim" style="font-size:10px;font-family:'DM Mono',monospace">${c.date ? new Date(c.date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</span>`;
+    html += `<button onclick="removeCommsEntry('${c.id}')" style="background:none;border:none;color:var(--dim);font-size:12px;cursor:pointer;opacity:0.5" onmouseover="this.style.color='var(--red)';this.style.opacity=1" onmouseout="this.style.color='var(--dim)';this.style.opacity=0.5">&times;</button>`;
+    html += '</div></div>';
+
+    if (c.summary) {
+      html += `<div style="font-size:13px;line-height:1.6;white-space:pre-wrap;color:var(--text);opacity:0.9">${esc(c.summary)}</div>`;
+    }
+
+    if (c.extractedChanges && c.extractedChanges.length > 0) {
+      html += `<div style="margin-top:10px;padding:8px 12px;background:var(--gold-dim);border:1px solid var(--gold-glow);border-radius:6px">`;
+      html += `<div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Changes Noted</div>`;
+      c.extractedChanges.forEach(ch => {
+        html += `<div style="font-size:12px;color:var(--text);padding-left:8px;border-left:2px solid var(--gold);margin-top:4px">${esc(ch)}</div>`;
+      });
+      html += '</div>';
+    }
+
+    html += '</div>';
+  });
+
+  return html;
+}
+
+// ═══════════════════════════════════════
+// CHANGES (Phase 2 placeholder)
+// ═══════════════════════════════════════
+
+let changesFilter = 'unreviewed'; // 'all', 'unreviewed', 'client'
+
+function renderChanges(p) {
+  const all = (p.changelog || []).slice().reverse();
+  let filtered;
+  switch (changesFilter) {
+    case 'unreviewed': filtered = all.filter(c => !c.reviewed); break;
+    case 'client': filtered = all.filter(c => c.author === 'client'); break;
+    default: filtered = all;
+  }
+
+  let html = '';
+
+  // Filter buttons
+  const unrevCount = all.filter(c => !c.reviewed).length;
+  const clientCount = all.filter(c => c.author === 'client').length;
+  html += '<div class="flex-between mb-16"><div class="label" style="margin-bottom:0">Changes</div>';
+  if (unrevCount > 0) html += `<button class="btn-sm btn" onclick="markAllReviewed()">Mark all reviewed</button>`;
+  html += '</div>';
+  html += '<div class="sl-filters mb-16">';
+  html += `<div class="sl-fbtn${changesFilter === 'unreviewed' ? ' on' : ''}" onclick="setChangesFilter('unreviewed')">Unreviewed (${unrevCount})</div>`;
+  html += `<div class="sl-fbtn${changesFilter === 'client' ? ' on' : ''}" onclick="setChangesFilter('client')">Client only (${clientCount})</div>`;
+  html += `<div class="sl-fbtn${changesFilter === 'all' ? ' on' : ''}" onclick="setChangesFilter('all')">All (${all.length})</div>`;
+  html += '</div>';
+
+  if (filtered.length === 0) {
+    html += '<div class="card text-center" style="padding:40px"><div class="dim">No changes to show</div></div>';
+    return html;
+  }
+
+  filtered.forEach(c => {
+    const reviewed = c.reviewed ? ' reviewed' : '';
+    html += `<div class="card change-entry${reviewed}">`;
+    html += `<div class="flex-between mb-4"><div class="flex gap-8 flex-center">`;
+    if (c.shotId) html += `<span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);font-weight:600">${esc(c.shotId)}</span>`;
+    html += `<span class="dim" style="font-size:11px">${esc(c.field === 'text' ? 'Shot description' : c.field === 'note' ? 'Shot notes' : c.field === 'approval' ? 'Approval' : c.field || '')}</span>`;
+    html += '</div>';
+    html += `<span class="dim" style="font-size:10px;font-family:'DM Mono',monospace">${new Date(c.timestamp).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>`;
+    html += '</div>';
+    if (c.oldValue) html += `<div class="change-old">${esc(c.oldValue)}</div>`;
+    html += `<div class="change-new">${esc(c.newValue || '')}</div>`;
+    html += `<div class="flex gap-8 mt-8 flex-center">`;
+    const tagColor = c.author === 'client' ? 'background:var(--gold-dim);color:var(--gold)' : 'background:var(--blue-dim);color:var(--blue)';
+    html += `<span class="tag" style="${tagColor}">${esc(c.author === 'client' ? 'Client' : 'Sev')}</span>`;
+    if (!c.reviewed) html += `<button class="btn-ghost btn-sm" onclick="markChangeReviewed('${c.id}')">Mark Reviewed</button>`;
+    else html += `<span class="dim" style="font-size:10px">&#10003; Reviewed</span>`;
+    html += '</div></div>';
+  });
+  return html;
+}
+
+function setChangesFilter(f) {
+  changesFilter = f;
+  renderProjectView();
+}
+
+function markAllReviewed() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  p.changelog.forEach(c => { c.reviewed = true; });
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('All changes marked reviewed');
+}
+
+function markChangeReviewed(changeId) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const c = p.changelog.find(x => x.id === changeId);
+  if (c) c.reviewed = true;
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+}
+
+// ═══════════════════════════════════════
+// SHARE (Phase 2 placeholder)
+// ═══════════════════════════════════════
+
+function renderShare(p) {
+  let html = '<div class="label mb-12">Share Links</div>';
+
+  const tokens = Object.entries(p.meta.shareTokens || {});
+  if (tokens.length === 0) {
+    html += '<div class="card"><div class="dim mb-12">No share links yet</div>';
+  } else {
+    tokens.forEach(([tokenId, tok]) => {
+      const url = location.origin + location.pathname + '?token=' + tokenId;
+      html += `<div class="card mb-8">
+        <div class="flex-between mb-4">
+          <span style="font-weight:500;font-size:13px">${esc(tok.label)}</span>
+          <span class="tag" style="background:var(--green-dim);color:var(--green)">Active</span>
+        </div>
+        <div class="dim" style="font-size:11px;margin-bottom:8px">Scope: ${esc(tok.scope)} ${tok.allowEdit ? '(editable)' : '(read-only)'}</div>
+        <div class="flex gap-8">
+          <input class="input" style="font-size:11px;font-family:'DM Mono',monospace" value="${esc(url)}" readonly onclick="this.select()">
+          <button class="btn-sm btn-ghost" onclick="navigator.clipboard.writeText('${esc(url)}');toast('Copied!')">Copy</button>
+          <button class="btn-sm btn-ghost btn-danger" onclick="deleteShareToken('${tokenId}')">Delete</button>
+        </div>
+      </div>`;
+    });
+  }
+
+  html += '<div class="card mt-12">';
+  html += '<div class="label mb-8">Create New Link</div>';
+  html += `<div class="form-group"><label class="form-label">Label</label><input class="input" id="sh-label" placeholder="e.g. Client — shot list review"></div>`;
+  html += `<div class="form-group"><label class="form-label">Scope</label>
+    <select class="select" id="sh-scope" style="width:100%">
+      <option value="full">Full project</option>
+      <option value="shotlist">Shot list only</option>
+      <option value="shoot">Shoot day only</option>
+      <option value="post">Post-production only</option>
+    </select></div>`;
+  html += `<div class="form-group"><label class="form-label"><input type="checkbox" id="sh-edit" checked> Allow editing</label></div>`;
+  html += `<button class="btn" onclick="createShareLink()">Create Link</button>`;
+  html += '</div>';
+
+  return html;
+}
+
+function createShareLink() {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  const label = document.getElementById('sh-label').value.trim() || 'Share link';
+  const scope = document.getElementById('sh-scope').value;
+  const allowEdit = document.getElementById('sh-edit').checked;
+  const tokenId = 'tok-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
+  p.meta.shareTokens[tokenId] = {
+    createdAt: nowISO(),
+    label: label,
+    scope: scope,
+    allowEdit: allowEdit,
+    expiresAt: null
+  };
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Share link created');
+}
+
+function deleteShareToken(tokenId) {
+  const p = getProject(currentProjectId);
+  if (!p) return;
+  delete p.meta.shareTokens[tokenId];
+  p.updatedAt = nowISO();
+  save();
+  renderProjectView();
+  toast('Link removed');
+}
+
+// ═══════════════════════════════════════
+// SHARED MODE
+// ═══════════════════════════════════════
+
+async function loadSharedProject(token) {
+  // Scan all vault paths in Firebase to find the project with this token
+  // Since we don't know the vault hash, we search localStorage first
+  // then try Firebase with a known structure
+  let found = null;
+
+  // Check localStorage projects
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) {
+      const localProjects = JSON.parse(s);
+      for (const p of localProjects) {
+        if (p.meta && p.meta.shareTokens && p.meta.shareTokens[token]) {
+          found = p;
+          break;
+        }
+      }
+    }
+  } catch (e) {}
+
+  // If not found locally, try Firebase with the owner vault path
+  if (!found) {
+    try {
+      const ownerVault = 'pipeline/' + OWNER_HASH;
+      const snap = await db.ref(ownerVault + '/_index').once('value');
+      const idx = snap.val();
+      if (idx) {
+        for (const pid of Object.keys(idx)) {
+          const pSnap = await db.ref(ownerVault + '/projects/' + pid + '/data').once('value');
+          const pData = pSnap.val();
+          if (pData && pData.meta && pData.meta.shareTokens && pData.meta.shareTokens[token]) {
+            found = pData;
+            fixProject(found);
+            break;
+          }
+        }
+      }
+    } catch (e) { console.warn('Firebase shared load failed:', e); }
+  }
+
+  return found;
+}
+
+function enterSharedMode(project, token) {
+  sharedMode = true;
+  sharedToken = token;
+  sharedProject = project;
+  const tokData = project.meta.shareTokens[token];
+  sharedScope = tokData.scope;
+  sharedAllowEdit = tokData.allowEdit;
+
+  document.getElementById('lock-screen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('back-btn').style.display = 'none';
+  document.getElementById('new-proj-btn').classList.add('hidden');
+
+  document.getElementById('header-title').textContent = project.meta.businessName || project.meta.clientName || 'Project';
+  document.getElementById('header-sub').textContent = 'Viewing as: ' + tokData.label;
+
+  // Show only tabs allowed by scope
+  const tabBar = document.getElementById('project-tabs');
+  tabBar.classList.remove('hidden');
+  const scopeTabs = getScopeTabs(sharedScope);
+  tabBar.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('hidden', !scopeTabs.includes(t.dataset.tab));
+  });
+
+  currentProjectId = project.id;
+  currentTab = scopeTabs[0] || 'shotlist';
+  tabBar.querySelector('.tab[data-tab="' + currentTab + '"]')?.classList.add('active');
+
+  renderSharedView();
+}
+
+function getScopeTabs(scope) {
+  switch (scope) {
+    case 'full': return ['overview', 'shotlist', 'shoot', 'post', 'delivery', 'comms'];
+    case 'shotlist': return ['shotlist'];
+    case 'shoot': return ['shoot'];
+    case 'post': return ['post'];
+    default: return ['shotlist'];
+  }
+}
+
+function renderSharedView() {
+  const p = sharedProject;
+  if (!p) return;
+
+  // Activate correct tab
+  document.querySelectorAll('#project-tabs .tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === currentTab);
+  });
+
+  const content = document.getElementById('main-content');
+  let html = '';
+
+  // Shared banner
+  html += `<div class="shared-banner"><div><span class="shared-banner-label">Shared View</span><span class="shared-banner-text"> — ${esc(p.meta.shareTokens[sharedToken]?.label || 'Client')}</span></div>`;
+  if (sharedAllowEdit) html += '<span class="tag" style="background:var(--green-dim);color:var(--green)">Editing enabled</span>';
+  else html += '<span class="tag" style="background:rgba(125,133,144,0.15);color:var(--dim)">Read-only</span>';
+  html += '</div>';
+
+  switch (currentTab) {
+    case 'overview': html += renderOverview(p); break;
+    case 'shotlist': html += renderSharedShotList(p); break;
+    case 'shoot': html += renderShootDay(p); break;
+    case 'post': html += renderPost(p); break;
+    case 'delivery': html += renderDelivery(p); break;
+    case 'comms': html += renderComms(p); break;
+    default: html += renderSharedShotList(p);
+  }
+  content.innerHTML = html;
+}
+
+function renderSharedShotList(p) {
+  const pre = p.stage2_preproduction;
+  const h = pre.header;
+  const aTotal = countAShots(p);
+  const bTotal = countBShots(p);
+  const aDone = countADone(p);
+  const bDone = countBDone(p);
+
+  let html = '';
+
+  // Header
+  html += '<div class="sl-header"><div class="flex-between flex-wrap gap-12">';
+  html += '<div>';
+  html += '<div class="sl-eyebrow">Bright Tsar Studios — Shoot Shotlist</div>';
+  html += `<div class="sl-title">${esc(h.clientName || p.meta.clientName || 'Untitled')}${h.date ? ' &middot; ' + fmtDate(h.date) : ''}</div>`;
+  html += `<div class="sl-meta">${esc(h.crew.lead || 'Sev')} (A-Roll lead)${h.crew.second ? ' + ' + esc(h.crew.second) + ' (B-Roll)' : ''}`;
+  if (h.timeRange.start) html += ` &middot; ${fmtTime(h.timeRange.start)} to ${fmtTime(h.timeRange.end)}${h.hardStop ? ' hard stop' : ''}`;
+  if (h.shootType) html += ` &middot; ${esc(h.shootType)}`;
+  html += '</div></div>';
+  html += '<div class="sl-stats">';
+  html += `<div class="sl-stat"><div class="sl-stat-num">${aTotal}</div><div class="sl-stat-label">A-Roll</div></div>`;
+  html += `<div class="sl-stat"><div class="sl-stat-num">${bTotal}</div><div class="sl-stat-label">B-Roll</div></div>`;
+  html += '</div></div></div>';
+
+  // Sub-tabs
+  html += '<div class="sl-tabs">';
+  html += `<button class="sl-tab${slActivePanel === 'aroll' ? ' active' : ''}" onclick="switchSharedPanel('aroll')">A-Roll</button>`;
+  html += `<button class="sl-tab${slActivePanel === 'broll' ? ' active' : ''}" onclick="switchSharedPanel('broll')">B-Roll</button>`;
+  html += '</div>';
+
+  // A-Roll Panel
+  html += `<div class="sl-panel${slActivePanel === 'aroll' ? ' active' : ''}">`;
+  const aPct = aTotal > 0 ? Math.round(aDone / aTotal * 100) : 0;
+  html += `<div class="sl-progress-wrap"><div class="sl-progress-bar" style="width:${aPct}%"></div></div>`;
+  html += `<div class="sl-progress-label">${aDone} / ${aTotal} shots</div>`;
+
+  pre.aroll.blocks.forEach((block, bi) => {
+    html += '<div class="sl-block">';
+    html += '<div class="sl-block-head">';
+    if (block.time) html += `<span class="sl-block-time">${esc(fmtTime(block.time) || block.time)}</span>`;
+    html += `<span class="sl-block-tag bt-${block.type}">${BLOCK_TYPE_LABELS[block.type] || block.type}</span>`;
+    html += `<span class="sl-block-title">${esc(block.title)}</span>`;
+    if (block.desc) html += `<span class="sl-block-desc">${esc(block.desc)}</span>`;
+    html += '</div><div class="sl-shots">';
+    (block.shots || []).forEach((shot, si) => {
+      html += renderSharedShot(shot, 'a', bi, si);
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+
+  // B-Roll Panel
+  html += `<div class="sl-panel${slActivePanel === 'broll' ? ' active' : ''}">`;
+  const bPct = bTotal > 0 ? Math.round(bDone / bTotal * 100) : 0;
+  html += `<div class="sl-progress-wrap"><div class="sl-progress-bar" style="width:${bPct}%"></div></div>`;
+  html += `<div class="sl-progress-label">${bDone} / ${bTotal} shots</div>`;
+
+  html += '<div class="sl-filters">';
+  html += `<div class="sl-fbtn${brollFilter === 'all' ? ' on' : ''}" onclick="filterBrollShared('all')">All</div>`;
+  BROLL_CATS.forEach(cat => {
+    html += `<div class="sl-fbtn${brollFilter === cat.key ? ' on' : ''}" onclick="filterBrollShared('${cat.key}')">${cat.title}</div>`;
+  });
+  html += '</div>';
+
+  pre.broll.categories.forEach((cat, ci) => {
+    if (brollFilter !== 'all' && cat.key !== brollFilter) return;
+    html += '<div class="sl-bcat">';
+    html += '<div class="sl-bcat-head">';
+    html += `<span class="sl-bcat-icon">${cat.icon}</span>`;
+    html += `<div><div class="sl-bcat-title">${esc(cat.title)}</div></div>`;
+    html += `<span class="sl-bcat-count">${(cat.shots || []).length} shots</span>`;
+    html += '</div><div class="sl-shots">';
+    (cat.shots || []).forEach((shot, si) => {
+      html += renderSharedShot(shot, 'b', ci, si);
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+
+  // Client approval section
+  const approval = pre.clientApproval;
+  if (sharedAllowEdit) {
+    html += '<div class="approval-bar' + (approval.approved ? ' approved' : '') + '">';
+    if (approval.approved) {
+      html += `<div style="color:var(--green);font-weight:600;font-size:15px;margin-bottom:4px">&#10003; Approved</div>`;
+      html += `<div class="dim" style="font-size:12px">Approved on ${fmtDate(approval.approvedAt)}</div>`;
+      html += `<button class="btn-ghost btn-sm mt-8" onclick="clientUnapprove()">Revoke Approval</button>`;
+    } else {
+      html += `<div style="font-weight:500;margin-bottom:8px">Happy with the shot list?</div>`;
+      html += `<button class="btn" onclick="clientApprove()">Save &amp; Approve</button>`;
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderSharedShot(shot, type, parentIdx, shotIdx) {
+  const isEditing = editingShot && editingShot.type === type && editingShot.parentIdx === parentIdx && editingShot.shotIdx === shotIdx;
+  const done = shot.done ? ' done' : '';
+  const editable = sharedAllowEdit ? ' sl-shot-editable' : '';
+  const editing = isEditing ? ' sl-shot-editing' : '';
+
+  let html = `<div class="sl-shot${done}${editable}${editing}">`;
+  html += `<div class="sl-shot-check"><input type="checkbox" ${shot.done ? 'checked' : ''} disabled></div>`;
+  html += `<div class="sl-shot-num">${esc(shot.id)}</div>`;
+  html += '<div class="sl-shot-body">';
+
+  if (isEditing) {
+    html += `<textarea class="edit-field" id="shared-edit-text" rows="2">${esc(shot.text)}</textarea>`;
+    html += `<textarea class="edit-field" id="shared-edit-note" rows="1" placeholder="Notes (optional)">${esc(shot.note || '')}</textarea>`;
+    html += '<div class="edit-actions">';
+    html += `<button class="btn btn-sm" onclick="saveSharedEdit('${type}',${parentIdx},${shotIdx})">Save</button>`;
+    html += `<button class="btn-ghost btn-sm" onclick="cancelSharedEdit()">Cancel</button>`;
+    html += '</div>';
+  } else {
+    html += `<div class="sl-shot-text">${esc(shot.text)}</div>`;
+    if (shot.note) html += `<div class="sl-shot-note">${esc(shot.note)}</div>`;
+    if (shot.tags && shot.tags.length) {
+      html += '<div class="sl-shot-tags">';
+      shot.tags.forEach(t => { html += `<span class="stag stag-${t}">${TAG_LABELS[t] || t}</span>`; });
+      html += '</div>';
+    }
+    if (sharedAllowEdit) {
+      html += `<div class="mt-8"><button class="btn-ghost btn-sm" onclick="startSharedEdit('${type}',${parentIdx},${shotIdx})">Edit</button></div>`;
+    }
+  }
+
+  html += '</div></div>';
+  return html;
+}
+
+function switchSharedPanel(panel) {
+  slActivePanel = panel;
+  renderSharedView();
+}
+
+function filterBrollShared(key) {
+  brollFilter = key;
+  renderSharedView();
+}
+
+function startSharedEdit(type, parentIdx, shotIdx) {
+  editingShot = { type, parentIdx, shotIdx };
+  renderSharedView();
+  setTimeout(() => { const el = document.getElementById('shared-edit-text'); if (el) el.focus(); }, 50);
+}
+
+function cancelSharedEdit() {
+  editingShot = null;
+  renderSharedView();
+}
+
+function saveSharedEdit(type, parentIdx, shotIdx) {
+  const p = sharedProject;
+  if (!p) return;
+  let shot;
+  if (type === 'a') shot = p.stage2_preproduction.aroll.blocks[parentIdx].shots[shotIdx];
+  else shot = p.stage2_preproduction.broll.categories[parentIdx].shots[shotIdx];
+
+  const newText = document.getElementById('shared-edit-text').value.trim();
+  const newNote = document.getElementById('shared-edit-note').value.trim();
+
+  // Log changes
+  if (newText !== shot.text) {
+    p.changelog.push({
+      id: uid(), timestamp: nowISO(), author: 'client',
+      authorLabel: 'Client (via ' + (p.meta.shareTokens[sharedToken]?.label || 'shared link') + ')',
+      field: 'text', shotId: shot.id,
+      oldValue: shot.text, newValue: newText, reviewed: false
+    });
+    shot.text = newText;
+  }
+  if (newNote !== (shot.note || '')) {
+    p.changelog.push({
+      id: uid(), timestamp: nowISO(), author: 'client',
+      authorLabel: 'Client (via ' + (p.meta.shareTokens[sharedToken]?.label || 'shared link') + ')',
+      field: 'note', shotId: shot.id,
+      oldValue: shot.note || '', newValue: newNote, reviewed: false
+    });
+    shot.note = newNote;
+  }
+
+  p.updatedAt = nowISO();
+  editingShot = null;
+
+  // Save to Firebase
+  if (vaultPath) {
+    db.ref(vaultPath + '/projects/' + p.id + '/data').set(p).catch(e => console.warn('Firebase shared save failed:', e));
+  } else {
+    // Try owner vault path
+    db.ref('pipeline/' + OWNER_HASH + '/projects/' + p.id + '/data').set(p).catch(e => console.warn('Firebase shared save failed:', e));
+  }
+  // Also update localStorage if available
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) {
+      const arr = JSON.parse(s);
+      const idx = arr.findIndex(x => x.id === p.id);
+      if (idx >= 0) { arr[idx] = p; localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+    }
+  } catch (e) {}
+
+  renderSharedView();
+  toast('Changes saved');
+}
+
+function clientApprove() {
+  const p = sharedProject;
+  if (!p) return;
+  p.stage2_preproduction.clientApproval.approved = true;
+  p.stage2_preproduction.clientApproval.approvedAt = nowISO();
+  p.stage2_preproduction.clientApproval.savedSnapshots.push({
+    timestamp: nowISO(),
+    aroll: JSON.parse(JSON.stringify(p.stage2_preproduction.aroll)),
+    broll: JSON.parse(JSON.stringify(p.stage2_preproduction.broll))
+  });
+  p.changelog.push({
+    id: uid(), timestamp: nowISO(), author: 'client',
+    authorLabel: 'Client', field: 'approval', shotId: '',
+    oldValue: 'Not approved', newValue: 'Approved', reviewed: false
+  });
+  p.updatedAt = nowISO();
+  db.ref('pipeline/' + OWNER_HASH + '/projects/' + p.id + '/data').set(p).catch(e => {});
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) { const arr = JSON.parse(s); const idx = arr.findIndex(x => x.id === p.id); if (idx >= 0) { arr[idx] = p; localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } }
+  } catch (e) {}
+  renderSharedView();
+  toast('Shot list approved!');
+}
+
+function clientUnapprove() {
+  const p = sharedProject;
+  if (!p) return;
+  p.stage2_preproduction.clientApproval.approved = false;
+  p.stage2_preproduction.clientApproval.approvedAt = null;
+  p.changelog.push({
+    id: uid(), timestamp: nowISO(), author: 'client',
+    authorLabel: 'Client', field: 'approval', shotId: '',
+    oldValue: 'Approved', newValue: 'Revoked approval', reviewed: false
+  });
+  p.updatedAt = nowISO();
+  db.ref('pipeline/' + OWNER_HASH + '/projects/' + p.id + '/data').set(p).catch(e => {});
+  renderSharedView();
+  toast('Approval revoked');
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+
+(async function init() {
+  // Check for shared token in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+
+  if (token) {
+    const project = await loadSharedProject(token);
+    if (project && project.meta.shareTokens[token]) {
+      enterSharedMode(project, token);
+    } else {
+      document.getElementById('lock-screen').querySelector('.lock-box').innerHTML =
+        '<div style="color:var(--red);font-size:16px;font-weight:600;margin-bottom:8px">Invalid or expired link</div>' +
+        '<div class="dim">This share link is no longer valid. Please request a new one.</div>';
+    }
+    return;
+  }
+
+  if (checkSession()) {
+    await loadData();
+    route();
+  }
+})();
+
+</script>
+</body>
+</html>
