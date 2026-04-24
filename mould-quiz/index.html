@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Is Your Home Making You Sick? | Free Diagnostic</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f3e0;</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --bg2: #161b22; --bg3: #1a1f29; --border: #21262d; --border-bright: #30363d;
+  --gold: #c9a227; --gold-bright: #e0b830; --gold-dim: rgba(201,162,39,0.2); --gold-glow: rgba(201,162,39,0.4);
+  --text: #e6edf3; --dim: #7d8590; --white: #fff;
+  --green: #22c55e; --red: #ef4444; --yellow: #f59e0b; --cyan: #06b6d4;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100vh; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Header / Progress */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(13,17,23,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner { max-width: 720px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); }
+.brand strong { color: var(--gold); font-weight: 500; }
+.counter { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--dim); letter-spacing: 1px; }
+.counter.hidden { display: none; }
+.progress-bar {
+  height: 3px; background: var(--border); width: 100%; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 100%);
+  width: 0%; transition: width 0.45s cubic-bezier(0.4,0,0.2,1); border-radius: 3px;
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.main { flex: 1; width: 100%; max-width: 720px; margin: 0 auto; padding: 40px 24px 60px; }
+
+/* Screen transitions */
+.screen { display: none; animation: fadeIn 0.45s cubic-bezier(0.4,0,0.2,1); }
+.screen.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Intro screen */
+.intro-tag {
+  display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold); padding: 6px 14px; border: 1px solid var(--gold-dim);
+  border-radius: 999px; margin-bottom: 24px; background: var(--gold-dim);
+}
+.intro-title {
+  font-family: 'DM Serif Display', serif; font-weight: 400;
+  font-size: clamp(36px, 6vw, 56px); line-height: 1.05; color: var(--white);
+  margin-bottom: 20px; letter-spacing: -0.5px;
+}
+.intro-title em { font-style: italic; color: var(--gold); }
+.intro-sub {
+  font-size: 17px; line-height: 1.6; color: var(--dim); margin-bottom: 36px; max-width: 560px;
+}
+.intro-meta {
+  display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 36px;
+  padding: 18px 22px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+}
+.intro-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--dim); }
+.intro-meta-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 6px var(--gold-glow); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 15px;
+  background: var(--gold); color: #1a1500; border: none; cursor: pointer;
+  padding: 16px 32px; border-radius: 10px; transition: all 0.2s;
+  box-shadow: 0 4px 24px var(--gold-glow);
+}
+.btn-primary:hover { background: var(--gold-bright); transform: translateY(-1px); box-shadow: 0 6px 30px var(--gold-glow); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary .arrow { transition: transform 0.2s; }
+.btn-primary:hover .arrow { transform: translateX(3px); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+  background: transparent; color: var(--dim); border: 1px solid var(--border); cursor: pointer;
+  padding: 10px 18px; border-radius: 8px; transition: all 0.2s; text-decoration: none;
+}
+.btn-secondary:hover { border-color: var(--gold-dim); color: var(--text); }
+
+/* Question screen */
+.q-label {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+}
+.q-title {
+  font-family: 'DM Serif Display', serif; font-weight: 400;
+  font-size: clamp(26px, 4vw, 34px); line-height: 1.2; color: var(--white);
+  margin-bottom: 16px; letter-spacing: -0.3px;
+}
+.q-context {
+  font-size: 14px; line-height: 1.6; color: var(--dim); margin-bottom: 28px;
+  padding-left: 14px; border-left: 2px solid var(--gold-dim);
+}
+.answers { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.answer {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 20px; cursor: pointer; transition: all 0.15s; text-align: left;
+  font-family: inherit; font-size: 15px; color: var(--text); width: 100%;
+}
+.answer:hover { border-color: var(--gold-dim); background: var(--bg3); transform: translateX(3px); }
+.answer.selected {
+  border-color: var(--gold); background: var(--gold-dim);
+}
+.answer-mark {
+  width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-bright);
+  flex-shrink: 0; position: relative; transition: all 0.15s;
+}
+.answer.selected .answer-mark { border-color: var(--gold); background: var(--gold); }
+.answer.selected .answer-mark::after {
+  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 8px; height: 8px; border-radius: 50%; background: #1a1500;
+}
+.answer-text { flex: 1; }
+
+.q-controls { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+
+/* Results screen */
+.result-tag {
+  display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 20px;
+}
+.result-tag.low { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+.result-tag.mod { background: rgba(245,158,11,0.15); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+.result-tag.high { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+.result-title {
+  font-family: 'DM Serif Display', serif; font-weight: 400;
+  font-size: clamp(30px, 5vw, 44px); line-height: 1.1; color: var(--white);
+  margin-bottom: 18px; letter-spacing: -0.3px;
+}
+
+.result-score {
+  display: flex; align-items: baseline; gap: 10px; margin-bottom: 28px;
+  padding: 20px 24px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+}
+.score-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); }
+.score-value { font-family: 'DM Serif Display', serif; font-size: 36px; line-height: 1; color: var(--gold); }
+.score-of { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--dim); }
+
+.result-body { font-size: 16px; line-height: 1.7; color: var(--text); margin-bottom: 28px; }
+.result-body p { margin-bottom: 16px; }
+.result-body strong { color: var(--white); }
+
+.callout {
+  padding: 22px 24px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+  margin-bottom: 28px; position: relative; overflow: hidden;
+}
+.callout::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold);
+}
+.callout-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.callout-list { list-style: none; padding: 0; }
+.callout-list li { padding: 8px 0; padding-left: 24px; position: relative; color: var(--text); font-size: 15px; line-height: 1.5; border-bottom: 1px solid var(--border); }
+.callout-list li:last-child { border-bottom: none; }
+.callout-list li::before {
+  content: ''; position: absolute; left: 0; top: 15px; width: 10px; height: 10px;
+  border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg);
+}
+
+.cta-card {
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+  border: 1px solid var(--gold-dim); border-radius: 16px; padding: 32px;
+  margin-bottom: 24px; position: relative; overflow: hidden;
+}
+.cta-card::before {
+  content: ''; position: absolute; top: -50%; right: -20%; width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%); pointer-events: none;
+}
+.cta-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; position: relative; z-index: 1; }
+.cta-title {
+  font-family: 'DM Serif Display', serif; font-weight: 400;
+  font-size: clamp(22px, 3.5vw, 28px); line-height: 1.2; color: var(--white);
+  margin-bottom: 12px; position: relative; z-index: 1;
+}
+.cta-desc { font-size: 15px; line-height: 1.6; color: var(--dim); margin-bottom: 24px; position: relative; z-index: 1; }
+.cta-card .btn-primary { position: relative; z-index: 1; }
+.cta-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; font-size: 12px; color: var(--dim); position: relative; z-index: 1; }
+.cta-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.cta-meta span::before { content: '✓'; color: var(--green); font-weight: 700; }
+
+.result-footer { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+
+.footer {
+  text-align: center; padding: 24px; color: var(--dim); font-size: 11px;
+  font-family: 'DM Mono', monospace; letter-spacing: 0.5px; border-top: 1px solid var(--border);
+}
+.footer a { color: var(--gold); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* Pitch modal */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  display: none; align-items: center; justify-content: center; padding: 24px;
+  animation: overlayFade 0.3s ease-out;
+}
+.modal-overlay.active { display: flex; }
+@keyframes overlayFade { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  position: relative; background: var(--bg2); border: 1px solid var(--gold-dim);
+  border-radius: 16px; padding: 40px 36px; max-width: 500px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  animation: modalSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--gold-dim);
+}
+@keyframes modalSlide {
+  from { opacity: 0; transform: scale(0.94) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal::before {
+  content: ''; position: absolute; top: -80px; right: -80px; width: 260px; height: 260px;
+  border-radius: 50%; background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%);
+  pointer-events: none;
+}
+.modal-close {
+  position: absolute; top: 14px; right: 14px; width: 32px; height: 32px;
+  background: transparent; border: 1px solid var(--border); border-radius: 8px;
+  color: var(--dim); cursor: pointer; font-size: 18px; line-height: 1;
+  display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  z-index: 2; font-family: inherit;
+}
+.modal-close:hover { border-color: var(--gold-dim); color: var(--text); }
+.modal-tag {
+  display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold); padding: 6px 14px; border: 1px solid var(--gold-dim);
+  border-radius: 999px; margin-bottom: 20px; background: var(--gold-dim); position: relative;
+}
+.modal-title {
+  font-family: 'DM Serif Display', serif; font-weight: 400;
+  font-size: clamp(26px, 4vw, 32px); line-height: 1.15; color: var(--white);
+  margin-bottom: 18px; letter-spacing: -0.3px; position: relative;
+}
+.modal-body { font-size: 15px; line-height: 1.65; color: var(--text); margin-bottom: 16px; position: relative; }
+.modal-body.tight { margin-bottom: 26px; }
+.modal-body strong { color: var(--gold); }
+.modal .btn-primary { width: 100%; justify-content: center; position: relative; }
+.modal-footnote {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+  color: var(--dim); margin-top: 18px; text-align: center; position: relative; text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .main { padding: 28px 20px 48px; }
+  .intro-meta { flex-direction: column; gap: 10px; }
+  .q-controls { flex-direction: column-reverse; align-items: stretch; }
+  .q-controls .btn-primary { justify-content: center; }
+  .cta-card { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Home Health <strong>Diagnostic</strong></div>
+    <div class="counter hidden" id="counter">Question <span id="qNum">1</span> of 10</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="main">
+
+  <!-- INTRO -->
+  <div class="screen active" id="screenIntro">
+    <span class="intro-tag">Free 2-minute diagnostic</span>
+    <h1 class="intro-title">Is your home <em>silently</em> making you sick?</h1>
+    <p class="intro-sub">
+      Fatigue, brain fog, worsening allergies, headaches that won't quit — most people blame stress, work, or age.
+      In thousands of homes, the real cause is hiding inside the walls. This diagnostic tells you if yours is one of them.
+    </p>
+    <div class="intro-meta">
+      <div class="intro-meta-item"><span class="dot"></span>10 questions</div>
+      <div class="intro-meta-item"><span class="dot"></span>~2 minutes</div>
+      <div class="intro-meta-item"><span class="dot"></span>Personalised result</div>
+      <div class="intro-meta-item"><span class="dot"></span>No email required</div>
+    </div>
+    <button class="btn-primary" onclick="startQuiz()">Start the diagnostic <span class="arrow">&rarr;</span></button>
+  </div>
+
+  <!-- QUESTION -->
+  <div class="screen" id="screenQuestion">
+    <div class="q-label" id="qLabel">Question 1 of 10</div>
+    <h2 class="q-title" id="qTitle">Question text</h2>
+    <p class="q-context" id="qContext">Context text</p>
+    <div class="answers" id="answers"></div>
+    <div class="q-controls">
+      <button class="btn-secondary" id="backBtn" onclick="prevQuestion()">&larr; Back</button>
+      <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled style="opacity: 0.4; cursor: not-allowed; box-shadow: none;">Next <span class="arrow">&rarr;</span></button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="screen" id="screenResults">
+    <span class="result-tag" id="resultTag">Result</span>
+    <h2 class="result-title" id="resultTitle"></h2>
+    <div class="result-score">
+      <span class="score-label">Risk Score</span>
+      <span class="score-value" id="scoreValue">0</span>
+      <span class="score-of">/ 40</span>
+    </div>
+    <div class="result-body" id="resultBody"></div>
+    <div class="callout" id="resultCallout">
+      <div class="callout-label" id="calloutLabel">What to do next</div>
+      <ul class="callout-list" id="calloutList"></ul>
+    </div>
+
+    <div class="cta-card">
+      <div class="cta-label">Recommended next step</div>
+      <h3 class="cta-title" id="ctaTitle">Book a free consultation</h3>
+      <p class="cta-desc" id="ctaDesc">A 15-minute call with Travis — walk through your result, identify the specific risks in your home, and get a clear, honest plan. No pressure. No obligation.</p>
+      <a href="#" class="btn-primary" id="bookBtn" onclick="openPitch(event)">Book your free call <span class="arrow">&rarr;</span></a>
+      <div class="cta-meta">
+        <span>15 minutes</span>
+        <span>100% free</span>
+        <span>No obligation</span>
+      </div>
+    </div>
+
+    <div class="result-footer">
+      <button class="btn-secondary" onclick="restartQuiz()">&#8635; Retake quiz</button>
+      <a class="btn-secondary" href="#" id="shareBtn" onclick="shareResult(event)">&#8663; Share with someone</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Pitch modal: intercepts the "Book your free call" click -->
+<div class="modal-overlay" id="pitchModal" onclick="closePitch(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closePitch()" aria-label="Close">&times;</button>
+    <span class="modal-tag">Premium asset &middot; Demo</span>
+    <h3 class="modal-title">That's the conversion moment.</h3>
+    <p class="modal-body">
+      You just clicked the button your future customers will click — the moment a cold visitor turns into a booked call. This one's disabled on purpose. It's a working demo, built for you to feel the experience from the other side of the screen.
+    </p>
+    <p class="modal-body tight">
+      Everything you just went through — the questions, the branching results, the risk scoring, the CTA — is the kind of asset <strong>Sev builds for service businesses.</strong> Branded for your offer. Wired to your calendar. Converting 24/7 while you sleep.
+    </p>
+    <a href="https://sevspics.github.io/talk-to-sev/" class="btn-primary" target="_blank" rel="noopener">
+      Book a call with Sev to build yours <span class="arrow">&rarr;</span>
+    </a>
+    <p class="modal-footnote">One-off demo built for Travis Ahern &middot; 2026</p>
+  </div>
+</div>
+
+<div class="footer">
+  Prototype built by <a href="https://sevspics.github.io/sev-tools/" target="_blank" rel="noopener">Sev Mozhaev</a> for Travis Ahern &middot; 2026
+</div>
+
+<script>
+const questions = [
+  {
+    q: "How old is your home?",
+    context: "Older buildings have had more time to accumulate hidden moisture issues — and predate many modern ventilation standards.",
+    answers: [
+      { text: "Less than 10 years", score: 0 },
+      { text: "10–30 years",         score: 1 },
+      { text: "30–50 years",         score: 2 },
+      { text: "Over 50 years",       score: 3 }
+    ]
+  },
+  {
+    q: "Have you or anyone in your household experienced unexplained fatigue or brain fog lately?",
+    context: "Persistent fatigue without a clear cause is one of the most common — and most overlooked — symptoms of poor indoor air.",
+    answers: [
+      { text: "Never",             score: 0 },
+      { text: "Occasionally",      score: 1 },
+      { text: "Often",             score: 3 },
+      { text: "Almost every day",  score: 4 }
+    ]
+  },
+  {
+    q: "Do headaches, congestion, or itchy eyes seem worse at home than when you're out?",
+    context: "If symptoms ease the moment you leave the house, something inside the house is usually the reason.",
+    answers: [
+      { text: "No difference",       score: 0 },
+      { text: "Maybe slightly",      score: 1 },
+      { text: "Yes, somewhat",       score: 3 },
+      { text: "Yes, significantly",  score: 4 }
+    ]
+  },
+  {
+    q: "Has anyone in the home been dealing with respiratory issues — cough, wheezing, or asthma flare-ups?",
+    context: "Airborne spores and fine particles are a leading trigger for new or worsening respiratory problems, especially in kids and older adults.",
+    answers: [
+      { text: "No issues",               score: 0 },
+      { text: "Mild",                    score: 2 },
+      { text: "Moderate",                score: 3 },
+      { text: "Severe or getting worse", score: 4 }
+    ]
+  },
+  {
+    q: "Have you noticed any musty, earthy, or 'off' smells anywhere in your home?",
+    context: "A persistent musty smell is often the first — and most reliable — sign of hidden moisture damage, long before anything becomes visible.",
+    answers: [
+      { text: "None",                       score: 0 },
+      { text: "Occasionally, very faint",   score: 2 },
+      { text: "In specific rooms",          score: 3 },
+      { text: "Strong or widespread",       score: 4 }
+    ]
+  },
+  {
+    q: "Has your home had water damage, leaks, or plumbing issues in the past 2 years?",
+    context: "It takes as little as 24 to 48 hours of moisture for problems to start forming behind walls and under floors.",
+    answers: [
+      { text: "None",                         score: 0 },
+      { text: "Minor — fixed quickly",        score: 1 },
+      { text: "Significant — one incident",   score: 3 },
+      { text: "Ongoing or repeated issues",   score: 4 }
+    ]
+  },
+  {
+    q: "Do any rooms feel consistently damp, humid, or poorly ventilated?",
+    context: "Bathrooms, basements, laundries, and sealed rooms are the most common problem zones in any home.",
+    answers: [
+      { text: "No",                     score: 0 },
+      { text: "One room",               score: 1 },
+      { text: "Multiple rooms",         score: 3 },
+      { text: "Throughout the home",    score: 4 }
+    ]
+  },
+  {
+    q: "Any unexplained stains, dark spots, or bubbling on walls, ceilings, or around windows?",
+    context: "Visible signs mean the problem has already moved past the hidden stage. What you can see is often a fraction of what's behind the surface.",
+    answers: [
+      { text: "None",                         score: 0 },
+      { text: "Slight discoloration",         score: 2 },
+      { text: "Visible spots or patches",     score: 3 },
+      { text: "Clear dark or fuzzy growth",   score: 4 }
+    ]
+  },
+  {
+    q: "Has anyone's allergies, skin irritation, or rashes worsened since living here?",
+    context: "Families often dismiss worsening allergies as 'just bad seasons' — when the real trigger has been at home the whole time.",
+    answers: [
+      { text: "No change",         score: 0 },
+      { text: "Slightly worse",    score: 1 },
+      { text: "Noticeably worse",  score: 3 },
+      { text: "Severely worse",    score: 4 }
+    ]
+  },
+  {
+    q: "When you leave home for a few days, do symptoms improve — and return when you come back?",
+    context: "This is the single most telling sign. If your body feels different away from home, your home environment is almost certainly the reason.",
+    answers: [
+      { text: "No — or I haven't noticed",    score: 0 },
+      { text: "Maybe — hard to tell",         score: 2 },
+      { text: "Yes, somewhat",                score: 4 },
+      { text: "Yes, dramatically",            score: 5 }
+    ]
+  }
+];
+
+const state = {
+  current: 0,
+  answers: new Array(questions.length).fill(null)
+};
+
+const $ = (id) => document.getElementById(id);
+
+function startQuiz() {
+  $("screenIntro").classList.remove("active");
+  $("screenQuestion").classList.add("active");
+  $("counter").classList.remove("hidden");
+  state.current = 0;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderQuestion() {
+  const q = questions[state.current];
+  const i = state.current;
+  $("qLabel").textContent = `Question ${i + 1} of ${questions.length}`;
+  $("qNum").textContent = i + 1;
+  $("qTitle").textContent = q.q;
+  $("qContext").textContent = q.context;
+
+  const answersEl = $("answers");
+  answersEl.innerHTML = "";
+  q.answers.forEach((a, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "answer" + (state.answers[i] === idx ? " selected" : "");
+    btn.innerHTML = `<span class="answer-mark"></span><span class="answer-text">${a.text}</span>`;
+    btn.onclick = () => selectAnswer(idx);
+    answersEl.appendChild(btn);
+  });
+
+  $("backBtn").style.visibility = i === 0 ? "hidden" : "visible";
+  const last = i === questions.length - 1;
+  $("nextBtn").innerHTML = last ? 'See my result <span class="arrow">&rarr;</span>' : 'Next <span class="arrow">&rarr;</span>';
+
+  updateNextBtn();
+  updateProgress();
+}
+
+function selectAnswer(idx) {
+  state.answers[state.current] = idx;
+  renderQuestion();
+}
+
+function updateNextBtn() {
+  const btn = $("nextBtn");
+  const picked = state.answers[state.current] !== null;
+  btn.disabled = !picked;
+  btn.style.opacity = picked ? "1" : "0.4";
+  btn.style.cursor = picked ? "pointer" : "not-allowed";
+  btn.style.boxShadow = picked ? "" : "none";
+}
+
+function updateProgress() {
+  // Answered questions fill the bar; intro = 0%, results = 100%
+  const answered = state.answers.filter(a => a !== null).length;
+  const pct = (answered / questions.length) * 100;
+  $("progressFill").style.width = pct + "%";
+}
+
+function nextQuestion() {
+  if (state.answers[state.current] === null) return;
+  if (state.current === questions.length - 1) {
+    showResults();
+    return;
+  }
+  state.current++;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function prevQuestion() {
+  if (state.current === 0) return;
+  state.current--;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function calculateScore() {
+  return state.answers.reduce((sum, ansIdx, qIdx) => {
+    if (ansIdx === null) return sum;
+    return sum + questions[qIdx].answers[ansIdx].score;
+  }, 0);
+}
+
+function showResults() {
+  const score = calculateScore();
+  $("screenQuestion").classList.remove("active");
+  $("screenResults").classList.add("active");
+  $("counter").classList.add("hidden");
+  $("progressFill").style.width = "100%";
+  $("scoreValue").textContent = score;
+
+  let tier;
+  if (score <= 12)      tier = "low";
+  else if (score <= 25) tier = "mod";
+  else                  tier = "high";
+
+  renderResult(tier, score);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderResult(tier, score) {
+  const tagEl = $("resultTag");
+  tagEl.className = "result-tag " + tier;
+
+  const content = {
+    low: {
+      tagText: "Low risk",
+      title: "Good news — your home is low risk. Now let's keep it that way.",
+      body: `
+        <p>Your answers don't suggest serious warning signs right now. That puts you in the best position possible: <strong>ahead of the problem, not chasing it.</strong></p>
+        <p>Here's the frustrating truth most homeowners only learn the hard way — the vast majority of mould-related health issues start with conditions people didn't know to look for. By the time something's visible, the problem has usually been growing silently for months.</p>
+        <p>A short prevention audit today can save you tens of thousands of dollars and years of unexplained illness later.</p>
+      `,
+      calloutLabel: "Prevention checklist",
+      callout: [
+        "Inspect bathroom, laundry, and basement seals every 6 months",
+        "Check gutters and roofing after every heavy rain",
+        "Watch for condensation on windows in winter",
+        "Keep indoor humidity under 50%",
+        "Clean HVAC filters and have ducts inspected annually"
+      ],
+      ctaTitle: "Lock in your prevention plan",
+      ctaDesc: "A free 15-minute call with Travis — walk through the specific risks in your home, get a tailored prevention plan, and know exactly what to watch for. No pressure, no obligation."
+    },
+    mod: {
+      tagText: "Moderate risk",
+      title: "A few warning signs are showing. Now's the time to act — before it becomes a real problem.",
+      body: `
+        <p>Several of your answers point to early warning signs. That doesn't mean you have a serious issue yet — but it does mean the window to catch this early is <strong>closing</strong>, not opening.</p>
+        <p>Mould grows silently for months behind walls, under floors, and inside HVAC systems before anything becomes visible. The difference between catching it now versus in six months is often the difference between a <strong>$500 fix and a $50,000 remediation</strong> — plus months of illness nobody can explain.</p>
+        <p>A professional inspection at this stage is the single highest-leverage move you can make.</p>
+      `,
+      calloutLabel: "What to do this month",
+      callout: [
+        "Book a professional inspection — don't wait for visible growth",
+        "Document any symptoms that improve when you're away from home",
+        "Check every area you answered 'yes' about — look, smell, and feel",
+        "Fix any known moisture or ventilation issues immediately",
+        "Avoid DIY removal if you spot anything — it spreads spores fast"
+      ],
+      ctaTitle: "Get a professional inspection",
+      ctaDesc: "A free 15-minute call with Travis — review your result together, identify the specific risks in your home, and get a clear honest plan. No pressure, no obligation."
+    },
+    high: {
+      tagText: "High risk",
+      title: "Your answers show multiple red flags. There's a strong chance your home is already affecting your health.",
+      body: `
+        <p>This is the result most people wish they'd seen a year earlier. By the time the symptoms are obvious, the problem has usually been present for months or years — behind walls, under floorboards, inside air systems.</p>
+        <p>We've worked with families who spent <strong>years</strong> dealing with unexplained migraines, chronic fatigue, worsening asthma, rashes, even hair loss — before anyone put it together that the cause was in their own home. Once the source was found and removed, most of those symptoms improved within <strong>weeks</strong>.</p>
+        <p>The good news: this is fixable. The bad news: every week of delay makes it harder, more expensive, and more dangerous to your family's health.</p>
+      `,
+      calloutLabel: "What to do right now",
+      callout: [
+        "Get a professional inspection this week — not this month",
+        "Do not attempt DIY removal — it releases spores and makes it worse",
+        "Keep a daily log of symptoms (who, when, where in the house)",
+        "Consider staying elsewhere if symptoms are severe",
+        "Document visible damage with dated photos for insurance"
+      ],
+      ctaTitle: "Get help — today",
+      ctaDesc: "A free 15-minute call with Travis — walk through your result together, identify what to test immediately, and get an honest plan for what to do next. No pressure, no obligation."
+    }
+  };
+
+  const c = content[tier];
+  tagEl.textContent = c.tagText;
+  $("resultTitle").textContent = c.title;
+  $("resultBody").innerHTML = c.body;
+  $("calloutLabel").textContent = c.calloutLabel;
+  $("calloutList").innerHTML = c.callout.map(item => `<li>${item}</li>`).join("");
+  $("ctaTitle").textContent = c.ctaTitle;
+  $("ctaDesc").textContent = c.ctaDesc;
+}
+
+function openPitch(e) {
+  if (e) e.preventDefault();
+  $("pitchModal").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closePitch(e) {
+  // When triggered by overlay click, only close if target IS the overlay
+  if (e && e.currentTarget && e.target !== e.currentTarget) return;
+  $("pitchModal").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && $("pitchModal").classList.contains("active")) {
+    closePitch();
+  }
+});
+
+function restartQuiz() {
+  state.current = 0;
+  state.answers = new Array(questions.length).fill(null);
+  $("screenResults").classList.remove("active");
+  $("screenIntro").classList.add("active");
+  $("counter").classList.add("hidden");
+  $("progressFill").style.width = "0%";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function shareResult(e) {
+  e.preventDefault();
+  const url = window.location.href;
+  const text = "I just took the Home Health diagnostic — worth 2 minutes if you've been feeling off at home.";
+  if (navigator.share) {
+    try { await navigator.share({ title: "Home Health Diagnostic", text, url }); } catch (_) {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(url);
+      e.target.textContent = "✓ Link copied";
+      setTimeout(() => { e.target.innerHTML = "&#8663; Share with someone"; }, 2000);
+    } catch (_) {}
+  }
+}
+</script>
+
+</body>
+</html>
