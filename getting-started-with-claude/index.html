@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started with Claude · Sev's Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --surface: #ffffff;
+  --bg: #F8FAFC;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --border: #E2E8F0;
+  --tag-bg: #F1F5F9;
+  --teal: #0D9488;
+  --teal-soft: #CCFBF1;
+  --amber: #F59E0B;
+  --violet: #8B5CF6;
+  --blue: #3B82F6;
+  --pink: #EC4899;
+  --emerald: #10B981;
+  --indigo: #6366F1;
+  --orange: #F97316;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+/* HEADER */
+.header {
+  background: #0F172A;
+  background-image: radial-gradient(circle at 20% 10%, rgba(13,148,136,0.18), transparent 50%),
+                    radial-gradient(circle at 80% 90%, rgba(139,92,246,0.12), transparent 50%);
+  padding: 56px 24px 48px;
+  color: #fff;
+}
+.header-inner { max-width: 880px; margin: 0 auto; }
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: rgba(13,148,136,0.12);
+  padding: 6px 12px;
+  border-radius: 100px;
+  margin-bottom: 18px;
+}
+.header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.header h1 em { font-style: italic; color: var(--teal); }
+.header .lede {
+  font-size: 17px;
+  color: #CBD5E1;
+  max-width: 640px;
+  margin-bottom: 32px;
+}
+.header-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.15s, background 0.15s;
+}
+.header-cta:hover { background: #14B8A6; transform: translateY(-1px); }
+.header-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #CBD5E1;
+  padding: 12px 18px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  margin-left: 8px;
+}
+.header-cta-secondary:hover { color: #fff; }
+
+/* TOC */
+.toc {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  overflow-x: auto;
+}
+.toc-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 0 16px;
+  white-space: nowrap;
+}
+.toc a {
+  padding: 14px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+.toc a:hover { color: var(--text-secondary); }
+
+/* MAIN */
+.main { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* SECTION */
+.section { margin-bottom: 48px; scroll-margin-top: 80px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--teal);
+  font-weight: 500;
+}
+.section h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+}
+.section .sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-left: auto;
+  font-style: italic;
+}
+
+/* CARDS */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.card:hover { border-color: #CBD5E1; }
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+.card-body {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+.card-body strong { color: var(--text-primary); font-weight: 600; }
+
+.card.accent { border-left: 3px solid var(--teal); }
+.card.accent-amber { border-left: 3px solid var(--amber); }
+.card.accent-violet { border-left: 3px solid var(--violet); }
+.card.accent-pink { border-left: 3px solid var(--pink); }
+.card.accent-blue { border-left: 3px solid var(--blue); }
+.card.accent-orange { border-left: 3px solid var(--orange); }
+
+/* HERO CARD (for highest-ROI) */
+.hero-card {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: #fff;
+  border-radius: 14px;
+  padding: 32px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(13,148,136,0.25), transparent 70%);
+  pointer-events: none;
+}
+.hero-card .label {
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.hero-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+.hero-card p {
+  font-size: 15px;
+  color: #CBD5E1;
+  margin-bottom: 14px;
+  max-width: 580px;
+  position: relative;
+}
+.hero-card .pattern {
+  display: inline-block;
+  background: rgba(13,148,136,0.18);
+  border: 1px solid rgba(13,148,136,0.4);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: #5EEAD4;
+  margin-top: 8px;
+  position: relative;
+}
+
+/* NEXT STEP CTA */
+.next-step-card {
+  background: linear-gradient(135deg, #0F172A 0%, #134E4A 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 44px 36px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.next-step-card::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(13,148,136,0.35), transparent 70%);
+  pointer-events: none;
+}
+.next-step-card .label {
+  position: relative;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.next-step-card h3 {
+  position: relative;
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  letter-spacing: -0.3px;
+}
+.next-step-card p {
+  position: relative;
+  font-size: 16px;
+  color: #CBD5E1;
+  max-width: 560px;
+  margin: 0 auto 28px;
+  line-height: 1.55;
+}
+.next-step-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--teal);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 24px rgba(13,148,136,0.35);
+}
+.next-step-cta:hover {
+  background: #14B8A6;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(13,148,136,0.45);
+}
+
+/* CHECKLIST PILL */
+.checklist-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 8px 16px 8px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-top: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+.checklist-pill:hover {
+  border-color: var(--emerald);
+  background: #fff;
+  transform: translateY(-1px);
+}
+.checklist-pill .dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--emerald);
+}
+.checklist-pill .arrow {
+  margin-left: 4px;
+  font-weight: 700;
+  color: var(--emerald);
+}
+
+/* TAG */
+.tag {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 100px;
+  letter-spacing: 0.3px;
+  margin-right: 6px;
+}
+.tag.teal { background: var(--teal-soft); color: var(--teal); }
+
+/* FOOTER */
+.footer {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+.footer a { color: var(--teal); text-decoration: none; }
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .header { padding: 40px 20px 36px; }
+  .header h1 { font-size: 32px; }
+  .header .lede { font-size: 15px; }
+  .header-cta-secondary { display: block; margin: 12px 0 0; }
+  .main { padding: 32px 20px 60px; }
+  .section h2 { font-size: 24px; }
+  .section .sub { display: none; }
+  .hero-card { padding: 24px 22px; }
+  .hero-card h3 { font-size: 22px; }
+  .next-step-card { padding: 32px 22px; }
+  .next-step-card h3 { font-size: 24px; }
+  .next-step-card p { font-size: 15px; }
+  .toc-inner { padding: 0 12px; }
+  .toc a { padding: 12px 10px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <span class="eyebrow">Sev's Playbook</span>
+    <h1>How I actually use <em>Claude</em> day to day</h1>
+    <p class="lede">If you're just starting out, this is the short version. The setup, the speed tricks, and the moves that have actually paid off. Skim it once, bookmark it, come back when you hit a wall.</p>
+    <a class="header-cta" href="https://claude.ai/download" target="_blank" rel="noopener">Download Claude Desktop →</a>
+    <a class="header-cta-secondary" href="#fundamentals">Or jump straight in ↓</a>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#fundamentals">Setup</a>
+    <a href="#speed">Speed unlocks</a>
+    <a href="#planning">Planning Mode</a>
+    <a href="#md">Markdown library</a>
+    <a href="#roi">Highest-ROI play</a>
+    <a href="#research">Research move</a>
+    <a href="#golive">Go-live</a>
+    <a href="#next-step">Next step</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- FUNDAMENTALS -->
+  <section class="section" id="fundamentals">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>Claude Code: the setup</h2>
+      <span class="sub">non-negotiables</span>
+    </div>
+
+    <div class="card accent">
+      <div class="card-title">Download the desktop app first</div>
+      <div class="card-body">That's home base. <a href="https://claude.ai/download" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:none;font-weight:600;">Grab it here →</a></div>
+    </div>
+
+    <div class="card accent">
+      <div class="card-title">Default to Sonnet, not Opus</div>
+      <div class="card-body">Sonnet handles roughly <strong>80% of the work at 5× fewer tokens</strong> (79.6% vs 80% on coding benchmarks, basically a tie). Only reach for Opus when you're stuck on something genuinely gnarly.</div>
+    </div>
+
+    <div class="card accent">
+      <div class="card-title">Start on the $20 plan</div>
+      <div class="card-body">Don't overbuy. Upgrade the day you actually hit the ceiling, not a day before.</div>
+    </div>
+
+    <div class="card accent">
+      <div class="card-title">One folder per project</div>
+      <div class="card-body">Make the folder first. Then point Claude Code at it. Don't let projects bleed into each other.</div>
+    </div>
+
+    <div class="card accent">
+      <div class="card-title">Turn on Bypass Permissions</div>
+      <div class="card-body">Otherwise you'll click "accept" every 10 seconds and lose the plot. Set it once and forget it.</div>
+    </div>
+
+    <div class="card accent">
+      <div class="card-title">Build local. Push live once.</div>
+      <div class="card-body">Get it right on your machine, then ship one clean push. Don't fix things in production.</div>
+    </div>
+  </section>
+
+  <!-- SPEED -->
+  <section class="section" id="speed">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Speed unlocks</h2>
+      <span class="sub">small habits, huge compounding</span>
+    </div>
+
+    <div class="card accent-amber">
+      <div class="card-title">Wispr Flow on the middle mouse button</div>
+      <div class="card-body">(Or the Fn key on Mac.) <strong>Talking is faster than typing.</strong> 3 to 4 days of awkward and then you'll never type a prompt again.
+        <div style="margin-top:14px;">
+          <a href="https://wisprflow.ai/r?SEVA21" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:#0F172A;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;transition:transform 0.15s;">Free Trial Download Here →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card accent-amber">
+      <div class="card-title">Option-click → Copy Pathname</div>
+      <div class="card-body">Reference files without pasting their entire contents into the chat. One click and you hand Claude a clean pointer.</div>
+    </div>
+
+    <div class="card accent-amber">
+      <div class="card-title">Use the live preview's select-element button</div>
+      <div class="card-body">Click any element on the page and ask for a change to just that piece. No more "the second card under the hero…" descriptions.</div>
+    </div>
+
+    <div class="card accent-amber">
+      <div class="card-title">Open localhost on your iPhone via Handoff</div>
+      <div class="card-body">The desktop's mobile preview lies. Test the real mobile feel on a real phone. Every time.
+        <div style="margin-top:14px;">
+          <a href="https://www.joshwcomeau.com/blog/local-testing-on-an-iphone/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:#0F172A;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;transition:transform 0.15s;">2-min Setup Tutorial →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANNING -->
+  <section class="section" id="planning">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Planning Mode</h2>
+      <span class="sub">use it for the big stuff</span>
+    </div>
+
+    <div class="card accent-violet">
+      <div class="card-title">Endorsed by Claude's CEO for bigger builds</div>
+      <div class="card-body">You agree the plan before any code gets written. Result: <strong>faster output, fewer tokens burned</strong>, and Claude doesn't drift halfway through.</div>
+    </div>
+
+    <div class="card accent-violet">
+      <div class="card-title">Skip it for small jobs</div>
+      <div class="card-body">If the build is a quick page or a one-off prompt, planning mode is overkill. Save it for the real projects.</div>
+    </div>
+  </section>
+
+  <!-- MD FILES -->
+  <section class="section" id="md">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>Markdown is your prompt library</h2>
+      <span class="sub">the secret weapon</span>
+    </div>
+
+    <div class="card accent-pink">
+      <div class="card-title">Keep a folder of .md files</div>
+      <div class="card-body">Reusable prompts you'll run forever. Extraction, lead-magnet generator, Content Mine, SINBO 4.2, the lot. Once a prompt earns its keep, it gets a markdown file.</div>
+    </div>
+
+    <div class="card accent-pink">
+      <div class="card-title">Drop a CLAUDE.md inside every project</div>
+      <div class="card-body">Persistent context: brand, fonts, API setup, tone. <strong>Stop re-explaining yourself</strong> at the start of every session.</div>
+    </div>
+
+    <div class="card accent-pink">
+      <div class="card-title">Don't type your brand colors. Point Claude at your live site.</div>
+      <div class="card-body">Tell it to study and pull the palette and fonts directly. It's more accurate than your memory and ten times faster than digging through Figma.</div>
+    </div>
+  </section>
+
+  <!-- ROI -->
+  <section class="section" id="roi">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>The highest-ROI play so far</h2>
+      <span class="sub">proven, repeatable</span>
+    </div>
+
+    <div class="hero-card">
+      <div class="label">Mini-funnels from live event data</div>
+      <h3>Event/sales funnels pulling live data from SOM. 3 minutes vs 3 hours on DHL.</h3>
+      <p>And here's the kicker: they convert <strong>better than the actual homepage</strong>. Built fast, focused on one thing, no compromise pages.</p>
+      <span class="pattern">pull event → generate audience pain points → build a price-anchored CTA</span>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="section" id="research">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2>The research move worth stealing</h2>
+      <span class="sub">do this before any rebuild</span>
+    </div>
+
+    <div class="card accent-blue">
+      <div class="card-title">Have Claude case-study the best in your space first</div>
+      <div class="card-body">Before you rebuild anything, ask Claude for a deep-dive on best-in-class competitors. <strong>Structure, format, subscriber counts, what they do differently.</strong> Then ask it what to tweak in yours based on the findings. Free strategy from people who already figured it out.</div>
+    </div>
+  </section>
+
+  <!-- GO LIVE -->
+  <section class="section" id="golive">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <h2>Go-live checklist</h2>
+      <span class="sub">last stop before push</span>
+    </div>
+
+    <div class="card accent-orange">
+      <div class="card-title">Run this before any page goes live</div>
+      <div class="card-body">Don't skip it. Five minutes of checks beats a week of "why is this broken in production."
+        <a href="#" id="download-checklist" class="checklist-pill"><span class="dot"></span> go-live-checklist.md <span class="arrow">↓</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEP -->
+  <section class="section" id="next-step">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <h2>Run Claude with Sev</h2>
+      <span class="sub">the next step</span>
+    </div>
+
+    <div class="next-step-card">
+      <div class="label">Why this matters</div>
+      <h3>This was the primer. The real upgrade is doing it together.</h3>
+      <p>Reading about Claude is one thing. Running it inside your business, on your live projects, with someone who has already done the reps. That's where it stops being a tool and starts being leverage.</p>
+      <a href="https://sevspics.github.io/run-claude-with-me/" target="_blank" rel="noopener" class="next-step-cta">Run Claude with Me →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  Share freely with anyone learning Claude
+</footer>
+
+<script type="text/markdown" id="checklist-md">
+# Pre-Launch Checklist · Landing Page / Event Funnel
+
+Use this checklist every time you launch a new landing page or event registration page. Work through it top to bottom before you go live.
+
+---
+
+## 1. Page Meta & SEO
+
+- [ ] `<title>` tag updated with event/product name
+- [ ] Meta description written (1-2 sentence hook, under 160 chars)
+- [ ] `canonical` URL set to your live domain
+- [ ] Favicon linked and loading correctly
+
+## 2. Social Sharing (OG Tags)
+
+- [ ] `og:title` set
+- [ ] `og:description` set (1 sentence, compelling)
+- [ ] `og:image` set. Use a 1200x630px image for best results
+- [ ] `og:url` set to the canonical URL
+- [ ] Twitter card tags present (`twitter:card`, `twitter:image`, `twitter:title`)
+
+> **Test it:** Paste your URL into [opengraph.xyz](https://www.opengraph.xyz) or the Facebook Sharing Debugger before going live.
+
+## 3. Analytics & Tracking
+
+- [ ] Analytics tag (Google Tag Manager, GA4, Meta Pixel, etc.) in the `<head>`
+- [ ] Body fallback noscript tag placed immediately after `<body>`
+- [ ] Conversion events firing on checkout button clicks (test in preview mode)
+
+## 4. Hero Section
+
+- [ ] Hero headline updated and compelling
+- [ ] Subheadline written (benefit-focused, not effort-focused)
+- [ ] Hero background image swapped in, loads fast
+- [ ] Text is readable over the background (use overlay or text-shadow if needed)
+- [ ] Event date/time visible and correct
+
+## 5. Timezones
+
+- [ ] Primary timezone shown prominently
+- [ ] At least 2-3 secondary timezones listed for your audience
+- [ ] Double-check DST if launching near a clocks-change date
+
+## 6. Countdown Timer
+
+- [ ] Timer pointing to the correct date and time
+- [ ] Correct timezone offset used in the ISO date string
+- [ ] Timer tested. It counts down, not up
+
+## 7. Copy & Content
+
+- [ ] Problem section: 4-6 bullets that speak to your audience's pain
+- [ ] Solution section: 4-6 bullets about what they'll get
+- [ ] No typos or placeholder text left in
+- [ ] No income claims (use language like "results vary" or outcome-neutral phrasing)
+- [ ] No em-dashes (use a comma or rewrite the sentence instead)
+
+## 8. Images
+
+- [ ] All images compressed and optimised (aim for under 300KB each)
+- [ ] WebP versions created with JPG/PNG fallback (`<picture>` tags)
+- [ ] Hero background: max 1920px wide
+- [ ] Card/thumbnail images: max 800px wide
+- [ ] No uncompressed originals committed to your repo
+
+## 9. Pricing & Checkout
+
+- [ ] Pricing is correct (right currency, right amount)
+- [ ] All checkout button links tested and working
+- [ ] UTM parameters added to all checkout links
+- [ ] Offer/guarantee copy is accurate
+
+## 10. Mobile Check
+
+- [ ] Full page scrolled on a real phone
+- [ ] Hero text readable at mobile size
+- [ ] Buttons big enough to tap (min 44px height)
+- [ ] Pricing cards stack cleanly on small screens
+- [ ] No horizontal scroll
+
+## 11. Desktop Check
+
+- [ ] Layout looks right at 1280px and 1920px widths
+- [ ] No text overflows or broken layouts
+- [ ] Images not stretched or pixelated
+
+## 12. Performance
+
+- [ ] Page loads in under 3 seconds on a phone (test with [PageSpeed Insights](https://pagespeed.web.dev))
+- [ ] No render-blocking scripts in `<head>` (move to bottom of `<body>` or use `defer`)
+- [ ] No broken image links (check browser console for 404s)
+
+## 13. Final QA
+
+- [ ] Clicked every button and link on the page
+- [ ] Filled out any forms to confirm they submit correctly
+- [ ] Tested on both Chrome and Safari
+- [ ] Checked browser console. No errors
+- [ ] Spell-checked the whole page
+
+## 14. Go Live
+
+- [ ] Pushed to production / published
+- [ ] Live URL opens correctly
+- [ ] OG image loads when URL is shared in a message or social post
+- [ ] Analytics showing page views (confirm tracking is live)
+
+---
+
+> **Rule of thumb:** If you haven't tested it on a real phone with real data, it's not ready to launch.
+</script>
+
+<script>
+document.getElementById('download-checklist').addEventListener('click', function(e) {
+  e.preventDefault();
+  var md = document.getElementById('checklist-md').textContent.trim() + '\n';
+  var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'go-live-checklist.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(url); }, 0);
+});
+</script>
+
+</body>
+</html>
