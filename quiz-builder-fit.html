@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Is a Quiz Funnel Right for Your Business? — Sev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-2: #111111;
+    --ink: #f5f5f5;
+    --ink-dim: #8a8a8a;
+    --ink-faint: #555;
+    --accent: #d4ff00;
+    --accent-2: #ff3d00;
+    --line: #1f1f1f;
+    --card: #131313;
+    --good: #d4ff00;
+    --warn: #ff3d00;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(212, 255, 0, 0.06), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(255, 61, 0, 0.05), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+
+  .stage {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .brand span { color: var(--accent); }
+
+  .progress-track {
+    flex: 1;
+    margin: 0 24px;
+    height: 2px;
+    background: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .step-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .step-counter b { color: var(--ink); }
+
+  /* Intro screen */
+  .intro {
+    text-align: left;
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+  }
+
+  .intro h1 {
+    font-size: clamp(38px, 7vw, 64px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+
+  .intro h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .intro p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink-dim);
+    margin-bottom: 32px;
+    max-width: 560px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 32px 0;
+  }
+
+  .stat {
+    background: var(--bg);
+    padding: 20px;
+  }
+
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Question screen */
+  .question-screen {
+    animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .q-text {
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .q-sub {
+    font-size: 15px;
+    color: var(--ink-dim);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 18px 22px;
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s ease;
+  }
+
+  .option:hover {
+    border-color: var(--accent);
+    background: #181818;
+    transform: translateX(4px);
+  }
+
+  .option:hover::before { background: var(--accent); }
+
+  .option-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+    padding: 4px 8px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .option:hover .option-key {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .option-text { flex: 1; line-height: 1.3; }
+
+  /* Result screens */
+  .result-screen {
+    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: left;
+  }
+
+  .verdict-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    margin-bottom: 24px;
+  }
+
+  .verdict-tag.fit {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .verdict-tag.notyet {
+    background: var(--warn);
+    color: #fff;
+  }
+
+  .result-screen h2 {
+    font-size: clamp(32px, 5.5vw, 48px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+
+  .result-screen h2 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .result-body {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+
+  .result-body p { margin-bottom: 16px; }
+
+  .result-body strong { color: var(--accent); font-weight: 700; }
+
+  .breakdown {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 24px;
+    margin: 28px 0;
+  }
+
+  .breakdown-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    gap: 16px;
+  }
+
+  .breakdown-row:last-child { border-bottom: none; }
+
+  .breakdown-label {
+    font-size: 13px;
+    color: var(--ink-dim);
+    flex: 1;
+  }
+
+  .breakdown-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+    flex: 1;
+  }
+
+  .urgency-block {
+    border: 1px solid var(--accent);
+    padding: 20px;
+    margin: 28px 0;
+    position: relative;
+    background: rgba(212, 255, 0, 0.03);
+  }
+
+  .urgency-block::before {
+    content: 'LIMITED';
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--bg);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    padding: 2px 10px;
+  }
+
+  .urgency-block p {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .urgency-block strong { color: var(--accent); }
+
+  .price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 24px 0 12px;
+  }
+
+  .price-num {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .price-cur {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--ink-dim);
+  }
+
+  .price-meta {
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin-bottom: 24px;
+  }
+
+  .cta-primary {
+    display: block;
+    width: 100%;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 22px 28px;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-primary:hover {
+    background: #fff;
+    transform: translateY(-2px);
+  }
+
+  .cta-primary .arrow {
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+  }
+
+  .cta-primary:hover .arrow { transform: translateX(4px); }
+
+  .cta-secondary {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--ink-dim);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .cta-secondary:hover { color: var(--ink); }
+
+  .restart {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    padding: 12px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 32px;
+    transition: all 0.2s ease;
+  }
+
+  .restart:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .signature {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ink-dim);
+  }
+
+  .signature .dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* Hidden by default */
+  .hidden { display: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .stage { padding: 20px 16px 60px; }
+    .stats-row { grid-template-columns: 1fr; }
+    .breakdown-row { flex-direction: column; gap: 4px; }
+    .breakdown-value { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- Top bar with progress -->
+  <div class="top-bar" id="topBar">
+    <div class="brand">SEV<span>.</span>QUIZ</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="step-counter"><b id="stepCurrent">0</b>/<span id="stepTotal">7</span></div>
+  </div>
+
+  <!-- Intro screen -->
+  <div class="intro" id="introScreen">
+    <span class="eyebrow">Free Diagnostic · 90 Seconds</span>
+    <h1>Should you build a <em>quiz funnel</em> for your business?</h1>
+    <p>Answer 7 questions. Get a brutally honest verdict on whether an AI-powered quiz funnel will actually move sales for you, or whether you're better off skipping it. Built by someone who used one to sell 12 devices in a week.</p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">12</div>
+        <div class="stat-label">Devices sold in 7 days</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">90s</div>
+        <div class="stat-label">Average completion time</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1:1</div>
+        <div class="stat-label">Built with you, not for you</div>
+      </div>
+    </div>
+
+    <button class="cta-primary" onclick="startQuiz()">Start the diagnostic <span class="arrow">→</span></button>
+  </div>
+
+  <!-- Question screen (single, dynamically populated) -->
+  <div class="question-screen hidden" id="questionScreen">
+    <div class="q-num" id="qNum">QUESTION 01</div>
+    <h2 class="q-text" id="qText"></h2>
+    <p class="q-sub" id="qSub"></p>
+    <div class="options" id="qOptions"></div>
+  </div>
+
+  <!-- Result: FIT -->
+  <div class="result-screen hidden" id="resultFit">
+    <span class="verdict-tag fit">✓ Strong Fit</span>
+    <h2>You should be running a <em>quiz funnel</em> by next week.</h2>
+
+    <div class="result-body" id="fitBody"></div>
+
+    <div class="breakdown">
+      <div class="breakdown-title">Your Diagnostic Snapshot</div>
+      <div id="fitBreakdown"></div>
+    </div>
+
+    <div class="urgency-block">
+      <p><strong>I only run 4 of these sessions per week.</strong> Each one is a 60-minute live build where the tool walks out the door done. People who book this week are typically live in 7 to 10 days.</p>
+    </div>
+
+    <div class="price-block">
+      <span class="price-num">$350</span>
+      <span class="price-cur">AUD · One-time</span>
+    </div>
+    <p class="price-meta">60-minute 1:1 build session. We design and ship your quiz funnel together. You walk out with a working tool, not homework.</p>
+
+    <a href="https://buy.stripe.com/00w4gz5T0epS2AE6tO6oo01" target="_blank" rel="noopener" class="cta-primary" id="bookCta">Book the build session <span class="arrow">→</span></a>
+    <a href="#" class="cta-secondary" onclick="restart(); return false;">Re-take the diagnostic</a>
+  </div>
+
+  <!-- Result: NOT YET -->
+  <div class="result-screen hidden" id="resultNotYet">
+    <span class="verdict-tag notyet">⚠ Not yet</span>
+    <h2>A quiz funnel won't help you. <em>Yet.</em></h2>
+
+    <div class="result-body">
+      <p>Brutal honesty: a quiz funnel only converts when you have <strong>traffic flowing into it</strong>. Right now you don't have enough audience or inbound flow for this tool to move the needle. If I built one for you today, it would sit there.</p>
+      <p>The good news: that's a fixable problem, and I happen to fix it for a living. Marketing, audience building, and demand generation are what I do. Different conversation, different pricing, but a real path forward.</p>
+    </div>
+
+    <div class="breakdown">
+      <div class="breakdown-title">What I'd suggest instead</div>
+      <div class="breakdown-row">
+        <span class="breakdown-label">Step 1</span>
+        <span class="breakdown-value">Build a traffic source first (organic, paid, or both)</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-label">Step 2</span>
+        <span class="breakdown-value">Get to ~500 monthly visitors minimum</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-label">Step 3</span>
+        <span class="breakdown-value">Then come back. The quiz funnel will print money.</span>
+      </div>
+    </div>
+
+    <a href="https://www.instagram.com/sevspics" class="cta-primary" style="background: #fff;">DM me about marketing instead <span class="arrow">→</span></a>
+    <a href="#" class="cta-secondary" onclick="restart(); return false;">Re-take the diagnostic</a>
+  </div>
+
+  <div class="signature">
+    <div class="dot"></div>
+    <div>Built by Sev · @sevspics · Perth, AU</div>
+  </div>
+
+</div>
+
+<script>
+  // ---- QUESTION TREE ----
+  // Each question has: id, text, subtitle, options (label + value + next + score)
+  // score: positive integers add fit-points. -999 = instant disqualify (route to NotYet)
+  // next: 'auto' = move to next question in linear order, OR a question id
+  // 'end-fit' = go to fit result, 'end-notyet' = go to not-yet result
+
+  const questions = [
+    {
+      id: 'audience',
+      num: '01',
+      text: 'How many eyeballs land on your business each month?',
+      sub: 'Website visitors, social followers actively engaging, email list. Be honest, this is the single biggest factor.',
+      options: [
+        { label: 'Less than 200 a month, traffic is basically zero', value: 'none', next: 'audience_plan', score: 0 },
+        { label: '200 to 1,000 a month, building but small', value: 'small', next: 'auto', score: 1 },
+        { label: '1,000 to 10,000 a month, decent flow', value: 'medium', next: 'auto', score: 3 },
+        { label: '10,000+ a month, strong traffic engine', value: 'large', next: 'auto', score: 5 }
+      ]
+    },
+    {
+      id: 'audience_plan',
+      num: '01b',
+      text: 'Do you have a plan to fix the traffic problem in the next 90 days?',
+      sub: 'A quiz funnel is useless without people landing on it. So this matters.',
+      options: [
+        { label: 'No, I want to figure out sales first then traffic', value: 'no_plan', next: 'end-notyet', score: -999 },
+        { label: 'Yes, I am running ads or building content actively', value: 'yes_plan', next: 'business_type', score: 1 }
+      ]
+    },
+    {
+      id: 'business_type',
+      num: '02',
+      text: 'What kind of business are you actually running?',
+      sub: 'This shapes which quiz format will work best for you.',
+      options: [
+        { label: 'Physical products I sell direct or via affiliate', value: 'product', next: 'auto', score: 2 },
+        { label: 'Services with packages or tiers (consulting, agency, coaching)', value: 'service', next: 'auto', score: 2 },
+        { label: 'High-ticket bespoke work (every job is custom)', value: 'bespoke', next: 'auto', score: 1 },
+        { label: 'Course, membership, or digital product', value: 'digital', next: 'auto', score: 2 }
+      ]
+    },
+    {
+      id: 'price_point',
+      num: '03',
+      text: 'What does your average customer spend with you?',
+      sub: 'The bigger the decision, the more your customer needs convincing. Quizzes thrive on this.',
+      options: [
+        { label: 'Under $100, low-stakes impulse buys', value: 'low', next: 'auto', score: 1 },
+        { label: '$100 to $1,000, considered purchases', value: 'mid', next: 'auto', score: 3 },
+        { label: '$1,000 to $10,000, big decision territory', value: 'high', next: 'auto', score: 4 },
+        { label: '$10,000+ enterprise or long-term contracts', value: 'enterprise', next: 'auto', score: 3 }
+      ]
+    },
+    {
+      id: 'sales_friction',
+      num: '04',
+      text: 'Where does your sales process get stuck most often?',
+      sub: 'A quiz funnel\'s job is to remove a specific kind of friction. Pick the one that hurts most.',
+      options: [
+        { label: 'Customers don\'t know which option of mine is right for them', value: 'choice', next: 'auto', score: 4 },
+        { label: 'Customers don\'t understand why I\'m different from competitors', value: 'differentiation', next: 'auto', score: 4 },
+        { label: 'Customers ghost after the first conversation', value: 'ghost', next: 'auto', score: 3 },
+        { label: 'Customers love it but the price scares them', value: 'price', next: 'auto', score: 2 }
+      ]
+    },
+    {
+      id: 'sales_volume',
+      num: '05',
+      text: 'How many sales conversations are you having a week right now?',
+      sub: 'I want to know if you\'re drowning in repetitive conversations.',
+      options: [
+        { label: '0 to 2, mostly tumbleweeds', value: 'few', next: 'auto', score: 1 },
+        { label: '3 to 10, manageable but eating time', value: 'medium', next: 'auto', score: 4 },
+        { label: '10+ a week, I\'m repeating myself constantly', value: 'lots', next: 'auto', score: 5 }
+      ]
+    },
+    {
+      id: 'tech_comfort',
+      num: '06',
+      text: 'Real talk on tech: how comfortable are you with tools and tinkering?',
+      sub: 'Be honest. This affects whether we go simple or sophisticated in the build.',
+      options: [
+        { label: 'I avoid tech, please don\'t make me think about it', value: 'avoid', next: 'auto', score: 1 },
+        { label: 'I can follow instructions and copy-paste', value: 'basic', next: 'auto', score: 2 },
+        { label: 'I\'m fine with tools, I just don\'t know AI yet', value: 'comfortable', next: 'auto', score: 3 },
+        { label: 'I build stuff myself already, I just want a faster way', value: 'builder', next: 'auto', score: 3 }
+      ]
+    },
+    {
+      id: 'urgency',
+      num: '07',
+      text: 'When do you actually want this live and pulling sales?',
+      sub: 'Last one. This tells me how serious the conversation needs to be.',
+      options: [
+        { label: 'Yesterday, I\'m losing deals every week without it', value: 'asap', next: 'end-fit', score: 5 },
+        { label: 'Within the next month, before my next launch', value: 'month', next: 'end-fit', score: 4 },
+        { label: 'In the next 3 months, planning ahead', value: 'quarter', next: 'end-fit', score: 2 },
+        { label: 'Just curious for now, no rush', value: 'curious', next: 'end-fit', score: 1 }
+      ]
+    }
+  ];
+
+  // ---- STATE ----
+  let answers = {};
+  let totalScore = 0;
+  let history = []; // for back navigation if ever needed
+
+  // ---- ELEMENTS ----
+  const introEl = document.getElementById('introScreen');
+  const qScreen = document.getElementById('questionScreen');
+  const qNumEl = document.getElementById('qNum');
+  const qTextEl = document.getElementById('qText');
+  const qSubEl = document.getElementById('qSub');
+  const qOptsEl = document.getElementById('qOptions');
+  const fitEl = document.getElementById('resultFit');
+  const notYetEl = document.getElementById('resultNotYet');
+  const progressFill = document.getElementById('progressFill');
+  const stepCurrent = document.getElementById('stepCurrent');
+  const stepTotal = document.getElementById('stepTotal');
+  const topBar = document.getElementById('topBar');
+
+  // ---- FUNCTIONS ----
+  function findQuestion(id) {
+    return questions.find(q => q.id === id);
+  }
+
+  function startQuiz() {
+    answers = {};
+    totalScore = 0;
+    history = [];
+    introEl.classList.add('hidden');
+    fitEl.classList.add('hidden');
+    notYetEl.classList.add('hidden');
+    qScreen.classList.remove('hidden');
+    showQuestion('audience');
+  }
+
+  function showQuestion(qId) {
+    const q = findQuestion(qId);
+    if (!q) return;
+
+    history.push(qId);
+
+    // animate out then in
+    qScreen.style.opacity = 0;
+    qScreen.style.transform = 'translateY(10px)';
+
+    setTimeout(() => {
+      qNumEl.textContent = `QUESTION ${q.num}`;
+      qTextEl.textContent = q.text;
+      qSubEl.textContent = q.sub;
+      qOptsEl.innerHTML = '';
+
+      const keys = ['A', 'B', 'C', 'D', 'E'];
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.innerHTML = `<span class="option-key">${keys[i]}</span><span class="option-text">${opt.label}</span>`;
+        btn.onclick = () => selectOption(q, opt);
+        qOptsEl.appendChild(btn);
+      });
+
+      // progress
+      const progress = (history.length / questions.length) * 100;
+      progressFill.style.width = Math.min(progress, 100) + '%';
+      stepCurrent.textContent = history.length;
+      stepTotal.textContent = questions.length;
+
+      qScreen.style.opacity = 1;
+      qScreen.style.transform = 'translateY(0)';
+    }, 200);
+  }
+
+  function selectOption(question, option) {
+    answers[question.id] = { label: option.label, value: option.value, score: option.score };
+
+    // disqualifier?
+    if (option.score === -999) {
+      goToNotYet();
+      return;
+    }
+
+    totalScore += option.score;
+
+    if (option.next === 'end-fit') {
+      goToFit();
+    } else if (option.next === 'end-notyet') {
+      goToNotYet();
+    } else if (option.next === 'auto') {
+      // find next question in array order
+      const idx = questions.findIndex(q => q.id === question.id);
+      if (idx >= 0 && idx < questions.length - 1) {
+        // skip questions that are branch-only (have ids ending in _plan etc)
+        let nextIdx = idx + 1;
+        while (nextIdx < questions.length && questions[nextIdx].id.includes('_plan')) {
+          nextIdx++;
+        }
+        if (nextIdx < questions.length) {
+          showQuestion(questions[nextIdx].id);
+        } else {
+          goToFit();
+        }
+      } else {
+        goToFit();
+      }
+    } else {
+      // explicit next id
+      showQuestion(option.next);
+    }
+  }
+
+  function goToFit() {
+    qScreen.classList.add('hidden');
+    topBar.style.opacity = 0.4;
+    progressFill.style.width = '100%';
+
+    // Build personalized body
+    const body = document.getElementById('fitBody');
+    const breakdown = document.getElementById('fitBreakdown');
+
+    let bodyHtml = '<p>Based on your answers, you have <strong>real demand and real friction</strong>, the exact two ingredients that make a quiz funnel print results.</p>';
+
+    // tailor based on key answers
+    if (answers.sales_friction) {
+      const f = answers.sales_friction.value;
+      if (f === 'choice') {
+        bodyHtml += '<p>Your biggest blocker is choice paralysis. A quiz funnel solves this directly. It walks the customer through their own situation and recommends exactly one option, removing the "but which one?" objection that\'s killing your sales.</p>';
+      } else if (f === 'differentiation') {
+        bodyHtml += '<p>Your biggest blocker is differentiation. Your quiz funnel will weaponise comparisons. We\'ll bake side-by-side breakdowns of you vs competitors directly into the flow, so by the time they hit the CTA they already know why you win.</p>';
+      } else if (f === 'ghost') {
+        bodyHtml += '<p>Your biggest blocker is ghosting after the first chat. The quiz funnel pre-sells before the conversation even starts, so when they arrive they\'re already 80% sold. Less ghosting, faster closes.</p>';
+      } else if (f === 'price') {
+        bodyHtml += '<p>Your biggest blocker is price resistance. The quiz funnel reframes value before the price ever appears, so the ROI conversation is already won by the time the number lands.</p>';
+      }
+    }
+
+    if (answers.sales_volume && answers.sales_volume.value === 'lots') {
+      bodyHtml += '<p>You\'re drowning in repetitive sales conversations. This tool will handle the first 60% of every one of them automatically, freeing you to only talk to people who are already qualified and ready.</p>';
+    }
+
+    if (answers.urgency) {
+      const u = answers.urgency.value;
+      if (u === 'asap') {
+        bodyHtml += '<p><strong>You said yesterday.</strong> Realistic timeline: book this week, build session next week, live within 10 days.</p>';
+      } else if (u === 'month') {
+        bodyHtml += '<p>One month is plenty of runway. We\'ll build it in our session and give you 2 to 3 weeks of refinement before your launch.</p>';
+      }
+    }
+
+    body.innerHTML = bodyHtml;
+
+    // breakdown rows
+    let bdHtml = '';
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Audience signal</span><span class="breakdown-value">${labelFor('audience')}</span></div>`;
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Business model</span><span class="breakdown-value">${labelFor('business_type')}</span></div>`;
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Average sale</span><span class="breakdown-value">${labelFor('price_point')}</span></div>`;
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Primary friction</span><span class="breakdown-value">${labelFor('sales_friction')}</span></div>`;
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Conversation volume</span><span class="breakdown-value">${labelFor('sales_volume')}</span></div>`;
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Tech comfort</span><span class="breakdown-value">${labelFor('tech_comfort')}</span></div>`;
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Timeline</span><span class="breakdown-value">${labelFor('urgency')}</span></div>`;
+    bdHtml += `<div class="breakdown-row"><span class="breakdown-label">Fit score</span><span class="breakdown-value">${totalScore}/30 — strong</span></div>`;
+    breakdown.innerHTML = bdHtml;
+
+    fitEl.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToNotYet() {
+    qScreen.classList.add('hidden');
+    topBar.style.opacity = 0.4;
+    notYetEl.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function labelFor(qId) {
+    if (!answers[qId]) return '—';
+    return answers[qId].label;
+  }
+
+  function restart() {
+    fitEl.classList.add('hidden');
+    notYetEl.classList.add('hidden');
+    qScreen.classList.add('hidden');
+    introEl.classList.remove('hidden');
+    topBar.style.opacity = 1;
+    progressFill.style.width = '0%';
+    stepCurrent.textContent = '0';
+    answers = {};
+    totalScore = 0;
+    history = [];
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // expose for inline handlers
+  window.startQuiz = startQuiz;
+  window.restart = restart;
+</script>
+
+</body>
+</html>
