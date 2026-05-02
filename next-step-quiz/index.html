@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-<title>What's Your Next Step? — A 60-second street quiz</title>
+<title>What's Your Next Step? A 60-second street quiz</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f9ed;</text></svg>">
@@ -157,7 +157,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   flex-wrap: wrap;
 }
 .welcome .meta span::before {
-  content: '— ';
+  content: '· ';
   color: var(--accent);
 }
 
@@ -538,23 +538,105 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .opt { padding: 14px 14px; min-height: 68px; font-size: 16px; }
 }
 
-/* ===== Print stylesheet (PDF for AirDrop) ===== */
+/* ===== Print stylesheet (single-page PDF for AirDrop) ===== */
 @media print {
-  @page { margin: 18mm 16mm; size: A4; }
-  body { background: #fff; color: #000; }
-  .app { padding: 0; max-width: none; }
-  .topbar, .bottombar, .result-actions, #print-hide { display: none !important; }
-  .scene { animation: none !important; }
-  .first-action { background: #000 !important; color: #fff !important; border: 2px solid #000 !important; box-shadow: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .first-action .label { color: #fff !important; }
-  .strength, .step { border: 1.5px solid #000; box-shadow: none; page-break-inside: avoid; }
-  .strength .check { background: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .step .num { background: #000 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .bar-fill, .bar-fill.top { background: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .runner-up { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .result h1 { color: #000; }
-  .result .crown { color: #000; }
+  @page { margin: 12mm 14mm; size: A4; }
+  html, body { background: #fff !important; color: #000 !important; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .app { padding: 0; max-width: none; min-height: 0; }
+  .stage { min-height: 0; }
+  .topbar, .bottombar, .result-actions, .bars-section, #print-hide { display: none !important; }
+  .scene { animation: none !important; gap: 10px !important; }
+  .scene.result { padding-bottom: 0 !important; gap: 12px !important; }
+
+  /* Header */
+  .result .crown { font-size: 9px !important; letter-spacing: 2px !important; margin-bottom: 2px !important; color: #000 !important; }
+  .result h1 { font-size: 32px !important; line-height: 1 !important; letter-spacing: -0.02em !important; color: #000 !important; }
+  .result .tagline { font-size: 13px !important; line-height: 1.35 !important; max-width: none !important; color: #222 !important; }
+
+  /* Section titles */
+  .section-title { font-size: 9px !important; letter-spacing: 2px !important; margin-bottom: 6px !important; }
+
+  /* Strengths */
+  .strengths { gap: 4px !important; }
+  .strength {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    page-break-inside: avoid;
+    border-radius: 6px !important;
+  }
+  .strength .check {
+    flex: 0 0 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+    font-size: 9px !important;
+    background: #000 !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Steps */
+  .steps { gap: 5px !important; }
+  .step {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    padding: 8px 10px !important;
+    font-size: 11.5px !important;
+    line-height: 1.3 !important;
+    page-break-inside: avoid;
+    border-radius: 6px !important;
+    gap: 9px !important;
+  }
+  .step .num {
+    flex: 0 0 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 10px !important;
+    background: #000 !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* First action callout */
+  .first-action {
+    background: #000 !important;
+    color: #fff !important;
+    border: 1.5px solid #000 !important;
+    box-shadow: none !important;
+    padding: 12px 14px !important;
+    border-radius: 8px !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    page-break-inside: avoid;
+  }
+  .first-action .label { color: #fff !important; font-size: 9px !important; letter-spacing: 2px !important; margin-bottom: 4px !important; }
+  .first-action .body { font-size: 14px !important; line-height: 1.25 !important; }
+
+  /* Runner-up */
+  .runner-up {
+    background: #f3f3f3 !important;
+    border: 1px dashed #999 !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+    border-radius: 6px !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    page-break-inside: avoid;
+  }
+  .runner-up strong { color: #000 !important; }
+
+  /* Reset accent backgrounds that don't print */
   .leadin .echo, .welcome h1 .underline::after { background: transparent !important; }
+
+  /* Force all to single page */
+  .scene.result > * { page-break-inside: avoid; }
 }
 </style>
 </head>
@@ -585,7 +667,7 @@ const TRAIT_LABELS = {
 const ARCHETYPES = {
   founder: {
     name: "The Visionary Founder",
-    headline: "You're wired to start things from scratch — and that's rarer than you think.",
+    headline: "You're wired to start things from scratch. And that's rarer than you think.",
     strengths: [
       "You see opportunities other people walk past",
       "You're willing to bet on yourself when no one else will",
@@ -594,13 +676,13 @@ const ARCHETYPES = {
     nextSteps: [
       "Pick ONE problem you've personally felt and write down 3 different ways to solve it.",
       "Talk to 5 people this week who have that problem. Just ask, don't pitch.",
-      "Set a 30-day deadline to put something — anything — in front of paying customers."
+      "Set a 30-day deadline to put something, anything, in front of paying customers."
     ],
     firstAction: "Today: write a single sentence describing the business you'd start tomorrow if you had to."
   },
   builder: {
     name: "The Side-Hustle Builder",
-    headline: "You don't need to bet the farm. You build piece by piece — and that's how most real businesses actually start.",
+    headline: "You don't need to bet the farm. You build piece by piece. That's how most real businesses actually start.",
     strengths: [
       "You're patient with progress and ship instead of overthinking",
       "You can hold a job AND a vision without breaking",
@@ -609,13 +691,13 @@ const ARCHETYPES = {
     nextSteps: [
       "Pick a skill you already have. List 3 ways someone could pay you for it on the side.",
       "Set a goal: your first $100 from your side thing within 30 days.",
-      "Block 4 hours a week — same time, every week — and protect them like rent."
+      "Block 4 hours a week, same time every week, and protect them like rent."
     ],
     firstAction: "Today: list every single skill you've been paid for OR complimented on."
   },
   creative: {
     name: "The Creative Freelancer",
-    headline: "Your work is the work. People will pay for the way you see things — once you stop hiding it.",
+    headline: "Your work is the work. People will pay for the way you see things, once you stop hiding it.",
     strengths: [
       "You have a point of view most people don't",
       "You make things that didn't exist before",
@@ -630,14 +712,14 @@ const ARCHETYPES = {
   },
   specialist: {
     name: "The Skilled Specialist",
-    headline: "You want a real career — and you want to be excellent at it. Don't apologise for that.",
+    headline: "You want a real career. You want to be excellent at it. Don't apologise for that.",
     strengths: [
       "You're willing to put in the years most people won't",
       "You respect mastery and want to earn yours",
       "You'd rather go deep than wide"
     ],
     nextSteps: [
-      "Name the role you want — be specific (industry, company size, level) — by Friday.",
+      "Name the role you want by Friday. Be specific (industry, company size, level).",
       "Find 3 people who already have that role. Study their LinkedIn paths.",
       "Identify the ONE skill gap between you and that role. Start closing it this month."
     ],
@@ -649,25 +731,25 @@ const ARCHETYPES = {
     strengths: [
       "People naturally trust you and open up to you",
       "You go deep on the things you actually care about",
-      "You can charge for what you know — most people just never try"
+      "You can charge for what you know. Most people just never try"
     ],
     nextSteps: [
       "Pick the ONE topic friends already ask you for help with. That's your lane.",
       "Offer 3 free 30-min consults this month to sharpen your offer.",
-      "Set your first paid rate — even if it scares you. Then raise it next month."
+      "Set your first paid rate, even if it scares you. Then raise it next month."
     ],
     firstAction: "Today: write down the 3 things people already ask you for help with."
   },
   leader: {
     name: "The People-First Leader",
-    headline: "You don't just want to do the work — you want to bring others with you. The world needs more of that.",
+    headline: "You don't just want to do the work. You want to bring others with you. The world needs more of that.",
     strengths: [
       "You read people and rooms quickly",
       "You make others around you better",
       "You take responsibility when no one else will"
     ],
     nextSteps: [
-      "Volunteer to lead ONE thing this month. A project, a group, an event — anything.",
+      "Volunteer to lead ONE thing this month. A project, a group, an event. Anything.",
       "Identify a leader you genuinely admire. Ask them for a 20-minute coffee.",
       "Get clear: do you want to lead inside a company, or build your own team?"
     ],
@@ -675,37 +757,37 @@ const ARCHETYPES = {
   },
   maker: {
     name: "The Hands-On Maker",
-    headline: "You think with your hands. Don't let anyone talk you out of that — the world is short on people who can actually build things.",
+    headline: "You think with your hands. Don't let anyone talk you out of that. The world is short on people who can actually build things.",
     strengths: [
-      "You can make real, tangible things — not just talk about them",
+      "You can make real, tangible things, not just talk about them",
       "You're not afraid of hard or physical work",
       "Your skills are real and visible to anyone who sees your work"
     ],
     nextSteps: [
       "Pick a trade or craft you respect. Find someone to apprentice or learn under.",
-      "Make 3 things this month — finish them, photograph them, share them.",
+      "Make 3 things this month. Finish them, photograph them, share them.",
       "Decide: do you want to work for yourself, or be the best in someone else's shop first?"
     ],
-    firstAction: "Today: pick up the tool, the keyboard, the brush — and make ONE thing. Today."
+    firstAction: "Today: pick up the tool, the keyboard, the brush. Make ONE thing. Today."
   },
   strategist: {
     name: "The Quiet Strategist",
-    headline: "You play the long game. That's how real wealth and real edge actually get built — slowly, then suddenly.",
+    headline: "You play the long game. That's how real wealth and real edge actually get built: slowly, then suddenly.",
     strengths: [
       "You think before you move",
       "You see patterns others miss",
       "You're not seduced by hype or noise"
     ],
     nextSteps: [
-      "Pick ONE area to go deep on — investing, a market, a domain you're drawn to.",
+      "Pick ONE area to go deep on: investing, a market, or a domain you're drawn to.",
       "Open a simple tracking sheet for your money flows. Update it every Sunday.",
       "Find 3 people who've quietly built wealth. Study what they actually did, not what they say."
     ],
-    firstAction: "Today: write down what 'enough' actually looks like for you — in dollars and lifestyle."
+    firstAction: "Today: write down what 'enough' actually looks like for you, in dollars and lifestyle."
   },
   performer: {
     name: "The Performer / Creator",
-    headline: "You're built to be seen — and there has never been a better time in history to be that person.",
+    headline: "You're built to be seen. And there has never been a better time in history to be that person.",
     strengths: [
       "You're not afraid of the camera, the stage, or attention",
       "You can hold a room and bring energy others feed off",
@@ -714,22 +796,22 @@ const ARCHETYPES = {
     nextSteps: [
       "Pick your platform. Post 3x a week for 90 days. Non-negotiable.",
       "Study 3 creators in your lane. Break down their hooks, format, voice.",
-      "Decide your angle: entertain, teach, or inspire. Pick ONE for now — you can expand later."
+      "Decide your angle: entertain, teach, or inspire. Pick ONE for now. You can expand later."
     ],
     firstAction: "Today: post ONE thing publicly. Even if it's bad. Especially if it's bad."
   },
   explorer: {
     name: "The Explorer",
-    headline: "You haven't picked yet — and that's actually fine. But it's time to start narrowing down.",
+    headline: "You haven't picked yet, and that's actually fine. But it's time to start narrowing down.",
     strengths: [
-      "You're honest about not knowing yet — most people lie to themselves",
+      "You're honest about not knowing yet. Most people lie to themselves",
       "You're still open, which means you haven't locked into the wrong thing",
       "You're curious, and that's the engine of every real journey"
     ],
     nextSteps: [
-      "This week: try ONE new thing — a class, a shadow day, a side project. Anything.",
+      "This week: try ONE new thing: a class, a shadow day, a side project. Anything.",
       "Talk to 5 people in 5 different careers. Ask: 'What does your actual day look like?'",
-      "Set a check-in date 60 days from now. Commit to a direction by then — even a wrong one."
+      "Set a check-in date 60 days from now. Commit to a direction by then, even a wrong one."
     ],
     firstAction: "Today: pick the ONE thing you're most curious about and look up how to try it for free."
   }
@@ -747,9 +829,9 @@ const QUESTIONS = {
     prompt: "When you imagine your ideal week five years from now, what's the vibe?",
     options: [
       { label: "Running my own thing. I call the shots.",                     echo: "running your own thing",       effects: { founder: 3, builder: 1 } },
-      { label: "Deep in a craft I love — and being paid well to be the best at it.", echo: "going deep in a craft", effects: { specialist: 2, creative: 2 } },
+      { label: "Deep in a craft I love, getting paid well to be the best at it.", echo: "going deep in a craft", effects: { specialist: 2, creative: 2 } },
       { label: "Helping people directly. Being the one they trust.",          echo: "helping people directly",      effects: { expert: 2, leader: 2 } },
-      { label: "Building or making things — physical, digital, or both.",     echo: "making things",                effects: { maker: 2, builder: 1, creative: 1 } },
+      { label: "Building or making things. Physical, digital, or both.",     echo: "making things",                effects: { maker: 2, builder: 1, creative: 1 } },
       { label: "Honestly? I haven't figured it out yet.",                     echo: "still figuring it out",        effects: { explorer: 3 } }
     ]
   },
@@ -757,7 +839,7 @@ const QUESTIONS = {
   /* ---- Q2 hand-branched off Q1 ---- */
   q2_founder: {
     id: 'q2_founder',
-    prompt: "You said running your own thing. So — what's actually pulling you to it?",
+    prompt: "You said running your own thing. What's actually pulling you to it?",
     options: [
       { label: "Freedom. I don't want to answer to anyone.",                  echo: "wanting freedom",               effects: { founder: 2, performer: 1 } },
       { label: "I have an idea I literally can't stop thinking about.",       echo: "having an idea you can't shake",effects: { founder: 3 } },
@@ -768,7 +850,7 @@ const QUESTIONS = {
   },
   q2_craft: {
     id: 'q2_craft',
-    prompt: "Going deep in a craft — when you picture being the best at it, you're more like…",
+    prompt: "Going deep in a craft. When you picture being the best at it, you're more like…",
     options: [
       { label: "The quiet expert. The one people call when it really matters.", echo: "being the quiet expert",     effects: { expert: 3 } },
       { label: "On a stage, in a studio, in front of a camera.",              echo: "being seen for the work",       effects: { performer: 3 } },
@@ -779,29 +861,29 @@ const QUESTIONS = {
   },
   q2_help: {
     id: 'q2_help',
-    prompt: "Helping people directly — where does that actually live for you?",
+    prompt: "Helping people directly. Where does that actually live for you?",
     options: [
       { label: "1-on-1, deep conversations where I really know someone.",     echo: "going 1-on-1 with people",      effects: { expert: 3 } },
       { label: "Leading a team toward something bigger than us.",             echo: "leading a team",                effects: { leader: 3 } },
-      { label: "Teaching — coaching, training, breaking it down.",            echo: "teaching others",               effects: { expert: 2, performer: 2 } },
-      { label: "Healing — body, mind, or hands-on care.",                     echo: "healing people",                effects: { expert: 2, maker: 1 } },
+      { label: "Teaching. Coaching, training, breaking it down.",            echo: "teaching others",               effects: { expert: 2, performer: 2 } },
+      { label: "Healing. Body, mind, or hands-on care.",                     echo: "healing people",                effects: { expert: 2, maker: 1 } },
       { label: "Building a service business around helping people.",          echo: "turning help into a business",  effects: { builder: 2, expert: 1, founder: 1 } }
     ]
   },
   q2_make: {
     id: 'q2_make',
-    prompt: "Making things — what kind of making feels closest to you?",
+    prompt: "Making things. What kind of making feels closest to you?",
     options: [
       { label: "Physical stuff. Hands, tools, materials.",                    echo: "physical making",               effects: { maker: 3 } },
-      { label: "Digital products — apps, sites, content.",                    echo: "digital building",              effects: { builder: 2, creative: 1 } },
-      { label: "Building an audience — videos, posts, a brand.",              echo: "building an audience",          effects: { performer: 3 } },
+      { label: "Digital products. Apps, sites, content.",                    echo: "digital building",              effects: { builder: 2, creative: 1 } },
+      { label: "Building an audience. Videos, posts, a brand.",              echo: "building an audience",          effects: { performer: 3 } },
       { label: "Something I can sell on my own terms.",                       echo: "selling on your own terms",     effects: { builder: 2, founder: 2 } },
-      { label: "Honestly I just love the making — money side bores me.",      echo: "loving the craft itself",       effects: { creative: 3, maker: 1 } }
+      { label: "Honestly I just love the making. The money side bores me.",      echo: "loving the craft itself",       effects: { creative: 3, maker: 1 } }
     ]
   },
   q2_explore: {
     id: 'q2_explore',
-    prompt: "Most people haven't figured it out — that's normal. So let's narrow it. On a free Saturday with nothing planned, you usually…",
+    prompt: "Most people haven't figured it out. That's normal. So let's narrow it. On a free Saturday with nothing planned, you usually…",
     options: [
       { label: "Learn something. Videos, books, courses, rabbit holes.",      echo: "going deep on learning",        effects: { strategist: 2, specialist: 1 } },
       { label: "Make stuff. Music, art, code, food, anything.",               echo: "making things for fun",         effects: { creative: 2, maker: 1 } },
@@ -829,7 +911,7 @@ const QUESTIONS = {
     exploresTraits: ['strategist','builder','founder','maker','explorer'],
     prompt: "Someone hands you $5,000 right now. What's your move?",
     options: [
-      { label: "Invest it. Stocks, index funds — make it grow.",              echo: "investing the cash",            effects: { strategist: 3 } },
+      { label: "Invest it. Stocks, index funds. Make it grow.",              echo: "investing the cash",            effects: { strategist: 3 } },
       { label: "Buy gear or skills to start something.",                      echo: "buying gear to start",          effects: { builder: 2, founder: 1, maker: 1 } },
       { label: "Save it. I sleep better knowing it's there.",                 echo: "saving for safety",             effects: { specialist: 1, expert: 1 } },
       { label: "Spend it on an experience I'd remember forever.",             echo: "spending on an experience",     effects: { creative: 1, performer: 1, explorer: 1 } },
@@ -867,7 +949,7 @@ const QUESTIONS = {
     options: [
       { label: "Started clubs, sold things, had side projects going.",        echo: "always running side projects",  effects: { founder: 2, builder: 1 } },
       { label: "Was excellent at one or two specific subjects.",              echo: "being the subject specialist",  effects: { specialist: 2, expert: 1 } },
-      { label: "Made things — art, music, writing, code.",                    echo: "making creative work",          effects: { creative: 2, maker: 1 } },
+      { label: "Made things. Art, music, writing, code.",                    echo: "making creative work",          effects: { creative: 2, maker: 1 } },
       { label: "Was on a team, in productions, always around people.",        echo: "always being around people",    effects: { leader: 1, performer: 2 } },
       { label: "Drifted. Wasn't sure where I fit.",                           echo: "drifting through it",           effects: { explorer: 2 } }
     ]
@@ -905,7 +987,7 @@ const QUESTIONS = {
       { label: "Working hard for someone else's dream.",                      echo: "building someone else's dream", effects: { founder: 3, builder: 1, creative: 1 } },
       { label: "Being a generalist who's not great at anything.",             echo: "being a forever-generalist",    effects: { specialist: 3, expert: 1 } },
       { label: "Being broke or financially stuck.",                           echo: "being financially stuck",       effects: { strategist: 2, founder: 1 } },
-      { label: "Being invisible — never being seen for what I do.",           echo: "being invisible",               effects: { performer: 3, creative: 1 } },
+      { label: "Being invisible. Never being seen for what I do.",           echo: "being invisible",               effects: { performer: 3, creative: 1 } },
       { label: "Picking the wrong thing and wasting years.",                  echo: "picking the wrong thing",       effects: { explorer: 3 } }
     ]
   },
@@ -924,10 +1006,10 @@ const QUESTIONS = {
   q_skills: {
     id: 'q_skills', pool: true,
     exploresTraits: ['founder','maker','expert','performer','explorer'],
-    prompt: "What's your edge — the thing people compliment you on?",
+    prompt: "What's your edge? The thing people already compliment you on.",
     options: [
       { label: "I see opportunities and run at them.",                        echo: "spotting opportunities",        effects: { founder: 2, builder: 1 } },
-      { label: "I'm great with my hands — or great at making things look right.", echo: "having that maker's eye",   effects: { maker: 2, creative: 1 } },
+      { label: "I'm great with my hands, or great at making things look right.", echo: "having that maker's eye",   effects: { maker: 2, creative: 1 } },
       { label: "I'm the one people open up to.",                              echo: "being the one people open up to", effects: { expert: 2, leader: 1 } },
       { label: "I can hold a room. People listen when I talk.",               echo: "holding a room",                effects: { performer: 2, leader: 1 } },
       { label: "Honestly? I'm not sure I have one yet.",                      echo: "not having found your edge",    effects: { explorer: 3 } }
@@ -948,7 +1030,7 @@ const QUESTIONS = {
   q_audience: {
     id: 'q_audience', pool: true,
     exploresTraits: ['performer','creative','strategist','maker','expert'],
-    prompt: "How do you feel about being publicly visible — posting, podcasting, being on camera?",
+    prompt: "How do you feel about being publicly visible? Posting, podcasting, being on camera.",
     options: [
       { label: "I love it. I'm built for it.",                                echo: "being built for the camera",    effects: { performer: 3 } },
       { label: "I'd do it if I had to. Not the goal.",                        echo: "doing it only if needed",       effects: { builder: 1, founder: 1, expert: 1 } },
@@ -965,7 +1047,7 @@ const QUESTIONS = {
       { label: "Listen. Really listen. They open up to me.",                  echo: "really listening",              effects: { expert: 3, leader: 1 } },
       { label: "Try to fix it. Give advice fast.",                            echo: "fixing it fast",                effects: { founder: 1, leader: 2, specialist: 1 } },
       { label: "Make them laugh. Pull them out of it.",                       echo: "pulling them out of it",        effects: { performer: 1, leader: 1 } },
-      { label: "Send them something I made — a song, a meme, a thing.",      echo: "sending something you made",    effects: { creative: 2, maker: 1, performer: 1 } },
+      { label: "Send them something I made. A song, a meme, a thing.",      echo: "sending something you made",    effects: { creative: 2, maker: 1, performer: 1 } },
       { label: "Honestly I'm not great at this.",                             echo: "not being great at that",       effects: { strategist: 1, maker: 1, explorer: 1 } }
     ]
   },
@@ -976,9 +1058,9 @@ const QUESTIONS = {
     options: [
       { label: "My own space. Door closed. Headphones on.",                   echo: "your own quiet space",          effects: { creative: 2, strategist: 2, maker: 1 } },
       { label: "A bustling office or shop. Energy of others working.",        echo: "a buzzing workplace",           effects: { leader: 1, specialist: 1, performer: 1 } },
-      { label: "A workshop, studio, kitchen, or lab — making something.",     echo: "a hands-on workspace",          effects: { maker: 3, creative: 1 } },
+      { label: "A workshop, studio, kitchen, or lab. Making something.",     echo: "a hands-on workspace",          effects: { maker: 3, creative: 1 } },
       { label: "Cafés, planes, anywhere with wifi. Mobile life.",             echo: "the mobile life",               effects: { builder: 2, founder: 1, performer: 1 } },
-      { label: "On site with clients — out in the world.",                    echo: "out in the world with clients", effects: { expert: 2, leader: 1, maker: 1 } }
+      { label: "On site with clients. Out in the world.",                    echo: "out in the world with clients", effects: { expert: 2, leader: 1, maker: 1 } }
     ]
   },
 
@@ -987,10 +1069,10 @@ const QUESTIONS = {
     id: 'q_confirm_founder', pool: true,
     exploresTraits: ['founder','builder','specialist','strategist'],
     confirmsTraits: ['founder'],
-    prompt: "Real talk — would you actually quit a stable job to chase a business idea?",
+    prompt: "Real talk. Would you actually quit a stable job to chase a business idea?",
     options: [
       { label: "Already have. Or would tomorrow.",                            echo: "already going for it",          effects: { founder: 3 } },
-      { label: "Yes — but only with 12 months of savings.",                   echo: "going with a runway",           effects: { founder: 2, strategist: 1 } },
+      { label: "Yes, but only with 12 months of savings.",                   echo: "going with a runway",           effects: { founder: 2, strategist: 1 } },
       { label: "I'd start it on the side first.",                             echo: "starting on the side",          effects: { builder: 3 } },
       { label: "Maybe. Depends on the idea.",                                 echo: "needing the right idea",        effects: { builder: 1, explorer: 1 } },
       { label: "Probably not. I like the safety.",                            echo: "valuing the safety",            effects: { specialist: 2, expert: 1 } }
@@ -1039,12 +1121,12 @@ const QUESTIONS = {
     id: 'q_confirm_performer', pool: true,
     exploresTraits: ['performer','creative','founder','expert'],
     confirmsTraits: ['performer'],
-    prompt: "If your work blew up online tomorrow — 100k people watching — how would you feel?",
+    prompt: "If your work blew up online tomorrow, with 100k people watching. How would you feel?",
     options: [
       { label: "Finally. That's what I've been waiting for.",                 echo: "feeling finally seen",          effects: { performer: 3 } },
       { label: "Excited but a bit terrified. I'd handle it.",                 echo: "excited and terrified",         effects: { performer: 2, founder: 1 } },
       { label: "Honestly I'd hate it. Too much attention.",                   echo: "hating the attention",          effects: { creative: 1, maker: 1, expert: 1, strategist: 1 } },
-      { label: "Great — but only if it actually pays.",                       echo: "only if it pays",               effects: { builder: 2, founder: 1, strategist: 1 } },
+      { label: "Great, but only if it actually pays.",                       echo: "only if it pays",               effects: { builder: 2, founder: 1, strategist: 1 } },
       { label: "I'd want to use the moment to help people.",                  echo: "using the moment to help",      effects: { leader: 2, expert: 1 } }
     ]
   },
@@ -1052,7 +1134,7 @@ const QUESTIONS = {
     id: 'q_confirm_strategist', pool: true,
     exploresTraits: ['strategist','founder','specialist','expert'],
     confirmsTraits: ['strategist'],
-    prompt: "Be honest — when you make a big decision, you usually…",
+    prompt: "Be honest. When you make a big decision, you usually…",
     options: [
       { label: "Spreadsheet it. Compare options. Pick the smart one.",        echo: "spreadsheeting the decision",   effects: { strategist: 3, specialist: 1 } },
       { label: "Move on gut. Then justify it later.",                         echo: "moving on gut",                 effects: { founder: 2, performer: 1 } },
@@ -1176,7 +1258,7 @@ function renderWelcome() {
       <div class="scene fade welcome">
         <div class="eyebrow">60-second street quiz</div>
         <h1>What's your <span class="underline">next step?</span></h1>
-        <p>This quiz figures out the kind of work you're actually wired for — career, business, craft, or something in between.</p>
+        <p>This quiz figures out the kind of work you're actually wired for: career, business, craft, or something in between.</p>
         <p>There are no right answers. Tap whichever option feels closest. It only finishes when something becomes clear.</p>
         <div class="meta">
           <span>Up to 10 questions</span>
@@ -1225,7 +1307,7 @@ function renderQuestion() {
   `).join('');
 
   const leadinHtml = showLeadin
-    ? `<div class="leadin"><span class="you-said">You said —</span> <span class="echo">${lastEntry.echo}</span></div>`
+    ? `<div class="leadin"><span class="you-said">You said:</span> <span class="echo">${lastEntry.echo}</span></div>`
     : '';
 
   app.innerHTML = `
@@ -1289,7 +1371,7 @@ function goBack() {
   const last = state.history.pop();
   // remove from asked so it could be re-asked (Q1/Q2 are deterministic anyway)
   const askedIdx = state.asked.indexOf(last.qId);
-  // We pop the most recent asked entry — only if it was the most recent
+  // We pop the most recent asked entry, only if it was the most recent
   if (askedIdx === state.asked.length - 1) state.asked.splice(askedIdx, 1);
   // undo effects
   Object.keys(last.effects).forEach(t => state.scores[t] -= last.effects[t]);
@@ -1356,17 +1438,17 @@ function renderResult() {
         </div>
 
         <div class="first-action">
-          <div class="label">First action — do this today</div>
+          <div class="label">First action: do this today</div>
           <div class="body">${arche.firstAction}</div>
         </div>
 
-        <div>
+        <div class="bars-section">
           <div class="section-title">How your answers stacked up</div>
           <div class="bars">${barsHtml}</div>
         </div>
 
         <div class="runner-up">
-          You also showed strong <strong>${TRAIT_LABELS[secondKey]}</strong> energy — most people are a primary plus a secondary. Lean into the top one first, but don't ignore the second.
+          You also showed strong <strong>${TRAIT_LABELS[secondKey]}</strong> energy. Most people are a primary plus a secondary. Lean into the top one first, but don't ignore the second.
         </div>
 
         <div class="result-actions" id="print-hide-actions">
@@ -1382,11 +1464,11 @@ function renderResult() {
   `;
 
   document.getElementById('save-btn').addEventListener('click', () => {
-    // Use the print dialog — on iPad, this opens the share sheet → "Save to Files" or "AirDrop" as PDF
+    // Use the print dialog. On iPad, this opens the share sheet → "Save to Files" or "AirDrop" as PDF
     document.title = `Next-Step-Result-${arche.name.replace(/[^a-zA-Z0-9]/g,'-')}`;
     window.print();
     // restore title after a moment
-    setTimeout(() => { document.title = "What's Your Next Step? — A 60-second street quiz"; }, 1500);
+    setTimeout(() => { document.title = "What's Your Next Step? A 60-second street quiz"; }, 1500);
   });
 
   document.getElementById('restart-btn').addEventListener('click', () => {
