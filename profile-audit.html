@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 5-Minute Profile Audit — Sev Mozhaev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0d0c0a;
+    --bg-elev: #15130f;
+    --bg-card: #1a1814;
+    --ink: #f4ede0;
+    --ink-dim: #a39b8a;
+    --ink-faint: #6b6557;
+    --rule: #2a2620;
+    --accent: #d4a437;
+    --accent-soft: rgba(212, 164, 55, 0.12);
+    --pass: #7fa860;
+    --warn: #c87844;
+    --fail: #b04848;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    z-index: 100;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* HEADER */
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .topbar .brand {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .topbar .meta {
+    display: flex;
+    gap: 24px;
+  }
+
+  .topbar .meta span::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .hero .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero .lede {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.5;
+    color: var(--ink-dim);
+    max-width: 640px;
+    margin-bottom: 48px;
+  }
+
+  .hero .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 48px;
+  }
+
+  .stat {
+    background: var(--bg);
+    padding: 24px 28px;
+  }
+
+  .stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* HOW TO USE */
+  .howto {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg-elev);
+  }
+
+  .howto-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .howto h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .howto-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+  }
+
+  .howto-step {
+    border-left: 1px solid var(--rule);
+    padding-left: 20px;
+  }
+
+  .howto-step .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .howto-step h3 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .howto-step p {
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  .audit {
+    padding: 80px 0 60px;
+  }
+
+  .section {
+    margin-bottom: 12px;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
+    transition: border-color 0.3s;
+  }
+
+  .section:hover {
+    border-color: var(--accent-soft);
+  }
+
+  .section-header {
+    padding: 32px 36px;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    user-select: none;
+    transition: background 0.2s;
+  }
+
+  .section-header:hover {
+    background: var(--bg-elev);
+  }
+
+  .section-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 42px;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title-wrap .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .section-title-wrap h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+
+  .section-title-wrap .sub {
+    font-size: 14px;
+    color: var(--ink-dim);
+    margin-top: 6px;
+  }
+
+  .section-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-toggle .chev {
+    width: 14px;
+    height: 14px;
+    border-right: 1px solid var(--ink-dim);
+    border-bottom: 1px solid var(--ink-dim);
+    transform: rotate(45deg);
+    transition: transform 0.3s;
+    margin-bottom: 4px;
+  }
+
+  .section.open .chev {
+    transform: rotate(-135deg);
+    margin-bottom: -4px;
+  }
+
+  .section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section.open .section-body {
+    max-height: 4000px;
+  }
+
+  .section-content {
+    padding: 32px 36px 40px;
+  }
+
+  /* CHECK ITEMS */
+  .check {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px dashed var(--rule);
+    align-items: start;
+    transition: opacity 0.2s;
+  }
+
+  .check:has(.check-box.checked) {
+    background: linear-gradient(90deg, rgba(176, 72, 72, 0.06) 0%, transparent 100%);
+    border-left: 2px solid var(--fail);
+    margin-left: -16px;
+    padding-left: 14px;
+    padding-right: 16px;
+  }
+
+  .check:last-child {
+    border-bottom: none;
+  }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--ink-faint);
+    background: transparent;
+    cursor: pointer;
+    margin-top: 2px;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .check-box:hover {
+    border-color: var(--fail);
+  }
+
+  .check-box.checked {
+    background: var(--fail);
+    border-color: var(--fail);
+  }
+
+  .check-box.checked::before,
+  .check-box.checked::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 3px;
+    width: 2px;
+    height: 16px;
+    background: var(--ink);
+  }
+
+  .check-box.checked::before {
+    transform: rotate(45deg);
+  }
+
+  .check-box.checked::after {
+    transform: rotate(-45deg);
+  }
+
+  .check-text h4 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .check-text p {
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1.55;
+  }
+
+  .check-text .why {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dotted var(--rule);
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  .check-text .why::before {
+    content: '⟶ ';
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .check-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border: 1px solid var(--rule);
+    padding: 4px 8px;
+    white-space: nowrap;
+    align-self: start;
+    margin-top: 4px;
+  }
+
+  .check-tag.critical {
+    color: var(--accent);
+    border-color: var(--accent-soft);
+  }
+
+  /* PROGRESS BAR */
+  .progress {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding: 12px 0;
+    backdrop-filter: blur(8px);
+  }
+
+  .progress-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .progress-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--rule);
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--fail);
+    width: 0%;
+    transition: width 0.3s;
+  }
+
+  .progress-count {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .progress-count em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .progress-reset {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: none;
+    border: 1px solid var(--rule);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .progress-reset:hover {
+    color: var(--ink);
+    border-color: var(--ink-faint);
+  }
+
+  .progress-export {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+
+  .progress-export:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .fixes-export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 32px;
+    background: var(--accent);
+    color: var(--bg);
+    border: 1px solid var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 18px 26px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .fixes-export-btn:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .fixes-export-btn .arrow {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    letter-spacing: 0;
+  }
+
+  .recipient-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+    margin-top: 28px;
+  }
+
+  .recipient-input {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    padding: 12px 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .recipient-input::placeholder {
+    color: var(--ink-faint);
+  }
+
+  .recipient-input:focus {
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 720px) {
+    .recipient-row { grid-template-columns: 1fr; }
+  }
+
+  /* FIVE MINUTE MODE */
+  .quick-mode {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    padding: 24px 28px;
+    margin: 32px 0 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .quick-mode h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .quick-mode p {
+    font-size: 14px;
+    color: var(--ink-dim);
+  }
+
+  .quick-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .quick-toggle:hover {
+    background: var(--ink);
+  }
+
+  body.quick-only .check[data-priority="full"] {
+    display: none;
+  }
+
+  body.quick-only .section .check[data-priority="critical"] ~ .check[data-priority="full"] {
+    display: none;
+  }
+
+  /* TOP 3 FIXES BOX */
+  .fixes-box {
+    border: 1px solid var(--accent);
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-elev) 100%);
+    padding: 48px 44px;
+    position: relative;
+  }
+
+  .fixes-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .fixes-box h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+
+  .fixes-sub {
+    font-size: 15px;
+    color: var(--ink-dim);
+    margin-bottom: 32px;
+    max-width: 540px;
+  }
+
+  .fix-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .fix-row:last-child { border-bottom: none; }
+
+  .fix-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 32px;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .fix-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid transparent;
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    padding: 8px 0;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .fix-input::placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  .fix-input:focus {
+    border-bottom-color: var(--accent);
+  }
+
+  @media (max-width: 720px) {
+    .fixes-box { padding: 32px 24px; }
+    .fix-row { grid-template-columns: 40px 1fr; gap: 12px; }
+    .fix-num { font-size: 24px; }
+  }
+
+  /* CTA SECTION */
+  .cta {
+    margin-top: 80px;
+    padding: 100px 0 120px;
+    background:
+      radial-gradient(ellipse at top right, var(--accent-soft) 0%, transparent 60%),
+      var(--bg-elev);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .cta-inner {
+    max-width: 720px;
+  }
+
+  .cta .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .cta h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+  }
+
+  .cta h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cta p {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-dim);
+    margin-bottom: 40px;
+    max-width: 580px;
+  }
+
+  .cta-list {
+    list-style: none;
+    margin-bottom: 48px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .cta-list li {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .cta-list li::before {
+    content: '+';
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--accent);
+    line-height: 1;
+    font-weight: 300;
+  }
+
+  .cta-list li span {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .cta-list li small {
+    display: block;
+    color: var(--ink-faint);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 22px 32px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all 0.25s;
+    border: 1px solid var(--accent);
+  }
+
+  .cta-button:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .cta-button .arrow {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    letter-spacing: 0;
+  }
+
+  .cta-meta {
+    margin-top: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 0 60px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  footer .sig {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-dim);
+    text-transform: none;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 60px 0 50px; }
+    .howto-grid { grid-template-columns: 1fr; gap: 32px; }
+    .section-header { grid-template-columns: 40px 1fr; padding: 24px 22px; gap: 16px; }
+    .section-toggle { display: none; }
+    .section-num { font-size: 32px; }
+    .section-title-wrap h2 { font-size: 22px; }
+    .section-content { padding: 24px 22px 30px; }
+    .quick-mode { grid-template-columns: 1fr; }
+    .check { grid-template-columns: 28px 1fr; }
+    .check-tag { grid-column: 2; justify-self: start; margin-top: 8px; }
+    .topbar .meta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+    <span class="brand">SEV — ADVISORY</span>
+    <div class="meta">
+      <span>2026 EDITION</span>
+      <span>v1.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress">
+  <div class="container">
+    <div class="progress-inner">
+      <span class="progress-label">Items Flagged</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-count"><em id="checkedCount">0</em> flagged</span>
+      <button class="progress-reset" onclick="resetAll()">Reset</button>
+      <button class="progress-export" onclick="exportPDF()">Export PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="label">The 5-Minute Profile Audit</div>
+    <h1>What's actually <em>broken</em><br>on your profile.</h1>
+    <p class="lede">A 2026 audit framework for service businesses and personal brands. Built from how the algorithm actually behaves now, how attention actually decays now, and how a serious operator's profile should read at a glance.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="num">9</span>
+        <span class="lbl">Audit Categories</span>
+      </div>
+      <div class="stat">
+        <span class="num">42</span>
+        <span class="lbl">Pass/Fail Checks</span>
+      </div>
+      <div class="stat">
+        <span class="num">~5</span>
+        <span class="lbl">Minutes Per Profile</span>
+      </div>
+      <div class="stat">
+        <span class="num">2026</span>
+        <span class="lbl">Built For Now</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section class="howto">
+  <div class="container">
+    <div class="howto-grid">
+      <h2>How to use<br>this checklist.</h2>
+      <div class="howto-steps">
+        <div class="howto-step">
+          <span class="n">01 / OPEN</span>
+          <h3>Pull up the profile</h3>
+          <p>Bio, photo, link, highlights, pinned posts, last 6 reels. That's the surface area.</p>
+        </div>
+        <div class="howto-step">
+          <span class="n">02 / CROSS</span>
+          <h3>Flag what's broken</h3>
+          <p>Walk top to bottom. Cross every item that fails. Untouched = passes. Don't get stuck on a single item.</p>
+        </div>
+        <div class="howto-step">
+          <span class="n">03 / EXPORT</span>
+          <h3>Hit export</h3>
+          <p>Every crossed item auto-builds the action plan PDF. Send it to them before the call ends.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIT BODY -->
+<section class="audit">
+  <div class="container">
+
+    <div class="quick-mode">
+      <div>
+        <h3>Running short on time?</h3>
+        <p>Strip this down to only the critical checks — the 18 items that catch 80% of what's broken on most profiles. Keep this on for the live audit, switch off for the deeper pass.</p>
+      </div>
+      <button class="quick-toggle" onclick="toggleQuickMode(this)">5-Minute Mode: Off</button>
+    </div>
+
+    <!-- ===== SECTION 01: PROFILE FOUNDATIONS ===== -->
+    <div class="section open">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">01</div>
+        <div class="section-title-wrap">
+          <div class="kicker">Profile Foundations</div>
+          <h2>Username, photo, name field</h2>
+          <div class="sub">The first 0.4 seconds. Before they read a word.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>The name field contains a keyword, not just their name</h4>
+              <p>Bold "Name" field on Instagram is the #1 ranking signal for in-platform search. "Sarah Chen | Fitness Coach" beats "Sarah Chen" every time. Empty keyword field = invisible to search.</p>
+              <div class="why">When someone searches "fitness coach Perth," Instagram only shows accounts that have those words in the name field. Not the bio. Not the captions. The name field.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Profile photo is recognisable at 40px</h4>
+              <p>Open the profile on a phone, then squint. If you can't tell what it is, the algorithm's notification thumbnail and the Reels comment avatar already lost the battle. Faces beat logos for personal brands. Logos need bold contrast and transparent backgrounds.</p>
+              <div class="why">Most discovery happens at thumbnail size — comments, search results, reel overlays. A pretty photo that goes muddy at 40px is a wasted asset.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Username is simple, memorable, near-identical across platforms</h4>
+              <p>If their handle on Instagram is different from TikTok and YouTube, they're forcing every fan to re-find them. One handle, one search, three platforms.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Photo is consistent across LinkedIn, IG, and the website</h4>
+              <p>The "five tab test" — open them in tabs side-by-side. If they look like five different people, every cross-platform discovery doubles back to "wait, is this even the same person?"</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 02: BIO ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">02</div>
+        <div class="section-title-wrap">
+          <div class="kicker">The Bio</div>
+          <h2>150 characters of pitch and filter</h2>
+          <div class="sub">Most profiles waste this real estate. Yours shouldn't.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>The bio answers: what you do, who it's for, one proof point</h4>
+              <p>"I help [audience] achieve [result] through [method/timeframe]." If a stranger reads the bio and can't tell those three things, the bio is decoration.</p>
+              <div class="why">The bio is the conversion line between "saw a reel" and "pressed follow." It's a pitch, not a personality bio.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>One primary CTA, not five</h4>
+              <p>"Fewer, bigger, better." If the bio has a free guide AND a podcast AND a course AND a Discord AND a podcast clip, none of them get clicked. Pick the one that matches the goal, kill the rest from the bio (they can live in Linktree).</p>
+              <div class="why">Every additional option cuts the click-through on the primary action. The bio is a funnel, not a menu.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Specific, not generic</h4>
+              <p>"Helping you find your next favourite read — fantasy and romance only" beats "book lover and reader." Specificity is what makes the right person stop and the wrong person scroll. You want both.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Contact path is visible without opening the action button</h4>
+              <p>Service businesses get inbound from desktop. Creators get inbound from brand scouts using filtering tools. Both miss the mobile-only "Email" button. Putting the email or booking URL in the actual bio text catches both.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 03: LINK + HIGHLIGHTS + PINNED ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">03</div>
+        <div class="section-title-wrap">
+          <div class="kicker">Link, Highlights, Pinned</div>
+          <h2>The conversion architecture</h2>
+          <div class="sub">Where the follower becomes a lead, or doesn't.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Link-in-bio loads in under 2 seconds on 4G</h4>
+              <p>If their Linktree is 12 buttons long, takes 4 seconds to load, and the lead magnet is button #7, nobody is getting to the lead magnet. Test it on cellular, not wifi.</p>
+              <div class="why">Mobile users abandon at 3 seconds. Every extra second past 2 cuts conversion by ~20%.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>The link points to one high-value destination</h4>
+              <p>Not the homepage. A specific lead magnet, booking page, or landing page that matches the bio's promise. "Get my free 12-month creator plan" → a Stan store opt-in. Not "visit my website."</p>
+              <div class="why">Bio promise → link destination = same offer. Mismatch kills the trust handoff.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Highlights: 5–7 categories, custom branded covers, themed</h4>
+              <p>Service businesses: About / Services / Reviews / Case Studies / Free Guide / Contact. Personal brands: About / Free Guide / Wins / Behind the Scenes / Reviews / Work With Me. Default IG cover screenshots are a tell that nobody's actually thought about this.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Up to 3 pinned posts that reinforce the bio promise</h4>
+              <p>Best testimonial, biggest viral tip, current offer. The top 3 grid slots are the most-viewed real estate on the entire profile. Pinning a random selfie there is wasting it.</p>
+              <div class="why">A new visitor sees the bio, then their eyes drop to the pinned posts. That's two pieces of evidence in three seconds — make them line up.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 04: REEL COVER / THUMBNAIL ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">04</div>
+        <div class="section-title-wrap">
+          <div class="kicker">Cover &amp; Thumbnail</div>
+          <h2>The grid-tap decision</h2>
+          <div class="sub">Whether the video gets opened in the first place.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>The cover reads cleanly at grid size</h4>
+              <p>Reels are designed at 1080×1920 but the profile grid crops to 1:1 (or 3:4 in some rollouts). If the headline text is at the top of the frame, the grid crops it off. Test by viewing the profile, not just the reel.</p>
+              <div class="why">The cover is doing the same job as a YouTube thumbnail — making someone tap. A cropped cover is a missed tap.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Cover text is short, high-contrast, centred</h4>
+              <p>Three to six words max. White text with black stroke, or the inverse. Centred, not pushed to an edge. The eye should land on it before the brain processes the image.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Cover and verbal hook do not say the same thing</h4>
+              <p>Same trap as YouTube — title and thumbnail shouldn't duplicate. Cover text should summarise the gift; the verbal hook should create curiosity. Saying the same thing twice wastes one of them.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Grid as a whole has visual coherence</h4>
+              <p>Step back from the profile. Does it look like one person's body of work, or 30 random posts? A consistent colour, a consistent text treatment, even just consistent framing — any one of those signals "this person is intentional."</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 05: HOOK 0-3s ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">05</div>
+        <div class="section-title-wrap">
+          <div class="kicker">The First 3 Seconds</div>
+          <h2>The hook layering test</h2>
+          <div class="sub">Up to 50% of viewers leave here. Get this right and reach 5–10x.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Visual hook: first frame stops the scroll</h4>
+              <p>High contrast, a face with direct eye contact, unexpected motion, or a result before the explanation. Not a slow pan. Not a logo intro. Not "hey guys welcome back."</p>
+              <div class="why">The first frame is the static thumbnail in someone's feed for the half-second before autoplay catches up. It has to do work even with no audio and no motion.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Text hook visible in the first 1.5 seconds — different from the audio</h4>
+              <p>Most reels are watched on mute. The text needs to land before IG's caption overlay loads. Ten words or fewer. And it should not duplicate what's being said — text summarises the gift, audio creates curiosity.</p>
+              <div class="why">Test it: mute the video, watch the first 1.5 seconds, ask "would I keep watching?" If no, the hook fails.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Audio hook: cold-open, contrarian take, or pain point — not throat-clearing</h4>
+              <p>"Most personal trainers will lie to you about this." "I lost $40k learning this." "Your bio is the reason nobody's converting." Versus: "Hey everyone! So today I wanted to share..." The first three rip into curiosity. The last one announces a video is starting.</p>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Three layers, not one</h4>
+              <p>The best hooks layer all three — visual + text + audio — in the first 3 seconds. One layer alone isn't enough anymore. Watch the first 3 seconds of their last 5 reels. Count the layers. Most fail this test.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 06: RETENTION ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">06</div>
+        <div class="section-title-wrap">
+          <div class="kicker">Retention &amp; Pacing</div>
+          <h2>What happens after the hook</h2>
+          <div class="sub">Watch time is the #1 algo signal in 2026. This is where it's earned or lost.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Visual cut every 1.5–3 seconds</h4>
+              <p>Static shot held longer than 4 seconds = drop-off zone. Doesn't have to be a hard edit — a zoom, a cutaway, a text change all count as a visual reset.</p>
+              <div class="why">The brain treats unchanging visual input as "nothing's happening." It scrolls. Visual change is what tells the brain "still worth watching."</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Length earns its place — most reels should be 7–25 seconds</h4>
+              <p>7–15s for one-liner reach. 15–30s for instructional. 30–60s only if every second earns it. Going longer to "add value" usually adds water. Shorter beats longer unless retention data proves otherwise.</p>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Loop-close ending or sends-on rewatch</h4>
+              <p>Best-performing reels end in a way that punches the viewer back to the beginning, or makes them think "wait, what?" and rewatch. Ending with "follow for more" is leaving retention on the table.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>No filler in seconds 8–25</h4>
+              <p>That's the high-density value zone. If they're saying "and another thing I want to mention is," that's filler. Cut it.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 07: CAPTIONS / TEXT ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">07</div>
+        <div class="section-title-wrap">
+          <div class="kicker">Captions &amp; On-Screen Text</div>
+          <h2>The mute test</h2>
+          <div class="sub">Most viewers hear nothing. Make sure they still get the message.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Burned-in subtitles, not auto-captions</h4>
+              <p>Auto-captions break, miss words, vanish off-screen. Burned-in (CapCut, Premiere) lets you control the timing, font, colour, and stroke. For branded content this is non-negotiable.</p>
+              <div class="why">Auto-captions are a tell that the video was uploaded as an afterthought. Burned-in is a tell that someone thought about how it'd be consumed.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Bold sans-serif, ≥45px, white with 2px black stroke</h4>
+              <p>Anything thinner is unreadable on a busy background. Anything smaller breaks on small phones. The 2px stroke is what stops it disappearing into a light frame.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Primary keyword in the on-screen text within the first 3 seconds</h4>
+              <p>Instagram OCRs on-screen text and uses it for content classification. The word that defines what this video is about should appear early and visibly.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Caption first line is the second hook</h4>
+              <p>The visible portion before "...more" is doing real work. Don't waste it on "watch till the end" — use it to extend curiosity or pre-frame the takeaway.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 08: SAFE ZONES ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">08</div>
+        <div class="section-title-wrap">
+          <div class="kicker">Safe Zones &amp; Format</div>
+          <h2>Where the platform crops the work</h2>
+          <div class="sub">Critical text and faces in the wrong zone = invisible.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>All critical content lives in the central 70–80% of the frame</h4>
+              <p>Between roughly y=285px and y=1635px on the 1080×1920 canvas. The top has the camera/status bar; the bottom has the IG caption, audio info, and engagement buttons.</p>
+              <div class="why">Text below y=1640px gets buried under IG's UI. Text above y=250px gets cropped on grid view. Both zones are dead.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Bottom 280px is clear of headlines or faces</h4>
+              <p>That's where IG stacks the username, caption, audio strip, and the like/comment/share buttons. If the verbal hook is in that zone, half of it is hidden behind UI on a real phone.</p>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Right edge has 90px buffer</h4>
+              <p>The like, comment, share, save, and "more" buttons live there. Faces or text crammed into the right margin get partially covered.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Aspect ratio is 9:16, 1080×1920, 30fps minimum</h4>
+              <p>Anything else gets letterboxed or downscaled. Square posts in a Reel grid kill reach.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 09: ALGORITHM HYGIENE ===== -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">09</div>
+        <div class="section-title-wrap">
+          <div class="kicker">Algorithm Hygiene</div>
+          <h2>The unforced errors</h2>
+          <div class="sub">Things that quietly suppress reach without anyone realising.</div>
+        </div>
+        <div class="section-toggle"><span>EXPAND</span><div class="chev"></div></div>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>No watermarks from TikTok, CapCut, or other platforms</h4>
+              <p>Instagram's 2026 Originality Score actively penalises content with foreign watermarks. If the reel has a TikTok logo on it, reach is being suppressed before the algorithm even decides whether the content is good.</p>
+              <div class="why">This is the easiest fix and the one most reposters miss. Re-export from CapCut without the watermark, or re-cut natively.</div>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="critical">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>3–5 specific niche hashtags, not 30</h4>
+              <p>Hashtags are filing labels in 2026, not growth levers. Hashtag-heavy posts now perform ~23% worse than minimal-hashtag posts. Three to five tight, niche tags is the new ceiling.</p>
+            </div>
+            <span class="check-tag critical">Critical</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Original audio or trending audio — not muted</h4>
+              <p>A reel without audio is a graphic post in a video format. The algorithm treats audio (especially original or trending) as a context signal. Silent reels lose that signal.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Posting cadence they can sustain for 12 months</h4>
+              <p>Not "what's optimal." What's sustainable. Three reels a week for 52 weeks beats daily for 8 weeks then ghosting. The cadence question is "what's your minimum?" not "what's your max?"</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+          <div class="check" data-priority="full">
+            <div class="check-box" onclick="toggleCheck(this)"></div>
+            <div class="check-text">
+              <h4>Account is positioned for one niche, not five</h4>
+              <p>Instagram assigns one topic per account in 2026 — they call it "account-based embedding." If the last 9 reels are fitness, business, mum life, and fashion, the algo can't decide who to show it to. Pick the topic, hold the line for 90 days, watch what happens.</p>
+            </div>
+            <span class="check-tag">Standard</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TOP 3 FIXES CAPTURE -->
+<section class="audit" style="padding-top: 0; padding-bottom: 60px;">
+  <div class="container">
+    <div class="fixes-box">
+      <div class="fixes-label">Top 3 Fixes</div>
+      <h3>The three things to ship first.</h3>
+      <p class="fixes-sub">Type the priority fixes here during the call. Then export the full action plan as a PDF — every crossed item below becomes their punch list.</p>
+
+      <div class="recipient-row">
+        <input type="text" class="recipient-input" id="recipientName" placeholder="Their name (for the PDF)" />
+        <input type="text" class="recipient-input" id="recipientHandle" placeholder="Their @handle (optional)" />
+      </div>
+
+      <div class="fix-row">
+        <span class="fix-num">01</span>
+        <input type="text" class="fix-input" id="fix1" placeholder="The biggest unforced error..." />
+      </div>
+      <div class="fix-row">
+        <span class="fix-num">02</span>
+        <input type="text" class="fix-input" id="fix2" placeholder="The second biggest..." />
+      </div>
+      <div class="fix-row">
+        <span class="fix-num">03</span>
+        <input type="text" class="fix-input" id="fix3" placeholder="The one quiet thing nobody talks about..." />
+      </div>
+
+      <button class="fixes-export-btn" onclick="exportPDF()">
+        Export Action Plan as PDF
+        <span class="arrow">↓</span>
+      </button>
+    </div>
+  </div>
+</section>
+<section class="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="label">Want me to do this on your profile?</div>
+      <h2>Some profiles can't be fixed in <em>five minutes.</em></h2>
+      <p>This checklist will catch the common stuff. But if your reach has flatlined for six months, your conversion is broken even though your views are fine, or you've got a high-ticket offer and the audience you're attracting is wrong — that's a different conversation.</p>
+
+      <ul class="cta-list">
+        <li>
+          <span>
+            A 60-minute deep audit, recorded, with timestamped fixes
+            <small>Walked through your last 30 days of content, not just the surface profile.</small>
+          </span>
+        </li>
+        <li>
+          <span>
+            Positioning rebuild if your content is attracting the wrong audience
+            <small>For high-ticket operators where "more views" doesn't mean "more buyers."</small>
+          </span>
+        </li>
+        <li>
+          <span>
+            A 90-day rollout plan with measurable benchmarks
+            <small>What to ship, in what order, on what cadence — built around your bandwidth, not someone else's playbook.</small>
+          </span>
+        </li>
+      </ul>
+
+      <a href="https://stan.store/talktosev/p/tailored-session-with-sev" class="cta-button" target="_blank" rel="noopener">
+        Book a 1:1 with Sev
+        <span class="arrow">→</span>
+      </a>
+      <div class="cta-meta">Limited slots — currently taking 5 advisory clients per quarter</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="sig">— Sev Mozhaev</div>
+    <div>Bright Tsar Studios · Business Momentum Builder · 2026</div>
+  </div>
+</footer>
+
+<script>
+  // PDF EXPORT
+  function exportPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+
+    // Page constants
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const margin = 56;
+    const contentW = pageW - (margin * 2);
+    let y = margin;
+
+    // Brand colours (matching the HTML)
+    const ink = [26, 24, 20];
+    const accent = [212, 164, 55];
+    const dim = [110, 105, 92];
+    const rule = [220, 215, 205];
+
+    // Recipient details
+    const name = (document.getElementById('recipientName').value || '').trim();
+    const handle = (document.getElementById('recipientHandle').value || '').trim();
+    const fix1 = (document.getElementById('fix1').value || '').trim();
+    const fix2 = (document.getElementById('fix2').value || '').trim();
+    const fix3 = (document.getElementById('fix3').value || '').trim();
+
+    // Date
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Helper: add new page if needed
+    function checkPage(needed) {
+      if (y + needed > pageH - margin - 30) {
+        addFooter();
+        doc.addPage();
+        y = margin;
+      }
+    }
+
+    // Helper: footer on each page
+    function addFooter() {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...dim);
+      doc.text('SEV MOZHAEV  ·  ADVISORY', margin, pageH - 30);
+      doc.text(dateStr.toUpperCase(), pageW - margin, pageH - 30, { align: 'right' });
+    }
+
+    // ===== COVER =====
+    doc.setFillColor(13, 12, 10);
+    doc.rect(0, 0, pageW, pageH, 'F');
+
+    // Top label
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...accent);
+    doc.text('PROFILE AUDIT  ·  ACTION PLAN', margin, 80);
+
+    // Title
+    doc.setFont('times', 'normal');
+    doc.setFontSize(48);
+    doc.setTextColor(244, 237, 224);
+    if (name) {
+      doc.text('Action plan', margin, 180);
+      doc.setFont('times', 'italic');
+      doc.setTextColor(...accent);
+      doc.text('for ' + name + '.', margin, 230);
+    } else {
+      doc.text('Your', margin, 180);
+      doc.setFont('times', 'italic');
+      doc.setTextColor(...accent);
+      doc.text('action plan.', margin, 230);
+    }
+
+    // Handle
+    if (handle) {
+      const cleanHandle = handle.startsWith('@') ? handle : '@' + handle;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.setTextColor(163, 155, 138);
+      doc.text(cleanHandle, margin, 260);
+    }
+
+    // Sub
+    doc.setFont('times', 'normal');
+    doc.setFontSize(13);
+    doc.setTextColor(163, 155, 138);
+    const subText = 'A prioritised punch list of the fixes that move the needle on your profile, your content, and the way the algorithm reads you in 2026.';
+    const subLines = doc.splitTextToSize(subText, contentW - 100);
+    doc.text(subLines, margin, 310);
+
+    // Footer info on cover
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(107, 101, 87);
+    doc.text('PREPARED ' + dateStr.toUpperCase(), margin, pageH - 80);
+    doc.text('SEV MOZHAEV  ·  ADVISORY', margin, pageH - 60);
+
+    // Bottom rule
+    doc.setDrawColor(...accent);
+    doc.setLineWidth(2);
+    doc.line(margin, pageH - 100, margin + 60, pageH - 100);
+
+    // ===== PAGE 2: Top 3 Priority Fixes =====
+    doc.addPage();
+    y = margin + 20;
+
+    if (fix1 || fix2 || fix3) {
+      // Section label
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...accent);
+      doc.text('THE THREE THINGS TO SHIP FIRST', margin, y);
+      y += 30;
+
+      // Heading
+      doc.setFont('times', 'normal');
+      doc.setFontSize(28);
+      doc.setTextColor(...ink);
+      doc.text('Priority fixes.', margin, y);
+      y += 20;
+
+      doc.setFont('times', 'italic');
+      doc.setFontSize(13);
+      doc.setTextColor(...dim);
+      const introLines = doc.splitTextToSize('Most profiles fail the same three checks. These are yours. Everything below this is the longer punch list — but if you ship nothing else, ship these.', contentW);
+      doc.text(introLines, margin, y + 10);
+      y += introLines.length * 18 + 30;
+
+      // Rule
+      doc.setDrawColor(...accent);
+      doc.setLineWidth(0.8);
+      doc.line(margin, y, margin + 60, y);
+      y += 30;
+
+      // The three fixes
+      const fixes = [fix1, fix2, fix3].filter(f => f.length > 0);
+      fixes.forEach((fix, i) => {
+        checkPage(80);
+        // Number
+        doc.setFont('times', 'normal');
+        doc.setFontSize(36);
+        doc.setTextColor(...accent);
+        doc.text(String(i + 1).padStart(2, '0'), margin, y + 26);
+
+        // Text
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(13);
+        doc.setTextColor(...ink);
+        const fixLines = doc.splitTextToSize(fix, contentW - 70);
+        doc.text(fixLines, margin + 70, y + 22);
+
+        y += Math.max(50, fixLines.length * 18 + 30);
+
+        // Divider between fixes
+        if (i < fixes.length - 1) {
+          doc.setDrawColor(...rule);
+          doc.setLineWidth(0.5);
+          doc.line(margin, y, pageW - margin, y);
+          y += 24;
+        }
+      });
+
+      y += 20;
+    }
+
+    // ===== Collect crossed (flagged) items by section =====
+    const sections = document.querySelectorAll('.section');
+    const sectionData = [];
+
+    sections.forEach(section => {
+      const num = section.querySelector('.section-num').textContent.trim();
+      const kicker = section.querySelector('.kicker').textContent.trim();
+      const title = section.querySelector('h2').textContent.trim();
+      const checks = section.querySelectorAll('.check');
+      const flagged = [];
+
+      checks.forEach(check => {
+        const box = check.querySelector('.check-box');
+        if (box.classList.contains('checked')) {
+          const heading = check.querySelector('h4').textContent.trim();
+          const body = check.querySelector('p').textContent.trim();
+          const tag = check.querySelector('.check-tag').textContent.trim();
+          flagged.push({ heading, body, tag });
+        }
+      });
+
+      if (flagged.length > 0) {
+        sectionData.push({ num, kicker, title, flagged });
+      }
+    });
+
+    // ===== PAGE 3+: The full action list =====
+    if (sectionData.length > 0) {
+      doc.addPage();
+      y = margin + 20;
+
+      // Section label
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...accent);
+      doc.text('THE FULL PUNCH LIST', margin, y);
+      y += 30;
+
+      // Heading
+      doc.setFont('times', 'normal');
+      doc.setFontSize(28);
+      doc.setTextColor(...ink);
+      doc.text('Everything else to fix.', margin, y);
+      y += 20;
+
+      doc.setFont('times', 'italic');
+      doc.setFontSize(13);
+      doc.setTextColor(...dim);
+      const fullIntroLines = doc.splitTextToSize('Grouped by audit category. Critical items are flagged. Work top to bottom or jump to whatever you have bandwidth for this week.', contentW);
+      doc.text(fullIntroLines, margin, y + 10);
+      y += fullIntroLines.length * 18 + 36;
+
+      // Loop through sections
+      sectionData.forEach(section => {
+        checkPage(120);
+
+        // Section number + title
+        doc.setFont('times', 'normal');
+        doc.setFontSize(38);
+        doc.setTextColor(...accent);
+        doc.text(section.num, margin, y);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(...dim);
+        doc.text(section.kicker.toUpperCase(), margin + 60, y - 18);
+
+        doc.setFont('times', 'normal');
+        doc.setFontSize(20);
+        doc.setTextColor(...ink);
+        const titleLines = doc.splitTextToSize(section.title, contentW - 70);
+        doc.text(titleLines, margin + 60, y);
+        y += titleLines.length * 22 + 4;
+
+        // Divider
+        doc.setDrawColor(...rule);
+        doc.setLineWidth(0.5);
+        doc.line(margin, y + 8, pageW - margin, y + 8);
+        y += 28;
+
+        // Items
+        section.flagged.forEach((item, idx) => {
+          // Estimate height needed
+          doc.setFontSize(12);
+          const headLines = doc.splitTextToSize(item.heading, contentW - 30);
+          doc.setFontSize(10);
+          const bodyLines = doc.splitTextToSize(item.body, contentW - 30);
+          const blockHeight = (headLines.length * 16) + (bodyLines.length * 13) + 30;
+
+          checkPage(blockHeight);
+
+          // Bullet/checkbox
+          doc.setDrawColor(...ink);
+          doc.setLineWidth(0.8);
+          doc.rect(margin, y, 10, 10);
+
+          // Critical tag
+          if (item.tag.toLowerCase() === 'critical') {
+            doc.setFillColor(...accent);
+            doc.circle(margin + 5, y + 5, 2, 'F');
+          }
+
+          // Heading
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(12);
+          doc.setTextColor(...ink);
+          doc.text(headLines, margin + 22, y + 9);
+          y += headLines.length * 16 + 4;
+
+          // Critical badge text
+          if (item.tag.toLowerCase() === 'critical') {
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(7);
+            doc.setTextColor(...accent);
+            doc.text('CRITICAL', margin + 22, y + 4);
+            y += 12;
+          }
+
+          // Body
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(10);
+          doc.setTextColor(...dim);
+          doc.text(bodyLines, margin + 22, y + 8);
+          y += bodyLines.length * 13 + 18;
+        });
+
+        y += 16;
+      });
+    } else {
+      // Nothing crossed = no flagged items
+      doc.addPage();
+      y = margin + 60;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...accent);
+      doc.text('AUDIT COMPLETE', margin, y);
+      y += 30;
+
+      doc.setFont('times', 'normal');
+      doc.setFontSize(36);
+      doc.setTextColor(...ink);
+      doc.text('Nothing flagged.', margin, y);
+      y += 30;
+
+      doc.setFont('times', 'italic');
+      doc.setFontSize(14);
+      doc.setTextColor(...dim);
+      const cleanLines = doc.splitTextToSize('Either the audit was rushed, or the profile is genuinely dialled in. If it is, the next conversation is not about the profile. It is about scale, positioning, and what to build next.', contentW);
+      doc.text(cleanLines, margin, y);
+    }
+
+    // ===== Final page: Next steps =====
+    doc.addPage();
+    y = margin + 40;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...accent);
+    doc.text('WHAT HAPPENS NEXT', margin, y);
+    y += 30;
+
+    doc.setFont('times', 'normal');
+    doc.setFontSize(32);
+    doc.setTextColor(...ink);
+    doc.text('Some profiles need', margin, y);
+    y += 36;
+    doc.setFont('times', 'italic');
+    doc.setTextColor(...accent);
+    doc.text('more than a checklist.', margin, y);
+    y += 50;
+
+    doc.setFont('times', 'normal');
+    doc.setFontSize(13);
+    doc.setTextColor(...dim);
+    const ctaIntro = 'This document gives you the surface-level fixes. If your reach has flatlined for six months, your conversion is broken even though your views are fine, or you are attracting the wrong audience for a high-ticket offer, that is a different conversation. The deep audit covers:';
+    const ctaIntroLines = doc.splitTextToSize(ctaIntro, contentW);
+    doc.text(ctaIntroLines, margin, y);
+    y += ctaIntroLines.length * 18 + 30;
+
+    // Bullets
+    const bullets = [
+      ['60-minute deep audit, recorded', 'Walked through your last 30 days of content, not just the surface profile.'],
+      ['Positioning rebuild for high-ticket offers', 'Where more views does not mean more buyers.'],
+      ['90-day rollout plan with benchmarks', 'What to ship, in what order, on what cadence — built around your bandwidth.']
+    ];
+
+    bullets.forEach(b => {
+      checkPage(60);
+      doc.setFont('times', 'normal');
+      doc.setFontSize(20);
+      doc.setTextColor(...accent);
+      doc.text('+', margin, y + 6);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(...ink);
+      doc.text(b[0], margin + 24, y);
+      y += 16;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...dim);
+      const subLines = doc.splitTextToSize(b[1], contentW - 24);
+      doc.text(subLines, margin + 24, y);
+      y += subLines.length * 13 + 22;
+    });
+
+    y += 20;
+
+    // CTA box
+    checkPage(140);
+    const ctaUrl = 'https://stan.store/talktosev/p/tailored-session-with-sev';
+    const ctaBoxY = y;
+    const ctaBoxH = 100;
+
+    doc.setFillColor(...accent);
+    doc.rect(margin, ctaBoxY, contentW, ctaBoxH, 'F');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(13, 12, 10);
+    doc.text('BOOK A TAILORED SESSION WITH SEV', margin + 24, ctaBoxY + 30);
+
+    doc.setFont('times', 'italic');
+    doc.setFontSize(15);
+    doc.text('stan.store/talktosev', margin + 24, ctaBoxY + 60);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.text('Tap anywhere on this banner to book.', margin + 24, ctaBoxY + 82);
+
+    // Make the entire CTA box a clickable link
+    doc.link(margin, ctaBoxY, contentW, ctaBoxH, { url: ctaUrl });
+
+    addFooter();
+
+    // Filename
+    let filename = 'Profile-Audit-Action-Plan';
+    if (name) {
+      filename += '-' + name.replace(/[^a-zA-Z0-9]/g, '-');
+    }
+    filename += '-' + today.toISOString().slice(0, 10) + '.pdf';
+
+    doc.save(filename);
+  }
+
+  // Toggle individual check items
+  function toggleCheck(box) {
+    box.classList.toggle('checked');
+    updateProgress();
+  }
+
+  // Toggle section open/closed
+  function toggleSection(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  // Reset all checkboxes and input fields
+  function resetAll() {
+    document.querySelectorAll('.check-box.checked').forEach(b => b.classList.remove('checked'));
+    // Clear recipient + priority fix inputs
+    ['recipientName', 'recipientHandle', 'fix1', 'fix2', 'fix3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    updateProgress();
+  }
+
+  // 5-minute mode toggle
+  function toggleQuickMode(btn) {
+    const isOn = document.body.classList.toggle('quick-only');
+    btn.textContent = isOn ? '5-Minute Mode: On' : '5-Minute Mode: Off';
+    updateProgress();
+  }
+
+  // Progress tracking — counts flagged (crossed) items
+  function updateProgress() {
+    const allChecks = Array.from(document.querySelectorAll('.check-box'));
+    const visible = allChecks.filter(b => b.offsetParent !== null);
+    const crossed = visible.filter(b => b.classList.contains('checked'));
+    const total = visible.length;
+    const count = crossed.length;
+    document.getElementById('checkedCount').textContent = count;
+    // progress fill represents proportion of items flagged (visual urgency cue)
+    document.getElementById('progressFill').style.width = total ? (count / total * 100) + '%' : '0%';
+  }
+
+  // Init
+  updateProgress();
+
+  // Auto-open all sections after the first on desktop for the live audit flow
+  if (window.innerWidth > 720) {
+    document.querySelectorAll('.section').forEach(s => s.classList.add('open'));
+  }
+</script>
+
+</body>
+</html>
