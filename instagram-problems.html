@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's actually broken on your members' Instagram — With U Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,500&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:#0d0c0a;--bg-elev:#15130f;--bg-card:#1a1814;
+  --ink:#f4ede0;--ink-dim:#a39b8a;--ink-faint:#6b6557;
+  --rule:#2a2620;--accent:#d4a437;--accent-soft:rgba(212,164,55,0.12);
+  --crit:#b04848;--high:#c87844;--med:#d4a437;--low:#7fa860;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:0.035;z-index:100;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.header{background:var(--bg);padding:56px 24px 40px;color:var(--ink);border-bottom:1px solid var(--rule);position:relative}
+.header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:500;margin-bottom:14px}
+.header h1{font-size:clamp(30px,4.5vw,46px);font-weight:400;font-family:'Fraunces',serif;line-height:1.05;margin-bottom:14px;letter-spacing:-0.02em}
+.header h1 em{font-style:italic;color:var(--accent);font-weight:500}
+.header .lede{font-size:16px;color:var(--ink-dim);max-width:680px;margin-bottom:32px;line-height:1.6}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px}
+.stat-card{background:var(--bg-elev);border-radius:10px;padding:18px 22px;border:1px solid var(--rule)}
+.stat-num{font-size:32px;font-weight:600;font-family:'Fraunces',serif;color:var(--ink);line-height:1}
+.stat-num.amber{color:var(--accent)}.stat-num.red{color:var(--crit)}
+.stat-label{font-size:10px;color:var(--ink-faint);letter-spacing:1.5px;margin-top:8px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+
+.main{max-width:1100px;margin:0 auto;padding:40px 24px}
+
+.section-head{margin:40px 0 18px;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.section-head:first-child{margin-top:0}
+.section-head h2{font-size:26px;font-weight:400;font-family:'Fraunces',serif;letter-spacing:-0.01em}
+.section-head .meta{font-size:11px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase}
+
+.chart-card{background:var(--bg-elev);border-radius:14px;padding:28px;border:1px solid var(--rule)}
+.chart-wrap{position:relative;height:540px}
+
+.legend-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;padding-top:20px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-dim);font-family:'JetBrains Mono',monospace;letter-spacing:0.5px}
+.legend-item{display:flex;align-items:center;gap:8px}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+.legend-dot.crit{background:var(--crit)}
+.legend-dot.high{background:var(--high)}
+.legend-dot.med{background:var(--med)}
+.legend-dot.low{background:var(--low)}
+
+.tabs{display:flex;gap:4px;background:var(--bg-elev);padding:4px;border-radius:10px;border:1px solid var(--rule);width:fit-content;margin-bottom:18px}
+.tab-btn{padding:8px 18px;border:none;background:none;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--ink-faint);border-radius:7px;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:1px}
+.tab-btn:hover{color:var(--ink-dim)}
+.tab-btn.active{background:var(--accent);color:var(--bg)}
+
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.problem-card{background:var(--bg-card);border-radius:12px;padding:22px;border:1px solid var(--rule);position:relative;transition:border-color .2s}
+.problem-card:hover{border-color:var(--ink-faint)}
+.problem-card.crit{border-left:4px solid var(--crit)}
+.problem-card.high{border-left:4px solid var(--high)}
+.problem-card.med{border-left:4px solid var(--med)}
+.problem-card.low{border-left:4px solid var(--low)}
+
+.rank-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.rank-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--ink-faint);background:var(--bg-elev);padding:4px 9px;border-radius:5px;letter-spacing:0.5px}
+.severity-pill{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;padding:3px 9px;border-radius:100px;color:var(--bg);font-family:'JetBrains Mono',monospace}
+.severity-pill.crit{background:var(--crit);color:var(--ink)}
+.severity-pill.high{background:var(--high);color:var(--bg)}
+.severity-pill.med{background:var(--med);color:var(--bg)}
+.severity-pill.low{background:var(--low);color:var(--bg)}
+.cat-pill{font-size:9px;font-weight:500;color:var(--ink-dim);background:var(--bg-elev);padding:3px 9px;border-radius:100px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px}
+
+.problem-title{font-size:18px;font-weight:500;line-height:1.3;margin-bottom:10px;color:var(--ink);font-family:'Fraunces',serif;letter-spacing:-0.005em}
+.problem-stat{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+.problem-stat .pct{font-size:30px;font-weight:500;font-family:'Fraunces',serif;color:var(--ink);line-height:1}
+.problem-stat .frac{font-size:11px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;letter-spacing:0.5px}
+
+.bar-track{height:5px;background:var(--bg-elev);border-radius:100px;overflow:hidden;margin-bottom:16px}
+.bar-fill{height:100%;border-radius:100px}
+.bar-fill.crit{background:var(--crit)}
+.bar-fill.high{background:var(--high)}
+.bar-fill.med{background:var(--med)}
+.bar-fill.low{background:var(--low)}
+
+.quote{background:var(--bg-elev);border-left:3px solid var(--accent);padding:12px 14px;font-size:13px;color:var(--ink-dim);font-style:italic;border-radius:0 6px 6px 0;margin-bottom:14px;line-height:1.5;font-family:'Fraunces',serif}
+.quote-source{font-size:10px;color:var(--ink-faint);font-style:normal;display:block;margin-top:6px;font-weight:500;font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;text-transform:uppercase}
+
+.fix-block{margin-top:10px}
+.fix-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+.fix-text{font-size:13px;color:var(--ink);line-height:1.55}
+
+.takeaway-card{background:linear-gradient(135deg,var(--bg-card) 0%,var(--bg-elev) 100%);color:var(--ink);border-radius:14px;padding:28px 32px;margin-top:32px;border:1px solid var(--rule);position:relative;overflow:hidden}
+.takeaway-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,var(--accent-soft) 0%,transparent 70%);pointer-events:none}
+.takeaway-card h3{font-size:22px;font-family:'Fraunces',serif;margin-bottom:20px;color:var(--ink);font-weight:400;letter-spacing:-0.01em;position:relative;z-index:1}
+.takeaway-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;position:relative;z-index:1}
+.takeaway{display:flex;gap:12px}
+.takeaway-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);flex-shrink:0;width:24px;letter-spacing:0.5px;padding-top:2px}
+.takeaway-text{font-size:13px;color:var(--ink-dim);line-height:1.6}
+.takeaway-text strong{color:var(--ink);font-weight:600}
+
+.footer{text-align:center;padding:40px 24px;font-size:11px;color:var(--ink-faint);margin-top:32px;border-top:1px solid var(--rule);font-family:'JetBrains Mono',monospace;letter-spacing:0.5px}
+.footer .sub{margin-top:8px;font-size:10px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+.split{display:none}
+.split.active{display:block}
+
+@media(max-width:720px){
+  .header{padding:40px 22px 32px}
+  .stat-num{font-size:24px}
+  .chart-wrap{height:680px}
+  .chart-card{padding:18px}
+  .problem-grid{grid-template-columns:1fr}
+  .takeaway-card{padding:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="eyebrow">With U Advisory · Apr 28 → May 7, 2026</div>
+    <h1>What's actually <em>broken</em><br>on your members' Instagram.</h1>
+    <p class="lede">A ranked breakdown of the most common Instagram profile and Reels problems surfaced across the last set of With U advisory calls. Frequency = how many of the 11 audited member profiles had the issue.</p>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">Profiles Audited</div></div>
+      <div class="stat-card"><div class="stat-num amber">15</div><div class="stat-label">Distinct Problems</div></div>
+      <div class="stat-card"><div class="stat-num red">5</div><div class="stat-label">Critical Issues</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="section-head">
+    <h2>Top 10 Problems · Ranked by Frequency</h2>
+    <div class="meta">% of audited profiles affected</div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-wrap"><canvas id="rankChart"></canvas></div>
+    <div class="legend-row">
+      <div class="legend-item"><span class="legend-dot crit"></span> Critical · breaks conversion</div>
+      <div class="legend-item"><span class="legend-dot high"></span> High · kills reach or trust</div>
+      <div class="legend-item"><span class="legend-dot med"></span> Medium · friction or polish</div>
+      <div class="legend-item"><span class="legend-dot low"></span> Low · nice-to-fix</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Problem Detail · By Category</h2>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="all" onclick="switchTab('all')">All</button>
+      <button class="tab-btn" data-tab="profile" onclick="switchTab('profile')">Profile</button>
+      <button class="tab-btn" data-tab="reels" onclick="switchTab('reels')">Reels</button>
+    </div>
+  </div>
+
+  <div class="split active" id="split-all">
+    <div class="problem-grid" id="problem-grid-all"></div>
+  </div>
+  <div class="split" id="split-profile">
+    <div class="problem-grid" id="problem-grid-profile"></div>
+  </div>
+  <div class="split" id="split-reels">
+    <div class="problem-grid" id="problem-grid-reels"></div>
+  </div>
+
+  <div class="takeaway-card">
+    <h3>The pattern across all 11 audits</h3>
+    <div class="takeaway-list">
+      <div class="takeaway"><div class="takeaway-num">01</div><div class="takeaway-text"><strong>Bios don't pitch.</strong> 9 of 11 bios are missing the "what you do · who it's for · one proof point" formula. Generic "best service / best start" lines burn the slot.</div></div>
+      <div class="takeaway"><div class="takeaway-num">02</div><div class="takeaway-text"><strong>Reels open with cold air.</strong> Logo intros, glitch effects, "If you want to lose belly fat" — the first 1.5s is wasted. Hooks need to start with You / Your and name the pain.</div></div>
+      <div class="takeaway"><div class="takeaway-num">03</div><div class="takeaway-text"><strong>Link-in-bio leaks traffic.</strong> Most members send the click to a homepage instead of one high-value destination — a booking page, a lead magnet, or a quiz funnel.</div></div>
+      <div class="takeaway"><div class="takeaway-num">04</div><div class="takeaway-text"><strong>Selling 7 is the new SEO.</strong> AI search reads on-screen video text. Members not answering customer questions in Reels are invisible to ChatGPT, Gemini, and Google AI Overviews.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Generated from With U Advisory transcripts · Apr 28 / Apr 30 / May 5 / May 7, 2026 · Sev's Pics</p>
+  <p class="sub">Methodology: 11 distinct profile audits in the last 2 weeks. % affected = profiles where Sev flagged the issue during audit. Severity assigned by impact on reach, conversion, or trust.</p>
+</div>
+
+<script>
+const PROBLEMS = [
+  {
+    rank: 1,
+    title: "Bio doesn't follow What / Who / Proof formula",
+    cat: "profile",
+    severity: "crit",
+    affected: 9, total: 11,
+    quote: "Give your child the best start. Everybody wants to give their child the best start. What sets you apart from everyone else? … This doesn't excite me enough. There's no point of difference here.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Rewrite each bio to three lines: (1) What you do, (2) Who it's for, (3) One proof point — reviews count, years in business, named result. Cut everything else. Generic 'best start / best service' lines burn the slot."
+  },
+  {
+    rank: 2,
+    title: "Weak or missing Reel hook (first 1.5s)",
+    cat: "reels",
+    severity: "crit",
+    affected: 8, total: 11,
+    quote: "If you want to lose that god-awful belly fat — too soft. Of course they want to. Go for the jugular. Start with 'You' or 'Your.' Punch me in the face with what it's about.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Layer three hooks in the first 1.5s: a high-contrast visual (face, eye contact, unexpected motion), a punchy 'You' / 'Your' text hook that names the pain, and a cold-open audio line — contrarian take, not throat-clearing. Skip glitch effects and logo intros."
+  },
+  {
+    rank: 3,
+    title: "Weak or missing CTA in bio",
+    cat: "profile",
+    severity: "crit",
+    affected: 8, total: 11,
+    quote: "One primary CTA, not five. You've got DM coaching, free guide, body audit quiz, website, free call — which one do I do? Fewer, bigger, better. Pick the one and kill the rest.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Pick ONE high-priority conversion goal (Book a Call, Get a Quote, Get the Guide). Write it as a verb-led CTA on the last line of the bio. Linktree-style multi-link soup is killing conversion."
+  },
+  {
+    rank: 4,
+    title: "No pinned posts (or pins don't reinforce the pitch)",
+    cat: "profile",
+    severity: "high",
+    affected: 8, total: 11,
+    quote: "Up to three pinned posts that reinforce the buyer promise. You don't have three posts. So I would create three pinned posts at the top — and pin at least one Reel, not just photos.",
+    quoteSource: "Sev · Apr 28 + May 5",
+    fix: "Pin 1–3 Reels at the top of the grid that answer: (1) what you do, (2) cost or process, (3) proof — a result, review, or transformation. Mix in at least one Reel so the default tab gets the same payoff."
+  },
+  {
+    rank: 5,
+    title: "No keywords in Name field (SEO miss)",
+    cat: "profile",
+    severity: "crit",
+    affected: 7, total: 11,
+    quote: "Jake Rogers, fat loss, muscle building coach. Perfect — that's the tick. Compare that to 'Montessori Learning Centre' on its own. Empty keyword field equals invisible to search.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Add 2–3 high-volume search keywords to the Name field (format: 'Brand · Service Keyword · Location'). Google now indexes Instagram — this is double-duty SEO."
+  },
+  {
+    rank: 6,
+    title: "Link-in-bio points to homepage, not a booking/lead page",
+    cat: "profile",
+    severity: "crit",
+    affected: 7, total: 11,
+    quote: "The link points to one high value destination, not the homepage — a specific lead magnet, booking page or landing page that matches the buyer's promise. Limit friction to one or two steps.",
+    quoteSource: "Sev · Apr 28 audit",
+    fix: "Replace the homepage link with a dedicated landing page: a booking calendar, a free guide opt-in, a quote calculator, or a quiz funnel. Capture the lead before they bounce. Audit for broken sub-pages."
+  },
+  {
+    rank: 7,
+    title: "Not answering the Selling 7 (cost, process, reviews, problems, comparisons, best, worst)",
+    cat: "reels",
+    severity: "high",
+    affected: 7, total: 11,
+    quote: "Be obsessed with answering every possible question your customer asks — as a video. The most common one: how much does it cost? If you haven't mentioned pricing, you don't make the AI list.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Build a Reel series around the Selling 7: 'How much does X cost?' / 'What's the process?' / 'Best vs worst options' / problems and reviews. Burn the title into the video itself — AI scrapes on-screen text, not just the cover."
+  },
+  {
+    rank: 8,
+    title: "Slow pacing — no visual cuts every 1.5–3s",
+    cat: "reels",
+    severity: "high",
+    affected: 6, total: 11,
+    quote: "Visual cut every 1.5 to 3 seconds. Let's count: one, two, three, four. Fail. It took you way too long to get into it.",
+    quoteSource: "Sev · Apr 28 + May 5",
+    fix: "Edit Reels to a cut every 1.5–3 seconds. Most should be 7–25s. If retention graph has a long flat tail, the video is too long — trim it."
+  },
+  {
+    rank: 9,
+    title: "Static image posts instead of Reels or carousels",
+    cat: "reels",
+    severity: "high",
+    affected: 6, total: 11,
+    quote: "You have photos, which is good — but you need videos. Too many static things means it's not really viable. Reels are pushed out more than photos.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Convert static posts into either Reels (even an 8s photo + music + text overlay counts) or text-heavy carousels. Static single-image posts are starved of reach."
+  },
+  {
+    rank: 10,
+    title: "No burned-in subtitles (relying on auto-captions)",
+    cat: "reels",
+    severity: "high",
+    affected: 5, total: 11,
+    quote: "Burned-in subtitles. No auto captions. Auto captions break, miss words, vanish off the screen. AI also reads on-screen text — so burn it in.",
+    quoteSource: "Sev · Apr 28 audit",
+    fix: "Add burned-in captions in CapCut (or Premiere). This wins the mute test, makes content readable to AI search engines, and protects accessibility."
+  },
+  {
+    rank: 11,
+    title: "Grid covers don't read — viewers can't tell what Reels are about",
+    cat: "reels",
+    severity: "med",
+    affected: 5, total: 11,
+    quote: "It just looks like your camera roll. I'm not gonna look through your camera roll unless there's something interesting there. Make the cover clickable — like a YouTube thumbnail.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Edit cover photos for each Reel from inside the app — add bold center-frame title text that survives the 1:1 / 3:4 grid crop. The grid is the new homepage. Treat covers like YouTube thumbnails."
+  },
+  {
+    rank: 12,
+    title: "Profile photo unreadable at 40px",
+    cat: "profile",
+    severity: "med",
+    affected: 3, total: 11,
+    quote: "Profile photo is recognizable at 40px. If I put that on my mobile phone, I will struggle to see that. I want a recognizable logo or a face — faces build trust.",
+    quoteSource: "Sev · Apr 28 audit",
+    fix: "Use a high-contrast logo mark or a face. Test at 40px — if you can't tell what it is in the notification bar, redesign."
+  },
+  {
+    rank: 13,
+    title: "Watermarks from TikTok / CapCut on Reels",
+    cat: "reels",
+    severity: "med",
+    affected: 3, total: 11,
+    quote: "Watermark here. So I'm going to instantly cross this — unforced error. Don't have watermarks in your videos. Very bad practice.",
+    quoteSource: "Sev · Apr 28 audit",
+    fix: "Export from CapCut without watermark, or save TikToks via the no-watermark route before reposting. Watermarks tank reach because Instagram deprioritizes off-platform content."
+  },
+  {
+    rank: 14,
+    title: "Testimonials missing the 'Action' step (Situation–Action–Outcome)",
+    cat: "reels",
+    severity: "med",
+    affected: 2, total: 11,
+    quote: "Do you think that I should edit these videos and do it in the sequence? — Situation, action, outcome. Cut the middle bits.",
+    quoteSource: "Member testimonial Q · May 7 audit",
+    fix: "Re-cut testimonials to: (1) Situation — what was the problem, (2) Action — what specifically they did with you, (3) Outcome — measurable result. The Action step is what makes the story credible and repeatable."
+  },
+  {
+    rank: 15,
+    title: "Profile is stale — no posts in months",
+    cat: "profile",
+    severity: "low",
+    affected: 1, total: 11,
+    quote: "Your last post was in October? You need to post more content. There's no visual hook because you haven't posted in a long time. The algorithm punishes inactivity.",
+    quoteSource: "Sev · May 5 audit",
+    fix: "Even one Reel a week beats nothing. Repurpose existing photos into 8-second Reel slideshows, or batch-record 5 hook-driven Reels in one session and queue them. Restart the signal to the algo."
+  }
+];
+
+const SEV_COLOR = {
+  crit: '#b04848',
+  high: '#c87844',
+  med:  '#d4a437',
+  low:  '#7fa860'
+};
+
+// === Bar chart ===
+const top10 = PROBLEMS.slice(0, 10);
+const ctx = document.getElementById('rankChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: top10.map(p => p.title),
+    datasets: [{
+      label: '% of audited profiles affected',
+      data: top10.map(p => Math.round((p.affected / p.total) * 100)),
+      backgroundColor: top10.map(p => SEV_COLOR[p.severity]),
+      borderRadius: 6,
+      barThickness: 26
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { right: 24 } },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1814',
+        borderColor: '#2a2620',
+        borderWidth: 1,
+        padding: 12,
+        titleColor: '#f4ede0',
+        bodyColor: '#a39b8a',
+        titleFont: { family: 'Inter Tight', weight: '600', size: 13 },
+        bodyFont: { family: 'JetBrains Mono', size: 11 },
+        callbacks: {
+          label: ctx => {
+            const p = top10[ctx.dataIndex];
+            return `${p.affected} of ${p.total} profiles (${ctx.raw}%) · ${p.severity.toUpperCase()}`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          font: { family: 'JetBrains Mono', size: 10 },
+          color: '#6b6557',
+          callback: v => v + '%'
+        },
+        grid: { color: '#2a2620', drawBorder: false }
+      },
+      y: {
+        ticks: {
+          font: { family: 'Inter Tight', weight: '500', size: 12 },
+          color: '#f4ede0',
+          autoSkip: false,
+          callback: function(val) {
+            const lbl = this.getLabelForValue(val);
+            return lbl.length > 48 ? lbl.slice(0, 46) + '…' : lbl;
+          }
+        },
+        grid: { display: false, drawBorder: false }
+      }
+    }
+  }
+});
+
+// === Render problem cards ===
+function renderProblems(filterCat) {
+  const list = filterCat === 'all' ? PROBLEMS : PROBLEMS.filter(p => p.cat === filterCat);
+  const html = list.map(p => {
+    const pct = Math.round((p.affected / p.total) * 100);
+    const catLabel = p.cat === 'profile' ? 'Profile' : 'Reels';
+    return `
+    <div class="problem-card ${p.severity}">
+      <div class="rank-row">
+        <span class="rank-num">#${p.rank}</span>
+        <span class="severity-pill ${p.severity}">${p.severity}</span>
+        <span class="cat-pill">${catLabel}</span>
+      </div>
+      <div class="problem-title">${p.title}</div>
+      <div class="problem-stat">
+        <span class="pct">${pct}%</span>
+        <span class="frac">· ${p.affected} of ${p.total} profiles</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill ${p.severity}" style="width:${pct}%"></div></div>
+      <div class="quote">"${p.quote}"<span class="quote-source">— ${p.quoteSource}</span></div>
+      <div class="fix-block">
+        <div class="fix-label">↳ The Fix</div>
+        <div class="fix-text">${p.fix}</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('problem-grid-' + filterCat).innerHTML = html;
+}
+
+renderProblems('all');
+renderProblems('profile');
+renderProblems('reels');
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.split').forEach(s => s.classList.toggle('active', s.id === 'split-' + tab));
+}
+</script>
+
+</body>
+</html>
