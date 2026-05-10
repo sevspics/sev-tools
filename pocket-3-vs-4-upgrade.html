@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pocket 3 vs Pocket 4 — Is It Worth The Upgrade?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-elev: #131313;
+    --bg-card: #181818;
+    --bg-hover: #1f1f1f;
+    --border: #262626;
+    --border-strong: #3a3a3a;
+    --text: #ededed;
+    --text-dim: #999;
+    --text-faint: #5c5c5c;
+    --accent: #ff5722;
+    --accent-dim: #c2410c;
+    --accent-bg: rgba(255, 87, 34, 0.08);
+    --pocket3: #4ade80;
+    --pocket4: #f59e0b;
+    --gold: #d4af37;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --sans: "IBM Plex Sans", -apple-system, sans-serif;
+    --display: "Fraunces", Georgia, serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ==================== HEADER ==================== */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .logo strong { color: var(--accent); }
+
+  .header-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* ==================== HERO ==================== */
+  .hero {
+    padding: 100px 0 60px;
+    position: relative;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-bg) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(44px, 7vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    margin-bottom: 28px;
+    font-variation-settings: "opsz" 144;
+  }
+
+  .hero h1 .italic {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 620px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero-meta span strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ==================== SECTION COMMON ==================== */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin-bottom: 40px;
+    max-width: 720px;
+  }
+
+  /* ==================== CONTENDERS ==================== */
+  .contenders {
+    padding: 60px 0 80px;
+  }
+
+  .contender-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 720px) {
+    .contender-grid { grid-template-columns: 1fr; }
+  }
+
+  .contender {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .contender:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+
+  .contender-tag {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+
+  .contender-tag.p3 { color: var(--pocket3); border-color: var(--pocket3); }
+  .contender-tag.p4 { color: var(--pocket4); border-color: var(--pocket4); }
+
+  .contender h3 {
+    font-family: var(--display);
+    font-size: 30px;
+    line-height: 1.1;
+    margin: 32px 0 8px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .contender-blurb {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  /* ==================== COMPARISON ==================== */
+  .comparison {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .matchups {
+    display: grid;
+    gap: 16px;
+  }
+
+  .matchup {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+    transition: border-color 0.2s;
+  }
+
+  .matchup:hover {
+    border-color: var(--border-strong);
+  }
+
+  @media (max-width: 720px) {
+    .matchup {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 24px;
+    }
+  }
+
+  .matchup-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .matchup-side {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 20px;
+    background: var(--bg-elev);
+    border-left: 2px solid var(--border);
+    position: relative;
+  }
+
+  .matchup-side.p3 { border-left-color: var(--pocket3); }
+  .matchup-side.p4 { border-left-color: var(--pocket4); }
+
+  .matchup-side.winner::after {
+    content: "✓";
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .matchup-side-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .matchup-side.p3 .matchup-side-name { color: var(--pocket3); }
+  .matchup-side.p4 .matchup-side-name { color: var(--pocket4); }
+
+  .matchup-side-value {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .matchup-side-detail {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ==================== UPGRADE DECISION ==================== */
+  .decision-section {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+    background: radial-gradient(ellipse at top left, rgba(255, 87, 34, 0.03) 0%, transparent 50%);
+  }
+
+  .decision-intro {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 56px;
+  }
+
+  .decision-intro .section-label {
+    justify-content: center;
+  }
+
+  .decision-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 48px;
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  @media (max-width: 640px) {
+    .decision-box { padding: 32px 22px; }
+  }
+
+  .corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--accent);
+  }
+  .corner.tl { top: 14px; left: 14px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 14px; right: 14px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 14px; left: 14px; border-right: none; border-top: none; }
+  .corner.br { bottom: 14px; right: 14px; border-left: none; border-top: none; }
+
+  .decision-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--accent);
+    width: 0;
+    transition: width 0.4s ease;
+  }
+
+  .question-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .question-text {
+    font-family: var(--display);
+    font-size: clamp(22px, 3vw, 30px);
+    line-height: 1.2;
+    font-weight: 700;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    width: 100%;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .option:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+    transform: translateX(4px);
+  }
+
+  .option-marker {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    flex-shrink: 0;
+    letter-spacing: 0.1em;
+    width: 16px;
+  }
+
+  .option:hover .option-marker { color: var(--accent); }
+
+  /* ==================== RESULT ==================== */
+  .decision-result {
+    display: none;
+  }
+
+  .decision-result.active { display: block; }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .result-verdict-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #000;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .result-headline {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .result-headline .italic {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .result-tagline {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 540px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  .reasoning {
+    background: var(--bg-elev);
+    border-left: 2px solid var(--accent);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+  }
+
+  .reasoning h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .reasoning p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .reasoning p:last-child { margin-bottom: 0; }
+
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 13px 26px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 600;
+  }
+
+  .btn.primary:hover {
+    background: #ff7043;
+    border-color: #ff7043;
+    color: #000;
+  }
+
+  /* ==================== CREATOR CREDIT ==================== */
+  .creator-credit {
+    padding: 80px 0 60px;
+    border-top: 1px solid var(--border);
+  }
+
+  .credit-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elev) 100%);
+    border: 1px solid var(--border);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (max-width: 720px) {
+    .credit-card { padding: 32px 24px; }
+  }
+
+  .credit-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .credit-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 32px;
+    align-items: center;
+    position: relative;
+  }
+
+  @media (max-width: 720px) {
+    .credit-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      text-align: center;
+    }
+  }
+
+  /* The Seal */
+  .seal {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 720px) {
+    .seal { margin: 0 auto; }
+  }
+
+  .seal-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .seal-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display);
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 0.9;
+  }
+
+  .seal-text .seal-s {
+    font-size: 32px;
+    font-style: italic;
+    margin-bottom: 2px;
+  }
+
+  .seal-text .seal-label {
+    font-family: var(--mono);
+    font-size: 6px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.85;
+  }
+
+  .credit-content {
+    min-width: 0;
+  }
+
+  .credit-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .credit-name {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+
+  .credit-handle {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  .credit-blurb {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  .credit-cta {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 720px) {
+    .credit-cta { margin: 0 auto; }
+  }
+
+  .ig-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: var(--gold);
+    color: #0a0a0a;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    transition: all 0.2s;
+  }
+
+  .ig-btn:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .ig-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ==================== FOOTER ==================== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  /* ==================== ANIMATIONS ==================== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes seal-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="nav">
+      <div class="logo">TALK TO <strong>SEV</strong> / GEAR BREAKDOWN</div>
+      <div class="header-meta">Apr 2026</div>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Pocket 3 vs Pocket 4</div>
+    <h1>
+      It looks the same.<br>
+      But is it <span class="italic">worth the upgrade?</span>
+    </h1>
+    <p class="hero-sub">
+      The DJI Osmo Pocket 4 lands on shelves looking nearly identical to its predecessor. Same body shape, same 1-inch sensor, same f/2.0 lens. But six things have changed underneath, and one of them might be the reason you finally stop reaching for SD cards.
+    </p>
+    <div class="hero-meta">
+      <span>READING TIME <strong>2 min</strong></span>
+      <span>SOURCES <strong>DJI Official + Charan Breakdown</strong></span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTENDERS ==================== -->
+<section class="contenders">
+  <div class="container">
+    <div class="section-label">The Two Tools</div>
+    <h2 class="section-title">Same shape. Different beast.</h2>
+
+    <div class="contender-grid">
+      <div class="contender">
+        <div class="contender-tag p3">Pocket 3 · 2023</div>
+        <h3>DJI Osmo Pocket 3</h3>
+        <p class="contender-blurb">
+          The camera that ate the vlogging world. Two and a half years on, still excellent and now sitting at value-buy prices.
+        </p>
+      </div>
+
+      <div class="contender">
+        <div class="contender-tag p4">Pocket 4 · 2026</div>
+        <h3>DJI Osmo Pocket 4</h3>
+        <p class="contender-blurb">
+          Same form factor. Bigger battery, brighter screen, full D-Log, and the upgrade nobody's talking about: 107GB built into the body.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPARISON ==================== -->
+<section class="comparison">
+  <div class="container">
+    <div class="section-label">Six Differences That Matter</div>
+    <h2 class="section-title">What actually changed.</h2>
+
+    <div class="matchups">
+
+      <div class="matchup">
+        <div class="matchup-label">Sensor &amp; Aperture</div>
+        <div class="matchup-side p3">
+          <span class="matchup-side-name">Pocket 3</span>
+          <span class="matchup-side-value">1-inch · f/2.0</span>
+          <span class="matchup-side-detail">Same as Pocket 4</span>
+        </div>
+        <div class="matchup-side p4">
+          <span class="matchup-side-name">Pocket 4</span>
+          <span class="matchup-side-value">1-inch · f/2.0</span>
+          <span class="matchup-side-detail">Identical hardware spec</span>
+        </div>
+      </div>
+
+      <div class="matchup">
+        <div class="matchup-label">Dynamic Range</div>
+        <div class="matchup-side p3">
+          <span class="matchup-side-name">Pocket 3</span>
+          <span class="matchup-side-value">D-Log M only</span>
+          <span class="matchup-side-detail">Lighter flat profile</span>
+        </div>
+        <div class="matchup-side p4 winner">
+          <span class="matchup-side-name">Pocket 4</span>
+          <span class="matchup-side-value">14 stops · Full D-Log</span>
+          <span class="matchup-side-detail">Better grading latitude</span>
+        </div>
+      </div>
+
+      <div class="matchup">
+        <div class="matchup-label">Screen</div>
+        <div class="matchup-side p3">
+          <span class="matchup-side-name">Pocket 3</span>
+          <span class="matchup-side-value">2-inch OLED</span>
+          <span class="matchup-side-detail">700 nits</span>
+        </div>
+        <div class="matchup-side p4 winner">
+          <span class="matchup-side-name">Pocket 4</span>
+          <span class="matchup-side-value">2-inch OLED</span>
+          <span class="matchup-side-detail">1000 nits · much brighter outdoors</span>
+        </div>
+      </div>
+
+      <div class="matchup">
+        <div class="matchup-label">Battery Life</div>
+        <div class="matchup-side p3">
+          <span class="matchup-side-name">Pocket 3</span>
+          <span class="matchup-side-value">166 minutes</span>
+          <span class="matchup-side-detail">16 min to full charge</span>
+        </div>
+        <div class="matchup-side p4 winner">
+          <span class="matchup-side-name">Pocket 4</span>
+          <span class="matchup-side-value">240 minutes</span>
+          <span class="matchup-side-detail">18 min to full charge · 45% more shoot time</span>
+        </div>
+      </div>
+
+      <div class="matchup">
+        <div class="matchup-label">Weight</div>
+        <div class="matchup-side p3 winner">
+          <span class="matchup-side-name">Pocket 3</span>
+          <span class="matchup-side-value">179 grams</span>
+          <span class="matchup-side-detail">11g lighter</span>
+        </div>
+        <div class="matchup-side p4">
+          <span class="matchup-side-name">Pocket 4</span>
+          <span class="matchup-side-value">190 grams</span>
+          <span class="matchup-side-detail">You won't feel it</span>
+        </div>
+      </div>
+
+      <div class="matchup">
+        <div class="matchup-label">Internal Storage</div>
+        <div class="matchup-side p3">
+          <span class="matchup-side-name">Pocket 3</span>
+          <span class="matchup-side-value">microSD only</span>
+          <span class="matchup-side-detail">Bring your own card</span>
+        </div>
+        <div class="matchup-side p4 winner">
+          <span class="matchup-side-name">Pocket 4</span>
+          <span class="matchup-side-value">107GB built in</span>
+          <span class="matchup-side-detail">The one you'll actually feel daily</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== UPGRADE DECISION ==================== -->
+<section class="decision-section" id="decision">
+  <div class="container">
+    <div class="decision-intro">
+      <div class="section-label">The Decision Tree</div>
+      <h2 class="section-title" style="margin-bottom: 14px;">Three questions. One answer.</h2>
+      <p style="color: var(--text-dim); font-size: 16px;">
+        Skip the spec-sheet paralysis. Three taps and you'll know whether to spend the money or sit tight.
+      </p>
+    </div>
+
+    <div class="decision-box">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+
+      <div id="decision-content">
+        <div class="decision-progress">
+          <span id="progress-label">Question 1 of 3</span>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+
+        <div id="question-container"></div>
+      </div>
+
+      <div class="decision-result" id="result">
+        <div class="result-header">
+          <div class="result-verdict-tag" id="result-tag">The Verdict</div>
+          <div class="result-headline" id="result-headline">—</div>
+          <p class="result-tagline" id="result-tagline">—</p>
+        </div>
+
+        <div class="reasoning">
+          <h4>Why</h4>
+          <div id="reasoning-body"></div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn" id="restart-btn">Run It Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CREATOR CREDIT ==================== -->
+<section class="creator-credit">
+  <div class="container">
+    <div class="credit-card">
+      <div class="credit-grid">
+
+        <div class="seal">
+          <svg class="seal-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="circlePath" d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
+            </defs>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.4"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#d4af37" stroke-width="1"/>
+            <circle cx="50" cy="50" r="34" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.5"/>
+            <text font-family="IBM Plex Mono, monospace" font-size="6" letter-spacing="2" fill="#d4af37" opacity="0.85">
+              <textPath href="#circlePath" startOffset="0">SEV SELECT · CREATOR APPROVED · SEV SELECT · CREATOR APPROVED · </textPath>
+            </text>
+            <!-- Star marks -->
+            <text x="50" y="14" text-anchor="middle" font-size="6" fill="#d4af37" opacity="0.7">★</text>
+            <text x="50" y="92" text-anchor="middle" font-size="6" fill="#d4af37" opacity="0.7">★</text>
+          </svg>
+          <div class="seal-text">
+            <span class="seal-s">S</span>
+            <span class="seal-label">SELECT</span>
+          </div>
+        </div>
+
+        <div class="credit-content">
+          <div class="credit-eyebrow">Featured Creator · Sev Select</div>
+          <div class="credit-name">Charan</div>
+          <div class="credit-handle">@trainwithcharan</div>
+          <p class="credit-blurb">
+            This breakdown was built on Charan's six-point teardown of the Pocket 3 vs Pocket 4. He's one of the creators I trust to cut through gear-launch noise and tell you what actually matters. Follow him.
+          </p>
+        </div>
+
+        <div class="credit-cta">
+          <a href="https://www.instagram.com/trainwithcharan?igsh=Zjc2cmdvcnMybWl4" class="ig-btn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Follow Charan
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>© 2026 · Talk To Sev · Curated gear breakdowns</div>
+      <div>Sev Select · Creators worth your follow</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ==================== DATA ====================
+const questions = [
+  {
+    id: 'own_p3',
+    label: 'The Starting Point',
+    question: 'Do you already own a Pocket 3?',
+    options: [
+      { text: "Yes, I already own one", value: 'yes' },
+      { text: "No, I'm buying my first Pocket", value: 'no' }
+    ]
+  },
+  {
+    id: 'pain_point',
+    label: 'The Pain',
+    question: "What's the one thing that frustrates you most while shooting?",
+    options: [
+      { text: "Running out of storage mid-shoot", value: 'storage' },
+      { text: "Battery dying before I'm done", value: 'battery' },
+      { text: "Screen too dim to see in sunlight", value: 'screen' },
+      { text: "Footage feels too contrasty straight out of camera", value: 'grading' },
+      { text: "Honestly, none of the above", value: 'none' }
+    ]
+  },
+  {
+    id: 'workflow',
+    label: 'The Workflow',
+    question: "How do you actually edit your footage?",
+    options: [
+      { text: "I grade properly in Premiere, Resolve, or Final Cut", value: 'graded' },
+      { text: "I do light edits in CapCut or Mimo", value: 'light' },
+      { text: "I post mostly straight from camera", value: 'raw' }
+    ]
+  }
+];
+
+// ==================== STATE ====================
+let currentQuestion = 0;
+let answers = {};
+
+// ==================== RENDER ====================
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  const container = document.getElementById('question-container');
+  const progress = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+
+  progress.style.width = `${((currentQuestion) / questions.length) * 100}%`;
+  progressLabel.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+
+  const markers = ['A', 'B', 'C', 'D', 'E'];
+
+  container.innerHTML = `
+    <div class="question-label">${q.label}</div>
+    <div class="question-text">${q.question}</div>
+    <div class="options" id="options">
+      ${q.options.map((opt, i) => `
+        <button class="option" data-value="${opt.value}">
+          <span class="option-marker">${markers[i]}</span>
+          <span class="option-text">${opt.text}</span>
+        </button>
+      `).join('')}
+    </div>
+  `;
+
+  // Animate in
+  container.querySelectorAll('.option').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.animation = `fadeUp 0.35s ease ${i * 0.05}s forwards`;
+  });
+
+  // Click handlers - auto-advance on click
+  container.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      answers[q.id] = btn.dataset.value;
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  });
+}
+
+// ==================== VERDICT LOGIC ====================
+function calculateVerdict() {
+  const ownsP3 = answers.own_p3 === 'yes';
+  const pain = answers.pain_point;
+  const workflow = answers.workflow;
+
+  // Simple rule-based verdict
+  // High-pull pain points: storage, screen, grading
+  const strongUpgrade = ['storage', 'screen', 'grading'].includes(pain);
+  const moderateUpgrade = pain === 'battery';
+  const noPain = pain === 'none';
+
+  // Workflow weight
+  const grades = workflow === 'graded';
+  const lightEdit = workflow === 'light';
+  const rawPost = workflow === 'raw';
+
+  // === VERDICT MATRIX ===
+  if (!ownsP3) {
+    // Buying first Pocket — almost always go with the Pocket 4
+    return {
+      verdict: 'BUY_P4',
+      headline: 'Buy the <span class="italic">Pocket 4.</span>',
+      tagline: "If you're new to the Pocket line, there's no reason to start a generation behind.",
+      reasoning: [
+        "You're not making an upgrade decision — you're making a buy decision. The Pocket 4 is only a small step up in price over a new Pocket 3, and you get every improvement Charan walked through: brighter screen, longer battery, full D-Log, and 107GB built into the body.",
+        ...(grades ? ["You grade your footage, which means full D-Log and 14 stops of dynamic range will pay you back every time you sit down to edit."] : []),
+        ...(rawPost ? ["You post mostly straight from camera, so the brighter 1000-nit screen for outdoor shooting and the longer battery are the upgrades you'll feel daily."] : []),
+        "Skip the Pocket 3. The Pocket 4 is the right starting point."
+      ]
+    };
+  }
+
+  // Already owns Pocket 3
+  if (strongUpgrade && (grades || lightEdit)) {
+    return {
+      verdict: 'UPGRADE',
+      headline: '<span class="italic">Upgrade.</span>',
+      tagline: "The thing that frustrates you most is exactly what the Pocket 4 fixes.",
+      reasoning: [
+        pain === 'storage' ? "Storage is the upgrade nobody's leading with, but it's the one you'll feel daily. 107GB built into the body means no more SD card swaps, no more failed cards, no more 'damn it I forgot to format.' The Pocket 4's USB 3.1 also offloads at 800MB/s — an hour of 4K offloads to your laptop in minutes." : "",
+        pain === 'screen' ? "The Pocket 4's 1000-nit screen versus the Pocket 3's 700 nits is the kind of upgrade you don't realise matters until you're shooting outdoors at midday and can finally see what you're framing." : "",
+        pain === 'grading' ? "Full D-Log on the Pocket 4 is the genuine pro upgrade. The Pocket 3's D-Log M was a half-step — flatter than standard, but not flat enough for serious grading. Full D-Log plus 14 stops of dynamic range gives you actual cinema-camera latitude." : "",
+        "If you grade or even lightly edit, the Pocket 4 earns its keep on this single point alone."
+      ].filter(Boolean)
+    };
+  }
+
+  if (moderateUpgrade) {
+    return {
+      verdict: 'CONSIDER',
+      headline: 'It depends.',
+      tagline: "Battery life is a real upgrade, but only you know if 74 extra minutes is worth the spend.",
+      reasoning: [
+        "240 minutes versus 166 is a 45% jump in shoot time. If you regularly run out mid-day, that's significant. If you mostly do short sessions, it's nice to have but not essential.",
+        "Honest answer: if battery is your only frustration, get a second Pocket 3 battery handle for under $50 instead of dropping full price on the Pocket 4.",
+        ...(grades ? ["That said, since you grade your footage, the move to full D-Log and 14 stops is a separate reason to upgrade. Combined with the battery improvement, the case gets stronger."] : [])
+      ]
+    };
+  }
+
+  if (noPain) {
+    return {
+      verdict: 'WAIT',
+      headline: 'Don\'t upgrade.',
+      tagline: "If you have no pain points, the Pocket 4 is a sidegrade, not an upgrade.",
+      reasoning: [
+        "Charan's breakdown showed clear improvements — full D-Log, brighter screen, longer battery, 107GB internal. Real upgrades. But upgrades only matter if they fix something that frustrates you today.",
+        "Your Pocket 3 still shoots 4K at 120fps with a 1-inch sensor and a 3-axis mechanical gimbal. That's still better than 95% of cameras at this size.",
+        "Save the money. Re-evaluate when the Pocket 5 lands or when you actually run into a wall with what you've got."
+      ]
+    };
+  }
+
+  // Default fallback — moderate case
+  return {
+    verdict: 'CONSIDER',
+    headline: 'Probably not yet.',
+    tagline: "The upgrades are real but the pain isn't sharp enough to justify the spend right now.",
+    reasoning: [
+      "You've got a specific frustration, but your editing workflow doesn't lean hard enough on grading or polish for the Pocket 4's biggest wins (full D-Log, 14 stops) to pay you back fast.",
+      "The Pocket 4 is a better camera. Your Pocket 3 is still an excellent one. If budget isn't burning a hole in your pocket, hold."
+    ]
+  };
+}
+
+// ==================== RESULT RENDER ====================
+function showResult() {
+  const result = calculateVerdict();
+  document.getElementById('decision-content').style.display = 'none';
+  document.getElementById('result').classList.add('active');
+  document.getElementById('progress-fill').style.width = '100%';
+
+  document.getElementById('result-headline').innerHTML = result.headline;
+  document.getElementById('result-tagline').textContent = result.tagline;
+
+  const tagMap = {
+    'BUY_P4': 'The Verdict · Buy It',
+    'UPGRADE': 'The Verdict · Upgrade',
+    'CONSIDER': 'The Verdict · Consider',
+    'WAIT': 'The Verdict · Hold'
+  };
+  document.getElementById('result-tag').textContent = tagMap[result.verdict];
+
+  document.getElementById('reasoning-body').innerHTML =
+    result.reasoning.map(p => `<p>${p}</p>`).join('');
+
+  setTimeout(() => {
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 200);
+}
+
+// ==================== RESTART ====================
+document.getElementById('restart-btn').addEventListener('click', () => {
+  currentQuestion = 0;
+  answers = {};
+  document.getElementById('result').classList.remove('active');
+  document.getElementById('decision-content').style.display = 'block';
+  renderQuestion();
+  document.getElementById('decision').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// ==================== INIT ====================
+renderQuestion();
+</script>
+
+</body>
+</html>
