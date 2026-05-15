@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Source SOP, Onboarding to Claude AI for First-Time Use</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0E1A24;
+  --ink-soft: #1B2A38;
+  --ink-pale: #4A5862;
+  --bone: #F6F1E8;
+  --bone-deep: #ECE3D2;
+  --paper: #FBF8F1;
+  --white: #FFFFFF;
+  --copper: #B8743C;
+  --copper-deep: #8E5526;
+  --moss: #2F4A3A;
+  --gold: #C9A35B;
+  --crimson: #8E2D2D;
+  --line: rgba(14, 26, 36, 0.10);
+  --line-strong: rgba(14, 26, 36, 0.18);
+  --warn: #B8743C;
+  --tip: #2F4A3A;
+  --note: #4A6FA5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.serif { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.01em; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ===== DOCUMENT WRAPPER ===== */
+.doc {
+  max-width: 880px;
+  margin: 0 auto;
+  background: var(--white);
+  min-height: 100vh;
+  box-shadow: 0 0 60px rgba(14, 26, 36, 0.04);
+}
+
+/* ===== HEADER ===== */
+.doc-header {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 56px 64px 48px;
+  position: relative;
+}
+.doc-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 64px;
+  right: 64px;
+  height: 1px;
+  background: rgba(246,241,232,0.15);
+}
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.brand span { color: var(--copper); }
+.doc-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+.doc-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  max-width: 640px;
+}
+.doc-title em { color: var(--gold); font-style: italic; }
+.doc-sub {
+  font-size: 17px;
+  color: rgba(246,241,232,0.75);
+  max-width: 620px;
+  line-height: 1.55;
+}
+.doc-meta {
+  margin-top: 32px;
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(246,241,232,0.55);
+}
+.doc-meta strong { color: var(--bone); font-weight: 500; }
+
+/* ===== TABLE OF CONTENTS ===== */
+.toc {
+  background: var(--bone);
+  padding: 36px 64px;
+  border-bottom: 1px solid var(--line);
+}
+.toc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.toc-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+}
+.toc-list a {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 6px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  transition: color 0.15s;
+}
+.toc-list a:hover { color: var(--copper); }
+.toc-list .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--copper);
+  font-weight: 500;
+  min-width: 28px;
+}
+
+/* ===== SECTION ===== */
+.body { padding: 56px 64px 80px; }
+
+section { margin-bottom: 60px; scroll-margin-top: 20px; }
+section:last-child { margin-bottom: 0; }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--copper);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.section-intro {
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 20px;
+  margin: 32px 0 14px;
+  color: var(--ink);
+}
+
+p { color: var(--ink-soft); margin-bottom: 14px; }
+
+/* ===== PROCEDURE STEPS ===== */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 20px 0;
+}
+.steps > li {
+  counter-increment: step;
+  padding: 16px 0 16px 56px;
+  position: relative;
+  border-top: 1px solid var(--line);
+}
+.steps > li:last-child { border-bottom: 1px solid var(--line); }
+.steps > li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--copper);
+  font-weight: 600;
+  background: var(--bone);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.steps .step-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.steps p {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+/* ===== CALLOUTS ===== */
+.callout {
+  background: var(--bone);
+  border-left: 3px solid var(--copper);
+  padding: 18px 22px;
+  border-radius: 0 3px 3px 0;
+  margin: 22px 0;
+}
+.callout.warn { border-left-color: var(--warn); background: rgba(184,116,60,0.07); }
+.callout.tip { border-left-color: var(--tip); background: rgba(47,74,58,0.06); }
+.callout.note { border-left-color: var(--note); background: rgba(74,111,165,0.06); }
+.callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.callout.warn .callout-label { color: var(--warn); }
+.callout.tip .callout-label { color: var(--tip); }
+.callout.note .callout-label { color: var(--note); }
+.callout p {
+  font-size: 14px;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.6;
+}
+.callout p + p { margin-top: 8px; }
+.callout strong { font-weight: 600; }
+
+/* ===== PROMPT BLOCK ===== */
+.prompt-block {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 24px 28px;
+  border-radius: 3px;
+  margin: 20px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  position: relative;
+}
+.prompt-block::before {
+  content: 'EXAMPLE PROMPT';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--copper);
+  color: var(--bone);
+  padding: 3px 10px;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  border-radius: 2px;
+}
+.prompt-block .blank {
+  background: rgba(201,163,91,0.2);
+  color: var(--gold);
+  padding: 0 6px;
+  border-radius: 2px;
+  font-style: italic;
+}
+
+/* ===== TABLE ===== */
+.table-wrap {
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th, td {
+  text-align: left;
+  padding: 14px 18px;
+  vertical-align: top;
+}
+th {
+  background: var(--bone);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-strong);
+}
+td {
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+tr:last-child td { border-bottom: none; }
+td strong { color: var(--ink); font-weight: 600; }
+
+/* ===== INLINE CODE / KBD ===== */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+  background: var(--bone);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 2px 7px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ===== CHECKLIST ===== */
+.checklist {
+  list-style: none;
+  margin: 16px 0;
+}
+.checklist li {
+  position: relative;
+  padding: 8px 0 8px 30px;
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.checklist li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--copper);
+  border-radius: 2px;
+}
+.checklist li strong { color: var(--ink); font-weight: 600; }
+
+/* ===== ORDERED INLINE LIST ===== */
+ul.bullets {
+  list-style: none;
+  margin: 12px 0;
+}
+ul.bullets li {
+  padding: 6px 0 6px 18px;
+  position: relative;
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+ul.bullets li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  color: var(--copper);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* ===== QUICK REFERENCE CARD ===== */
+.qref {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 36px;
+  border-radius: 4px;
+  margin-top: 30px;
+}
+.qref h3 {
+  color: var(--gold);
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  margin: 0 0 24px;
+  font-size: 24px;
+}
+.qref-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.qref-item {
+  border-top: 1px solid rgba(246,241,232,0.15);
+  padding-top: 14px;
+}
+.qref-item .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.qref-item .value {
+  font-size: 14px;
+  color: rgba(246,241,232,0.85);
+  line-height: 1.5;
+}
+
+/* ===== FOOTER ===== */
+.doc-footer {
+  background: var(--bone);
+  padding: 28px 64px;
+  border-top: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-pale);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.doc-footer .left { font-weight: 500; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 760px) {
+  .doc-header { padding: 40px 28px 36px; }
+  .doc-header::after { left: 28px; right: 28px; }
+  .doc-title { font-size: 30px; }
+  .doc-sub { font-size: 15px; }
+  .doc-meta { gap: 20px; }
+  .toc { padding: 28px; }
+  .toc-list { grid-template-columns: 1fr; gap: 0; }
+  .body { padding: 40px 28px 60px; }
+  h2 { font-size: 26px; }
+  .steps > li { padding-left: 0; padding-top: 44px; }
+  .steps > li::before { top: 14px; }
+  .qref { padding: 28px 24px; }
+  .qref-grid { grid-template-columns: 1fr; gap: 20px; }
+  .doc-footer { padding: 20px 28px; flex-direction: column; align-items: flex-start; }
+  .prompt-block { padding: 22px 18px; font-size: 12px; }
+}
+
+@media print {
+  body { background: white; }
+  .doc { box-shadow: none; max-width: none; }
+  section { page-break-inside: avoid; }
+  .prompt-block, .qref { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+<!-- ===== HEADER ===== -->
+<header class="doc-header">
+  <div class="brand">Source<span>.</span> Institute</div>
+  <div class="doc-type">Internal SOP · Document 001</div>
+  <h1 class="doc-title">Onboarding to <em>Claude AI</em> for First-Time Use.</h1>
+  <p class="doc-sub">A step-by-step procedure for moving from zero Claude experience to producing a complete client-ready asset (landing page, proposal, CRM, or strategy doc) inside a single working session.</p>
+  <div class="doc-meta">
+    <span><strong>Owner</strong>&nbsp;&nbsp;Dr Jonathan Ng</span>
+    <span><strong>Version</strong>&nbsp;&nbsp;1.0</span>
+    <span><strong>Effective</strong>&nbsp;&nbsp;May 2026</span>
+    <span><strong>Review</strong>&nbsp;&nbsp;Quarterly</span>
+  </div>
+</header>
+
+<!-- ===== TOC ===== -->
+<nav class="toc">
+  <div class="toc-label">Contents</div>
+  <ul class="toc-list">
+    <li><a href="#s1"><span class="num">01</span> Purpose &amp; Scope</a></li>
+    <li><a href="#s2"><span class="num">02</span> Required Tools &amp; Setup</a></li>
+    <li><a href="#s3"><span class="num">03</span> The "First Hour" Investment</a></li>
+    <li><a href="#s4"><span class="num">04</span> Project Architecture</a></li>
+    <li><a href="#s5"><span class="num">05</span> The Core Prompting Framework</a></li>
+    <li><a href="#s6"><span class="num">06</span> From Output to Live Asset</a></li>
+    <li><a href="#s7"><span class="num">07</span> Iterating with Claude Code</a></li>
+    <li><a href="#s8"><span class="num">08</span> Vetting &amp; Quality Control</a></li>
+    <li><a href="#s9"><span class="num">09</span> Common Pitfalls</a></li>
+    <li><a href="#s10"><span class="num">10</span> Quick Reference Card</a></li>
+  </ul>
+</nav>
+
+<!-- ===== BODY ===== -->
+<div class="body">
+
+<!-- 01 -->
+<section id="s1">
+  <div class="section-num">Section 01</div>
+  <h2>Purpose &amp; Scope</h2>
+  <p class="section-intro">This SOP exists to compress what normally takes weeks of trial-and-error into a single repeatable workflow. Anyone on the Source team should be able to follow it and produce a client-grade asset on their first proper session, without prior AI experience.</p>
+
+  <h3>What this SOP covers</h3>
+  <ul class="bullets">
+    <li>Subscribing to and setting up Claude correctly the first time</li>
+    <li>Personalising Claude to you, so its output is sharper from the outset</li>
+    <li>The exact prompting pattern that produces client-ready work in one shot</li>
+    <li>How to take a Claude output and ship it as a live web asset</li>
+    <li>The mistakes to avoid that waste tokens, time, and credibility</li>
+  </ul>
+
+  <h3>What this SOP is not</h3>
+  <ul class="bullets">
+    <li>A replacement for industry expertise. Claude amplifies what you already know. It does not invent it.</li>
+    <li>A guide to advanced integrations (Supabase, GitHub, MCP connectors, Claude Code automation). Those are covered in separate documents once this SOP is internalised.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section id="s2">
+  <div class="section-num">Section 02</div>
+  <h2>Required Tools &amp; Setup</h2>
+  <p class="section-intro">Do these once. Do them in order. Each step has a specific reason, and skipping any of them will cost you later.</p>
+
+  <ol class="steps">
+    <li>
+      <div class="step-title">Subscribe to Claude Pro on a desktop browser</div>
+      <p>Go to <code>claude.ai</code> on your laptop or desktop. Click "Upgrade" and choose the $20/month Pro plan. Do not use the top tier yet, the Pro plan is plenty for the entire workflow in this SOP.</p>
+    </li>
+    <li>
+      <div class="step-title">Download the Claude Desktop app</div>
+      <p>From <code>claude.ai/download</code>, install the Mac or Windows desktop application. The desktop app unlocks Claude Code and other features that the browser version cannot run.</p>
+    </li>
+    <li>
+      <div class="step-title">Install Wisprflow (dictation tool)</div>
+      <p>Wisprflow is the most accurate voice-to-text transcriber available. On macOS, press <kbd>fn fn</kbd> (function key twice) to start dictation anywhere on your computer. It saves an enormous amount of typing when feeding context into Claude.</p>
+      <p>Alternative: use your phone's Voice Memo app and paste the transcript in afterward.</p>
+    </li>
+    <li>
+      <div class="step-title">Create a "Source Education" folder on your Desktop</div>
+      <p>Every Claude-generated asset needs a home. Make one folder on your Desktop called <code>Source Education</code>. Every HTML, PDF, image, or document Claude produces for the diploma goes here. This becomes the source-of-truth folder Claude Code will reference later.</p>
+    </li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠ Warning</div>
+    <p><strong>Never subscribe to Claude via the mobile app on iPhone.</strong> Apple's 30% in-app purchase fee makes the subscription more expensive, and you can only manage or cancel it from the same phone. Always subscribe from a desktop browser so billing is clean and portable.</p>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-label">Note on tokens</div>
+    <p>The $20 Pro plan resets every 5 hours. If you're doing heavy code generation, you may hit the limit. Plan around it: brainstorm and prompt in the morning, let long jobs run while you do other work, come back when the timer resets. Only upgrade to a higher tier when you've hit the limit consistently for two weeks.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="s3">
+  <div class="section-num">Section 03</div>
+  <h2>The "First Hour" Investment</h2>
+  <p class="section-intro">Before using Claude for any real work, spend one focused hour teaching it about you. This is the single highest-leverage thing you can do, and it is the reason some people get extraordinary results while others get generic ones.</p>
+
+  <h3>Why this matters</h3>
+  <p>Claude responds to context. If it knows you are a Brisbane-based implant dentist running an education business, with a clinic that funds the education arm, and a target audience of qualified GDPs, its first answer to any question will be 10x sharper than if it has to guess. Teaching it once saves you teaching it every conversation.</p>
+
+  <h3>The first-hour procedure</h3>
+  <ol class="steps">
+    <li>
+      <div class="step-title">Open a new chat on Claude (not a project yet)</div>
+      <p>Start at <code>claude.ai</code> in a fresh chat. Don't worry about projects for this step.</p>
+    </li>
+    <li>
+      <div class="step-title">Turn on Wisprflow and talk for 15 to 20 minutes</div>
+      <p>Cover, in any order:</p>
+      <ul class="bullets">
+        <li>Your background, how you became a dentist, your clinical specialty</li>
+        <li>Your current businesses, the clinic and Source Education</li>
+        <li>What Source Education does, what it sells, who it sells to</li>
+        <li>Your goals over the next 12 to 24 months</li>
+        <li>What you've already tried, what worked, what didn't</li>
+        <li>Your team, your stack, your typical week</li>
+        <li>Aspirations beyond the business (where you want to be in 5 years)</li>
+      </ul>
+    </li>
+    <li>
+      <div class="step-title">Paste the whole transcript into the chat</div>
+      <p>Don't edit it. Don't clean it up. Raw is fine.</p>
+    </li>
+    <li>
+      <div class="step-title">Ask Claude to ask you comprehensive clarifying questions</div>
+      <p>Use this exact prompt below the transcript:</p>
+      <div class="prompt-block">
+Now ask me comprehensive clarifying questions to get more information out of me. Help me articulate what I do, what I'm currently working on, what my aspirations are, what I want to achieve next, and what I'm trying to build. Ask in batches of 5 to 7 questions at a time so I can answer them efficiently.
+      </div>
+    </li>
+    <li>
+      <div class="step-title">Answer every question by voice (Wisprflow again)</div>
+      <p>Don't skip questions. The detail compounds. Even questions that feel obvious to you reveal context Claude needs.</p>
+    </li>
+    <li>
+      <div class="step-title">Save the conversation</div>
+      <p>Pin this chat in your sidebar. Label it "Personal Context, Master." You'll reference this any time you start a new project, and you can paste relevant sections of it as needed.</p>
+    </li>
+  </ol>
+
+  <div class="callout tip">
+    <div class="callout-label">Tip</div>
+    <p>The output quality you see in the example deliverables Seva produced (the landing page, the CRM) is largely because Claude has been fed this kind of personal context over time. Quality of output scales directly with quality of context. Invest the hour.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="s4">
+  <div class="section-num">Section 04</div>
+  <h2>Project Architecture</h2>
+  <p class="section-intro">Claude has three layers for organising work: Chats, Projects, and Artifacts. Understanding what belongs where stops you from cluttering your workspace and losing context.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Best Used For</th><th>What Lives Inside</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Chats</strong></td>
+          <td>One-off questions, brainstorms, exploration</td>
+          <td>Free-form conversation. Each chat is its own context window.</td>
+        </tr>
+        <tr>
+          <td><strong>Projects</strong></td>
+          <td>Topic-specific work where you'll have multiple chats over time</td>
+          <td>System instructions, uploaded files, persistent memory. Acts like a Notebook LM.</td>
+        </tr>
+        <tr>
+          <td><strong>Artifacts</strong></td>
+          <td>Generated outputs you'll reuse or share</td>
+          <td>HTML files, PDFs, images, code. Findable in your "Artifacts" library.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Setting up the Source Education project</h3>
+  <ol class="steps">
+    <li>
+      <div class="step-title">Click "Projects" in the Claude sidebar and create a new project</div>
+      <p>Name it <code>Source Education</code>. Add a description like "Diploma in Implant Dentistry, marketing funnel, landing pages, and offer optimisation."</p>
+    </li>
+    <li>
+      <div class="step-title">Upload your reference library</div>
+      <p>Inside the project, upload PDFs of books and resources Claude should reference. Minimum recommended uploads:</p>
+      <ul class="bullets">
+        <li><strong>$100M Offers</strong> by Alex Hormozi (the offer framework)</li>
+        <li><strong>$100M Leads</strong> by Alex Hormozi (the traffic and lead-gen framework)</li>
+        <li><strong>They Ask, You Answer / Endless Customers</strong> by Marcus Sheridan (content strategy)</li>
+        <li>Any clinical or industry reference Claude should respect (e.g. AHPRA advertising guidelines PDF)</li>
+        <li>Your current website pages exported as text or PDF</li>
+      </ul>
+    </li>
+    <li>
+      <div class="step-title">Add system instructions</div>
+      <p>In the project's instructions field, paste your role, target audience, voice/tone preferences, and any formatting preferences (e.g. "no em-dashes"). This is the standing brief Claude reads every time you open a chat inside the project.</p>
+    </li>
+    <li>
+      <div class="step-title">Use one project per major business or topic</div>
+      <p>Don't pile everything into one project. Create separate projects for: <code>Source Education</code>, <code>Altura Clinic</code>, <code>Personal / Career</code>. This prevents context bleed.</p>
+    </li>
+  </ol>
+
+  <div class="callout note">
+    <div class="callout-label">Why uploading source books matters</div>
+    <p>When Claude references "Hormozi's value equation" or "the Big 5 from Sheridan," you need to actually understand the reference. Reading the source books and uploading them to the project closes the loop. Don't be the person who can't keep up when Claude cites something.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="s5">
+  <div class="section-num">Section 05</div>
+  <h2>The Core Prompting Framework</h2>
+  <p class="section-intro">There is one prompting pattern that produces dramatically better output than anything else. Memorise its shape. Use it every time you start a serious piece of work.</p>
+
+  <h3>The five-part prompt</h3>
+
+  <ol class="steps">
+    <li>
+      <div class="step-title">Frame the situation</div>
+      <p>One sentence describing who the work is for and what the goal is. Example: "This is a client looking to optimise their diploma funnel for general dentists 2 to 7 years out who want to add implants to their practice."</p>
+    </li>
+    <li>
+      <div class="step-title">Provide the source material</div>
+      <p>Paste URLs, attach screenshots, upload PDFs. Tell Claude which website to analyse and which uploaded files to reference. Be explicit: <em>"Reference the $100M Offers PDF I've uploaded to this project."</em></p>
+    </li>
+    <li>
+      <div class="step-title">Ask for clarifying questions first</div>
+      <p>This is the most important line in any serious prompt. Tell Claude to slow down and check assumptions before generating. <strong>This single instruction is what separates good output from generic output.</strong></p>
+    </li>
+    <li>
+      <div class="step-title">Specify the deliverable</div>
+      <p>Be precise. "Draft this up as an HTML landing page." "Produce a one-page PDF." "Give me a kanban-style CRM as a single HTML file." Vagueness costs tokens.</p>
+    </li>
+    <li>
+      <div class="step-title">Add operational context</div>
+      <p>Anything Claude should know that isn't obvious from the source material: current traffic sources, existing tech stack, brand constraints, what already works, what doesn't.</p>
+    </li>
+  </ol>
+
+  <h3>Reusable prompt template</h3>
+  <div class="prompt-block">
+<span class="blank">[FRAMING]</span> This is a client/project where the goal is to <span class="blank">[outcome]</span> for <span class="blank">[target audience]</span>.
+
+<span class="blank">[SOURCE]</span> The main product/page to analyse is: <span class="blank">[URL]</span>
+Reference the <span class="blank">[uploaded file]</span> in this project's knowledge base.
+
+<span class="blank">[CLARIFY]</span> Before drafting anything, ask me clarifying questions to make sure your approach is sharp. Group them logically so I can answer efficiently.
+
+<span class="blank">[DELIVERABLE]</span> Final output should be <span class="blank">[format: HTML landing page / PDF / etc.]</span>, suitable for <span class="blank">[use case]</span>.
+
+<span class="blank">[CONTEXT]</span> Additional info:
+- Current funnel/traffic: <span class="blank">[describe]</span>
+- Tech stack: <span class="blank">[WordPress + Elementor, etc.]</span>
+- Constraints: <span class="blank">[compliance, brand, tone]</span>
+- What we already tried: <span class="blank">[describe]</span>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">Tip</div>
+    <p>If you only remember one thing from this entire SOP, remember this: <strong>"Ask me clarifying questions first."</strong> Most people skip this and get mediocre output on the first attempt. The five extra minutes Claude spends interrogating you saves three hours of revisions later.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="s6">
+  <div class="section-num">Section 06</div>
+  <h2>From Output to Live Asset</h2>
+  <p class="section-intro">A Claude output is not a live asset until it's published. This is the workflow from "Claude finished generating" to "live on the website."</p>
+
+  <ol class="steps">
+    <li>
+      <div class="step-title">Open the artifact and review on-screen</div>
+      <p>Click "Open in artifact preview." Scroll through the entire output. Read every line. Note anything that looks wrong (numbers, names, quotes, claims).</p>
+    </li>
+    <li>
+      <div class="step-title">Download the HTML</div>
+      <p>Top-right of the artifact, click the download icon and save the file to <code>Desktop/Source Education/</code>. Rename it descriptively, e.g. <code>diploma-landing-v1.html</code>.</p>
+    </li>
+    <li>
+      <div class="step-title">Open the file locally in your browser</div>
+      <p>Double-click the HTML file. It opens in your default browser. This is exactly how the page will look once live, with all the styles intact.</p>
+    </li>
+    <li>
+      <div class="step-title">Decide your publishing path</div>
+      <p>Two options:</p>
+      <ul class="bullets">
+        <li><strong>Option A, fast publish</strong>: Send the HTML file to your developer (Dave at Source Education uses Elementor on WordPress). Ask them to retrofit the content and styling into your existing Elementor page. This is the fastest route for a WordPress site.</li>
+        <li><strong>Option B, host the raw HTML</strong>: For prototypes or client previews, you can host the HTML file directly via GitHub Pages, Netlify, or Vercel. Free, takes 5 minutes, gives you a shareable URL. Best for testing before committing to a WordPress build.</li>
+      </ul>
+    </li>
+    <li>
+      <div class="step-title">Replace all placeholders</div>
+      <p>Before publishing, swap out everything Claude couldn't know:</p>
+      <ul class="bullets">
+        <li>Faculty headshots (Claude used initials in circles as placeholders)</li>
+        <li>Hero video or photo</li>
+        <li>Live seat counts ("5 of 20 reserved" updates as enrolment moves)</li>
+        <li>CTA button links (point to your real Calendly / Tidycal / form URLs)</li>
+        <li>Any stats or figures that need clinical/legal verification</li>
+      </ul>
+    </li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠ Important</div>
+    <p>A Claude-generated HTML file is <strong>not</strong> a finished product. It is a working draft that compresses 20+ hours of design work into 5 minutes. You still need a human (designer or developer) to integrate it into your live site properly, especially for compliance, accessibility, and brand consistency.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section id="s7">
+  <div class="section-num">Section 07</div>
+  <h2>Iterating with Claude Code (Desktop)</h2>
+  <p class="section-intro">Once you've downloaded an HTML file, the Claude Code feature in the desktop app lets you iterate on it directly. Think of it as Claude editing a file on your computer, the way you'd ask a designer to make changes.</p>
+
+  <h3>The iteration loop</h3>
+  <ol class="steps">
+    <li>
+      <div class="step-title">Open Claude Desktop and switch to Code</div>
+      <p>In the Claude Desktop app, click "Code" in the left sidebar. This opens the agentic coding mode.</p>
+    </li>
+    <li>
+      <div class="step-title">Create a new session and add your project folder</div>
+      <p>Click "+" to start a new session. Click "Add files and folders" and select your <code>Desktop/Source Education/</code> folder. Claude Code now has access to every file in that folder.</p>
+    </li>
+    <li>
+      <div class="step-title">Give it editing instructions</div>
+      <p>Three ways to give instructions, in order of preference:</p>
+      <ul class="bullets">
+        <li><strong>Loom recording</strong> (best for complex changes). Record yourself walking through the page, explaining what you want changed and why. Paste the Loom transcript into Claude Code.</li>
+        <li><strong>Screenshots + text</strong> (best for visual issues). Take a screenshot of the problem area, paste it into the chat, describe the fix.</li>
+        <li><strong>Typed instructions</strong> (best for small tweaks). Describe what you want changed, where, and why, in plain English.</li>
+      </ul>
+    </li>
+    <li>
+      <div class="step-title">Set the permission mode</div>
+      <p>Claude Code has four modes:</p>
+      <ul class="bullets">
+        <li><strong>Plan mode</strong>: Claude only proposes changes, doesn't apply them. Safest, slowest.</li>
+        <li><strong>Accept edits</strong>: Asks before each edit. Good for early use.</li>
+        <li><strong>Auto mode</strong>: Asks once per session, then runs.</li>
+        <li><strong>Bypass permissions</strong>: Lets Claude run freely. Fastest, but only use once you trust the workflow.</li>
+      </ul>
+    </li>
+    <li>
+      <div class="step-title">Let it run, then reload the file in your browser</div>
+      <p>Claude Code edits the file on disk. To see the changes, just refresh the HTML file in your browser (or reopen it).</p>
+    </li>
+  </ol>
+
+  <div class="callout note">
+    <div class="callout-label">A real example from the May 14 session</div>
+    <p>After Claude generated the diploma landing page, the table comparing the Diploma vs Specialist Degree vs Weekend Course had colours that were too close together to read. The fix in Claude Code was a one-line instruction: <em>"In the comparison table, the column colours are too close together and unreadable. Make them clearly distinct."</em> Done in 90 seconds.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="s8">
+  <div class="section-num">Section 08</div>
+  <h2>Vetting &amp; Quality Control</h2>
+  <p class="section-intro">Claude is fast. Claude is not always right. You are the industry expert. Before any output goes to a client or onto a public page, run this checklist.</p>
+
+  <h3>Mandatory vetting checklist</h3>
+  <ul class="checklist">
+    <li><strong>All statistics and numbers</strong>: verify against a primary source (ADA, AHPRA, peer-reviewed research). Claude estimates. You verify.</li>
+    <li><strong>All clinical claims</strong>: cross-check against AHPRA advertising guidelines and your professional indemnity policy.</li>
+    <li><strong>All quoted speech</strong>: Claude will sometimes attribute statements to you that you didn't make. Read every quoted sentence and confirm you actually said it.</li>
+    <li><strong>All names, credentials, qualifications</strong>: faculty letters, course codes, accreditation bodies. Spell-check, fact-check.</li>
+    <li><strong>All pricing and offer terms</strong>: read the bonus stack values, the guarantee terms, the payment schedule. Does each one match reality?</li>
+    <li><strong>All external links and CTAs</strong>: every button should point somewhere real. Placeholder hashes (<code>#enrol</code>) must be replaced with live URLs.</li>
+    <li><strong>Tone and voice match your brand</strong>: Claude defaults to its own voice. Read aloud. Does it sound like Source Education, or does it sound like ChatGPT?</li>
+    <li><strong>Compliance with userPreferences</strong>: if you've specified style rules (e.g. no em-dashes), confirm Claude actually followed them.</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠ Hallucination is real</div>
+    <p>Claude does not "know" what it doesn't know. It will confidently assert that "the Australian Dental Association reports X" even when no such report exists. Treat every specific fact as a claim that needs a citation. If you can't find the citation, rewrite the line or remove it.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="s9">
+  <div class="section-num">Section 09</div>
+  <h2>Common Pitfalls</h2>
+  <p class="section-intro">The mistakes that waste the most time and money in the first 90 days of using Claude.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Pitfall</th><th>What Happens</th><th>How to Avoid</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Skipping the clarifying questions</strong></td>
+          <td>Generic, surface-level output that needs heavy rewrites</td>
+          <td>Always tell Claude to ask clarifying questions before generating</td>
+        </tr>
+        <tr>
+          <td><strong>Not uploading reference books</strong></td>
+          <td>Claude references frameworks you don't understand. You can't evaluate the output.</td>
+          <td>Upload Hormozi, Sheridan, and any industry standards to every project</td>
+        </tr>
+        <tr>
+          <td><strong>Subscribing on iPhone</strong></td>
+          <td>30% Apple tax, can only manage from same phone</td>
+          <td>Always subscribe via desktop browser</td>
+        </tr>
+        <tr>
+          <td><strong>Publishing without vetting</strong></td>
+          <td>Hallucinated stats, fake quotes, AHPRA exposure</td>
+          <td>Run the vetting checklist in Section 08 every single time</td>
+        </tr>
+        <tr>
+          <td><strong>Building tools instead of doing the work</strong></td>
+          <td>You spend two weeks building a perfect CRM while the cohort doesn't fill</td>
+          <td>The MVP is enough. Spend your time on the actual outcome (filling the cohort).</td>
+        </tr>
+        <tr>
+          <td><strong>One project for everything</strong></td>
+          <td>Context bleeds, instructions conflict, outputs get confused</td>
+          <td>One project per business unit (Source, Altura, Personal)</td>
+        </tr>
+        <tr>
+          <td><strong>Ignoring the userPreferences field</strong></td>
+          <td>Claude keeps making the same style mistake every chat</td>
+          <td>Set userPreferences once (Settings → Profile) for things like "no em-dashes"</td>
+        </tr>
+        <tr>
+          <td><strong>Treating one-shot output as final</strong></td>
+          <td>Mistakes go live, brand suffers</td>
+          <td>Every output goes through at least one iteration loop before publishing</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-label">The single biggest pitfall</div>
+    <p>Falling in love with the toy and forgetting the goal. Claude makes it easy to generate beautiful landing pages, fancy CRMs, custom dashboards, and live quizzes. None of that matters if the founding cohort doesn't fill. <strong>If the metric you actually care about isn't moving, stop building and start selling.</strong></p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <div class="section-num">Section 10</div>
+  <h2>Quick Reference Card</h2>
+  <p class="section-intro">Print this page. Pin it to your wall. The 80/20 of everything in this SOP.</p>
+
+  <div class="qref">
+    <h3>Source Education · Claude Quick Reference</h3>
+    <div class="qref-grid">
+      <div class="qref-item">
+        <div class="label">Subscription</div>
+        <div class="value">$20/month Pro plan. Subscribe via desktop browser only. Never on iPhone.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">First-Hour Onboarding</div>
+        <div class="value">Voice-dump your background via Wisprflow. Ask Claude to interview you with clarifying questions.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">Projects</div>
+        <div class="value">One per business unit. Upload $100M Offers, $100M Leads, Endless Customers, and AHPRA guidelines as reference.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">The Magic Prompt Line</div>
+        <div class="value">"Before drafting anything, ask me clarifying questions to make sure your approach is sharp."</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">Models</div>
+        <div class="value">Opus for complex work and code. Default Sonnet for everyday brainstorming.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">Token Resets</div>
+        <div class="value">Every 5 hours on Pro. Plan heavy jobs to run while you work on other things.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">From HTML to Live</div>
+        <div class="value">Download → save to Desktop/Source Education/ → send to Dave for Elementor integration.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">Editing Existing Files</div>
+        <div class="value">Open Claude Desktop → Code → add project folder → instruct via Loom transcript or screenshots.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">Vetting</div>
+        <div class="value">Verify every stat, every quote, every name, every link. Claude estimates. You verify.</div>
+      </div>
+      <div class="qref-item">
+        <div class="label">The Discipline</div>
+        <div class="value">Don't build tools instead of selling. If the cohort isn't filling, stop iterating and start outreach.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="doc-footer">
+  <div class="left">Source Institute · Internal SOP 001 · v1.0 · May 2026</div>
+  <div>Confidential, for Source Education team use</div>
+</footer>
+
+</div>
+
+</body>
+</html>
