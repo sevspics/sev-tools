@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Workshop Brief | Talk To Sev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F2EDE4;
+    --cream-deep: #EBE4D4;
+    --ink: #14181F;
+    --ink-soft: #4A4F5A;
+    --teal: #1F4D4A;
+    --teal-soft: #3A6B68;
+    --terracotta: #C8602F;
+    --line: #D9D1C0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Geist', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 400;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Subtle paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 40px 120px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Header */
+  .brand {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-soft);
+    margin-bottom: 56px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+    font-variation-settings: 'opsz' 144;
+  }
+
+  h1.title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--teal);
+  }
+
+  .lede {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin-bottom: 72px;
+    font-variation-settings: 'opsz' 36;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 56px;
+    position: sticky;
+    top: 0;
+    background: var(--cream);
+    z-index: 10;
+    padding-top: 16px;
+    margin-left: -8px;
+    padding-left: 8px;
+  }
+
+  .tab {
+    background: none;
+    border: none;
+    padding: 16px 4px;
+    margin-right: 36px;
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    position: relative;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+
+  .tab .num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--terracotta);
+    margin-right: 8px;
+  }
+
+  .tab:hover { color: var(--ink); }
+
+  .tab.active { color: var(--ink); }
+
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ink);
+  }
+
+  /* Tab content */
+  .panel { display: none; animation: fadeIn 0.4s ease-out; }
+  .panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section intro */
+  .section-intro {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    text-transform: uppercase;
+    padding-top: 8px;
+  }
+
+  .section-intro h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(26px, 3.6vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    font-variation-settings: 'opsz' 72;
+  }
+
+  .section-intro p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 560px;
+  }
+
+  /* Questions */
+  .questions { list-style: none; }
+
+  .q {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .q:first-child { border-top: none; padding-top: 0; }
+
+  .q-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 32px;
+    color: var(--teal);
+    line-height: 1;
+    font-variation-settings: 'opsz' 9;
+  }
+
+  .q-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.4;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 36;
+  }
+
+  /* Deep end category headers */
+  .category {
+    margin-top: 64px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .category:first-of-type { margin-top: 0; }
+
+  .category-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .category h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-variation-settings: 'opsz' 60;
+  }
+
+  /* How to Record */
+  .record-grid {
+    display: grid;
+    gap: 40px;
+    margin-top: 8px;
+  }
+
+  .platform {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.4);
+    padding: 36px 36px 32px;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .platform-tag {
+    position: absolute;
+    top: -10px;
+    left: 32px;
+    background: var(--cream);
+    padding: 0 12px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    text-transform: uppercase;
+  }
+
+  .platform h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+    font-variation-settings: 'opsz' 60;
+  }
+
+  .platform .app {
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+
+  .steps {
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .steps li {
+    counter-increment: step;
+    padding: 14px 0 14px 36px;
+    border-top: 1px solid var(--line);
+    position: relative;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .steps li:first-child { border-top: none; padding-top: 0; }
+
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 14px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--terracotta);
+    font-weight: 500;
+  }
+
+  .steps li:first-child::before { top: 0; }
+
+  .steps strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .steps code {
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    background: var(--cream-deep);
+    padding: 2px 6px;
+    border-radius: 2px;
+    color: var(--teal);
+  }
+
+  /* Send to */
+  .send-to {
+    margin-top: 56px;
+    padding: 40px 40px 36px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 2px;
+  }
+
+  .send-to-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .send-to h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    font-variation-settings: 'opsz' 60;
+  }
+
+  .send-to h3 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .send-to p {
+    color: rgba(242, 237, 228, 0.7);
+    font-size: 15px;
+    max-width: 580px;
+    line-height: 1.6;
+  }
+
+  .send-to a {
+    color: var(--cream);
+    text-decoration: underline;
+    text-decoration-color: var(--terracotta);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-thickness 0.2s;
+  }
+
+  .send-to a:hover { text-decoration-thickness: 2px; }
+
+  /* Tip box */
+  .tip {
+    margin-top: 48px;
+    padding: 26px 30px;
+    background: rgba(31, 77, 74, 0.06);
+    border-left: 2px solid var(--teal);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  .tip strong {
+    display: block;
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .tip span {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .container { padding: 36px 22px 80px; }
+    .brand { margin-bottom: 36px; }
+    h1.title { margin-bottom: 20px; }
+    .lede { margin-bottom: 48px; font-size: 18px; }
+    .tabs { margin-bottom: 36px; }
+    .q, .section-intro { grid-template-columns: 1fr; gap: 10px; }
+    .q { padding: 22px 0; }
+    .section-intro { margin-bottom: 40px; padding-bottom: 24px; }
+    .q-num { font-size: 22px; }
+    .q-text { font-size: 18px; }
+    .section-label { padding-top: 0; }
+    .tab { margin-right: 22px; font-size: 13px; }
+    .tab .num { display: none; }
+    .platform { padding: 28px 22px; }
+    .send-to { padding: 32px 26px; }
+    .category h3 { font-size: 22px; }
+    .tip { padding: 22px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="brand">Talk to Sev / Content Workshop</div>
+
+  <h1 class="title">Before we<br><em>get into it.</em></h1>
+  <p class="lede">A short brief to bring me up to speed on you, your business, and how you actually think. Record your answers as voice memos. Talk like you're explaining it to a smart friend, not writing a report.</p>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="shallow"><span class="num">01</span>Shallow End</button>
+    <button class="tab" data-tab="deep"><span class="num">02</span>Deep End</button>
+    <button class="tab" data-tab="record"><span class="num">03</span>How to Record</button>
+  </div>
+
+  <!-- SHALLOW END -->
+  <div class="panel active" id="shallow">
+    <div class="section-intro">
+      <div class="section-label">Pre-Workshop</div>
+      <div>
+        <h2>The surface level. You and your business in plain English.</h2>
+        <p>Don't overthink these. One voice memo, top to bottom, off the cuff. Aim for 10 to 15 minutes total. We'll get into the specifics inside the workshop.</p>
+      </div>
+    </div>
+
+    <ol class="questions">
+      <li class="q"><div class="q-num">01</div><div><div class="q-text">Introduce yourself. Your name, where you're based, what you do in plain English.</div></div></li>
+      <li class="q"><div class="q-num">02</div><div><div class="q-text">Walk me through your backstory. How did you end up doing what you do today?</div></div></li>
+      <li class="q"><div class="q-num">03</div><div><div class="q-text">What did you do before this work, and what made you pivot?</div></div></li>
+      <li class="q"><div class="q-num">04</div><div><div class="q-text">In simple terms, who do you help and what problem do you solve for them?</div></div></li>
+      <li class="q"><div class="q-num">05</div><div><div class="q-text">Why this work? What keeps you in it on the hard days?</div></div></li>
+      <li class="q"><div class="q-num">06</div><div><div class="q-text">What do you want to be known for in your industry?</div></div></li>
+      <li class="q"><div class="q-num">07</div><div><div class="q-text">What does winning look like for you over the next 12 months?</div></div></li>
+      <li class="q"><div class="q-num">08</div><div><div class="q-text">What's something most people get wrong about you or your business?</div></div></li>
+      <li class="q"><div class="q-num">09</div><div><div class="q-text">How would you describe what you do to a 10 year old?</div></div></li>
+      <li class="q"><div class="q-num">10</div><div><div class="q-text">Tell me about a recent moment that reminded you why you do this.</div></div></li>
+    </ol>
+
+    <div class="tip">
+      <strong>Pro tip</strong>
+      <span>One continuous recording beats ten clean ones.</span> The pauses and tangents are where the good stuff lives. If you fumble a sentence, just keep going and restate it. We can edit later.
+    </div>
+  </div>
+
+  <!-- DEEP END -->
+  <div class="panel" id="deep">
+    <div class="section-intro">
+      <div class="section-label">Going Deeper</div>
+      <div>
+        <h2>The specifics that make the content sound like you, not like AI.</h2>
+        <p>This is the meat. The stuff AI can't make up: real customer language, contrarian beliefs, specific stories, pricing reality. Tackle it as one long memo, or one per category. Whatever flows.</p>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">A / The Customer in Their Own Words</div>
+      <h3>How they describe the problem before they meet you.</h3>
+    </div>
+    <ol class="questions">
+      <li class="q"><div class="q-num">01</div><div><div class="q-text">Read out 3 to 5 verbatim DMs, emails, or things customers have said in calls about their problem. Don't clean them up.</div></div></li>
+      <li class="q"><div class="q-num">02</div><div><div class="q-text">What words do they actually use for the problem? Not industry jargon, their language.</div></div></li>
+      <li class="q"><div class="q-num">03</div><div><div class="q-text">What did they try before you that didn't work, and why didn't it work?</div></div></li>
+      <li class="q"><div class="q-num">04</div><div><div class="q-text">What's the emotional cost of the problem, not just the financial one?</div></div></li>
+      <li class="q"><div class="q-num">05</div><div><div class="q-text">What's the one objection that kills more deals than any other?</div></div></li>
+    </ol>
+
+    <div class="category">
+      <div class="category-label">B / Voice and POV</div>
+      <h3>The contrarian gold. Where you disagree with your industry.</h3>
+    </div>
+    <ol class="questions">
+      <li class="q"><div class="q-num">06</div><div><div class="q-text">What's the loudest piece of advice in your industry that you think is wrong, and why?</div></div></li>
+      <li class="q"><div class="q-num">07</div><div><div class="q-text">What does your industry get away with that pisses you off?</div></div></li>
+      <li class="q"><div class="q-num">08</div><div><div class="q-text">If you had 60 seconds on stage in front of every potential client, what would you say?</div></div></li>
+      <li class="q"><div class="q-num">09</div><div><div class="q-text">Who's the customer you actively don't want, and why?</div></div></li>
+      <li class="q"><div class="q-num">10</div><div><div class="q-text">What's a belief you hold that costs you clients but you refuse to drop?</div></div></li>
+    </ol>
+
+    <div class="category">
+      <div class="category-label">C / The Big 5</div>
+      <h3>The questions every buyer asks before they buy.</h3>
+    </div>
+    <ol class="questions">
+      <li class="q"><div class="q-num">11</div><div><div class="q-text">Pricing: what does this actually cost, what drives the price up or down, and when is it not worth it?</div></div></li>
+      <li class="q"><div class="q-num">12</div><div><div class="q-text">Problems: what are the legitimate downsides, risks, or failure modes of what you sell?</div></div></li>
+      <li class="q"><div class="q-num">13</div><div><div class="q-text">Comparisons: how do you stack up against the 3 main alternatives, including doing nothing?</div></div></li>
+      <li class="q"><div class="q-num">14</div><div><div class="q-text">Reviews: what do customers say in their own words, good and bad?</div></div></li>
+      <li class="q"><div class="q-num">15</div><div><div class="q-text">Best in class: what makes a great version of what you do, versus an average one?</div></div></li>
+    </ol>
+
+    <div class="category">
+      <div class="category-label">D / Stories and Proof</div>
+      <h3>The moments and transformations that prove you can.</h3>
+    </div>
+    <ol class="questions">
+      <li class="q"><div class="q-num">16</div><div><div class="q-text">Founder origin. Why this business, why now, what's the scar tissue behind it?</div></div></li>
+      <li class="q"><div class="q-num">17</div><div><div class="q-text">Three specific customer transformations with numbers, timelines, and names if you can use them.</div></div></li>
+      <li class="q"><div class="q-num">18</div><div><div class="q-text">The biggest failure or near miss in the business, and what changed because of it.</div></div></li>
+      <li class="q"><div class="q-num">19</div><div><div class="q-text">A moment a customer said something that made you realise you were onto something.</div></div></li>
+    </ol>
+
+    <div class="category">
+      <div class="category-label">E / Competitive and Cultural Context</div>
+      <h3>The world your customer lives in.</h3>
+    </div>
+    <ol class="questions">
+      <li class="q"><div class="q-num">20</div><div><div class="q-text">Three competitors or category adjacent players you respect, and one thing each does well.</div></div></li>
+      <li class="q"><div class="q-num">21</div><div><div class="q-text">Three accounts, podcasts, or newsletters your ideal customer follows.</div></div></li>
+      <li class="q"><div class="q-num">22</div><div><div class="q-text">What's happening in the industry right now that nobody's talking about?</div></div></li>
+    </ol>
+
+    <div class="category">
+      <div class="category-label">F / Business Specifics and Execution</div>
+      <h3>The practical stuff that shapes what we make.</h3>
+    </div>
+    <ol class="questions">
+      <li class="q"><div class="q-num">23</div><div><div class="q-text">What do you sell, at what price, and how do they pay? One off, retainer, or package?</div></div></li>
+      <li class="q"><div class="q-num">24</div><div><div class="q-text">What's your average customer worth over 12 months?</div></div></li>
+      <li class="q"><div class="q-num">25</div><div><div class="q-text">What content has converted customers for you (yours or anyone else's), and why do you think it worked?</div></div></li>
+      <li class="q"><div class="q-num">26</div><div><div class="q-text">What have you tried that flopped?</div></div></li>
+      <li class="q"><div class="q-num">27</div><div><div class="q-text">What formats can you realistically produce each week. Video, audio, written, carousel?</div></div></li>
+      <li class="q"><div class="q-num">28</div><div><div class="q-text">What's the one piece of content you've been meaning to make for 6 months and haven't?</div></div></li>
+    </ol>
+
+    <div class="tip">
+      <strong>The bonus take</strong>
+      <span>Record a 5 minute unscripted memo answering:</span> "Explain what you do and who you do it for, like I'm a smart friend at a barbecue." Off the cuff, no script. That single file is worth more than any structured answer for capturing how you actually talk.
+    </div>
+  </div>
+
+  <!-- HOW TO RECORD -->
+  <div class="panel" id="record">
+    <div class="section-intro">
+      <div class="section-label">The How</div>
+      <div>
+        <h2>Recording voice memos. Three platforms, no excuses.</h2>
+        <p>You don't need fancy gear. The phone in your pocket is fine. Find a quiet room, hold it close to your face, and talk like you're on a call to a mate.</p>
+      </div>
+    </div>
+
+    <div class="record-grid">
+
+      <div class="platform">
+        <div class="platform-tag">iPhone</div>
+        <h4>Voice Memos</h4>
+        <div class="app">Pre-installed. White icon with a red soundwave.</div>
+        <ol class="steps">
+          <li>Open the <strong>Voice Memos</strong> app. Can't find it? Swipe down on the home screen and search <code>voice memos</code>.</li>
+          <li>Tap the big <strong>red circle</strong> at the bottom of the screen to start recording.</li>
+          <li>Talk. Tap the red square to stop when you're done.</li>
+          <li>Tap the recording, then tap the title (it'll say "New Recording") to rename it. Something like <code>Shallow End - [Your Name]</code>.</li>
+          <li>To send: tap the <strong>three dots</strong> next to the recording, then <code>Share</code>. Pick email, AirDrop, or Messages.</li>
+        </ol>
+      </div>
+
+      <div class="platform">
+        <div class="platform-tag">Android</div>
+        <h4>Recorder or Voice Recorder</h4>
+        <div class="app">Pre-installed on Pixel and Samsung. Otherwise grab Google Recorder from the Play Store (free).</div>
+        <ol class="steps">
+          <li>Open the <strong>Recorder</strong> app (Pixel), <strong>Voice Recorder</strong> (Samsung), or download <strong>Google Recorder</strong> from the Play Store.</li>
+          <li>Tap the <strong>red microphone</strong> button to start recording.</li>
+          <li>Talk. Tap stop when you're done.</li>
+          <li>Tap the recording to rename it. Use something like <code>Shallow End - [Your Name]</code>.</li>
+          <li>To send: tap the <strong>share icon</strong> on the recording. Pick email, Drive, or whatever's handy.</li>
+        </ol>
+      </div>
+
+      <div class="platform">
+        <div class="platform-tag">Mac</div>
+        <h4>QuickTime Player</h4>
+        <div class="app">Pre-installed. In your Applications folder, or hit Cmd + Space and search "QuickTime".</div>
+        <ol class="steps">
+          <li>Open <strong>QuickTime Player</strong>.</li>
+          <li>In the menu bar: <code>File</code> then <code>New Audio Recording</code>.</li>
+          <li>Click the <strong>red circle</strong> to start. Click it again to stop.</li>
+          <li>Save with <code>Cmd + S</code>. Give it a clear name and pick a folder you can find again.</li>
+          <li>Email it as an attachment, or upload to Google Drive and share the link.</li>
+        </ol>
+      </div>
+
+      <div class="platform">
+        <div class="platform-tag">Windows</div>
+        <h4>Sound Recorder</h4>
+        <div class="app">Pre-installed. Search "Sound Recorder" or "Voice Recorder" in the Start menu.</div>
+        <ol class="steps">
+          <li>Click <strong>Start</strong> and search <code>Sound Recorder</code> or <code>Voice Recorder</code>.</li>
+          <li>Click the <strong>red microphone</strong> to start recording.</li>
+          <li>Click stop when you're done. Files save automatically.</li>
+          <li>Right click the recording and select <code>Show in folder</code> to locate the file.</li>
+          <li>Attach to an email, or upload to Google Drive and share the link.</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <div class="tip">
+      <strong>Recording tips</strong>
+      <span>Hold the phone like you're on a call, close to your mouth.</span> Find a quiet room with soft furnishings (a bedroom beats a kitchen). Don't worry about ums and ahs. One take beats a perfect script. The longer you ramble, the more raw material we get to work with.
+    </div>
+
+    <div class="send-to">
+      <div class="send-to-label">Send your recordings</div>
+      <h3>Email the files (or a Google Drive link) to <em><a href="mailto:sev@sevspics.com">sev@sevspics.com</a></em></h3>
+      <p>If the files are too big for email, drop them in a Google Drive folder, set sharing to "anyone with the link can view", and send me the link. I'll listen before our session so we hit the ground running.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
