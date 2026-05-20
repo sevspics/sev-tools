@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealthy Wellness Business × BTS — Episode Plan v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0b;
+    --bg-2: #15151331;
+    --bg-card: #181815;
+    --bg-3: #1f1e1a;
+    --line: #2a2924;
+    --line-2: #3b3933;
+    --ink: #f3ede2;
+    --ink-dim: #b9b3a5;
+    --ink-faint: #7a7567;
+    --copper: #c97a3a;
+    --copper-soft: #e3a878;
+    --copper-bg: rgba(201, 122, 58, 0.08);
+    --sage: #93a283;
+    --sage-soft: #b5c4a4;
+    --cream: #e8dfcc;
+    --gold: #d4a957;
+    --select: #d4a957;
+    --select-bg: rgba(212, 169, 87, 0.12);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 48px 28px 120px;
+  }
+  /* Header */
+  .pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .pre .right { color: var(--ink-faint); }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(40px, 5.8vw, 68px);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin: 0 0 18px;
+  }
+  h1 .ital { font-style: italic; color: var(--copper-soft); }
+  .deck {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink-dim);
+    max-width: 720px;
+    margin: 0 0 32px;
+  }
+  .deck strong { color: var(--cream); font-weight: 400; }
+  /* How to use */
+  .howto {
+    background: var(--copper-bg);
+    border: 1px solid rgba(201, 122, 58, 0.3);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 48px;
+    font-size: 14px;
+    color: var(--cream);
+    line-height: 1.6;
+  }
+  .howto strong { color: var(--copper-soft); font-weight: 500; }
+  .howto-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 8px;
+  }
+
+  /* Strategy bar */
+  .strat-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 12px;
+  }
+  .strat-h {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.1;
+    margin: 0 0 22px;
+  }
+  .strat-h .ital { font-style: italic; color: var(--copper-soft); }
+  .strat {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 64px;
+  }
+  @media (max-width: 720px) {
+    .strat { grid-template-columns: 1fr; }
+  }
+  .strat-item {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+  .strat-item .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+  .strat-item .v {
+    font-size: 15px;
+    color: var(--cream);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .strat-item .v .small {
+    display: block;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    font-weight: 400;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* Anatomy */
+  .anatomy {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--copper);
+    border-radius: 6px;
+    padding: 28px 30px;
+    margin-bottom: 64px;
+  }
+  .anatomy h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 6px;
+    color: var(--cream);
+  }
+  .anatomy h3 .ital { font-style: italic; color: var(--copper-soft); }
+  .anatomy p.lead {
+    color: var(--ink-dim);
+    font-size: 14px;
+    margin: 0 0 20px;
+    max-width: 680px;
+  }
+  .ana-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+    font-size: 13.5px;
+  }
+  .ana-row:first-of-type { border-top: none; }
+  .ana-row .t {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--copper);
+    padding-top: 1px;
+  }
+  .ana-row .what strong {
+    color: var(--cream);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .ana-row .what {
+    color: var(--ink-dim);
+  }
+  .ana-row .clip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--sage);
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .ana-row .clip.none { color: var(--ink-faint); }
+  @media (max-width: 720px) {
+    .ana-row { grid-template-columns: 70px 1fr; }
+    .ana-row .clip { grid-column: 1 / -1; padding-left: 70px; padding-top: 4px; }
+  }
+
+  /* Selection bar (sticky) */
+  .sel-bar {
+    position: sticky;
+    top: 14px;
+    z-index: 50;
+    background: rgba(13, 13, 11, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    padding: 14px 22px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .sel-count {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+  }
+  .sel-count .num {
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .sel-count .of {
+    color: var(--ink-faint);
+    font-size: 17px;
+    font-style: italic;
+  }
+  .sel-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .sel-status.ok { color: var(--sage); }
+  .sel-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .btn {
+    background: transparent;
+    border: 1px solid var(--line-2);
+    color: var(--ink-dim);
+    padding: 7px 14px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn:hover {
+    border-color: var(--copper);
+    color: var(--copper);
+  }
+  .btn.danger:hover {
+    border-color: #c46a55;
+    color: #c46a55;
+  }
+  .cloud-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    color: var(--ink-faint);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cloud-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    flex-shrink: 0;
+  }
+  .cloud-status.loading { color: var(--ink-dim); }
+  .cloud-status.loading::before { background: var(--copper-soft); animation: pulseDot 1.2s ease-in-out infinite; }
+  .cloud-status.saving { color: var(--copper-soft); border-color: rgba(201,122,58,0.4); }
+  .cloud-status.saving::before { background: var(--copper); animation: pulseDot 0.9s ease-in-out infinite; }
+  .cloud-status.synced { color: var(--sage); border-color: rgba(147,162,131,0.35); }
+  .cloud-status.synced::before { background: var(--sage); }
+  .cloud-status.offline { color: #c46a55; border-color: rgba(196,106,85,0.4); }
+  .cloud-status.offline::before { background: #c46a55; }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  /* Section header */
+  .ep-section-head {
+    margin-bottom: 22px;
+  }
+  .ep-section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.1;
+    margin: 0 0 6px;
+  }
+  .ep-section-head h2 .ital { font-style: italic; color: var(--copper-soft); }
+  .ep-section-head p {
+    color: var(--ink-dim);
+    margin: 0;
+    max-width: 680px;
+  }
+
+  /* Episode card */
+  .ep {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 28px 30px;
+    margin-bottom: 18px;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .ep.selected {
+    border-color: var(--gold);
+    background: linear-gradient(180deg, var(--select-bg) 0%, var(--bg-card) 60%);
+  }
+  .ep-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .ep-tag-block {
+    flex-shrink: 0;
+  }
+  .ep-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--copper);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .ep-lead {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .ep-title-wrap {
+    flex: 1;
+    min-width: 240px;
+  }
+  .ep-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--cream);
+    margin: 0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: text;
+    transition: background 0.15s;
+  }
+  .ep-title:hover { background: var(--bg-3); }
+  .ep-title:focus {
+    outline: none;
+    background: var(--bg-3);
+    box-shadow: inset 0 0 0 1px var(--copper);
+  }
+  .ep-select-btn {
+    background: transparent;
+    border: 1px solid var(--line-2);
+    color: var(--ink-faint);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    align-self: flex-start;
+  }
+  .ep-select-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .ep.selected .ep-select-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  .ep-select-btn .check { display: none; }
+  .ep.selected .ep-select-btn .check { display: inline; margin-right: 6px; }
+
+  /* Field rows inside ep */
+  .field {
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .field-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    padding-top: 8px;
+  }
+  .field-input {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14.5px;
+    padding: 9px 12px;
+    line-height: 1.55;
+    width: 100%;
+    resize: vertical;
+    transition: border 0.15s;
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--copper);
+  }
+  textarea.field-input { min-height: 50px; }
+  @media (max-width: 640px) {
+    .field { grid-template-columns: 1fr; gap: 6px; }
+    .field-label { padding-top: 0; }
+  }
+
+  /* Clip moments block */
+  .clip-block {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .clip-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 14px;
+  }
+  .clip {
+    background: var(--bg-3);
+    border-left: 2px solid var(--sage);
+    border-radius: 0 4px 4px 0;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .clip-meta {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .clip-when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--sage-soft);
+    text-transform: uppercase;
+  }
+  .clip-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .clip-line {
+    color: var(--cream);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15.5px;
+    line-height: 1.4;
+    padding: 4px 6px;
+    border-radius: 3px;
+    cursor: text;
+    min-height: 22px;
+  }
+  .clip-line:hover { background: var(--bg-card); }
+  .clip-line:focus {
+    outline: none;
+    background: var(--bg-card);
+    box-shadow: inset 0 0 0 1px var(--sage);
+  }
+
+  /* Floor / footer */
+  .floor {
+    margin-top: 72px;
+    padding: 32px 30px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--copper);
+    border-radius: 6px;
+  }
+  .floor h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 8px;
+    color: var(--cream);
+  }
+  .floor h3 .ital { font-style: italic; color: var(--copper-soft); }
+  .floor p {
+    color: var(--ink-dim);
+    margin: 0 0 12px;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .floor ol {
+    color: var(--ink-dim);
+    font-size: 14px;
+    line-height: 1.7;
+    padding-left: 18px;
+    margin: 0;
+  }
+  .floor ol li strong { color: var(--cream); font-weight: 500; }
+
+  /* Doc footer */
+  .docfoot {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; color: black; }
+    .wrap { padding: 12px; max-width: 100%; }
+    .sel-bar, .no-print { display: none !important; }
+    .ep, .strat-item, .anatomy, .howto, .floor {
+      background: white;
+      border: 1px solid #ccc;
+      break-inside: avoid;
+      box-shadow: none;
+      page-break-inside: avoid;
+    }
+    .ep.selected { background: #faf5ec; border-color: #c97a3a; }
+    .clip { background: #fafafa; border-left: 2px solid #93a283; }
+    .field-input { background: white; border: 1px solid #ccc; color: black; }
+    .ep-title, .clip-line { color: black; }
+    .field-input { color: black; }
+    h1, h2, h3, .strat-h, .deck { color: black; }
+    h1 .ital, h2 .ital, .strat-h .ital, .floor h3 .ital, .anatomy h3 .ital, .ep-title { color: #555; }
+    .strat-title, .ep-tag, .clip-head, .pre, .ana-row .t, .ep-lead, .field-label, .clip-when, .clip-type, .howto-title { color: #c97a3a; }
+    .ana-row .clip { color: #5e7250; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <div class="pre">
+    <span>Bright Tsar Studios × Wealthy Wellness Business</span>
+    <span class="right">Live working doc · v1 · pre-shoot</span>
+  </div>
+
+  <h1>The first batch.<br><span class="ital">Twelve options. Six episodes. Yours to shape.</span></h1>
+  <p class="deck">Andy and J, what follows is the strategy we built together on Monday, turned into a working plan. Every field is editable. Click any title, any answer, any clip line and write over it. <strong>The doc auto-saves to the cloud as you type — Sev sees your edits in real time, and your work is safe across browsers and devices.</strong> Pick six of the twelve below, refine them however you want, and let us know when you're locked in. Then we walk into Wednesday with zero ambiguity.</p>
+
+  <div class="howto">
+    <div class="howto-title">How this document works</div>
+    Click any text to edit. Hit the <strong>Select for batch</strong> button on the six episodes you want recorded first. The counter at the top tracks your six. Edits sync to the cloud automatically — pick up where you left off on any device, and Sev can see your progress live. When you're done, hit <strong>Print / save PDF</strong> at the top, or just message Sev to confirm.
+  </div>
+
+  <!-- Strategy locked-in -->
+  <div class="strat-title">01 · Strategy locked in from Monday's call</div>
+  <h2 class="strat-h">The decisions <span class="ital">already made</span></h2>
+  <div class="strat">
+    <div class="strat-item">
+      <div class="k">Primary outcome</div>
+      <div class="v">Triple the views on the WWB feed<span class="small">All roads lead to Freedom Academy. Clips feed the show, the show feeds the funnel.</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">Avatar (locked)</div>
+      <div class="v">The practitioner with a team that isn't booked out<span class="small">Past the solo phase, has been burnt before, doesn't trust the booking flow.</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">Sequence type</div>
+      <div class="v">Objection sequence<span class="small">Each episode dismantles one of the conscious roadblocks stopping growth. Not "tips lists". Roadblocks.</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">Episode length</div>
+      <div class="v">15 to 20 minutes<span class="small">Same as your existing two seasons. Tight, repeatable, batchable.</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">Episode skeleton</div>
+      <div class="v">Steve Bartlett open → body → numbered takeaways<span class="small">Cold open hook, single biggest takeaway teased, story-led body, three actions at the close.</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">CTA mechanic</div>
+      <div class="v">"Comment <em style="color:var(--copper-soft); font-family:Fraunces; font-style:italic;">wellness</em> for our 5k playbook"<span class="small">Drives the engagement metric and feeds straight into your lead magnet. One CTA across all six, rotating optional.</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">Voice rules</div>
+      <div class="v">Success stories. Growth, not scale.<span class="small">Never "case study". Never "scale" when you mean "growth". Boutique always. Alignment always.</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">Lead host logic</div>
+      <div class="v">Allocated by expertise<span class="small">J leads strategy and mindset. Andy leads systems and operations. Ping-pong inside each. Live disagreements stay in (they clip beautifully).</span></div>
+    </div>
+    <div class="strat-item">
+      <div class="k">Per-episode clip yield</div>
+      <div class="v">3 to 4 marketable clips<span class="small">Each one designed either to bring people to the full episode, or to bypass and go straight to Freedom Academy.</span></div>
+    </div>
+  </div>
+
+  <!-- Anatomy -->
+  <div class="anatomy">
+    <h3>The 15-minute anatomy <span class="ital">(where the clips land)</span></h3>
+    <p class="lead">This is the structural skeleton we use for every episode in the batch so the clips emerge predictably rather than getting hunted for in edit. Treat the timestamps as scaffolding, not handcuffs.</p>
+
+    <div class="ana-row">
+      <div class="t">0:00 – 0:15</div>
+      <div class="what"><strong>Cold open hook</strong>The Steve Bartlett moment. A bold statement or a teased answer that gets cut off mid-thought. This is your trailer clip.</div>
+      <div class="clip">CLIP 1</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">0:15 – 0:45</div>
+      <div class="what"><strong>Brand intro</strong>Same template every episode. Brief, warm, named promise of what they'll get.</div>
+      <div class="clip none">—</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">0:45 – 2:00</div>
+      <div class="what"><strong>Topic frame + the roadblock</strong>The objection this episode dismantles, named in plain language.</div>
+      <div class="clip none">—</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">2:00 – 4:00</div>
+      <div class="what"><strong>The contrarian beat</strong>Why the common advice fails. The "you've been told X. X is wrong" beat.</div>
+      <div class="clip">CLIP 2</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">4:00 – 8:00</div>
+      <div class="what"><strong>The framework or method</strong>Three numbered points. Numbered so we can lift each as a standalone short.</div>
+      <div class="clip none">—</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">8:00 – 11:00</div>
+      <div class="what"><strong>The success story</strong>A real Freedom Academy member or an Open Space Healing moment. Names, numbers, specifics.</div>
+      <div class="clip">CLIP 3</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">11:00 – 12:30</div>
+      <div class="what"><strong>The hot take</strong>The contrarian one-liner. The line that ends up on the carousel.</div>
+      <div class="clip">CLIP 4</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">12:30 – 13:30</div>
+      <div class="what"><strong>The CTA</strong>"Comment wellness for our 5k playbook." One CTA. No stacking.</div>
+      <div class="clip none">—</div>
+    </div>
+    <div class="ana-row">
+      <div class="t">13:30 – 15:00</div>
+      <div class="what"><strong>Today's takeaways + soft close</strong>The three numbered actions. Then a warm sign-off that trails into the next episode.</div>
+      <div class="clip none">—</div>
+    </div>
+  </div>
+
+  <!-- Selection bar -->
+  <div class="sel-bar">
+    <div>
+      <div class="sel-count"><span class="num" id="selCount">0</span> <span class="of">of</span> <span class="num">6</span> selected</div>
+      <div class="sel-status" id="selStatus">Pick your six</div>
+    </div>
+    <div class="sel-actions">
+      <span class="cloud-status loading" id="cloudStatus" title="Cloud sync status">Connecting</span>
+      <button class="btn" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn danger" onclick="resetAll()">Reset all</button>
+    </div>
+  </div>
+
+  <!-- Episode section header -->
+  <div class="ep-section-head">
+    <h2>The twelve. <span class="ital">Choose six.</span></h2>
+    <p>Pre-filled from Monday's conversation. Edit any field. The first four are the highest-conviction picks based on what came out of the call. The remaining eight cover the themes you rated 4 or 5 plus the topics that surfaced organically. Two are safety-net wildcards.</p>
+  </div>
+
+  <!-- EPISODES -->
+  <div id="episodes">
+
+  <!-- Ep 01 -->
+  <div class="ep" data-ep="1">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 01</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">Both</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">The reintroduction: where we've been, where we are, and what's next</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the listener will understand who Andy and J actually are now, why one of you is "retiring" from the clinic floor, and why this season of the podcast looks different. The relaunch episode.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">Andy's retirement announcement to her patients last week. The years of clinical work behind it. The husband's birthday today. The middle child at Rottnest. The four-year-old at kindy. What life actually looks like when you've built the practice that can run without you on the floor.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">Retirement from the clinic floor isn't quitting. It's choosing what you actually want to give your energy to. Most practice owners can't do this because they built a business that needs them on the floor to function.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Subscribe, comment 'wellness' for the 5k playbook, and follow for the rest of the batch.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture · 3 to 4 per episode</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"I told my patients last week that I'm retiring. They all said the same thing. Are you okay? And I realised the whole industry has retirement wrong."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"Most practitioners think they're building a business. They're actually building a job that pays them for showing up. The day you stop showing up, the job pays nothing."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">behind-the-scenes</span></div>
+        <div class="clip-line" contenteditable="true">"This is what a Monday looks like for us now. Husband's birthday, kid on camp, kindy run at 8:30, podcast at 9:30. Six years ago, none of that was possible."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"You're not allowed to call it a business if it can't function without you in the room."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 02 -->
+  <div class="ep" data-ep="2">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 02</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">Andy</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">The three hires that bought us back 20 hours a week (in this order)</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practice owner with a team will know which role to hire next, in what order, and why hiring another clinician first is almost always the wrong move.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">The actual three hires at Open Space Healing. The order you made them. The week you knew each one was the right one. The hours each role gave back. Currently hiring a front desk person, onboarding a new doctor and a manager. The lived experience is right here.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">If your next hire is another clinician before you've hired a front desk lead or a practice manager, you're not scaling. You're adding to your own admin load and calling it growth.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Comment 'wellness' for the Find 5k playbook.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"We bought back 20 hours a week with three hires. None of them were clinicians. Most practice owners do this backwards and wonder why they're still drowning."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"The advice we hear constantly is 'hire your next clinician.' It's wrong. A clinician gives you patient capacity. They don't give you a single hour of your time back."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">numbered framework</span></div>
+        <div class="clip-line" contenteditable="true">"One. Front desk. Two. Practice manager. Three. Junior clinician. Get this order wrong and you'll work harder for less money for the next two years."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"Most practice owners hire the second clinician before they hire their first proper admin. That's the trap that kept us at six figures for two years longer than we needed to be."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 03 -->
+  <div class="ep" data-ep="3">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 03</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">J</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">Your team isn't lazy. Your booking system is broken.</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practice owner whose team isn't booked out will understand the actual leak: front desk scripting, weak care plan pre-frames, and a missing reminder sequence. The 5k is sitting in plain sight.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">A Freedom Academy member whose team went from 60% to 90%+ booked in 8 weeks without spending a dollar on new ads. Where the leak actually was. What changed at the front desk. The three-text reminder sequence that closed the gap.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">Stop trying to get more new patients. You don't have a marketing problem. You have a retention problem. You already have enough patients. You can't keep the ones you've got.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Comment 'wellness' for the Find 5k missed appointments playbook.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"Your team isn't lazy. Your team isn't unmotivated. They're sitting in a system that's quietly leaking five grand a month, and nobody told them."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"Every practice owner we talk to says they need more patients. They're wrong. They need to keep the ones they've already got. That's a different problem entirely."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">named success story</span></div>
+        <div class="clip-line" contenteditable="true">"One of our Freedom Academy members went from 60 percent booked to ninety in eight weeks. She didn't run a single new ad. She fixed three texts."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"You don't have a marketing problem. You have a retention problem. Stop paying for new patients you'll lose in three weeks anyway."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 04 -->
+  <div class="ep" data-ep="4">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 04</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">Both</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">Why we don't run a pain-based clinic (and why our patients stay for years)</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practitioner will understand the difference between a pain-based clinic (transactional, one-off) and a wellness-based clinic (relational, multi-year) and the specific patient experience moments that flip people from one to the other.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">The Kim example. Healthy spine vs unhealthy spine demo. The walking-on-the-spot test. Six weeks later, the felt-sense difference. The visceral patient experience that hooked a then-bride into becoming a long-term client. This is the experience model in practice.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">Pain-based clinics are stuck selling one-off transactions. Wellness-based clinics are stuck with patients for life. Most practitioners don't realise they're building the wrong business until they're four years into the wrong one.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Apply for the Freedom Academy via the link in the show notes.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"A pain-based clinic sells to a patient once. A wellness-based clinic gets to look after them for ten years. Most practitioners build the first kind by accident."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"Most clinicians think they're in the pain-relief business. They're not. They're in the experience business. The pain just happens to be what the patient walked in with."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">the Kim story</span></div>
+        <div class="clip-line" contenteditable="true">"She showed me a healthy spine and a not-so-healthy spine. Then she made me walk on the spot. Six weeks later I walked again and I genuinely couldn't believe the difference. That's when I became a patient for life."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"You're not selling sessions. You're selling a felt-sense difference six weeks from now that they can't get anywhere else."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 05 -->
+  <div class="ep" data-ep="5">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 05</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">J</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">You can't manifest a fully-booked clinic (and what actually fills the diary)</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practitioner who's been doing mindset and manifestation work without seeing booking results will understand the operational layer that makes the mindset work actually pay off.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">The 2020 coaching world boom. The female-clinician audience that was told they could just journal their way to seven figures. The pivot in your own approach. What you now teach instead.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">The coaching industry sold female practitioners a story that they could just manifest more patients. They lied. You can't manifest a phone script. You can write one. The mindset work is real. So is the spreadsheet.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Comment 'wellness' for the 5k playbook.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"If your practice could be manifested into being fully booked, it'd already be fully booked. You've been doing this for two years. It hasn't worked. Here's why."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"Since 2020 every female practitioner has been told she can just believe her way to a seven figure clinic. The mindset is necessary. It's not sufficient."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">positive frame</span></div>
+        <div class="clip-line" contenteditable="true">"The clinicians we work with who break through aren't the ones with the best journals. They're the ones with the best front desk script and the same alignment work running in the background."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"You can't manifest a phone script. You can write one. Then you can manifest. In that order."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 06 -->
+  <div class="ep" data-ep="6">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 06</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">Andy</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">If you don't know your profit margin, you don't have a business. You have a hobby.</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practitioner will know the five numbers to check every week, the budget framework that makes pricing decisions easy, and why their revenue could be growing while their actual money is going backwards.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">The reel you already posted that landed: "If you don't know your profit margin you don't have a business, you have a hobby." Pull the thread. Why you did the reel. What conversation triggered it. The Freedom Academy member who had her highest revenue month and the lowest bank balance in the same week.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">The reel said it. Most practitioners are running a hobby with a logo. You're not allowed to call it a business if you can't tell me what your profit margin was last month inside ten seconds.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Comment 'wellness' for the 5k playbook.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"If you don't know your profit margin, you don't have a business. You have a hobby with a logo on it. We'll wait. Tell us what last month's margin was. You can't, can you."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"Most practitioners think more revenue equals more money. It almost never does. The biggest revenue month is usually the worst margin month, because the costs scale with you and nobody warned you."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">numbered framework</span></div>
+        <div class="clip-line" contenteditable="true">"Five numbers, every Monday morning. Revenue. Profit margin. Outstanding invoices. Average appointment value. Cash in the account. If you can't pull those in two minutes, your bookkeeper is the problem."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"You're not allowed to grow if you can't measure. Manifesting doesn't replace a P&L. Sorry."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 07 -->
+  <div class="ep" data-ep="7">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 07</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">Andy</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">Pay yourself first (the salary schedule we follow now)</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practitioner will understand the structural difference between drawing profit and drawing a salary, and the schedule that means they're actually being compensated like the CEO they are, not the last person to get paid every month.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">A Freedom Academy member doing 40k a month in the practice and personally taking home 4k. The rebuild conversation. The schedule we put in place. The first month she paid herself first and what changed in her marriage that same week.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">If you're paying everyone in your practice before yourself, you don't own a business. You're personally funding one. There's a big difference, and most clinicians realise it ten years too late.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Book a Practice Plan Call via the show notes.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"She told us she was doing forty grand a month in her practice. We asked what she was personally taking home. Four grand. We stopped the call right there."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"You're not 'reinvesting in the business' if you can't pay your mortgage. You're funding a business with your personal life and calling it a strategy."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">named transformation</span></div>
+        <div class="clip-line" contenteditable="true">"The first month she paid herself first, her marriage changed. Same revenue. Same patients. She just stopped feeling like the practice was robbing her."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"If you're paying everyone before yourself, you don't own a business. You're funding one."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 08 -->
+  <div class="ep" data-ep="8">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 08</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">Both</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">The freedom number: what seven figures actually means once the bills are paid</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practitioner will know how to back-calculate the practice revenue she actually needs to fund the life she wants. The number behind the number. The freedom number.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">Your own seven-figure year at Open Space Healing. What landed in your personal accounts versus what stayed in the practice. The first time you sat down and ran the freedom number math for yourselves and how it changed what you were optimising for.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">A million dollar practice and a million dollar life are not the same thing. Most practice owners chase the first and never get the second. The freedom number tells you which one you're actually aiming at.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Apply for the Freedom Academy.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"Our first seven figure year hit our practice. Almost none of it hit our personal accounts. That was the moment we realised we were chasing the wrong number."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"Every coach in this industry tells you to chase the million dollar practice. None of them tell you that a million dollar practice and a million dollar life are completely different numbers."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">the formula</span></div>
+        <div class="clip-line" contenteditable="true">"Here's how you calculate yours. Start with the life. Add the personal tax. Add the practice overheads. Add the buffer. That's your real revenue target. Most clinicians work it out and realise they don't actually need a seven figure clinic."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"A million dollar practice doesn't make you free. Your freedom number does. Most clinicians don't know what theirs is."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 09 -->
+  <div class="ep" data-ep="9">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 09</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">J</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">Growth, not scale. A quiet rebellion.</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the wellness practitioner who has been told she needs to "scale to seven figures and beyond" gets permission to instead build a fully-booked, aligned, 1-to-3 location practice that supports her actual life. The growth path versus the scale path, named clearly.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">Your own moment of deciding growth, not scale, was the goal. The pressure from the coaching industry to franchise. The clarity that came when you stopped trying to look like the loudest coach in the room. The Freedom Academy members who now have a sustainable 2-location practice and don't want a third.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">The coaching world told us scaling was the only definition of success. We're calling bullshit. Most wellness practitioners don't want a corporate empire. They want a fully-booked practice, a great team, and to not work Fridays. That's growth. That's enough.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Apply for the Freedom Academy.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip · live disagreement</span></div>
+        <div class="clip-line" contenteditable="true">"Scaling and growing are two different things. Most coaches blur them on purpose. We define them out loud, and it changes what you optimise for."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">live definitional disagreement</span></div>
+        <div class="clip-line" contenteditable="true">"Andy says scaling is doing more with the same time. J says scaling is franchising and going national. We're both right, and the gap between those two definitions is where most practice owners get lost."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">permission slip</span></div>
+        <div class="clip-line" contenteditable="true">"One of our members has a beautiful two-location practice. She's full. Her team's full. She's done. We told her to stop. The coaching world would tell her to open ten more. We told her she's already won."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"You're allowed to build a great practice and stop. That's not failure to scale. That's growth done well."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 10 -->
+  <div class="ep" data-ep="10">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 10</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">J</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">Why cookie-cutter coaching fails wellness practitioners</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the wellness practitioner considering a coach will be able to tell within ten minutes whether the coach actually understands alignment-led, feminine, experience-based businesses, or is just selling a masculine numbers playbook with different branding.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">A Freedom Academy success story: a practitioner who tried two other coaches before WWB. The specific moments she knew it wasn't a fit. The model that fell apart at six months because the leader wasn't aligned with the system. What changed when she joined a boutique program built around her leadership style.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">Most business coaching for wellness clinicians is masculine playbook repackaged with softer fonts. It works for six months. Then it falls apart because the leader is being asked to run a business that isn't actually aligned with her values. That's not a coaching failure. That's a model failure.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Book a Practice Plan Call.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"Most business coaching for wellness practitioners works for exactly six months. Then it falls apart. There's a reason, and nobody in the industry wants to say it out loud."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"It's not bad coaching. The coaching is fine. The problem is the model. Most coaching programs are masculine playbooks in feminine packaging. The leader can't sustain it because it isn't aligned."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">named pivot</span></div>
+        <div class="clip-line" contenteditable="true">"One of our members had been through two programs before us. Both of them collapsed at the same point. Six months in. The model wasn't built for who she actually was."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"If your business model isn't aligned with your leadership style, it will fail at six months. Every time. The coaching world calls this resistance. We call it misalignment."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 11 -->
+  <div class="ep" data-ep="11">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 11 · wildcard</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">Andy</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">Your team isn't underperforming. They're misaligned.</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practice owner with a frustrating team member will be able to tell whether she has a performance problem or an alignment problem, plus the 90-day audit we run that catches misalignment before it becomes a hire-fire crisis.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">A real team member at Open Space Healing whose values didn't match the practice culture, and the conversation that resolved it (without firing). The 90-day values audit we now run. The questions we ask. Why we never struggle to hire.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">B-players aren't bad people. They're aligned to a different business than yours. Your job as the leader isn't to make them perform. It's to help them find the place they fit.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Book a Practice Plan Call.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"You think you have a performance problem on your team. You don't. You have an alignment problem. That's a completely different conversation."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"The advice every practice owner hears is 'hold them accountable'. That's the wrong question. The right question is whether they should have been hired into this business in the first place."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">behind the scenes</span></div>
+        <div class="clip-line" contenteditable="true">"We run a 90 day values audit. Three questions. It's caught every misaligned hire before they became a problem. Once you run it, you can't unsee what was already there."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"B players aren't bad people. They're aligned to a different business. Your job is to help them find it. Not punish them for being in the wrong room."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ep 12 -->
+  <div class="ep" data-ep="12">
+    <div class="ep-head">
+      <div class="ep-tag-block">
+        <span class="ep-tag">Episode option 12 · wildcard</span>
+        <span class="ep-lead">Lead: <span contenteditable="true">J</span></span>
+      </div>
+      <div class="ep-title-wrap">
+        <h3 class="ep-title" contenteditable="true">The interview moment that filters out every wrong hire</h3>
+      </div>
+      <button class="ep-select-btn" onclick="toggleSelect(this)"><span class="check">✓</span><span class="label">Select for batch</span></button>
+    </div>
+    <div class="field">
+      <div class="field-label">The promise</div>
+      <textarea class="field-input">By the end of this episode, the practice owner currently hiring will know the one question to ask in the interview and the one moment to watch for that has filtered out every "amazing on paper, disaster in person" hire we've ever interviewed.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Anchor story</div>
+      <textarea class="field-input">The worst hire you ever made early in the practice. What you would have seen in the interview if you'd known to look. Compare to the front desk hire you're making right now and what the interview process now looks like.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">Hot take</div>
+      <textarea class="field-input">The right hire never comes from the resume. It comes from one specific moment in the interview that most owners flinch through and move on. The owners who learn to stay in that moment never have to fire anyone again.</textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">CTA</div>
+      <input class="field-input" type="text" value="Book a Practice Plan Call.">
+    </div>
+    <div class="clip-block">
+      <div class="clip-head">Clip moments to capture</div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">0:00 – 0:15 · cold open hook</span><span class="clip-type">trailer clip</span></div>
+        <div class="clip-line" contenteditable="true">"There's one moment in every interview when you know whether to hire them. Most practice owners flinch through it and hire anyway. That flinch is what costs you six months of your life."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">2:00 – 4:00 · contrarian beat</span><span class="clip-type">reframe</span></div>
+        <div class="clip-line" contenteditable="true">"You're not hiring a resume. You're hiring a person who has to sit at your front desk and talk to your patients every day. The resume tells you nothing about whether that conversation goes well."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">8:00 – 11:00 · success story moment</span><span class="clip-type">the question</span></div>
+        <div class="clip-line" contenteditable="true">"The question we ask now is, 'tell me about a time you disagreed with your manager and how you handled it.' Their first three words tell us everything. Most people don't realise how much they reveal in those three words."</div>
+      </div>
+      <div class="clip">
+        <div class="clip-meta"><span class="clip-when">11:00 – 12:30 · hot take</span><span class="clip-type">the line for the carousel</span></div>
+        <div class="clip-line" contenteditable="true">"You're not hiring for skills. You can teach those. You're hiring for who that person is when nobody's watching."</div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Floor -->
+  <div class="floor">
+    <h3>What happens <span class="ital">after you confirm</span></h3>
+    <p>Once you're locked on your six, message Sev. From there:</p>
+    <ol>
+      <li><strong>48 hours before the shoot.</strong> We send you the run sheet with your final six in order, plus the wardrobe note and the one-page producer brief. Andy and J each get a printed card per episode with title, promise, story prompts and the hot take line written out.</li>
+      <li><strong>Day of shoot.</strong> Two hours in studio. Soft opener, peak energy, story episode, framework episode, the live disagreement episode, then heart-led close. Five minute resets between each. We'll prompt you on the talkback if a clip moment is sitting right there and we haven't grabbed it yet.</li>
+      <li><strong>Delivery.</strong> Six edited 15-minute episodes plus the one social clip per episode included in the package. Additional clips are quoted per clip if you want the full clip bank (the 3 to 4 per episode mapped above).</li>
+    </ol>
+  </div>
+
+  <div class="docfoot">
+    <span>Bright Tsar Studios · for Wealthy Wellness Business</span>
+    <span>v1 · pre-shoot working doc</span>
+  </div>
+
+</main>
+
+<script>
+  // Cloud-backed shared doc via Supabase. Anyone with the URL can edit.
+  // The publishable key below is safe in client code — RLS controls access.
+  const DOC_ID = 'wwb-episode-plan';
+  const SUPABASE_URL = 'https://ztbrbhfrnpdwbdwyuovo.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_Sc7-vIJ1xkv53G6SRC7omg_aBUoYwt6';
+  const REST_URL = SUPABASE_URL + '/rest/v1/shared_documents';
+  const LOCAL_CACHE_KEY = 'wwb-episode-plan-cache-v2';
+  const POLL_INTERVAL_MS = 12000;
+
+  const baseHeaders = {
+    apikey: SUPABASE_KEY,
+    Authorization: 'Bearer ' + SUPABASE_KEY
+  };
+
+  function getState() {
+    const state = { selected: [], fields: {} };
+    document.querySelectorAll('.ep.selected').forEach(ep => {
+      state.selected.push(ep.dataset.ep);
+    });
+    document.querySelectorAll('[contenteditable="true"], .field-input').forEach((el, i) => {
+      const key = 'f' + i;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        state.fields[key] = el.value;
+      } else {
+        state.fields[key] = el.innerHTML;
+      }
+    });
+    return state;
+  }
+
+  function applyState(state) {
+    if (!state || typeof state !== 'object') return;
+    if (Array.isArray(state.selected)) {
+      document.querySelectorAll('.ep.selected').forEach(ep => ep.classList.remove('selected'));
+      state.selected.forEach(epNum => {
+        const ep = document.querySelector('.ep[data-ep="' + epNum + '"]');
+        if (ep) ep.classList.add('selected');
+      });
+    }
+    if (state.fields) {
+      document.querySelectorAll('[contenteditable="true"], .field-input').forEach((el, i) => {
+        const key = 'f' + i;
+        if (state.fields[key] === undefined) return;
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          if (el.value !== state.fields[key]) el.value = state.fields[key];
+        } else {
+          if (el.innerHTML !== state.fields[key]) el.innerHTML = state.fields[key];
+        }
+      });
+    }
+    updateCounter();
+  }
+
+  function setStatus(stateName, ts) {
+    const el = document.getElementById('cloudStatus');
+    if (!el) return;
+    el.classList.remove('loading', 'saving', 'synced', 'offline');
+    el.classList.add(stateName);
+    const labels = {
+      loading: 'Connecting',
+      saving: 'Saving',
+      synced: ts ? 'Saved · ' + new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Saved',
+      offline: 'Offline'
+    };
+    el.textContent = labels[stateName] || '';
+  }
+
+  async function loadFromCloud() {
+    setStatus('loading');
+    try {
+      const res = await fetch(REST_URL + '?id=eq.' + DOC_ID + '&select=data,updated_at', {
+        headers: baseHeaders, cache: 'no-store'
+      });
+      if (!res.ok) throw new Error('GET ' + res.status);
+      const rows = await res.json();
+      const row = rows[0];
+      if (row && row.data && Object.keys(row.data).length > 0) {
+        applyState(row.data);
+        setStatus('synced', row.updated_at);
+      } else {
+        // Fresh doc — keep the defaults baked into the HTML.
+        // If the user previously edited offline, restore that local cache.
+        const localRaw = localStorage.getItem(LOCAL_CACHE_KEY);
+        if (localRaw) {
+          try { applyState(JSON.parse(localRaw)); } catch (e) {}
+        }
+        setStatus('synced');
+      }
+    } catch (err) {
+      console.warn('cloud load failed; using local cache if available', err);
+      const localRaw = localStorage.getItem(LOCAL_CACHE_KEY);
+      if (localRaw) {
+        try { applyState(JSON.parse(localRaw)); } catch (e) {}
+      }
+      setStatus('offline');
+    }
+  }
+
+  let saveInflight = false;
+  let savePending = false;
+
+  async function saveToCloud() {
+    if (saveInflight) { savePending = true; return; }
+    saveInflight = true;
+    setStatus('saving');
+    const state = getState();
+    try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(state)); } catch (e) {}
+    try {
+      const res = await fetch(REST_URL + '?id=eq.' + DOC_ID, {
+        method: 'PATCH',
+        headers: Object.assign({}, baseHeaders, {
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal'
+        }),
+        body: JSON.stringify({ data: state })
+      });
+      if (!res.ok) throw new Error('PATCH ' + res.status);
+      setStatus('synced', new Date().toISOString());
+    } catch (err) {
+      console.warn('cloud save failed', err);
+      setStatus('offline');
+    } finally {
+      saveInflight = false;
+      if (savePending) { savePending = false; saveToCloud(); }
+    }
+  }
+
+  function isUserTyping() {
+    const el = document.activeElement;
+    if (!el) return false;
+    return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable;
+  }
+
+  async function pollCloud() {
+    if (saveInflight || savePending || isUserTyping()) return;
+    try {
+      const res = await fetch(REST_URL + '?id=eq.' + DOC_ID + '&select=data,updated_at', {
+        headers: baseHeaders, cache: 'no-store'
+      });
+      if (!res.ok) return;
+      const rows = await res.json();
+      const row = rows[0];
+      if (!row || !row.data) return;
+      const currentJson = JSON.stringify(getState());
+      const remoteJson = JSON.stringify(row.data);
+      if (currentJson !== remoteJson && Object.keys(row.data).length > 0) {
+        applyState(row.data);
+        setStatus('synced', row.updated_at);
+      }
+    } catch (e) { /* silent — next poll retries */ }
+  }
+
+  function toggleSelect(btn) {
+    const ep = btn.closest('.ep');
+    ep.classList.toggle('selected');
+    const label = btn.querySelector('.label');
+    if (ep.classList.contains('selected')) {
+      label.textContent = 'Selected';
+    } else {
+      label.textContent = 'Select for batch';
+    }
+    updateCounter();
+    queueSave();
+  }
+
+  function updateCounter() {
+    const count = document.querySelectorAll('.ep.selected').length;
+    const counter = document.getElementById('selCount');
+    if (counter) counter.textContent = count;
+    const status = document.getElementById('selStatus');
+    if (status) {
+      if (count === 0) {
+        status.textContent = 'Pick your six';
+        status.classList.remove('ok');
+      } else if (count < 6) {
+        status.textContent = (6 - count) + ' to go';
+        status.classList.remove('ok');
+      } else if (count === 6) {
+        status.textContent = 'Locked in. Confirm with Sev.';
+        status.classList.add('ok');
+      } else {
+        status.textContent = 'Over by ' + (count - 6) + '. Deselect to lock.';
+        status.classList.remove('ok');
+      }
+    }
+    document.querySelectorAll('.ep').forEach(ep => {
+      const label = ep.querySelector('.label');
+      if (label) {
+        label.textContent = ep.classList.contains('selected') ? 'Selected' : 'Select for batch';
+      }
+    });
+  }
+
+  async function resetAll() {
+    if (!confirm('This clears every selection and edit on the shared document for everyone, and restores the original. Continue?')) return;
+    setStatus('saving');
+    try {
+      await fetch(REST_URL + '?id=eq.' + DOC_ID, {
+        method: 'PATCH',
+        headers: Object.assign({}, baseHeaders, {
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal'
+        }),
+        body: JSON.stringify({ data: {} })
+      });
+    } catch (e) { console.warn('reset failed', e); }
+    localStorage.removeItem(LOCAL_CACHE_KEY);
+    location.reload();
+  }
+
+  let saveTimer;
+  function queueSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveToCloud, 700);
+  }
+
+  document.addEventListener('input', queueSave);
+  document.addEventListener('blur', () => {
+    clearTimeout(saveTimer);
+    saveToCloud();
+  }, true);
+  window.addEventListener('beforeunload', () => {
+    if (saveTimer) {
+      clearTimeout(saveTimer);
+      try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(getState())); } catch (e) {}
+    }
+  });
+
+  loadFromCloud();
+  updateCounter();
+  setInterval(pollCloud, POLL_INTERVAL_MS);
+</script>
+</body>
+</html>
