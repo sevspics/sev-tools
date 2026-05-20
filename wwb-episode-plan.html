@@ -1345,7 +1345,8 @@
   const SUPABASE_URL = 'https://ztbrbhfrnpdwbdwyuovo.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_Sc7-vIJ1xkv53G6SRC7omg_aBUoYwt6';
   const REST_URL = SUPABASE_URL + '/rest/v1/shared_documents';
-  const LOCAL_CACHE_KEY = 'wwb-episode-plan-cache-v2';
+  const LOCAL_CACHE_KEY = 'wwb-episode-plan-cache-v3';
+  const DEBOUNCE_MS = 250;
   const POLL_INTERVAL_MS = 12000;
 
   const baseHeaders = {
@@ -1366,6 +1367,7 @@
         state.fields[key] = el.innerHTML;
       }
     });
+    state._ts = Date.now();
     return state;
   }
 
@@ -1406,8 +1408,22 @@
     el.textContent = labels[stateName] || '';
   }
 
+  function readLocalCache() {
+    try {
+      const raw = localStorage.getItem(LOCAL_CACHE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) { return null; }
+  }
+
+  function writeLocalCache(state) {
+    try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
   async function loadFromCloud() {
     setStatus('loading');
+    let cloudState = null;
+    let cloudUpdatedAt = null;
     try {
       const res = await fetch(REST_URL + '?id=eq.' + DOC_ID + '&select=data,updated_at', {
         headers: baseHeaders, cache: 'no-store'
@@ -1415,25 +1431,38 @@
       if (!res.ok) throw new Error('GET ' + res.status);
       const rows = await res.json();
       const row = rows[0];
-      if (row && row.data && Object.keys(row.data).length > 0) {
-        applyState(row.data);
-        setStatus('synced', row.updated_at);
-      } else {
-        // Fresh doc — keep the defaults baked into the HTML.
-        // If the user previously edited offline, restore that local cache.
-        const localRaw = localStorage.getItem(LOCAL_CACHE_KEY);
-        if (localRaw) {
-          try { applyState(JSON.parse(localRaw)); } catch (e) {}
-        }
-        setStatus('synced');
+      if (row && row.data) {
+        cloudState = row.data;
+        cloudUpdatedAt = row.updated_at;
       }
     } catch (err) {
       console.warn('cloud load failed; using local cache if available', err);
-      const localRaw = localStorage.getItem(LOCAL_CACHE_KEY);
-      if (localRaw) {
-        try { applyState(JSON.parse(localRaw)); } catch (e) {}
-      }
+      const local = readLocalCache();
+      if (local) applyState(local);
       setStatus('offline');
+      return;
+    }
+
+    const local = readLocalCache();
+    const localTs = local && typeof local._ts === 'number' ? local._ts : 0;
+    const cloudTs = cloudUpdatedAt ? new Date(cloudUpdatedAt).getTime() : 0;
+    const cloudHasContent = cloudState && Object.keys(cloudState).length > 0;
+    const localHasContent = local && local.fields && Object.keys(local.fields).length > 0;
+
+    if (localHasContent && localTs > cloudTs + 2000) {
+      // Local edits never made it to cloud (e.g., user closed tab before debounce fired).
+      // Apply local and push it up so cloud catches up.
+      applyState(local);
+      setStatus('saving');
+      saveToCloud();
+    } else if (cloudHasContent) {
+      applyState(cloudState);
+      setStatus('synced', cloudUpdatedAt);
+    } else if (localHasContent) {
+      applyState(local);
+      setStatus('synced');
+    } else {
+      setStatus('synced');
     }
   }
 
@@ -1445,7 +1474,7 @@
     saveInflight = true;
     setStatus('saving');
     const state = getState();
-    try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(state)); } catch (e) {}
+    writeLocalCache(state);
     try {
       const res = await fetch(REST_URL + '?id=eq.' + DOC_ID, {
         method: 'PATCH',
@@ -1466,6 +1495,26 @@
     }
   }
 
+  // Synchronous-style save for page-unload. `keepalive: true` lets the request
+  // survive past page lifetime. Fires unconditionally on every unload so we
+  // never lose the last few keystrokes typed before refresh.
+  function saveOnUnload() {
+    if (saveTimer) clearTimeout(saveTimer);
+    const state = getState();
+    writeLocalCache(state);
+    try {
+      fetch(REST_URL + '?id=eq.' + DOC_ID, {
+        method: 'PATCH',
+        headers: Object.assign({}, baseHeaders, {
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal'
+        }),
+        body: JSON.stringify({ data: state }),
+        keepalive: true
+      });
+    } catch (e) { /* silent — local cache is the backstop */ }
+  }
+
   function isUserTyping() {
     const el = document.activeElement;
     if (!el) return false;
@@ -1473,7 +1522,7 @@
   }
 
   async function pollCloud() {
-    if (saveInflight || savePending || isUserTyping()) return;
+    if (saveInflight || savePending || saveTimer || isUserTyping()) return;
     try {
       const res = await fetch(REST_URL + '?id=eq.' + DOC_ID + '&select=data,updated_at', {
         headers: baseHeaders, cache: 'no-store'
@@ -1481,10 +1530,10 @@
       if (!res.ok) return;
       const rows = await res.json();
       const row = rows[0];
-      if (!row || !row.data) return;
+      if (!row || !row.data || Object.keys(row.data).length === 0) return;
       const currentJson = JSON.stringify(getState());
       const remoteJson = JSON.stringify(row.data);
-      if (currentJson !== remoteJson && Object.keys(row.data).length > 0) {
+      if (currentJson !== remoteJson) {
         applyState(row.data);
         setStatus('synced', row.updated_at);
       }
@@ -1501,7 +1550,7 @@
       label.textContent = 'Select for batch';
     }
     updateCounter();
-    queueSave();
+    saveToCloud();
   }
 
   function updateCounter() {
@@ -1549,22 +1598,29 @@
     location.reload();
   }
 
-  let saveTimer;
+  let saveTimer = null;
   function queueSave() {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(saveToCloud, 700);
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => { saveTimer = null; saveToCloud(); }, DEBOUNCE_MS);
   }
 
+  // Keystroke-level: short debounce so saves catch up to the typist quickly.
   document.addEventListener('input', queueSave);
-  document.addEventListener('blur', () => {
-    clearTimeout(saveTimer);
+
+  // Field-commit events: force an immediate save, no debounce.
+  document.addEventListener('change', () => {
+    if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; }
     saveToCloud();
   }, true);
-  window.addEventListener('beforeunload', () => {
-    if (saveTimer) {
-      clearTimeout(saveTimer);
-      try { localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(getState())); } catch (e) {}
-    }
+  document.addEventListener('blur', () => {
+    if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; }
+    saveToCloud();
+  }, true);
+
+  // Page-unload safety nets: use keepalive so the request survives the unload.
+  window.addEventListener('pagehide', saveOnUnload);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') saveOnUnload();
   });
 
   loadFromCloud();
