@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tower Timer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-elev: #15151a;
+    --ink: #f5f1e8;
+    --ink-dim: #8a8780;
+    --build: #f5a623;
+    --build-glow: rgba(245, 166, 35, 0.35);
+    --discuss: #e63946;
+    --discuss-glow: rgba(230, 57, 70, 0.4);
+    --line: #2a2a30;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(16px, 4vh, 32px) 20px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    background-image:
+      radial-gradient(ellipse at top, rgba(245, 166, 35, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(230, 57, 70, 0.04) 0%, transparent 50%);
+  }
+
+  body.discuss-mode {
+    background-image:
+      radial-gradient(ellipse at center, rgba(230, 57, 70, 0.08) 0%, transparent 60%);
+  }
+
+  body.finished {
+    animation: alert 0.4s ease-in-out 6;
+  }
+
+  @keyframes alert {
+    0%, 100% { background-color: var(--bg); }
+    50% { background-color: rgba(230, 57, 70, 0.25); }
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    width: 100%;
+  }
+
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 40px);
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+
+  .brand .accent {
+    color: var(--build);
+  }
+
+  body.discuss-mode .brand .accent {
+    color: var(--discuss);
+  }
+
+  .tagline {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-top: 4px;
+  }
+
+  /* Mode toggle */
+  .mode-toggle {
+    display: flex;
+    gap: 8px;
+    background: var(--bg-elev);
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+
+  .mode-btn {
+    background: transparent;
+    border: none;
+    color: var(--ink-dim);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .mode-btn.active {
+    background: var(--build);
+    color: var(--bg);
+  }
+
+  body.discuss-mode .mode-btn.active {
+    background: var(--discuss);
+    color: var(--ink);
+  }
+
+  .mode-btn:not(.active):hover {
+    color: var(--ink);
+  }
+
+  /* Timer display */
+  .timer-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(85vw, 380px);
+    height: min(85vw, 380px);
+    max-height: 50vh;
+  }
+
+  .ring {
+    position: absolute;
+    inset: 0;
+    transform: rotate(-90deg);
+  }
+
+  .ring circle {
+    fill: none;
+    stroke-width: 4;
+  }
+
+  .ring .track {
+    stroke: var(--line);
+  }
+
+  .ring .progress {
+    stroke: var(--build);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.95s linear, stroke 0.3s ease;
+    filter: drop-shadow(0 0 8px var(--build-glow));
+  }
+
+  body.discuss-mode .ring .progress {
+    stroke: var(--discuss);
+    filter: drop-shadow(0 0 8px var(--discuss-glow));
+  }
+
+  .time-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 22vw, 160px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .time-display.warning {
+    color: var(--discuss);
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .status-label {
+    position: absolute;
+    bottom: 22%;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .btn-primary {
+    flex: 1;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    padding: 18px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.2s ease;
+  }
+
+  .btn-primary:hover { background: var(--build); }
+  body.discuss-mode .btn-primary:hover { background: var(--discuss); color: var(--ink); }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink-dim);
+    border: 1px solid var(--line);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 18px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    color: var(--ink);
+    border-color: var(--ink-dim);
+  }
+
+  .btn-skip {
+    display: none;
+    color: var(--discuss);
+    border-color: rgba(230, 57, 70, 0.4);
+  }
+
+  body.discuss-mode .btn-skip {
+    display: block;
+  }
+
+  .btn-skip:hover {
+    background: var(--discuss);
+    color: var(--ink);
+    border-color: var(--discuss);
+  }
+
+  .btn-emergency {
+    display: none;
+    color: var(--discuss);
+    border-color: var(--discuss);
+    background: rgba(230, 57, 70, 0.08);
+    letter-spacing: 0.15em;
+    font-weight: 600;
+  }
+
+  body:not(.discuss-mode) .btn-emergency {
+    display: block;
+  }
+
+  .btn-emergency:hover {
+    background: var(--discuss);
+    color: var(--ink);
+    border-color: var(--discuss);
+  }
+
+  /* Footer hint */
+  .hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+    text-align: center;
+    opacity: 0.5;
+  }
+
+  .hint kbd {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: inherit;
+  }
+
+  @media (max-width: 380px) {
+    .controls { gap: 10px; }
+    .btn-primary { font-size: 18px; padding: 16px; }
+    .btn-secondary { padding: 16px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">TOWER<span class="accent">.</span>TIMER</div>
+  <div class="tagline" id="tagline">Build phase</div>
+</header>
+
+<div class="mode-toggle" role="tablist">
+  <button class="mode-btn active" data-mode="build" data-seconds="300">Build 5:00</button>
+  <button class="mode-btn" data-mode="discuss" data-seconds="60">Discuss 1:00</button>
+</div>
+
+<div class="timer-wrap">
+  <svg class="ring" viewBox="0 0 200 200">
+    <circle class="track" cx="100" cy="100" r="94"></circle>
+    <circle class="progress" cx="100" cy="100" r="94"
+            stroke-dasharray="590.6" stroke-dashoffset="0"></circle>
+  </svg>
+  <div class="time-display" id="display">5:00</div>
+  <div class="status-label" id="statusLabel">Ready</div>
+</div>
+
+<div class="controls">
+  <button class="btn-primary" id="startBtn">START</button>
+  <button class="btn-secondary btn-emergency" id="emergencyBtn">Emergency Meeting</button>
+  <button class="btn-secondary btn-skip" id="skipBtn">Skip to Vote</button>
+  <button class="btn-secondary" id="resetBtn">Reset</button>
+</div>
+
+<div class="hint">
+  Press <kbd>SPACE</kbd> to start/pause &nbsp; · &nbsp; <kbd>R</kbd> to reset
+</div>
+
+<script>
+  const display = document.getElementById('display');
+  const statusLabel = document.getElementById('statusLabel');
+  const tagline = document.getElementById('tagline');
+  const startBtn = document.getElementById('startBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const skipBtn = document.getElementById('skipBtn');
+  const emergencyBtn = document.getElementById('emergencyBtn');
+  const modeBtns = document.querySelectorAll('.mode-btn');
+  const progressRing = document.querySelector('.ring .progress');
+
+  const RING_LENGTH = 590.6; // 2 * PI * 94
+
+  let totalSeconds = 300;
+  let remaining = 300;
+  let running = false;
+  let intervalId = null;
+  let mode = 'build';
+
+  function formatTime(secs) {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function updateDisplay() {
+    display.textContent = formatTime(remaining);
+    const pct = remaining / totalSeconds;
+    progressRing.style.strokeDashoffset = RING_LENGTH * (1 - pct);
+
+    // Warning state in last 10 seconds
+    if (remaining <= 10 && remaining > 0 && running) {
+      display.classList.add('warning');
+    } else {
+      display.classList.remove('warning');
+    }
+  }
+
+  function setMode(newMode, opts = {}) {
+    if (running && !opts.force) return; // don't switch mid-run unless forced
+    const switching = mode !== newMode;
+    mode = newMode;
+    modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === newMode));
+
+    if (newMode === 'build') {
+      totalSeconds = 300;
+      tagline.textContent = 'Build phase';
+      document.body.classList.remove('discuss-mode');
+    } else {
+      totalSeconds = 60;
+      tagline.textContent = 'Emergency meeting';
+      document.body.classList.add('discuss-mode');
+      if (switching && !opts.silent) playEmergencyBuzz();
+    }
+    remaining = totalSeconds;
+    statusLabel.textContent = 'Ready';
+    document.body.classList.remove('finished');
+    updateDisplay();
+  }
+
+  function tick() {
+    remaining -= 1;
+    if (remaining <= 0) {
+      remaining = 0;
+      updateDisplay();
+      stop();
+      finish();
+      return;
+    }
+    updateDisplay();
+    playTick();
+  }
+
+  function start() {
+    if (running) return;
+    if (remaining <= 0) remaining = totalSeconds;
+    running = true;
+    startBtn.textContent = 'PAUSE';
+    statusLabel.textContent = mode === 'build' ? 'Building' : 'Debating';
+    document.body.classList.remove('finished');
+    playStartSound();
+    intervalId = setInterval(tick, 1000);
+  }
+
+  function pause() {
+    running = false;
+    startBtn.textContent = 'RESUME';
+    statusLabel.textContent = 'Paused';
+    clearInterval(intervalId);
+    display.classList.remove('warning');
+    playPauseSound();
+  }
+
+  function stop() {
+    running = false;
+    clearInterval(intervalId);
+  }
+
+  function reset() {
+    stop();
+    remaining = totalSeconds;
+    startBtn.textContent = 'START';
+    statusLabel.textContent = 'Ready';
+    document.body.classList.remove('finished');
+    display.classList.remove('warning');
+    updateDisplay();
+  }
+
+  function finish() {
+    startBtn.textContent = 'START';
+    statusLabel.textContent = mode === 'build' ? 'Time up' : 'Vote now';
+    document.body.classList.add('finished');
+    playAlarm();
+  }
+
+  // Toggle start/pause
+  startBtn.addEventListener('click', () => {
+    if (running) pause();
+    else start();
+  });
+
+  resetBtn.addEventListener('click', reset);
+
+  skipBtn.addEventListener('click', () => {
+    if (mode !== 'discuss') return;
+    stop();
+    remaining = 0;
+    updateDisplay();
+    finish();
+  });
+
+  emergencyBtn.addEventListener('click', () => {
+    if (mode !== 'build') return;
+    stop();
+    playEmergencyMeeting();
+    setMode('discuss', { force: true, silent: true });
+  });
+
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => setMode(btn.dataset.mode));
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (running) pause(); else start();
+    } else if (e.key === 'r' || e.key === 'R') {
+      reset();
+    } else if (e.key === '1') {
+      setMode('build');
+    } else if (e.key === '2') {
+      setMode('discuss');
+    }
+  });
+
+  // Audio using Web Audio API (no external files)
+  let audioCtx = null;
+
+  function ensureAudio() {
+    if (!audioCtx) {
+      try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      } catch (e) {
+        return false;
+      }
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return true;
+  }
+
+  function playTone({ freq, type = 'sine', start = 0, dur = 0.1, peak = 0.1, attack = 0.005, release = 0.05 }) {
+    if (!ensureAudio()) return;
+    const t0 = audioCtx.currentTime + start;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.linearRampToValueAtTime(peak, t0 + attack);
+    gain.gain.setValueAtTime(peak, Math.max(t0 + attack, t0 + dur - release));
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(t0);
+    osc.stop(t0 + dur + 0.02);
+  }
+
+  function playTick() {
+    if (!ensureAudio()) return;
+    if (mode === 'build') {
+      // Soft wooden tick
+      playTone({ freq: 200, type: 'triangle', dur: 0.06, peak: 0.05, attack: 0.002, release: 0.05 });
+      playTone({ freq: 90, type: 'sine', dur: 0.05, peak: 0.03, attack: 0.002, release: 0.04 });
+    } else {
+      // Higher, more urgent digital pip
+      playTone({ freq: 520, type: 'square', dur: 0.05, peak: 0.045, attack: 0.002, release: 0.04 });
+      playTone({ freq: 780, type: 'square', start: 0.005, dur: 0.04, peak: 0.025, attack: 0.002, release: 0.035 });
+    }
+  }
+
+  function playStartSound() {
+    if (!ensureAudio()) return;
+    playTone({ freq: 520, type: 'sine', dur: 0.1, peak: 0.12, attack: 0.005, release: 0.08 });
+    playTone({ freq: 780, type: 'sine', start: 0.07, dur: 0.14, peak: 0.13, attack: 0.005, release: 0.1 });
+  }
+
+  function playPauseSound() {
+    if (!ensureAudio()) return;
+    playTone({ freq: 660, type: 'sine', dur: 0.1, peak: 0.12, attack: 0.005, release: 0.08 });
+    playTone({ freq: 440, type: 'sine', start: 0.07, dur: 0.14, peak: 0.1, attack: 0.005, release: 0.1 });
+  }
+
+  function playEmergencyBuzz() {
+    if (!ensureAudio()) return;
+    // Klaxon: rapid alternation between two harsh tones
+    const pattern = [440, 660, 440, 660, 440, 660];
+    const step = 0.13;
+    pattern.forEach((freq, i) => {
+      playTone({ freq, type: 'sawtooth', start: i * step, dur: step - 0.01, peak: 0.18, attack: 0.005, release: 0.02 });
+    });
+  }
+
+  function playEmergencyMeeting() {
+    if (!ensureAudio()) return;
+    // Air-raid siren: continuous rising/falling sweep + low rumble
+    const t0 = audioCtx.currentTime;
+    const cycles = 3;
+    const cycleDur = 0.45;
+    const totalDur = cycles * cycleDur;
+
+    const osc1 = audioCtx.createOscillator();
+    const gain1 = audioCtx.createGain();
+    osc1.type = 'sawtooth';
+    osc1.frequency.setValueAtTime(300, t0);
+    for (let i = 0; i < cycles; i++) {
+      osc1.frequency.linearRampToValueAtTime(900, t0 + i * cycleDur + cycleDur / 2);
+      osc1.frequency.linearRampToValueAtTime(300, t0 + (i + 1) * cycleDur);
+    }
+    gain1.gain.setValueAtTime(0.0001, t0);
+    gain1.gain.linearRampToValueAtTime(0.18, t0 + 0.03);
+    gain1.gain.setValueAtTime(0.18, t0 + totalDur - 0.1);
+    gain1.gain.exponentialRampToValueAtTime(0.0001, t0 + totalDur);
+    osc1.connect(gain1).connect(audioCtx.destination);
+    osc1.start(t0);
+    osc1.stop(t0 + totalDur + 0.05);
+
+    const osc2 = audioCtx.createOscillator();
+    const gain2 = audioCtx.createGain();
+    osc2.type = 'triangle';
+    osc2.frequency.value = 75;
+    gain2.gain.setValueAtTime(0.0001, t0);
+    gain2.gain.linearRampToValueAtTime(0.12, t0 + 0.05);
+    gain2.gain.setValueAtTime(0.12, t0 + totalDur - 0.1);
+    gain2.gain.exponentialRampToValueAtTime(0.0001, t0 + totalDur);
+    osc2.connect(gain2).connect(audioCtx.destination);
+    osc2.start(t0);
+    osc2.stop(t0 + totalDur + 0.05);
+  }
+
+  function playAlarm() {
+    if (!ensureAudio()) return;
+    const freq = mode === 'build' ? 880 : 660;
+    for (let i = 0; i < 3; i++) {
+      playTone({ freq, type: 'square', start: i * 0.35, dur: 0.25, peak: 0.18, attack: 0.02, release: 0.05 });
+    }
+  }
+
+  // Prime audio on first user interaction (mobile browsers)
+  document.body.addEventListener('click', ensureAudio, { once: true });
+
+  // Init
+  updateDisplay();
+</script>
+</body>
+</html>
