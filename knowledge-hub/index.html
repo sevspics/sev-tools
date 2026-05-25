@@ -200,6 +200,40 @@ const CATEGORIES={strategy:{label:"Content Strategy",color:"#0D9488",icon:"📐"
 const FORMATS={faceless:{label:"Faceless",icon:"\u{1F5A5}\uFE0F",difficulty:1,color:"#10B981"},meme:{label:"Memes",icon:"\u{1F602}",difficulty:2,color:"#84CC16"},candid:{label:"Candid",icon:"\u{1F4F1}",difficulty:3,color:"#F59E0B"},framed:{label:"Framed",icon:"\u{1F3AC}",difficulty:4,color:"#F97316"},"visual-storyteller":{label:"Visual Storyteller",icon:"\u{1F3A5}",difficulty:5,color:"#EF4444"},"talking-head":{label:"Talking Head",icon:"\u{1F5E3}\uFE0F",difficulty:6,color:"#DC2626"}};
 const CALLS=[
   {
+    "id": "donna-s3",
+    "name": "Marketing Weekly: Donna x Sev — Knowledge Hub Live Build",
+    "date": "2026-05-25",
+    "type": "1:1 Advisory",
+    "attendees": [
+      "Donna"
+    ],
+    "link": "https://fathom.video/calls/685297150",
+    "duration": 97
+  },
+  {
+    "id": "nick-wilkinson-s1",
+    "name": "Nick Wilkinson — Content Workshop Application + Live Prototype Build",
+    "date": "2026-05-25",
+    "type": "BTS Sales",
+    "attendees": [
+      "Nick Wilkinson"
+    ],
+    "link": "https://fathom.video/calls/685479924",
+    "duration": 44
+  },
+  {
+    "id": "janice-smythe-s1",
+    "name": "Janice Smythe — Content Workshop Application Sales Call",
+    "date": "2026-05-25",
+    "type": "BTS Sales",
+    "attendees": [
+      "Janice Smythe",
+      "Tara"
+    ],
+    "link": "https://fathom.video/calls/684744968",
+    "duration": 57
+  },
+  {
     "id": "kristian-may24",
     "name": "Kristian x Sev — AI Sesh Workshop Debrief + July Paid Workshop Plan",
     "date": "2026-05-24",
@@ -1062,6 +1096,270 @@ const CALLS=[
 ];
 const ENTRIES=[
   {
+    "id": "donna-s3-01",
+    "title": "Knowledge Hub Architecture (5-Step Capture → Publish Pipeline)",
+    "category": "ai",
+    "funnel": [
+      "ALL"
+    ],
+    "sourceId": "donna-s3",
+    "mentions": [],
+    "type": "framework",
+    "description": "A 5-step pipeline that turns operator expertise into a self-replenishing content engine. (1) CAPTURE: every call (sales, advisory, podcast, internal) is recorded via Fathom by default. (2) HARVEST: Claude scrapes the transcripts for gold nuggets — frameworks, reframes, case studies, named-named-and-numbered insights. (3) STRUCTURE: each nugget becomes a knowledge entry with sourceId, context, tags, and funnel stage. (4) GENERATE: Claude produces multi-format content briefs (reels, carousels, stories) from each entry. (5) PUBLISH: the operator records each brief in their own voice. The hub compounds — every new call adds raw material, the operator never starts from a blank page, and the database becomes a queryable asset for clients, a paid resource, or a source of receipts in disputes.",
+    "context": "Built live with Donna in 90 minutes. From 3 Fathom calls and one podcast transcript, the hub generated 38 knowledge entries plus ready-to-shoot content briefs (including a full brief for her '10-minute sleep rule' framework). Donna's bottleneck was 'what do I post' after 10+ years of expertise — the hub eliminated the blank page entirely by harvesting what she'd already said.",
+    "businessTypes": [
+      "Coaching",
+      "Consulting",
+      "Service Business",
+      "Creator Business",
+      "Agency"
+    ],
+    "tags": [
+      "knowledge-hub",
+      "content-engine",
+      "claude",
+      "fathom",
+      "ai-workflow",
+      "compounding-asset"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: three Fathom calls drag into a folder. One prompt. Caption: '38 content ideas in 90 minutes.'",
+        "body": "Show the pipeline on screen: Fathom transcripts go in, Claude harvests gold nuggets, each nugget becomes a structured entry with context and tags, then Claude generates reel + carousel + story briefs per entry. Walk through one entry going from raw transcript line to a ready-to-shoot brief. The operator never opens a blank doc again.",
+        "cta": "Save this. Comment 'HUB' for the prompt I'm using to build the harvest step.",
+        "notes": "Use real-feeling screen captures (anonymize). The 38-entries-from-3-calls reveal is the proof. Under 60 seconds."
+      },
+      "meme": {
+        "hook": "Coaches with 10 years of expertise staring at a blank doc vs. coaches with a knowledge hub harvesting every call.",
+        "body": "Left: founder at laptop, 'what should I post today,' three abandoned drafts. Right: same founder opens the hub, picks an entry, shoots the brief, done in 12 minutes. Text: 'The bottleneck isn't ideas. It's organizing what you already said.'",
+        "cta": "Tag a coach with 10 years of expertise and no content.",
+        "notes": "Two-panel meme. The 'abandoned drafts' visual is the cringe. Under 10 seconds."
+      },
+      "candid": {
+        "hook": "Built a knowledge hub with a client today. 38 content entries in 90 minutes. Here's the actual pipeline.",
+        "body": "Phone selfie, walking. Explain: she's got 10 years of expertise but freezes at the blank doc. So we built a hub. Capture every call. Claude scrapes transcripts for the real nuggets — frameworks, case studies, reframes. Each one becomes a structured entry. Claude generates the content briefs from there. The operator just records in their voice. She'll never stare at a blank doc again. And the hub keeps growing every time she gets on a call.",
+        "cta": "DM me 'HUB' if you want the build playbook I used with her.",
+        "notes": "Walking energy. The '38 in 90 minutes' is the credibility hook. Real story setup."
+      },
+      "framed": {
+        "hook": "If you've been creating content from scratch, you're working twice. Your calls already have the content.",
+        "body": "From the desk. Walk through the 5 steps: Capture (record everything), Harvest (Claude scrapes for nuggets), Structure (each nugget becomes a typed entry), Generate (Claude produces multi-format briefs), Publish (you record in your voice). The hub compounds: every call adds material. The asset isn't the content — it's the queryable database underneath. Clients can search it, you can monetize it, you can use entries as receipts in disputes. Most operators are sitting on years of unindexed expertise.",
+        "cta": "Save this. Comment 'HUB' for the pipeline I'm installing for coaches.",
+        "notes": "Authority delivery. Use a 5-step diagram overlay. Slow pace. Foundational systems content."
+      },
+      "visual-storyteller": {
+        "hook": "She had 10 years of expertise and zero content. We built one tool in 90 minutes and unlocked all of it.",
+        "body": "Open on the operator staring at her laptop, blank doc, four years of abandoned drafts in a folder. Cut to the build: three Fathom calls drag into the system, Claude harvests, structure pops up, content briefs generate. Show the moment she sees 38 entries scroll past, each one a piece of her own expertise she'd never written down. Cut to her recording the first brief, fast, confident, in her voice. Caption: 'The expertise was already there. The hub just made it findable.'",
+        "cta": "Save this if you've been making content the hard way.",
+        "notes": "SAO arc. The 38-entries-scroll reveal is the payoff. Music build at the build moment."
+      },
+      "talking-head": {
+        "hook": "If you have 10 years of expertise and no content, you don't need to create more. You need to harvest what's already on your call recordings.",
+        "body": "Direct to camera. Fast: every call you've recorded already contains the content. The bottleneck isn't ideas, it's organization. The fix is a 5-step pipeline — capture every call, harvest the nuggets with AI, structure them as a database, generate multi-format briefs, publish in your voice. The hub compounds with every call. The asset isn't the content. It's the queryable database underneath. Build the hub once, draw from it forever.",
+        "cta": "Follow for the rest of the knowledge-hub buildout.",
+        "notes": "Conviction. The 'expertise on call recordings' diagnosis is the open. Close on the database insight."
+      }
+    }
+  },
+  {
+    "id": "donna-s3-02",
+    "title": "Build For Yourself First, Productize Second ($5k-$10k Operator Products)",
+    "category": "strategy",
+    "funnel": [
+      "ALL"
+    ],
+    "sourceId": "donna-s3",
+    "mentions": [],
+    "type": "principle",
+    "description": "The most valuable products to sell to other operators are the systems you built to solve your own bottleneck. You already have proof you'll use it, unfiltered understanding of the pain, and the iteration loop baked into your daily workflow. Productize the result — knowledge hub, custom Notion system, internal app, prompt library — and sell it at $5k-$10k to operators in your same category. The pitch writes itself: 'I built this for me, it solved X, here's the version of it you can install.' The leverage: one build, infinite installs. The discipline: only productize systems you genuinely use every day. Theoretical systems don't sell. Daily-driver systems do.",
+    "context": "After building Donna's Knowledge Hub, Sev identified the same setup as a $5k-$10k productized offer for other coaches. The proof point is Sev using it daily across all his advisory work; the pain (content bottleneck from expertise overload) is universal across content-driven service businesses; the install can be done in a single session. The pattern: every internal tool Sev builds becomes a productization candidate within weeks of relying on it.",
+    "businessTypes": [
+      "Coaching",
+      "Consulting",
+      "Agency",
+      "Service Business",
+      "Creator Business"
+    ],
+    "tags": [
+      "productization",
+      "internal-tools",
+      "operator-products",
+      "leverage",
+      "pricing",
+      "dogfooding"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: open your custom internal tool. Then open Stripe. Caption: 'This used to be just for me. Now it's $7k a seat.'",
+        "body": "Show the operator's daily-driver tool — a knowledge hub, a Notion system, a custom app. Walk through the productization moves: package the install, write the SOP, record a setup Loom, set the price at $5k-$10k. The proof point is built-in: 'I use this every day.' Sales pitch writes itself. One build, infinite installs.",
+        "cta": "Save this. Comment 'PRODUCTIZE' for the internal-tool-to-product checklist.",
+        "notes": "Real product screenshot + Stripe overlay. Under 50 seconds. The 'used to be just for me' line is the cold open."
+      },
+      "meme": {
+        "hook": "Founders building courses about things they've never used vs. founders productizing the system they live in every day.",
+        "body": "Left: founder writing 'Module 3: Theoretical Framework I Read About,' face contorted. Right: same founder records a 10-minute Loom installing the tool they actually use, sells 20 seats at $7k. Text: 'Productize what you live in.'",
+        "cta": "Tag a founder building a course about something they've never deployed.",
+        "notes": "Two-panel meme. The 'theoretical framework' panel is the cringe. Under 10 seconds."
+      },
+      "candid": {
+        "hook": "Realized today that the tool I built for myself is a $5k product. The proof is I use it every day.",
+        "body": "Phone selfie, walking. Explain: I built a knowledge hub because I had a content bottleneck. Used it daily for weeks. Then I installed it for a client today and watched her face — she got it instantly. That's when it clicks: any system you actually use every day is productizable. The pitch is 'I built this for me, it works, here's how to install it.' No theoretical anything. Just the daily driver, packaged.",
+        "cta": "DM me 'PRODUCTIZE' if you've got an internal tool that's begging to be a product.",
+        "notes": "Walking, real-story energy. The 'realized today' frame is the credibility hook."
+      },
+      "framed": {
+        "hook": "Your most valuable potential product is the system you already built for yourself. You're just not selling it.",
+        "body": "From the desk. Walk through the principle: operators undervalue their internal tools because they assume 'if I built it, anyone can.' Wrong. The build is the moat. The install is the product. Three filters for productization: (1) you use it every day, (2) the pain it solves is universal in your category, (3) you can install it in a single session. Price at $5k-$10k. The proof is your own daily use. Sales cycle collapses because you're selling something you live in.",
+        "cta": "Save this. Comment 'PRODUCTIZE' for the internal-tool-to-product worksheet.",
+        "notes": "Authority delivery. Three-filter graphic overlay. Slow pace. Foundational strategy content."
+      },
+      "visual-storyteller": {
+        "hook": "He built a tool to solve his own bottleneck. 6 weeks later, the same tool is a $7k product. Here's the pivot.",
+        "body": "Open on the operator at his desk, frustrated with a daily problem (content, ops, sales tracking). Cut to the build — he opens Claude, sketches a custom tool, iterates over a few days. Show him using it daily — fewer pain points, faster output. Cut to the moment a client sees it: 'wait, can I have this?' Show the productization: install Loom recorded, SOP written, price set. Cut to Stripe notifications: $7k, $7k, $7k. Caption: 'You already built the product. You just hadn't sold it yet.'",
+        "cta": "Save this if you've built something for yourself that other operators would pay for.",
+        "notes": "SAO arc. The Stripe-notification sequence is the proof. Music build at the install reveal."
+      },
+      "talking-head": {
+        "hook": "Stop building courses. Productize the system you actually use every day. That's where the money is.",
+        "body": "Direct to camera. Fast: every operator has internal tools they built to solve their own bottleneck. Those tools are sitting unmonetized. The most valuable products you can sell to other operators are the systems you genuinely use daily — proof is built in, pitch writes itself, install takes one session. Stop teaching theory. Sell the install. Price it at $5k-$10k. The leverage is one build, infinite sales.",
+        "cta": "Follow for the rest of the operator-products playbook.",
+        "notes": "Conviction. The 'stop building courses' open is the controversial hook. Hold the eye contact."
+      }
+    }
+  },
+  {
+    "id": "nick-wilkinson-s1-01",
+    "title": "Dopamine Tool Beats Email For Cohort Retention",
+    "category": "platform",
+    "funnel": [
+      "BOF"
+    ],
+    "sourceId": "nick-wilkinson-s1",
+    "mentions": [],
+    "type": "principle",
+    "description": "Email newsletters do not retain workshop or cohort attendees between sessions. Open rates are too low, engagement is passive, there's no dopamine loop. The fix is a dedicated interactive tool — a web app with weekly prompts, a Notion leaderboard, unlockable rewards (1-on-1 sessions, bonus content, member tiers). Attendees return because the tool gives them a small win each visit. Build the tool, give it as part of the workshop, measure check-ins instead of opens. The architecture: Claude-built HTML app + Notion leaderboard + reward triggers outperforms a Mailchimp sequence by an order of magnitude on cohort retention. Email is for transactions. Dopamine tools are for retention.",
+    "context": "Nick runs the Someday Creative Club workshop and his email follow-up was getting near-zero engagement. The fix built live in the sales call: a Claude-prototyped HTML 'Drip Card Deck' app with the workshop's 'Pause, Amplify, Progress' prompts, a Notion leaderboard, and unlockable 1-on-1 sessions. Built as the prototype for a 100%-retention monthly series.",
+    "businessTypes": [
+      "Workshop",
+      "Coaching",
+      "Education",
+      "Cohort",
+      "Membership"
+    ],
+    "tags": [
+      "retention",
+      "cohort",
+      "dopamine",
+      "gamification",
+      "email-alternative",
+      "workshop-followup"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: open Mailchimp dashboard, 12% open rate. Now open a workshop drip card app, 78% weekly check-in. Caption: 'Email is dead for cohort retention.'",
+        "body": "Show the contrast: email newsletter with the standard 12% open rate, 2% click-through, no real engagement signal. Cut to the dopamine tool — daily prompts, Notion leaderboard, unlockable rewards. Walk through what an attendee sees: log in, get the prompt, complete it, climb the leaderboard, unlock the next reward. Each visit has a payoff. Email has none.",
+        "cta": "Save this. Drop 'DRIP' for the Claude prompt I use to build these.",
+        "notes": "Use real-looking analytics screenshots. The contrast lands. Under 50 seconds."
+      },
+      "meme": {
+        "hook": "Workshop hosts sending Mailchimp newsletters vs. workshop hosts shipping a leaderboard-powered drip app.",
+        "body": "Left: founder checking Mailchimp stats, 8% open rate, zero replies, asks 'why won't they engage.' Right: same founder watches the leaderboard updating live as 30 attendees complete the weekly prompt. Text: 'Email is a transaction tool. Dopamine is a retention tool.'",
+        "cta": "Tag a workshop host still relying on weekly newsletters.",
+        "notes": "Two-panel meme. The 'zero replies' panel is universal. Under 10 seconds."
+      },
+      "candid": {
+        "hook": "Watched a workshop host realize his entire follow-up strategy was the bottleneck. Email isn't retaining attendees. Here's what does.",
+        "body": "Phone selfie, walking. Explain: workshop follow-up over email gets near-zero engagement. The fix is a tool that gives attendees a small dopamine hit each time they log in — weekly prompts they complete, a leaderboard they climb, rewards they unlock. Built it live with him in 30 minutes using Claude. Same workshop content. Different delivery surface. Retention went from 'email opens we never measure' to 'check-ins we can count.'",
+        "cta": "DM me 'DRIP' and I'll send the build prompt I used.",
+        "notes": "Real-story energy. The 'realize his entire follow-up was the bottleneck' framing is the credibility hook."
+      },
+      "framed": {
+        "hook": "If you're using email to retain workshop attendees, you're losing them. Email is for transactions. Retention needs dopamine.",
+        "body": "From the desk. Walk through the framework: every cohort has a between-session drop-off. Email can't close it because there's no payoff for opening. A dopamine tool can — weekly prompts, leaderboard position, unlockable rewards. Three components: (1) a daily or weekly prompt that takes under 5 minutes, (2) a public leaderboard that shows progress relative to peers, (3) unlockable rewards (1-on-1 calls, bonus content, tier upgrades). Ship as part of the workshop. Measure check-ins, not opens.",
+        "cta": "Save this. Comment 'DRIP' for the prompt-leaderboard-reward stack I'm building for cohorts.",
+        "notes": "Authority delivery. Use a 3-component diagram. Slow pace."
+      },
+      "visual-storyteller": {
+        "hook": "His workshop email follow-up was averaging 8% open rate. He swapped it for a drip card app. Retention 10x'd in one cohort.",
+        "body": "Open on the operator staring at his Mailchimp dashboard, 8% open rate, blank engagement. Cut to the build: he and his coach prototype a Claude-built HTML drip card deck with prompts, leaderboard, unlockables. Show the launch — attendees logging in daily, climbing the board, unlocking rewards. Cut to the new analytics: 78% weekly check-ins. Same content. Different surface. Caption: 'Email is the transaction layer. The dopamine tool is the retention layer.'",
+        "cta": "Save this if your cohort drop-off is killing your retention numbers.",
+        "notes": "SAO arc. The before/after dashboard contrast is the proof. Music build at the launch moment."
+      },
+      "talking-head": {
+        "hook": "Workshop email follow-ups are dead. If you want retention, you need a tool that gives attendees a dopamine hit every time they open it.",
+        "body": "Direct to camera. Fast: every workshop has a between-session drop-off. Email can't close it because there's no payoff for opening. The fix is a dedicated tool — weekly prompts under 5 minutes, a leaderboard that shows progress, unlockable rewards. Each component creates a return reason. Email creates none. Ship the tool as part of the workshop. Measure check-ins, not opens. Retention numbers will speak for themselves.",
+        "cta": "Follow for the rest of the cohort-retention playbook.",
+        "notes": "Conviction. The 'email is dead' open is the controversial hook. Hold eye contact."
+      }
+    }
+  },
+  {
+    "id": "janice-smythe-s1-01",
+    "title": "Two-Path Execution Offer (DIY Or Delegated)",
+    "category": "sales",
+    "funnel": [
+      "BOF"
+    ],
+    "sourceId": "janice-smythe-s1",
+    "mentions": [],
+    "type": "framework",
+    "description": "For service buyers worried they won't actually execute on what they buy, offer two execution paths inside the same offer: DIY (you and your team do it, using the system) or DELEGATED (you connect them with a vetted vendor in their city). The two paths kill the most common objection — 'I love this but I won't have time / I'm camera-shy / I don't have an editor' — because the buyer can switch paths anytime without changing offers. The DIY path keeps margin high. The delegated path keeps reach wide. The choice itself signals you've thought through the actual execution constraint, not just sold them a course. Stack a vetted-vendor list in every major city as the underlying infrastructure; it's the moat that lets the offer scale across geographies without changing the architecture.",
+    "context": "Janice runs a Melbourne brokerage, 26 years in the industry, deep expertise, camera shy, recovering from a $4M personal investment loss, needs 10+ leads/week. The standard objection — 'I won't have time to film' — was the close blocker. The two-path offer (Janice + her assistant Tara DIY, OR Sev's vetted Melbourne videographer delegated) removed the execution objection entirely. She agreed to onboard after resolving her existing agency contract on Friday.",
+    "businessTypes": [
+      "Coaching",
+      "Workshop",
+      "Education",
+      "Agency",
+      "Service Business"
+    ],
+    "tags": [
+      "offer",
+      "execution",
+      "diy-delegated",
+      "objection-handling",
+      "two-path",
+      "vendor-network"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: a sales objection scroll — 'I won't have time,' 'I'm camera shy,' 'I have no editor.' One line of offer copy kills all three.",
+        "body": "Show the objection list on screen. Reveal the fix: 'You can run this DIY with your team using the system, OR we connect you with a vetted vendor in your city to run it for you.' Overlay the offer architecture: same price, same outcome, two execution paths. Walk through the math — DIY keeps margin, delegated keeps reach, switching is allowed mid-engagement.",
+        "cta": "Save this. Comment 'TWO-PATH' for the offer-copy template.",
+        "notes": "Use a clean text-overlay reveal. The 'one line kills three objections' framing is the payoff. Under 50 seconds."
+      },
+      "meme": {
+        "hook": "Service sellers hearing 'I won't have time' for the 50th time vs. service sellers with a DIY-or-delegated path baked into the offer.",
+        "body": "Left: founder mid-sales-call, head in hands, hears 'I love it but I just won't have time.' Right: same founder calmly says 'cool, you can DIY with the system or we'll connect you with our Melbourne vendor.' Buyer says yes. Text: 'Two paths beat one objection.'",
+        "cta": "Tag a founder still losing deals to 'I won't have time.'",
+        "notes": "Two-panel meme. The head-in-hands panel is the cringe. Under 10 seconds."
+      },
+      "candid": {
+        "hook": "Closed a deal today that would've died on the 'I won't have time' objection. The fix is two execution paths inside the same offer.",
+        "body": "Phone selfie. Explain: she's got 26 years of expertise, camera-shy, no editor on her team. Classic 'I love this but I can't actually do it' deal. The fix: same offer, two execution paths. DIY with your team using the system, or we connect you with a vetted videographer in your city to run it for you. Same price. Same outcome. She picked DIY for round one and reserved the right to switch to delegated if her assistant struggled. Deal closed.",
+        "cta": "DM me 'TWO-PATH' and I'll send the offer copy I used.",
+        "notes": "Real-story energy. The 'deal would've died' frame is the credibility hook."
+      },
+      "framed": {
+        "hook": "The most common sales objection in service work is 'I won't actually execute.' One offer architecture kills it permanently.",
+        "body": "From the desk. Walk through the framework: every service buyer has a hidden execution worry — too busy, wrong skills, no team. If your offer assumes execution, you lose deals to people who actually need the outcome. The fix is two paths inside the same offer. DIY: buyer's team does it with your system. DELEGATED: you connect them with a vetted vendor in their city. Same price, same outcome, switchable mid-engagement. The infrastructure: a vetted-vendor list in every major city you sell into. The result: zero deals lost to 'I can't execute.'",
+        "cta": "Save this. Comment 'TWO-PATH' for the offer-architecture template.",
+        "notes": "Authority delivery. Two-path diagram overlay. Slow, methodical pace."
+      },
+      "visual-storyteller": {
+        "hook": "26 years of expertise. Camera-shy. No editor. The kind of deal that always dies. Closed it in one call with a two-path offer.",
+        "body": "Open on the call: operator pitching, buyer nodding, then the moment of hesitation — 'I love it, I just don't think I'll execute.' Cut to the operator delivering the fix: 'You don't have to. You can DIY with your team and our system, or we connect you with a vetted videographer in Melbourne who runs the whole thing.' Show the buyer's face shift. Cut to the close — buyer picks DIY for round one, reserves the option to switch. Caption: 'The objection wasn't the offer. It was the execution.'",
+        "cta": "Save this if you're losing deals to 'I won't have time.'",
+        "notes": "SAO arc. The buyer-face-shift moment is the payoff. Music build at the close."
+      },
+      "talking-head": {
+        "hook": "If you're losing deals to 'I love it but I won't have time,' your offer is missing a delegated path. Add it.",
+        "body": "Direct to camera. Fast: every service buyer has a hidden execution worry. If your offer assumes they'll do the work, you lose anyone who doesn't have the time, skill, or team. The fix is two execution paths in one offer — DIY using your system, or delegated to a vetted vendor in their city. Same price. Same outcome. Switchable mid-engagement. Build the vendor list in every city you sell into and your offer scales geographies without changing architecture.",
+        "cta": "Follow for the rest of the two-path offer playbook.",
+        "notes": "Conviction. The 'add it' open is the directive. Hold eye contact."
+      }
+    }
+  },
+  {
     "id": "kristian-may24-01",
     "title": "Public-Face Partner Split (Build The Industry Set Model)",
     "category": "strategy",
@@ -1722,7 +2020,7 @@ const ENTRIES=[
       "BOF"
     ],
     "sourceId": "prince-may22",
-    "mentions": [],
+    "mentions": ["donna-s3"],
     "type": "principle",
     "description": "Most operators wait for opportunities to come, then try to prove themselves on the day. The receipts mindset inverts it: systematically collect undeniable proof of past work — photos at the booth, video clips mid-performance, screenshot testimonials from named decision-makers, attendance numbers, on-the-day organizer quotes — and build them into a portfolio that pre-answers every gatekeeper objection. The 'undeniable' standard matters: a generic testimonial is dismissable. A specific testimonial from a city council coordinator naming the event and the outcome ('Prince ran our 800-person community day, we want him back') is not. Receipts are the lever that lets you skip the proving phase: you walk into the conversation with the case already closed. Higher rates, fewer interviews, fewer agency gates. The discipline is collecting them live, not trying to reconstruct them after the gig.",
     "context": "Prince had MC'd big events but had no organized portfolio — no headshots from the booth, no testimonials from the organizers, no clips. Every new pitch started from zero proof. The install was a receipts-collection habit: every gig produces a photo, a one-line testimonial request, and a 30-second clip. Build the portfolio as you go, not after the fact. He'd already worked with City of Canning and needed to text Phoebe before the memory faded.",
@@ -1985,7 +2283,7 @@ const ENTRIES=[
       "ALL"
     ],
     "sourceId": "daecian-s11",
-    "mentions": [],
+    "mentions": ["donna-s3", "nick-wilkinson-s1"],
     "type": "tactic",
     "description": "Stop separating 'content creation time' from 'work time.' Record every advisory call, every sales call, every research session, every brainstorm. The unscripted teaching is your content. You're not performing for the camera — you're doing the actual work, with the camera running. Then post-process: clips become shorts, full sessions become long-form videos. The bottleneck stops being 'I don't have time to make content' because you weren't making content. You were doing the work that already makes content. Same hour, two outputs. Set the calls up as the record once, post infinitely engine.",
     "context": "Decided as Daecian's content production system. He'd been treating content creation as a separate workstream and stalling. The reframe: every advisory session he runs is already teaching. The Profit Margin video they brainstormed live in the call became the test case — film the brainstorm, not a polished retake.",
@@ -4158,7 +4456,7 @@ const ENTRIES=[
   {
     "id": "dave-may13-01",
     "title": "WhatsApp-First Client Comms (Email Kills Velocity)",
-    "mentions": ["jaimini-norath-s1"],
+    "mentions": ["jaimini-norath-s1", "nick-wilkinson-s1"],
     "category": "workflow",
     "funnel": [
       "BOF"
@@ -5453,7 +5751,7 @@ const ENTRIES=[
   {
     "id": "donna-s1-02",
     "title": "Three-Tier Offer Ascension Stack",
-    "mentions": ["donna-s2"],
+    "mentions": ["donna-s2", "janice-smythe-s1"],
     "category": "sales",
     "funnel": [
       "BOF"
@@ -7603,6 +7901,7 @@ const ENTRIES=[
   {
     "id": "ga1-34",
     "title": "Harvest Existing Customers For BOF Content",
+    "mentions": ["donna-s3"],
     "category": "sales",
     "funnel": [
       "BOF"
@@ -11883,6 +12182,7 @@ const ENTRIES=[
   {
     "id": "joel-04",
     "title": "Mine Lead Conversations for Content Ideas",
+    "mentions": ["donna-s3"],
     "category": "strategy",
     "funnel": [
       "ALL"
