@@ -109,11 +109,16 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;backgroun
 .format-section p{font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0}
 .view-formats-btn{margin-top:12px;padding:8px 18px;border-radius:8px;border:1px solid var(--teal);background:rgba(13,148,136,0.06);color:var(--teal);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
 .view-formats-btn:hover{background:var(--teal);color:#fff}
-.format-card{position:relative;transition:opacity .3s ease}
+.format-card{position:relative;transition:opacity .3s ease;padding-bottom:44px}
 .format-card.created{opacity:0.3}
 .format-check{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11px;color:var(--text-muted);user-select:none}
 .format-check input{width:16px;height:16px;cursor:pointer;accent-color:var(--teal)}
 .format-check span{font-family:'DM Sans',sans-serif}
+.format-copy{position:absolute;bottom:10px;left:10px;padding:4px 10px;border:1px solid var(--border);background:#fff;color:var(--text-secondary);font-size:11px;border-radius:6px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.format-copy:hover{border-color:var(--teal);color:var(--teal);background:rgba(13,148,136,0.06)}
+.format-copy.copied{border-color:var(--teal);background:var(--teal);color:#fff}
+.format-section p{user-select:text;-webkit-user-select:text}
+.format-header,.format-check,.format-copy{user-select:none;-webkit-user-select:none}
 .tracker-bar{display:flex;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .tracker-progress{flex:1;min-width:200px}
 .tracker-progress-bg{height:8px;background:var(--border);border-radius:100px;overflow:hidden}
@@ -199,6 +204,40 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;backgroun
 const CATEGORIES={strategy:{label:"Content Strategy",color:"#0D9488",icon:"📐"},hooks:{label:"Hooks & Scripting",color:"#F59E0B",icon:"🎣"},formats:{label:"Content Formats",color:"#8B5CF6",icon:"🎬"},workflow:{label:"Workflow & Production",color:"#3B82F6",icon:"⚙️"},platform:{label:"Platform & Algorithm",color:"#EC4899",icon:"📱"},brand:{label:"Personal Brand",color:"#EF4444",icon:"🔥"},sales:{label:"Sales Through Content",color:"#10B981",icon:"💰"},ai:{label:"AI & Tools",color:"#6366F1",icon:"🤖"},mindset:{label:"Mindset & Consistency",color:"#F97316",icon:"🧠"}};
 const FORMATS={faceless:{label:"Faceless",icon:"\u{1F5A5}\uFE0F",difficulty:1,color:"#10B981"},meme:{label:"Memes",icon:"\u{1F602}",difficulty:2,color:"#84CC16"},candid:{label:"Candid",icon:"\u{1F4F1}",difficulty:3,color:"#F59E0B"},framed:{label:"Framed",icon:"\u{1F3AC}",difficulty:4,color:"#F97316"},"visual-storyteller":{label:"Visual Storyteller",icon:"\u{1F3A5}",difficulty:5,color:"#EF4444"},"talking-head":{label:"Talking Head",icon:"\u{1F5E3}\uFE0F",difficulty:6,color:"#DC2626"}};
 const CALLS=[
+  {
+    "id": "adam-lewis-s3",
+    "name": "Adam Lewis — Content Workshop Day 3 (Live Filming + CapCut Editing Workflow)",
+    "date": "2026-05-26",
+    "type": "Workshop",
+    "attendees": [
+      "Adam Lewis"
+    ],
+    "link": "https://fathom.video/calls/686520976",
+    "duration": 311
+  },
+  {
+    "id": "mark-sacco-may26",
+    "name": "Mark Sacco x Sev — LinkedIn Organic Outreach vs Boosting Advisory",
+    "date": "2026-05-26",
+    "type": "1:1 Advisory",
+    "attendees": [
+      "Mark Sacco"
+    ],
+    "link": "https://fathom.video/calls/686509784",
+    "duration": 16
+  },
+  {
+    "id": "withu-may26",
+    "name": "With U Advisory Call (Organic Content) — May 26",
+    "date": "2026-05-26",
+    "type": "Group Advisory",
+    "attendees": [
+      "Niro Dayalan (Leadership Coach)",
+      "Mark Sacco"
+    ],
+    "link": "https://fathom.video/calls/684878595",
+    "duration": 52
+  },
   {
     "id": "donna-s3",
     "name": "Marketing Weekly: Donna x Sev — Knowledge Hub Live Build",
@@ -1096,6 +1135,565 @@ const CALLS=[
 ];
 const ENTRIES=[
   {
+    "id": "adam-lewis-s3-01",
+    "title": "5-Step CapCut Editing Workflow (Cut → Punch-In → Captions → Hook → Export)",
+    "category": "workflow",
+    "funnel": [
+      "ALL"
+    ],
+    "sourceId": "adam-lewis-s3",
+    "mentions": [],
+    "type": "framework",
+    "description": "A 5-step repeatable workflow for editing vertical video in CapCut that takes a raw clip to publish-ready in under 15 minutes. Step 1: vertical workspace + assign shortcuts (E=split, Q=delete left, W=delete right, G=generate captions). Step 2: cut the fat — zoom the timeline, use audio waveforms to identify and remove dead air. Step 3: punch in — duplicate clip, scale to 125% on an eye-level guide, copy/paste attributes across all cuts. Step 4: captions and hook — press G to generate captions for all clips at once (prevents timing gaps), apply black glow (intensity 40, range 40) for readability, position in safe zone, drop a 5-word AI hook at top. Step 5: export 4K/30fps, build a custom cover for curiosity. Same five steps every video means edit time stops being a variable.",
+    "context": "Day 3 of Adam Lewis's content workshop. Adam had 10 raw clips on Drive but no shipping rhythm because each edit took an hour. Sev ran the workflow live, condensing a 2:49 raw clip down to a 36-second publish-ready video in under 15 minutes. The systematized 5-step sequence with the exact shortcuts and attribute-copy trick unlocked Adam's cadence.",
+    "businessTypes": [
+      "All"
+    ],
+    "tags": [
+      "editing",
+      "capcut",
+      "video-workflow",
+      "production",
+      "batch-edit"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording of CapCut. Timer starts. Caption: 'A 2:49 raw clip becomes a 36-second post in under 15 minutes. Same 5 steps. Every time.'",
+        "body": "Walk through each step on screen. 1) Vertical workspace + shortcuts (E split, Q delete left, W delete right, G captions). 2) Trim dead air using audio waveforms. 3) Punch in — duplicate clip, scale 125%, copy attributes to all cuts. 4) Generate all captions at once with G, black glow 40/40, hook at top. 5) Export 4K/30fps + custom cover. Timer ends. Edit is done.",
+        "cta": "Save this. Pin it next time you sit down to edit.",
+        "notes": "Real CapCut screen recording. The visible timer is the proof — under 15 minutes. Text overlays at each step. Under 90s. Lo-fi music."
+      },
+      "meme": {
+        "hook": "Editors freestyling every cut vs editors running the same 5-step workflow every video.",
+        "body": "Left: someone scrubbing through a 3-hour timeline, deleting clips, no captions yet. Right: same person done in 12 minutes, export progress bar full. Text: 'Workflow eats freestyle for breakfast.'",
+        "cta": "Tag a creator still freestyling their edits.",
+        "notes": "Two-panel format. The cluttered timeline vs the export bar is the contrast. Under 8s."
+      },
+      "candid": {
+        "hook": "Spent two hours teaching a tradie coach the same 5-step CapCut workflow I run on every single video I ship.",
+        "body": "Phone selfie. Walk through it: vertical workspace, keyboard shortcuts for speed, waveform-based cutting, the punch-in trick with 125% scale and copy-attributes, captions all at once, AI hook at top, export. We took a 2:49 raw clip and got it to a 36-second post in under 15 minutes. The reason most editors are slow isn't lack of skill, it's no system.",
+        "cta": "DM me 'CAPCUT' and I'll send you the keyboard shortcut sheet I gave him.",
+        "notes": "Walking energy. The 2:49 → 36 second proof point lands. Raw phone selfie."
+      },
+      "framed": {
+        "hook": "If you're editing each video from scratch like it's the first one, you're paying a tax every single ship.",
+        "body": "Seated, structured. The 5 steps: setup, cut the fat, punch in, captions and hook, export. Walk through each: vertical workspace and keyboard shortcuts mean your hands stop leaving the keys. Waveforms let you cut dead air visually instead of guessing. Copy/paste attributes makes punch-ins identical across clips. Generating all captions at once eliminates the timing gaps. The 5-word AI hook at the top is the scroll-stopper. Same steps. Every video. Compound the time savings across 100 videos and you've bought yourself a month.",
+        "cta": "Comment 'WORKFLOW' for the keyboard shortcut sheet I use with clients.",
+        "notes": "Authority delivery. Have the 5 steps on screen as a lower-third. Slow, structured. The 'tax every ship' framing is the headline."
+      },
+      "visual-storyteller": {
+        "hook": "He had 10 videos filmed but couldn't get them out. The bottleneck wasn't filming. It was edit time. One workflow fixed it.",
+        "body": "Open on Adam at his desk — 10 clips on Google Drive, none edited. Cut to the live demo: 2:49 raw clip on the timeline. Walk through the steps in fast cuts — shortcuts firing, waveform trimming, punch-ins stacking, captions generating, hook overlay landing, export hitting. Final reveal: 36-second video, published. Five days later Adam is shipping daily.",
+        "cta": "Save this if you're filming faster than you're publishing.",
+        "notes": "Animated overlays showing each shortcut as it's pressed. Music builds on the export reveal. SAO arc."
+      },
+      "talking-head": {
+        "hook": "If editing each video takes you over an hour, the problem isn't your skill. It's that you don't have a workflow.",
+        "body": "Direct to camera. Conviction. Most editors freestyle every cut. They open the timeline and think. That's why every video takes an hour. The fix is a 5-step workflow you run identically every time: setup, cut, punch-in, captions, export. Same shortcuts. Same order. No thinking. Edits drop to 15 minutes. Output triples.",
+        "cta": "Follow if you want me to break down each of the 5 steps in its own video next.",
+        "notes": "Close to camera. Fast pace. The 'no thinking' line lands. Series-tease at the end."
+      }
+    }
+  },
+  {
+    "id": "adam-lewis-s3-02",
+    "title": "AI Hook From Transcript (10 Options, 5-Word Cap, Top of Screen)",
+    "category": "hooks",
+    "funnel": [
+      "TOF"
+    ],
+    "sourceId": "adam-lewis-s3",
+    "mentions": [],
+    "type": "tactic",
+    "description": "Export the video transcript from CapCut after captions are generated. Paste into Claude with the prompt: 'Give me 10 scroll-stopping hooks for this video. Max 5 words each.' Pick the strongest. Drop it as text at the top of the screen (above the captions, in the safe zone) so users scrolling on mute still see the hook. The 5-word cap forces compression. Doing 10 options gives you optionality without overcommitting. Critical: the hook is generated FROM the actual content of the video, so the video pays it off — no bait-and-switch, no false promise.",
+    "context": "Adam Lewis Day 3 workshop. Sev edited a 'Mark won $3M in 2 weeks' lead-followup story, exported the transcript from CapCut, dropped it into Claude. 10 hooks generated in 30 seconds. Picked 'Most tradies miss this.' Dropped it at the top of the screen. The hook came from the video's own words, so the delivery matched the promise.",
+    "businessTypes": [
+      "All"
+    ],
+    "tags": [
+      "hooks",
+      "ai",
+      "capcut",
+      "claude",
+      "copy"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording of CapCut. Hit 'Export Transcript.' Cut to Claude. Paste it in with a prompt. 10 hooks generated. Caption: 'The hook is in the video. You just need to extract it.'",
+        "body": "Walk through the workflow. Export transcript from CapCut after captions are generated. Paste into Claude with: 'Give me 10 scroll-stopping hooks for this video. Max 5 words each.' Pick the best. Drop it as text at the top of the screen — above the captions, in the safe zone. The hook is generated from your own words, so the video delivers on it.",
+        "cta": "Save this. The next video you edit, run the prompt.",
+        "notes": "Real CapCut + Claude screen recording. The 'extract not invent' frame is the headline. Under 60s."
+      },
+      "meme": {
+        "hook": "Creators making up a hook before they film vs creators pulling the hook out of the video after they edit.",
+        "body": "Left: someone with sticky notes, brainstorming 'a good hook' before recording — staring at the page. Right: same person finishing an edit, exporting transcript, AI generating 10 options instantly. Text: 'The hook was inside the video the whole time.'",
+        "cta": "Tag a creator still brainstorming hooks before filming.",
+        "notes": "Two-panel format. The sticky-note vs the AI output is the visual punchline. Under 10s."
+      },
+      "candid": {
+        "hook": "Just edited a video with a tradie coach and we generated the hook in 30 seconds using a trick most creators are missing.",
+        "body": "Phone selfie, walking. Explain: most creators try to write a hook before they film. That's hard because you don't know exactly what you're going to say. Easier move: film the video first, edit it, export the transcript from CapCut. Paste into Claude. Prompt for 10 hooks, 5 words each. Pick one. Drop it at the top of the screen. The hook is generated from your actual words, so the video pays it off. We did it live — 'Most tradies miss this' — for a $3M lead-followup story. Hook to delivery in 30 seconds.",
+        "cta": "DM me 'HOOK' and I'll send you the exact Claude prompt.",
+        "notes": "Walking energy. The 30-second proof point. Raw phone selfie. The 'extract, don't invent' frame is the takeaway."
+      },
+      "framed": {
+        "hook": "Stop trying to write hooks. Start extracting them.",
+        "body": "Seated, structured. The reframe: creators waste hours trying to brainstorm a hook before filming. The hook isn't a separate piece of writing — it's a compression of your video's best moment. Workflow: film, edit, export transcript from CapCut, paste into Claude with this prompt: 'Generate 10 scroll-stopping hooks for this video. Max 5 words each.' Pick the one that hits hardest. Drop it at the top of the screen. The video delivers on the hook because the hook came from the video.",
+        "cta": "Comment 'EXTRACT' for the Claude prompt I use.",
+        "notes": "Authority delivery. Have a CapCut + Claude screenshot on screen as proof. Slow, structured."
+      },
+      "visual-storyteller": {
+        "hook": "Two creators. Same video. One spent an hour writing a hook. The other generated 10 in 30 seconds — and the AI hook outperformed.",
+        "body": "Open on creator A at the whiteboard, scribbling hook drafts, crumpling paper. Cut to creator B, finishing their edit, exporting transcript, pasting into Claude. 10 hooks in 30 seconds. Show the chosen hook: 'Most tradies miss this.' Drop into the video at the top. Show the post-publish analytics: scroll-through rate, retention spike at 2 seconds. Text overlay: 'The hook was already in the video.'",
+        "cta": "Save this if you're spending more time on hooks than on the actual content.",
+        "notes": "SAO arc. Use real-looking Claude screen. Music builds on the analytics reveal."
+      },
+      "talking-head": {
+        "hook": "You're writing hooks the wrong way. And it's why most of your videos die at second one.",
+        "body": "Direct to camera. Provocation, then payoff. Stop trying to invent a hook before you film. The hook lives inside the video — you just need to extract it. Film, edit, export the transcript, paste into Claude with the right prompt. 10 hooks, 5 words each, pick the best. Drop it at the top of the screen. Now the video pays off the hook because the hook came from the video. No more bait-and-switch.",
+        "cta": "Follow for the exact Claude prompt I use — coming in the next post.",
+        "notes": "Close to camera. The 'bait-and-switch' callout is the diagnostic. Fast pace on the fix."
+      }
+    }
+  },
+  {
+    "id": "adam-lewis-s3-03",
+    "title": "Drive App Upload Preserves 4K (The Share-Sheet Compression Trap)",
+    "category": "workflow",
+    "funnel": [
+      "ALL"
+    ],
+    "sourceId": "adam-lewis-s3",
+    "mentions": [],
+    "type": "tactic",
+    "description": "When uploading phone video footage to Google Drive, ALWAYS open the Drive app itself and upload from inside the app. NEVER use the phone's Share sheet to send the file to Drive. The Share sheet silently compresses video to 720p; the Drive app upload preserves the full 4K source. This is a silent destroyer — the phone preview looks fine, but captions go soft on the final export and your editor is working with degraded footage they didn't know was compromised. Audit your last 10 uploaded clips by file size — anything under ~15MB per minute is compressed.",
+    "context": "Adam Lewis Day 3 workshop. Adam had uploaded all his 4K phone clips to Drive via the Share sheet. CapCut import revealed soft footage. Sev caught it mid-edit, re-uploaded one clip via the Drive app directly. Side-by-side comparison: same source clip, one at 12MB (compressed) vs the same at 84MB (full 4K). Captions on the compressed version rendered fuzzy.",
+    "businessTypes": [
+      "All"
+    ],
+    "tags": [
+      "workflow",
+      "video-quality",
+      "google-drive",
+      "mobile",
+      "production"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Side-by-side: same iPhone clip uploaded two ways to Google Drive. Left: 4K. Right: 720p. Caption: 'If you use the share sheet, you're losing the resolution you paid for.'",
+        "body": "Show the two workflows: upload via Share Sheet → file compressed to 720p. Upload via the Google Drive app directly → file preserved at 4K. Animate the file size: 84MB vs 12MB on the same clip. Show what it looks like in the editor — soft on the left, sharp on the right. Most editors don't catch it until the captions render fuzzy.",
+        "cta": "Save this. Then check your own Drive folder — your last 10 clips might be 720p.",
+        "notes": "Use actual file-size overlays. The side-by-side resolution comparison is the proof. Under 60s."
+      },
+      "meme": {
+        "hook": "Creators wondering why their footage looks soft vs creators who know about the share-sheet trap.",
+        "body": "Left: someone watching their reel back, captions blurry, 'why does this look bad???' Right: same person on the Drive app uploading directly, 4K preserved. Text: 'The share sheet eats your resolution.'",
+        "cta": "Tag a creator whose phone footage looks softer than it should.",
+        "notes": "Two-panel format. Two phone screens. Under 8s."
+      },
+      "candid": {
+        "hook": "I caught a tradie coach uploading his 4K phone footage the wrong way and it was costing him the resolution he filmed in.",
+        "body": "Phone selfie, walking. Lay it out: most creators upload to Google Drive by hitting Share on the iPhone and picking Drive. That share sheet compresses the file to 720p. Your editor opens it up, it looks soft, captions get fuzzy on export. The fix is dead simple: open the Google Drive app itself and upload from inside the app. That preserves the original 4K. Same file, completely different quality.",
+        "cta": "DM me 'DRIVE' if you want the full mobile-to-edit workflow I run.",
+        "notes": "Walking energy. The 'costing him resolution' framing is the hook. Raw phone selfie."
+      },
+      "framed": {
+        "hook": "If your phone footage looks soft in the edit, it's not your camera. It's your upload method.",
+        "body": "Seated, structured. Walk through the trap: the iOS Share sheet compresses video files when you send to Google Drive — drops 4K to 720p. The fix: open the Drive app directly. Hit upload from inside the app. The full-resolution file goes up untouched. This is a silent destroyer because the phone preview looks fine — you only notice when captions get blurry on the final export. Audit your last 10 uploads. The file sizes will tell you immediately.",
+        "cta": "Comment 'UPLOAD' for the full phone-to-Drive-to-CapCut workflow.",
+        "notes": "Teaching authority. Have a Drive screenshot showing file sizes as proof. Slow."
+      },
+      "visual-storyteller": {
+        "hook": "He filmed in 4K. He uploaded to Drive. The editor opened the files. They were 720p. Here's why.",
+        "body": "Open on Adam filming a clean 4K shot on his iPhone. Cut to him on the Drive Share sheet, hitting upload — done in 5 seconds. Cut to the editor importing into CapCut — footage looks soft. Cut to the diagnostic moment: re-upload via Drive app directly. Side-by-side comparison: blurry vs sharp. Text overlay: 'The share sheet was the bottleneck. Not the camera.'",
+        "cta": "Save this if your edits never look as sharp as your phone footage.",
+        "notes": "Real Drive UI screens for both upload paths. SAO arc. Music build on the side-by-side reveal."
+      },
+      "talking-head": {
+        "hook": "If your phone footage looks worse in CapCut than it did on your camera roll, you have a 30-second fix and almost nobody talks about it.",
+        "body": "Direct to camera. Fast and direct. The iOS Share sheet compresses videos to 720p when you upload to Google Drive. Doesn't matter if you filmed in 4K — the Share sheet kills it. The fix: open the Drive app directly. Upload from inside the app. Done. Original quality preserved. Every editor I work with had this problem and didn't know.",
+        "cta": "Follow for the rest of the phone-to-edit workflow optimizations I teach my clients.",
+        "notes": "Close to camera. The 'almost nobody talks about it' line is the lure. Fast delivery."
+      }
+    }
+  },
+  {
+    "id": "adam-lewis-s3-04",
+    "title": "Delegation Ladder By Revenue ($500k → SMM, $2M → SMM + Editor)",
+    "category": "workflow",
+    "funnel": [
+      "ALL"
+    ],
+    "sourceId": "adam-lewis-s3",
+    "mentions": [],
+    "type": "framework",
+    "description": "Content delegation should be staged with revenue, not personal preference. Under $500k annual revenue: DIY. You film, you edit, you post. The leverage is in YOU learning the system. $500k-$2M: hire a dedicated, full-time, in-house social media manager. Their job is content production, posting, and engagement. $2M+: SMM plus a dedicated video editor. The SMM strategizes and engages; the editor builds the production engine. The mistake most founders make is jumping tiers too early. A $5k/mo agency at $200k revenue isn't delegation; it's a tax on survival. At $200k, that's 30% of net. At $2M it's 3%. Same hire, completely different math.",
+    "context": "Adam Lewis Day 3, near end of workshop. Adam asked about outsourcing the editing work. Sev shut it down — at sub-$500k you do the editing yourself — and laid out the revenue-tiered ladder. The reason isn't just cash: at sub-$500k you're still finding your voice, hooks, and rhythm. You can't outsource that. You have to build it first.",
+    "businessTypes": [
+      "All"
+    ],
+    "tags": [
+      "delegation",
+      "hiring",
+      "content-team",
+      "revenue-thresholds",
+      "scaling"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: a calculator. Revenue input box. Output: a delegation prescription. Caption: 'Your revenue tells you who to hire next.'",
+        "body": "Animated breakdown of the three tiers. Under $500k → DIY content + editing. $500k-$2M → in-house SMM. $2M+ → SMM + dedicated editor. Show the math: at $200k, paying a $5k/mo SMM is 30% of net profit. At $2M it's 3%. Same hire, completely different economics. The principle: stage delegation with revenue, not ambition.",
+        "cta": "Save this. Find your tier.",
+        "notes": "Use a real-looking calculator interface. The revenue input → tier output is the visual. Under 60s."
+      },
+      "meme": {
+        "hook": "Owners at $300k hiring a full content team vs owners at $300k doing it themselves and waiting until $500k.",
+        "body": "Left: stressed founder at $300k, burning $8k/mo on a content agency, no leads, scared to fire them. Right: same founder at $300k, filming on their phone, ugly edits, banking the $8k, hitting $500k by end of year. Text: 'Match the delegation to the revenue.'",
+        "cta": "Tag a founder paying for delegation they can't sustain.",
+        "notes": "Two-panel format. Under 10s. The 'banking the $8k' frame is the cutting line."
+      },
+      "candid": {
+        "hook": "Got asked by a tradie coach today if he should hire an editor. He's at $300k. My answer was 'absolutely not' and here's why.",
+        "body": "Phone selfie, walking. Lay out the ladder. Under $500k = DIY. Above $500k = in-house SMM. Above $2M = SMM plus editor. The reason: at $300k, paying a $5k/mo editor is 20% of profit. At $2M it's 3%. Same hire, completely different math. The other reason: at sub-$500k, you're still finding your voice, your hooks, your rhythm. You can't outsource that. You have to learn it first. The discipline is matching delegation to revenue, not to how tired you feel.",
+        "cta": "DM me 'LADDER' and I'll send you the full tier breakdown with hire profiles.",
+        "notes": "Walking energy. The 'how tired you feel' line is the truth nobody says. Raw phone selfie."
+      },
+      "framed": {
+        "hook": "If your revenue is under $500k and you're hiring an editor, you're not delegating. You're avoiding the work.",
+        "body": "Seated, structured. The three tiers. Under $500k → DIY. You film, you edit, you post. The leverage is in YOU learning the system. $500k-$2M → in-house SMM. Full-time, dedicated. Their job is strategy + production + engagement. $2M+ → SMM plus dedicated editor. Now you have a content team. The mistake most founders make is jumping tiers too early. Hiring a $5k/mo agency at $200k revenue isn't delegation; it's a tax on your survival. Stage the hires with the revenue.",
+        "cta": "Comment 'TIER' for the hire-profile worksheet I use with clients.",
+        "notes": "Teaching authority. Have the three tiers on screen. The 'avoiding the work' callout is the diagnostic. Slow."
+      },
+      "visual-storyteller": {
+        "hook": "He wanted to hire an editor at $300k revenue. We ran the math. He kept the cash and shipped daily for 9 months. Now he's at $700k and hiring.",
+        "body": "Open on Adam at his desk, frustrated with editing, asking about outsourcing. Cut to the whiteboard moment: revenue-to-delegation ladder drawn out. Under $500k → DIY. $500k-$2M → SMM. $2M+ → SMM + editor. Cut to Adam editing his own videos, getting fast. Cut to the revenue ticker climbing. Final scene: at $700k, he's now ready for the SMM hire. Text overlay: 'Right hire. Right time.'",
+        "cta": "Save this if you're tempted to hire delegation you can't sustain yet.",
+        "notes": "Music build on the revenue climb. SAO arc. Use animated ladder graphic."
+      },
+      "talking-head": {
+        "hook": "Most founders hire help too early. And it's why they stay stuck at the same revenue tier for three years.",
+        "body": "Direct to camera. Conviction. Three tiers. Under $500k — you do the content yourself. Period. No editor, no SMM, no agency. The leverage is YOU learning the system. $500k to $2M — hire one in-house SMM. Full-time. They run the whole content engine. Above $2M — add a dedicated editor. The mistake is hiring at the wrong tier. A $5k/mo agency at $200k is a tax. Stage the hires with the revenue. Always.",
+        "cta": "Follow for the next post — I'm breaking down the hire profile for the $500k-tier SMM.",
+        "notes": "Close to camera. The 'tax on your survival' line lands. Series tease at the end."
+      }
+    }
+  },
+  {
+    "id": "mark-sacco-may26-01",
+    "title": "Network-First Manual Outreach Beats Boosting (50 Contacts = $25k Test)",
+    "category": "sales",
+    "funnel": [
+      "MOF"
+    ],
+    "sourceId": "mark-sacco-may26",
+    "mentions": [],
+    "type": "tactic",
+    "description": "For high-ticket B2B with an existing network, manual 1-to-1 LinkedIn outreach to 50 specifically-targeted decision-makers beats a paid boost almost every time. Boosts on LinkedIn often default to lookalikes of your existing network (limited new reach, weak conversion to inquiry). Manual outreach lets you pick exactly who you message, customize the open line, and reference shared context. Sev's most recent test: 50 messages to hand-picked contacts → $25k in revenue inside 30 days. Same effort would have produced near-zero with a boost. The reframe: in B2B, 'boost' sounds like leverage; it's mostly waste. Manual outreach IS the channel that converts. Do the typing yourself.",
+    "context": "Mark Sacco follow-up with a 2,500-connection LinkedIn network, asking whether boosting a well-engaged post was worth the spend. Sev's case: $300k generated in 2022-23 from LinkedIn organic alone; a recent 50-contact test campaign netted $25k in 30 days. The advice: at high-touch B2B price points, you should be doing the typing yourself, not paying the algorithm to do it badly.",
+    "businessTypes": [
+      "B2B",
+      "Consulting",
+      "Service Business",
+      "Coaching"
+    ],
+    "tags": [
+      "linkedin",
+      "outreach",
+      "b2b",
+      "organic",
+      "sales-prospecting"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording of LinkedIn. Compare boost results vs manual outreach results. Caption: '50 messages = $25k. $500 boost = 1 reaction.'",
+        "body": "Walk through the two approaches. Boost: pay LinkedIn, post amplified to a lookalike of your network, get reach impressions, weak conversion to inquiry. Manual outreach: 50 hand-picked decision-makers, custom opener referencing shared context, direct message. Show the case study: $300k from LinkedIn organic in 2022-23, plus $25k from a recent 50-message test. The frame: 'in B2B, boost is renting attention. Manual is buying conversation.'",
+        "cta": "Save this. Tonight, build your 50-name list.",
+        "notes": "Use real-looking LinkedIn UI mockups. The $25k vs $500 boost comparison is the punchline. Under 60s."
+      },
+      "meme": {
+        "hook": "B2B founders boosting a post to 'reach more people' vs B2B founders sending 50 personal DMs.",
+        "body": "Left: founder hitting the boost button, watching the impressions tick up, zero replies. Right: founder typing 50 personalized messages, three replies in two hours, $25k booked. Text: 'Algorithms don't sign $25k deals. Humans do.'",
+        "cta": "Tag a B2B founder boosting posts instead of sending DMs.",
+        "notes": "Two-panel format. Impressions vs dollar value is the punchline. Under 10s."
+      },
+      "candid": {
+        "hook": "Talked to a guy with a 2,500-person LinkedIn network this morning who was about to spend money boosting a post. I told him to send 50 DMs instead.",
+        "body": "Phone selfie, walking. Explain: in B2B at high-ticket price points, the algorithm doesn't sign your deals — humans do. Boosting a post on LinkedIn mostly targets lookalikes of your network, gets you impressions, weak inquiry conversion. Manual outreach lets you pick the exact 50 people you want to reach, customize the opener, reference shared context. My recent test: 50 messages, one month, $25k. The boost equivalent would have gotten a few likes.",
+        "cta": "DM me 'OUTREACH' and I'll send you the 50-name targeting workflow.",
+        "notes": "Walking energy. The '$25k from 50 messages' is the proof point. Raw phone selfie."
+      },
+      "framed": {
+        "hook": "In B2B, boosting is renting attention. Manual outreach is buying conversation. And conversations sign deals.",
+        "body": "Seated, structured. The reframe: most B2B founders default to boosting because it feels like marketing. But boosting on LinkedIn mostly targets lookalikes of your existing network — limited new reach, weak conversion. Manual outreach to 50 hand-picked decision-makers, with custom openers that reference shared context, outperforms by orders of magnitude. The proof: a recent 50-message campaign converted $25k inside 30 days. The boost equivalent would have hit zero. The rule: at high-ticket B2B, do the typing yourself.",
+        "cta": "Comment 'OUTREACH' for the 50-name targeting + opener template I use.",
+        "notes": "Authority delivery. Have a LinkedIn screenshot on screen as proof. Slow, structured. The 'do the typing yourself' line is the takeaway."
+      },
+      "visual-storyteller": {
+        "hook": "He had 2,500 connections and was about to spend $500 boosting a post. We swapped one tactic. He closed $25k in 30 days.",
+        "body": "Open on the founder hovering over the LinkedIn boost button. Cut to the conversation: 'don't boost. Send 50 DMs.' Cut to the workflow: targeting people-you-may-know, reviewing subheadings, picking decision-makers. Cut to him typing custom openers — 50 over a week. Three weeks later, the inbox shows replies, calls booked. Final reveal: $25k in revenue from the 50-message test. Text overlay: 'In B2B, the boost button is the slowest path.'",
+        "cta": "Save this if you've ever boosted a post for 'reach' and gotten nothing.",
+        "notes": "Music build on the $25k reveal. SAO arc. Use real-feeling LinkedIn UI throughout."
+      },
+      "talking-head": {
+        "hook": "If you're a B2B founder boosting LinkedIn posts to 'reach more people,' you're paying for the slowest path to a sale.",
+        "body": "Direct to camera. Conviction. In B2B, the algorithm doesn't sign $25k deals. Humans do. Boosting on LinkedIn mostly throws your post at lookalikes of your existing network — wide reach, weak conversion. Manual outreach lets you pick the 50 specific decision-makers you want to talk to, customize the opener with shared context, and start a real conversation. 50 DMs over a month beat a $500 boost by 50x. Do the typing yourself.",
+        "cta": "Follow for the rest of the LinkedIn B2B playbook — coming up: the opener template that converts at 18%.",
+        "notes": "Close to camera. The '50x' line is the lure. Fast pace on the reframe."
+      }
+    }
+  },
+  {
+    "id": "withu-may26-01",
+    "title": "Reship Winning Concepts on 90-Day Rotation",
+    "category": "workflow",
+    "funnel": [
+      "TOF"
+    ],
+    "sourceId": "withu-may26",
+    "mentions": [],
+    "type": "tactic",
+    "description": "When a piece of content wins, don't move on. Rebuild it as multiple format variations (face-to-camera, faceless, candid, meme, visual-storyteller, podcast clip) and repost every 90 days. The algorithm refreshes audience, the format change keeps it from feeling like a repost, and the cumulative reach compounds across versions. The 'same but different' move beats the 'new idea every week' move because you're shipping proven ideas, not lottery tickets. Most owners abandon winners at the peak; the move is to milk them across six formats and three calendar quarters.",
+    "context": "Niro Dayalan's saturated leadership-coaching market called for a way to scale what's already working without inventing new ideas every week. The proof: Perth Architectural Exteriors shipped a process-focused video that hit 500k views and 100 quotes. Same business, three months later, shipped a 'same but different' version of the same idea — 1.3M views and 900 quotes. Two ideas booked the year. Reshipping winners outperformed novelty.",
+    "businessTypes": [
+      "All"
+    ],
+    "tags": [
+      "repurposing",
+      "content-strategy",
+      "formats",
+      "compounding",
+      "evergreen"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: a creator's analytics page. One reel hit 500k views in March. Same creator, same idea, different format — 1.3M views in June. Caption: 'Reship winners.'",
+        "body": "Animated breakdown. Show the original winning reel. Show the 'same but different' version 90 days later. Stack the analytics: combined reach beats any new idea would have. Run the math on screen: 6 formats × 3 quarters = 18 ships from one proven concept. Most creators ship 18 lottery tickets in that time. The winners crew ships 18 versions of one thing that already won.",
+        "cta": "Save this for your next planning session. Pull your top reel and start the rotation.",
+        "notes": "Use real-feeling analytics screens with the view counts as the proof. The 18 ships vs 18 lottery tickets math is the punchline — text overlay it. Under 60s. Lo-fi music."
+      },
+      "meme": {
+        "hook": "Creators inventing a new idea every week vs. creators reshipping a proven winner across six formats.",
+        "body": "Left: exhausted creator at 2am whiteboarding 'fresh ideas,' last reel got 800 views. Right: same creator on the beach, the fourth version of their winning concept just hit a million plays. Text: 'Mine the winner. Don't mine luck.'",
+        "cta": "Tag a creator stuck on the novelty treadmill.",
+        "notes": "Two-panel meme. The exhausted whiteboard vs. the beach is the contrast. Under 8 seconds."
+      },
+      "candid": {
+        "hook": "Just got off a call with a leadership coach in a saturated market and the whole strategy came down to one move: stop inventing, start reshipping.",
+        "body": "Phone selfie, walking. Walk through the case: business shipped a reel about their process. 500k views, 100 quotes. Most owners would call that done and move on. They didn't. 90 days later they shipped the same idea in a different format. 1.3M views, 900 more quotes. Booked the year off two pieces of content. The lesson: when something works, you owe it six more ships.",
+        "cta": "DM me 'WINNER' and I'll send you the 6-format rotation template.",
+        "notes": "Walking energy. The 'booked the year off two pieces' line is the hook detail — say it slow. Raw phone selfie."
+      },
+      "framed": {
+        "hook": "If a piece of content wins for you, you're nowhere near done with it. You've barely started.",
+        "body": "Seated at the desk. Walk through the rotation: a winning concept goes through six format variations — face-to-camera, faceless, candid, meme, visual-storyteller, podcast clip. Then a 90-day cooldown. Then ship the first variant again. The algorithm has refreshed audience. The format change makes it feel new. The cumulative reach compounds. Most owners abandon winners at the peak. The discipline is the opposite: milk them.",
+        "cta": "Comment 'ROTATION' for the 90-day calendar template I use with clients.",
+        "notes": "Authority delivery. Have the 6-format list visible on screen as a lower-third or behind you. Slow, structured pace."
+      },
+      "visual-storyteller": {
+        "hook": "Same business. Same idea. Two reels three months apart. The second one outperformed the first by 800k views. Here's why.",
+        "body": "Open on the first reel — Perth Architectural Exteriors, process-focused, 500k views, 100 quotes. Cut to the team's decision: instead of moving on, they reshipped. New format, same insight. The second reel: 1.3M views, 900 quotes. Combined: the business booked the full year. Cut to text overlay: 'Reship winners. Don't replace them.'",
+        "cta": "Save this if you've ever buried a piece of content that was already working.",
+        "notes": "Use real-feeling analytics overlays for both reels. Music builds on the second reveal. SAO arc: Situation (a winning reel), Action (reshipped instead of replaced), Outcome (year booked)."
+      },
+      "talking-head": {
+        "hook": "You're inventing a new content idea every week and that's exactly why your reach isn't growing.",
+        "body": "Close to camera. Direct. The algorithm doesn't reward novelty. It rewards what already performs. If your reel won once, the audience that didn't see it the first time is the audience that wants it now. Reship the same insight in a different format. Six formats. Three quarters. One idea. The math beats six new ideas a week, every time.",
+        "cta": "Follow if you want me to break down the 6-format rotation by industry next.",
+        "notes": "Conviction. The 'inventing a new idea every week' line is the diagnostic — pause after it. Then go fast on the reframe."
+      }
+    }
+  },
+  {
+    "id": "withu-may26-02",
+    "title": "Content Farming From Industry Facebook Groups",
+    "category": "strategy",
+    "funnel": [
+      "TOF"
+    ],
+    "sourceId": "withu-may26",
+    "mentions": [],
+    "type": "tactic",
+    "description": "Find 1-2 industry-specific Facebook groups where your ICP hangs out. Read the questions being asked. Record a short video answering one of them. Post the video as your reply in the group. Most replies are text. A video answer stands out, demonstrates expertise visually, and builds personal connection in a way text never will. The questions are pre-validated demand — you're not guessing what your audience cares about, the group is telling you. Repeat weekly. Your face becomes the face of useful answers in that group, which converts to inbound DMs over time.",
+    "context": "From Niro Dayalan's saturated-market problem. A wedding-photographer example carried the point: instead of posting 'hire me, I'm the best,' the move is to find a group where brides are asking about bridesmaid expenses and answer that specific question on video. The questions in the group are the content pipeline.",
+    "businessTypes": [
+      "Coaching",
+      "Service Business",
+      "Consulting",
+      "Creator Business"
+    ],
+    "tags": [
+      "content-farming",
+      "facebook-groups",
+      "demand-capture",
+      "inbound",
+      "video-answers"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: a Facebook group search bar. Type your industry. Pause on the questions tab. Caption: 'This is your content pipeline.'",
+        "body": "Walk through the workflow. Find 1-2 industry-specific FB groups. Sort posts by recent. Read the questions. Pick one with the most replies (signal of universal pain). Record a short video answering it. Post the video as your reply in the group. Most replies are text walls — your video answer stands out, gets thanked, and gets DMs. Repeat weekly.",
+        "cta": "Save this. Then go find one group in your industry tonight.",
+        "notes": "Use a real-looking Facebook group interface. The 'questions tab is your content pipeline' frame is the headline insight — text overlay it. Under 60s, no music."
+      },
+      "meme": {
+        "hook": "Business owners guessing what content to make vs. business owners reading the questions in their industry's Facebook group.",
+        "body": "Left: creator staring at a blank doc, 'idk what to post.' Right: creator scrolling a Facebook group with 47 unanswered questions. Text: 'The content is already written. Just answer it.'",
+        "cta": "Tag a service business still guessing what content to make.",
+        "notes": "Two-panel format. The 47 unanswered questions visual is the punchline. Under 10 seconds."
+      },
+      "candid": {
+        "hook": "Talked to a coach this morning who's been trying to crack content in a saturated market. The fix wasn't a better hook. It was Facebook groups.",
+        "body": "Phone selfie, walking. Explain: in any industry, your ICP is sitting in 2-3 Facebook groups asking questions. Most answers are text. Yours is a video. You stand out instantly, you demonstrate expertise visually, and you build personal connection text can't match. The questions are pre-validated demand — you're not guessing what people want, the group is telling you. Wedding photographer example: instead of 'book me,' she answers the bridesmaid-expenses question on video. That's the post.",
+        "cta": "Comment 'FARM' and I'll send you the 3-prompt workflow for finding the right groups.",
+        "notes": "Walking energy. The 'questions are pre-validated demand' line is the hook detail. Raw phone selfie."
+      },
+      "framed": {
+        "hook": "Your industry's Facebook groups are the cheapest market research tool you'll ever use. And almost no one uses them.",
+        "body": "Seated, structured. Walk through the discipline: 1-2 groups, weekly habit, video answer to the most-replied question. Why it works: questions are demand signals already validated by other group members. Video answers stand out in a sea of text. Posting it in the group gets you exposure to the audience already asking the question. Repurpose the same video to your own grid. One workflow, two distribution surfaces.",
+        "cta": "Comment 'GROUPS' for the 3-prompt 'find the right group' workflow.",
+        "notes": "Teaching authority. Have a screenshot of a real (anonymized) FB group on screen as proof. Slow, structured."
+      },
+      "visual-storyteller": {
+        "hook": "She was posting 'hire me' content for months. Nothing landed. Then she started answering questions in a Facebook group. Three weeks later, her DMs were full.",
+        "body": "Open on the failed posts: generic 'book your wedding now' content, low engagement. Cut to the pivot: she joined a bride-to-be Facebook group, read the questions, recorded a 60-second video answering one about bridesmaid expenses. Posted it in the group. Show the result: 80 thank-yous, 12 DMs, 3 bookings inside a week. Cut to text overlay: 'The questions in the group are the content brief.'",
+        "cta": "Save this if you've been posting into the void. The audience is somewhere else asking for help.",
+        "notes": "Use real-feeling FB group screens. Music build on the 'three bookings inside a week' reveal. SAO arc."
+      },
+      "talking-head": {
+        "hook": "If you're trying to grow a service business with content, you don't need a content strategy. You need a Facebook group account.",
+        "body": "Direct to camera. Provocation, then payoff. Every industry has 2-3 active Facebook groups where your ICP is asking questions. Those questions are the content brief. Your job is to answer one a week on video, drop it in the group, and let it do the work. Text answers get skimmed. Video answers get DMs. The groups are pre-validated audiences. You're not guessing what to post. You're answering what's already being asked.",
+        "cta": "Follow if you want me to break down which platforms to farm besides Facebook — Reddit, Quora, niche forums.",
+        "notes": "High conviction. The 'you don't need a content strategy' line is the contrarian open. Close to camera."
+      }
+    }
+  },
+  {
+    "id": "withu-may26-03",
+    "title": "Sell the Insurance Policy, Not the Service",
+    "category": "sales",
+    "funnel": [
+      "MOF"
+    ],
+    "sourceId": "withu-may26",
+    "mentions": [],
+    "type": "reframe",
+    "description": "In a saturated market, every competitor sells the same service. The differentiator isn't WHAT you do — it's the certainty the buyer gets that the problem will be solved. Reframe the offer from 'I provide X service' to 'I am your insurance policy against the problem.' Buyers pay a premium for certainty. Your messaging stops listing deliverables and starts naming the risk being eliminated. The wedding photographer doesn't sell photos; she sells the certainty that the day won't be lost to bad images. The leadership coach doesn't sell sessions; he sells the certainty that the team won't burn out. Insurance framing lets you charge above the commodity price.",
+    "context": "Niro Dayalan's market — leadership coaching after 11 years of referrals — was getting commoditized by competitors running identical Meta and GoHighLevel ads. The fix wasn't a better ad; it was repositioning the offer as the insurance against the unsolved problem, not as another version of the same service.",
+    "businessTypes": [
+      "Coaching",
+      "Consulting",
+      "Service Business",
+      "Agency"
+    ],
+    "tags": [
+      "positioning",
+      "differentiation",
+      "reframe",
+      "pricing",
+      "saturated-market"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording of two service pages. Page 1: 'I do leadership coaching.' Page 2: 'I'm your insurance policy against your team falling apart.' Caption: 'Same service. One charges 3x.'",
+        "body": "Animated comparison. Show how page 1 lists deliverables — sessions, frameworks, hours. Show how page 2 names the risk being eliminated — burnout, attrition, missed targets. Walk through the math: when buyers see deliverables, they comparison-shop on price. When buyers see risk elimination, they compare on outcome certainty. Insurance framing prices itself.",
+        "cta": "Save this. Then audit your own offer page — are you selling deliverables or insurance?",
+        "notes": "Use mock service-page screens. The reframe lives in the side-by-side. Text overlay the price difference. Under 60s."
+      },
+      "meme": {
+        "hook": "Coaches listing their session hours vs. coaches naming the problem you no longer have to worry about.",
+        "body": "Left: 'I offer 12 sessions over 6 months covering goal-setting, accountability, and habit design.' Right: 'I'm the reason your top performer doesn't quit next quarter.' Text: 'Sell the outcome. Not the inventory.'",
+        "cta": "Tag a coach still listing their session hours.",
+        "notes": "Two-panel format. The 'inventory' framing on the left is universally recognizable as the weaker move. Under 10 seconds."
+      },
+      "candid": {
+        "hook": "Worked with a leadership coach today who's been doing this 11 years and the whole differentiation came down to one reframe: stop selling sessions, start selling insurance.",
+        "body": "Phone selfie, walking. Lay it out: every competitor in his space sells coaching sessions. Same Meta ads, same GoHighLevel funnels, same 12-week program. The only way out is to reposition: he's not selling sessions, he's the insurance policy against the team falling apart. Same delivery, completely different buyer. Buyers don't shop on price for insurance. They shop on certainty.",
+        "cta": "DM me 'INSURANCE' if you want me to help you rewrite your offer in insurance language.",
+        "notes": "Walking energy. The '11 years' detail gives the story credibility. The reframe is the whole video — don't overcomplicate."
+      },
+      "framed": {
+        "hook": "In a saturated market, your service isn't the product. The certainty is.",
+        "body": "Seated. Slow walkthrough. Most owners describe their service in deliverable terms — sessions, calls, hours, frameworks. That's commodity language. Buyers comparison-shop commodities on price. The reframe is to describe the risk being eliminated: 'I'm the insurance against your team burning out.' 'I'm the insurance against your wedding day being un-photographed.' 'I'm the insurance against your ad spend disappearing.' Insurance buyers don't shop on price. They shop on trust and certainty. Same business, different pricing power.",
+        "cta": "Comment 'POLICY' for the 5-question reframe worksheet I use with clients.",
+        "notes": "Teaching authority. Use a whiteboard or screen showing 'deliverables vs. insurance' as two columns. Slow."
+      },
+      "visual-storyteller": {
+        "hook": "He'd been a leadership coach for 11 years. His competitors caught up on tactics. One reframe pulled him out of the commodity pile.",
+        "body": "Open on the saturated market: identical Meta ads, identical funnels, identical promises. Cut to him: trying to compete on price, losing inquiries. Then the reframe: stop selling sessions, start selling insurance against the team falling apart. Show the new positioning. Show the inquiry quality lift — not more leads, better leads, willing to pay premium. Cut to text: 'When the market is commoditized, change what you're selling, not how loud you sell it.'",
+        "cta": "Save this if your industry is racing to the bottom on price.",
+        "notes": "Use mock 'identical ad' screens for the saturation visual. Music build on the reframe moment. SAO arc."
+      },
+      "talking-head": {
+        "hook": "If your industry is racing to the bottom on price, it's because every one of you is selling the same thing the same way.",
+        "body": "Direct to camera. Conviction. Stop describing your service in deliverable language. Sessions, hours, modules — that's inventory. Buyers shop inventory on price. The move is to name the risk the buyer doesn't have to carry anymore: I'm the insurance against your team burning out. I'm the insurance against the wedding day not being captured. Insurance buyers pay premiums. They don't shop on price. They shop on certainty.",
+        "cta": "Follow if you want me to break down how to write insurance-language headlines for your offer next.",
+        "notes": "Close to camera. The 'inventory' callout is the diagnostic — pause after. Then go fast on the fix."
+      }
+    }
+  },
+  {
+    "id": "withu-may26-04",
+    "title": "Test Four Channels, Double Down on the Winner",
+    "mentions": ["mark-sacco-may26"],
+    "category": "strategy",
+    "funnel": [
+      "ALL"
+    ],
+    "sourceId": "withu-may26",
+    "mentions": [],
+    "type": "framework",
+    "description": "Most owners pick one channel and grind it for years. The faster move is to run all four marketing channels — Organic, Paid Ads, Networking (in-person + digital), Affiliates — in a 30-day test window, instrument the full funnel (Views → Engagement → Inquiries → Sales) on each, then concentrate the next 90 days of effort on the one with the best inquiry-to-sale economics. Test wide, then go deep. Boosting a post that only got engagement is not the win signal — inquiries are. The test discipline forces the question 'is this actually moving the right metric' instead of optimizing vanity numbers on a channel that was never going to convert.",
+    "context": "Mark Sacco was debating whether to boost a high-engagement LinkedIn post to reach beyond his 2,500 personal connections. The reframe: boosting only makes sense if you're testing it against the other three channels on inquiry economics. The proof came from a separate move — a manual organic outreach to 50 LinkedIn contacts generated $25k in one month. That's the kind of inquiry math that earns the 'double down' decision; vanity engagement on a boosted post wouldn't have shown it.",
+    "businessTypes": [
+      "All"
+    ],
+    "tags": [
+      "channel-testing",
+      "marketing-mix",
+      "roi",
+      "double-down",
+      "funnel-math"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: a marketing dashboard with four channels — Organic, Ads, Networking, Affiliates. Three are red. One is green. Caption: 'Now you know where to spend.'",
+        "body": "Animated walkthrough. Show the 30-day test window: small budget across all four channels, full funnel instrumented (Views → Engagement → Inquiries → Sales). At day 30, run the inquiry math per channel. The winner gets the next 90 days of effort. The losers get archived. Most owners pick a channel and grind for years. The test discipline gets you to the winner in 30 days.",
+        "cta": "Save this. Then pick your start date for the 30-day test.",
+        "notes": "Use a real-feeling dashboard. The red/green channel visual is the punchline. Text overlay the funnel stages. Under 60s."
+      },
+      "meme": {
+        "hook": "Owners grinding the same channel for two years vs. owners running a 30-day test across four channels first.",
+        "body": "Left: exhausted owner at year 2 of LinkedIn, 'why isn't this working.' Right: same owner, 30 days into a four-channel test, already knows networking is the winner. Text: 'Test first. Grind second.'",
+        "cta": "Tag an owner stuck grinding the wrong channel.",
+        "notes": "Two-panel. The 'year 2 of LinkedIn' visual is the relatable cringe. Under 10 seconds."
+      },
+      "candid": {
+        "hook": "Just told a guy on an advisory call that boosting his post wasn't his problem. His problem was he was only testing one channel.",
+        "body": "Phone selfie, walking. Walk through the four: Organic, Ads, Networking, Affiliates. Most owners pick one and grind for a year. The faster move: run a 30-day test across all four. Instrument the funnel — Views, Engagement, Inquiries, Sales — for each. At day 30, you've got a clear winner. The next 90 days, that's the only channel you double down on. The other three get archived. Same effort, way better inquiry economics.",
+        "cta": "DM me '4CHAN' and I'll send you the test worksheet I use with advisory clients.",
+        "notes": "Walking energy. The '$25k from 50 contacts' moment can be dropped in mid-video as proof. Raw."
+      },
+      "framed": {
+        "hook": "If you're not sure which marketing channel deserves your money, the answer isn't 'try harder.' It's 'test all four for 30 days.'",
+        "body": "Seated, structured. The four channels: Organic. Paid Ads. Networking — in-person and digital. Affiliates and referrals. Most owners commit to one without ever comparing the inquiry math. The discipline: small spend on all four for 30 days, full funnel tracking on each, then make the 90-day call from data, not gut. Real example: a manual outreach to 50 LinkedIn contacts generated $25k in one month. That's the inquiry math that earns a double-down. Vanity engagement on a boosted post wouldn't have shown it.",
+        "cta": "Comment '4CHAN' for the test worksheet — channel definitions, tracking template, decision rules.",
+        "notes": "Authority delivery. Use a whiteboard with the four channels listed. Reference the $25k case as proof."
+      },
+      "visual-storyteller": {
+        "hook": "He was about to spend three months boosting LinkedIn posts. One conversation rerouted him into a 30-day test and the winning channel wasn't even on his radar.",
+        "body": "Open on the dilemma: high-engagement LinkedIn post, debating whether to boost. Cut to the reframe: boost is one of four channels, not the only one. Show the 30-day test: small spend across Organic, Ads, Networking, Affiliates. Instrumented funnel on each. At day 30, the winner emerges — a manual outreach play generated $25k in one month from 50 contacts. The boost didn't get the next dollar. The outreach did. Cut to text: 'Test the matrix. Trust the math.'",
+        "cta": "Save this if you've been about to commit to one channel without testing the others.",
+        "notes": "Use a mock dashboard for the test visualization. Music build on the $25k reveal. SAO arc."
+      },
+      "talking-head": {
+        "hook": "Picking one marketing channel and grinding it for two years is the most expensive mistake business owners make.",
+        "body": "Direct to camera. Fast. Four channels: Organic, Ads, Networking, Affiliates. You don't get to skip the test. 30 days, small spend on all four, full funnel tracking — Views, Engagement, Inquiries, Sales. The winner is whichever channel turns inquiries into sales at the best math. That's where the next 90 days of effort goes. Everything else gets archived. Test wide. Then go deep. That's the order.",
+        "cta": "Follow if you want me to break down what 'small spend' looks like for each channel.",
+        "notes": "High conviction. The 'most expensive mistake' line is the hook — pause after. Close to camera."
+      }
+    }
+  },
+  {
     "id": "donna-s3-01",
     "title": "Knowledge Hub Architecture (5-Step Capture → Publish Pipeline)",
     "category": "ai",
@@ -1124,40 +1722,40 @@ const ENTRIES=[
     ],
     "formats": {
       "faceless": {
-        "hook": "Screen recording: three Fathom calls drag into a folder. One prompt. Caption: '38 content ideas in 90 minutes.'",
-        "body": "Show the pipeline on screen: Fathom transcripts go in, Claude harvests gold nuggets, each nugget becomes a structured entry with context and tags, then Claude generates reel + carousel + story briefs per entry. Walk through one entry going from raw transcript line to a ready-to-shoot brief. The operator never opens a blank doc again.",
-        "cta": "Save this. Comment 'HUB' for the prompt I'm using to build the harvest step.",
-        "notes": "Use real-feeling screen captures (anonymize). The 38-entries-from-3-calls reveal is the proof. Under 60 seconds."
+        "hook": "On-screen text over a screen recording — 'I dropped 3 Fathom transcripts into a folder. 90 minutes later, the hub had 38 ready-to-shoot content briefs.'",
+        "body": "[SETUP] Caption: 'Step 1 — CAPTURE. Every call recorded by default. Sales. Advisory. Podcast. Internal.' (show Fathom transcripts dropping into folder). [TENSION] Caption: 'Step 2 — HARVEST. Claude scrapes every transcript for the gold — frameworks, reframes, named case studies. The nuggets you said out loud but never wrote down.' (show Claude output streaming). [PAYOFF] Caption: 'Steps 3–5 — STRUCTURE. GENERATE. PUBLISH. Each nugget becomes a typed entry. Claude writes the briefs. You record in your voice. Build the hub once. Draw from it forever.' (entries counter ticks 1 → 38).",
+        "cta": "Comment 'HUB' — I'll send the harvest prompt.",
+        "notes": "Screen-only, no face. 45–60s. Hard cut between steps. Final beat on the entries counter hitting 38. No music — keystrokes + notification sounds only."
       },
       "meme": {
-        "hook": "Coaches with 10 years of expertise staring at a blank doc vs. coaches with a knowledge hub harvesting every call.",
-        "body": "Left: founder at laptop, 'what should I post today,' three abandoned drafts. Right: same founder opens the hub, picks an entry, shoots the brief, done in 12 minutes. Text: 'The bottleneck isn't ideas. It's organizing what you already said.'",
-        "cta": "Tag a coach with 10 years of expertise and no content.",
-        "notes": "Two-panel meme. The 'abandoned drafts' visual is the cringe. Under 10 seconds."
+        "hook": "Title text over two panels — 'Coaches with 10 years of expertise: I have nothing to post.'",
+        "body": "[SETUP] LEFT panel: Coach at laptop. Blank Notion doc. Three crossed-out drafts in the sidebar. Caption: '10 years in the chair. Zero content shipped.' [TENSION] Centre text between panels: 'The expertise was always there. You just never indexed it.' [PAYOFF] RIGHT panel: Same coach opens the Knowledge Hub. 38 entries scroll past, each one a framework she said on a call this year. Caption: 'Build the hub once. Draw from it forever.'",
+        "cta": "Tag a coach who's been 'about to start posting' for 4 years.",
+        "notes": "Two-panel format. 8–12s. Hard cut between panels. Sound effect on the entries scroll. Text-only — no voiceover."
       },
       "candid": {
-        "hook": "Built a knowledge hub with a client today. 38 content entries in 90 minutes. Here's the actual pipeline.",
-        "body": "Phone selfie, walking. Explain: she's got 10 years of expertise but freezes at the blank doc. So we built a hub. Capture every call. Claude scrapes transcripts for the real nuggets — frameworks, case studies, reframes. Each one becomes a structured entry. Claude generates the content briefs from there. The operator just records in their voice. She'll never stare at a blank doc again. And the hub keeps growing every time she gets on a call.",
-        "cta": "DM me 'HUB' if you want the build playbook I used with her.",
-        "notes": "Walking energy. The '38 in 90 minutes' is the credibility hook. Real story setup."
+        "hook": "Spoken, camera looking up, real morning light — 'Built a knowledge hub with a client this morning. 38 content briefs in 90 minutes. Here's exactly what we did.'",
+        "body": "[SETUP] 'Donna's a coach. 10+ years in. Every time she sits down to post, she freezes. Not because she doesn't know the material — because she's lived in it so long she can't see what's worth saying anymore.' [TENSION] 'So we didn't write anything new. We pulled three Fathom calls and a podcast. Dropped them into Claude. Told it to scrape every framework, every reframe, every case study she'd already said out loud.' [PAYOFF] '90 minutes later — 38 entries. Each one a piece of her own expertise she'd never written down. Each one with a hook, a body, a CTA. She'll never open a blank doc again. The hub keeps growing every time she gets on a call. Build it once. Draw from it forever.'",
+        "cta": "DM me 'HUB' and I'll send the full build playbook.",
+        "notes": "Phone selfie, walking. Loose delivery. Pause before '38 entries' — let it land. 60–75s. No internal cuts."
       },
       "framed": {
-        "hook": "If you've been creating content from scratch, you're working twice. Your calls already have the content.",
-        "body": "From the desk. Walk through the 5 steps: Capture (record everything), Harvest (Claude scrapes for nuggets), Structure (each nugget becomes a typed entry), Generate (Claude produces multi-format briefs), Publish (you record in your voice). The hub compounds: every call adds material. The asset isn't the content — it's the queryable database underneath. Clients can search it, you can monetize it, you can use entries as receipts in disputes. Most operators are sitting on years of unindexed expertise.",
-        "cta": "Save this. Comment 'HUB' for the pipeline I'm installing for coaches.",
-        "notes": "Authority delivery. Use a 5-step diagram overlay. Slow pace. Foundational systems content."
+        "hook": "Spoken, seated, eye contact — 'If you've been making content from scratch, you've been working twice. Your call recordings already contain the content. You just haven't harvested them.'",
+        "body": "[SETUP] 'Most operators have 10+ years of expertise locked inside their call recordings. Sales calls. Advisory calls. Podcasts. They have the material. They don't have the index.' (graphic overlay: pile of call recordings). [TENSION] 'Email lists don't fix this. Newsletters don't fix this. Content calendars don't fix this. The fix is a pipeline.' (graphic overlay: 5-step diagram appears). [PAYOFF] 'Five steps. CAPTURE every call. HARVEST the nuggets with Claude. STRUCTURE each one as a typed entry. GENERATE multi-format briefs. PUBLISH in your own voice. The hub compounds with every call. The asset isn't the content — it's the queryable database underneath. Build the hub once. Draw from it forever.'",
+        "cta": "Save this. Comment 'HUB' for the install playbook I'm using with coaches.",
+        "notes": "Seated, structured. Authority pace. 5-step diagram overlay appears step by step. 75–90s. Closing line lands slow."
       },
       "visual-storyteller": {
-        "hook": "She had 10 years of expertise and zero content. We built one tool in 90 minutes and unlocked all of it.",
-        "body": "Open on the operator staring at her laptop, blank doc, four years of abandoned drafts in a folder. Cut to the build: three Fathom calls drag into the system, Claude harvests, structure pops up, content briefs generate. Show the moment she sees 38 entries scroll past, each one a piece of her own expertise she'd never written down. Cut to her recording the first brief, fast, confident, in her voice. Caption: 'The expertise was already there. The hub just made it findable.'",
+        "hook": "Voiceover over visual — 'She had 10 years of expertise and zero content. We built one tool in 90 minutes. It unlocked all of it.'",
+        "body": "[SETUP] Open on Donna at her laptop. Blank doc. Cursor blinking. Pan to a folder labelled 'Old Drafts 2024' — 12 untouched files. VO: 'Ten years in. Still freezing at the blank page.' [TENSION] Cut to Sev opening Claude. Drag three Fathom transcripts into the project. Hit run. VO: 'We didn't write anything new. We just gave Claude the recordings she'd already made.' [PAYOFF] Cut to the Knowledge Hub view. Entries count climbs: 1 → 5 → 12 → 28 → 38. Donna's face changes as the number climbs. Cut to her recording the first brief in her own voice — fast, confident. Final visual: a tag on the hub reading 'Self-Replenishing.' VO: 'The expertise was already there. The hub just made it findable. Build it once. Draw from it forever.'",
         "cta": "Save this if you've been making content the hard way.",
-        "notes": "SAO arc. The 38-entries-scroll reveal is the payoff. Music build at the build moment."
+        "notes": "SAO arc. 60–90s. Music builds at the entries-scroll moment. Hard cut on the final VO. The face-change shot is the emotional anchor."
       },
       "talking-head": {
-        "hook": "If you have 10 years of expertise and no content, you don't need to create more. You need to harvest what's already on your call recordings.",
-        "body": "Direct to camera. Fast: every call you've recorded already contains the content. The bottleneck isn't ideas, it's organization. The fix is a 5-step pipeline — capture every call, harvest the nuggets with AI, structure them as a database, generate multi-format briefs, publish in your voice. The hub compounds with every call. The asset isn't the content. It's the queryable database underneath. Build the hub once, draw from it forever.",
-        "cta": "Follow for the rest of the knowledge-hub buildout.",
-        "notes": "Conviction. The 'expertise on call recordings' diagnosis is the open. Close on the database insight."
+        "hook": "Direct to camera, fast — 'If you have 10 years of expertise and no content, you don't need to make more. You need to harvest what's already on your call recordings.'",
+        "body": "[SETUP] 'Every call you've ever recorded already contains the content. Sales calls. Advisory calls. Podcasts. Internal meetings. You said the frameworks. You said the case studies. You named the reframes. You just never wrote them down.' [TENSION] 'The bottleneck isn't ideas. It's organisation. Most operators are sitting on years of unindexed expertise and trying to write fresh content on top of it. Stop writing. Start harvesting.' [PAYOFF] 'Five steps. Capture every call by default. Harvest the nuggets with Claude. Structure each one as a typed entry with tags and a funnel stage. Generate multi-format briefs. Publish in your own voice. The hub compounds with every call. Build it once. Draw from it forever.'",
+        "cta": "Follow if you want me to break down the harvest prompt.",
+        "notes": "Direct to camera. High conviction. The 'stop writing, start harvesting' line is the controversial hook. Hold eye contact. 60–75s. No cuts."
       }
     }
   },
@@ -2669,7 +3267,7 @@ const ENTRIES=[
   {
     "id": "withu-may20-01",
     "title": "Four-Stage Content ROI Funnel (Views → Engagement → Inquiries → Sales)",
-    "mentions": [],
+    "mentions": ["mark-sacco-may26"],
     "category": "platform",
     "funnel": [
       "ALL"
@@ -2858,6 +3456,7 @@ const ENTRIES=[
   {
     "id": "adam-lewis-s2-01",
     "title": "5-Beat Script Structure (Hook → Context → Tension → Pivot → Payoff)",
+    "mentions": ["adam-lewis-s3"],
     "category": "hooks",
     "funnel": [
       "ALL"
@@ -2919,6 +3518,7 @@ const ENTRIES=[
   {
     "id": "adam-lewis-s2-02",
     "title": "Phone Filming Defaults (4K/30fps, HDR Off, Grid On)",
+    "mentions": ["adam-lewis-s3"],
     "category": "workflow",
     "funnel": [
       "ALL"
@@ -6297,7 +6897,7 @@ const ENTRIES=[
   {
     "id": "ga1-07",
     "title": "Bottom of Funnel: Success Stories, Not Case Studies",
-    "mentions": ["wwb-podcast-strategy", "withu-may20"],
+    "mentions": ["wwb-podcast-strategy", "withu-may20", "withu-may26"],
     "category": "formats",
     "funnel": [
       "BOF"
@@ -6766,7 +7366,7 @@ const ENTRIES=[
   {
     "id": "ga1-15",
     "title": "WIIFM: Be The DJ",
-    "mentions": ["group-may12"],
+    "mentions": ["group-may12", "withu-may26", "mark-sacco-may26"],
     "category": "brand",
     "funnel": [
       "ALL"
@@ -8494,7 +9094,7 @@ const ENTRIES=[
   {
     "id": "d2-01",
     "title": "SAO Framework (Situation-Action-Outcome)",
-    "mentions": ["donna-s1", "withu-may07", "withu-apr21", "withu-apr28", "group-may12"],
+    "mentions": ["donna-s1", "withu-may07", "withu-apr21", "withu-apr28", "group-may12", "withu-may26"],
     "category": "formats",
     "funnel": [
       "BOF"
@@ -8612,7 +9212,7 @@ const ENTRIES=[
   {
     "id": "d3-01",
     "title": "Andromeda Algorithm: First 2-5 Seconds",
-    "mentions": ["chris-bayens-s1", "withu-apr28", "withu-may07", "nick-bodley-s1", "group-may12", "withu-may14", "harman-s1", "withu-may19", "daecian-s11"],
+    "mentions": ["chris-bayens-s1", "withu-apr28", "withu-may07", "nick-bodley-s1", "group-may12", "withu-may14", "harman-s1", "withu-may19", "daecian-s11", "adam-lewis-s3"],
     "category": "hooks",
     "funnel": [
       "ALL"
@@ -12003,6 +12603,7 @@ const ENTRIES=[
   {
     "id": "bts-13",
     "title": "The 'Share' Metric Triggers Algorithms",
+    "mentions": ["adam-lewis-s3"],
     "category": "platform",
     "funnel": [
       "TOF"
@@ -12682,7 +13283,7 @@ const ENTRIES=[
   {
     "id": "ga2-02",
     "title": "Engagement Hierarchy: Follows > Shares > Comments > Likes",
-    "mentions": ["withu-may20"],
+    "mentions": ["withu-may20", "adam-lewis-s3"],
     "category": "platform",
     "funnel": [
       "ALL"
@@ -12928,7 +13529,7 @@ const ENTRIES=[
   {
     "id": "ga2-06",
     "title": "Assignment Selling With Self-Assessment Quizzes",
-    "mentions": ["donna-s1", "catchup-apr20"],
+    "mentions": ["donna-s1", "catchup-apr20", "adam-lewis-s3"],
     "category": "ai",
     "funnel": [
       "BOF"
@@ -13125,9 +13726,10 @@ let currentView="knowledge",catFilter=null,funnelFilter=null,expandedId=null,cal
 function makeBadge(l,c,s){return`<span class="badge${s?' sm':''}" style="background:${c}18;color:${c}">${l}</span>`}
 function isCreated(eid,fmt){return localStorage.getItem('created_'+eid+'_'+fmt)==='1'}
 function toggleCreated(eid,fmt,el){if(el)el.stopPropagation();if(isCreated(eid,fmt)){localStorage.removeItem('created_'+eid+'_'+fmt)}else{localStorage.setItem('created_'+eid+'_'+fmt,'1')}if(currentView==='creator')renderCreator();if(currentView==='tracker')renderTracker()}
+function copyBrief(eid,fmt,ev){if(ev){ev.stopPropagation();ev.preventDefault()}const entry=ENTRIES.find(e=>e.id===eid);if(!entry||!entry.formats||!entry.formats[fmt])return;const b=entry.formats[fmt];const fname=FORMATS[fmt]?FORMATS[fmt].label:fmt;const text=`${entry.title} — ${fname}\n\nHOOK\n${b.hook}\n\nBODY\n${b.body}\n\nCTA\n${b.cta}\n\nNOTES\n${b.notes}`;const btn=ev?ev.currentTarget:null;const done=()=>{if(!btn)return;const orig=btn.innerHTML;btn.innerHTML='✓ Copied';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied')},1500)};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){alert('Copy failed. Highlight the brief text and copy manually.')}document.body.removeChild(ta)})}else{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){alert('Copy failed.')}document.body.removeChild(ta)}}
 function switchView(v){currentView=v;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));['knowledge','calls','topics','creator','tracker','frequency'].forEach(w=>{document.getElementById('view-'+w).classList.toggle('hidden',v!==w)});if(v==='calls')renderCalls();if(v==='topics')renderTopics();if(v==='creator'){renderCreatorChips();renderCreator()}if(v==='tracker'){renderTrackerChips();renderTracker()}if(v==='frequency'){renderFreqChips();renderFrequency()}}
 function renderEntries(){const q=document.getElementById('search').value.toLowerCase();let filtered=ENTRIES.filter(e=>{if(showLatest&&!recentCallIds.has(e.sourceId))return false;if(catFilter&&e.category!==catFilter)return false;if(funnelFilter&&!e.funnel.includes(funnelFilter)&&!e.funnel.includes("ALL"))return false;if(q){return e.title.toLowerCase().includes(q)||e.description.toLowerCase().includes(q)||e.tags.some(t=>t.includes(q))||e.context.toLowerCase().includes(q)}return true});filtered=sortByDate(filtered);document.getElementById('result-count').textContent=`Showing ${filtered.length} of ${ENTRIES.length} entries`;if(!filtered.length){document.getElementById('entries-container').innerHTML='<div class="empty"><div class="empty-icon">🔍</div><p>No entries match your filters. Try broadening your search.</p></div>';return}document.getElementById('entries-container').innerHTML=filtered.map(e=>{const cat=CATEGORIES[e.category];const call=CALLS.find(c=>c.id===e.sourceId);const isExp=expandedId===e.id;const isNew=latestCallIds.has(e.sourceId);return`<div class="entry-card${isExp?' expanded':''}" style="border-left-color:${cat.color}" onclick="toggleEntry('${e.id}')"><div class="entry-top"><div class="entry-content"><div class="entry-badges"><span style="font-size:16px">${cat.icon}</span>${makeBadge(cat.label,cat.color)}${e.funnel.filter(f=>f!=='ALL').map(f=>makeBadge(f,'#64748B',true)).join('')}${makeBadge(e.type,'#94A3B8',true)}${isNew?'<span class="badge-new">NEW</span>':''}${e._mentionCount>1?`<span class="freq-mention-badge${e._mentionCount>=5?' legendary':e._mentionCount>=3?' hot':''}" title="Mentioned in ${e._mentionCount} calls">🔁 ${e._mentionCount}×</span>`:''}</div><h3 class="entry-title">${e.title}</h3><p class="entry-desc${isExp?'':' clamped'}">${e.description}</p></div><span class="entry-arrow">▼</span></div><div class="entry-detail"><div style="margin-bottom:12px"><div class="detail-label">Context</div><p class="detail-text italic">${e.context}</p></div><div class="detail-row"><div class="detail-col"><div class="detail-label">Source</div><p class="detail-text">${call?call.name:'Unknown'} (${call?call.date:''})</p></div><div class="detail-col"><div class="detail-label">Applies To</div><p class="detail-text">${e.businessTypes.join(', ')}</p></div></div><div class="tag-row">${e.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>${e.formats?`<button class="view-formats-btn" onclick="event.stopPropagation();goToFormats('${e.id}')">🎬 View Content Briefs</button>`:''}</div></div>`}).join('')}
-function toggleEntry(id){expandedId=expandedId===id?null:id;renderEntries()}
+function toggleEntry(id){if(window.getSelection&&window.getSelection().toString().length>0)return;expandedId=expandedId===id?null:id;renderEntries()}
 function setCat(k){catFilter=catFilter===k?null:k;renderCatChips();renderEntries()}
 function setFunnel(k){funnelFilter=funnelFilter===k?null:k;renderFunnelChips();renderEntries()}
 function setLatest(){showLatest=!showLatest;renderCatChips();renderEntries()}
@@ -13137,17 +13739,17 @@ function setCallType(t){callTypeFilter=callTypeFilter===t?null:t;renderCalls()}
 function renderCalls(){const types=["1:1 Advisory","Group Advisory","BTS Sales","Audit","Podcast","BTS Production"];let ch=`<button class="chip sm${!callTypeFilter?' active':''}" onclick="setCallType(null)">All (${CALLS.length})</button>`;types.forEach(t=>{const n=CALLS.filter(c=>c.type===t).length;if(!n)return;const a=callTypeFilter===t;ch+=`<button class="chip sm" style="${a?'border-color:#0D9488;background:rgba(13,148,136,.08);color:#0D9488':''}" onclick="setCallType('${t}')">${t} (${n})</button>`});document.getElementById('call-type-chips').innerHTML=ch;const tc={"1:1 Advisory":"#6366F1","Group Advisory":"#0D9488","BTS Sales":"#F59E0B",Audit:"#EF4444",Podcast:"#EC4899","BTS Production":"#94A3B8"};const fl=(callTypeFilter?CALLS.filter(c=>c.type===callTypeFilter):CALLS).sort((a,b)=>b.date.localeCompare(a.date));document.getElementById('calls-container').innerHTML=fl.map(c=>`<div class="call-card${c.entryCount>0?' has-entries':''}"><div class="call-info"><div class="call-name-row"><span class="call-name">${c.name}</span>${makeBadge(c.type,tc[c.type]||'#94A3B8',true)}</div><div class="call-meta">${c.date} · ${c.duration?c.duration+'min':'Duration TBD'} · ${c.attendees.join(', ')}</div></div><div class="call-right">${c.entryCount>0?`<span class="call-count">${c.entryCount} entries</span>`:`<span class="call-pending">Awaiting extraction</span>`}${c.link?`<a class="call-link" href="${c.link}" target="_blank" rel="noopener">Fathom ↗</a>`:''}</div></div>`).join('')}
 function renderTopics(){document.getElementById('topics-container').innerHTML=Object.entries(CATEGORIES).map(([k,cat])=>{const ce=ENTRIES.filter(e=>e.category===k);const ty={};ce.forEach(e=>{ty[e.type]=(ty[e.type]||0)+1});return`<div class="topic-card" style="border-top-color:${cat.color}" onclick="setCat('${k}');switchView('knowledge')"><div class="topic-icon">${cat.icon}</div><div class="topic-name">${cat.label}</div><div class="topic-count" style="color:${cat.color}">${ce.length}</div><div class="topic-types">${Object.entries(ty).map(([t,n])=>`<span class="topic-type">${n} ${t}${n>1?'s':''}</span>`).join('')}</div></div>`}).join('')}
 function setFreqCat(k){freqCatFilter=freqCatFilter===k?null:k;renderFreqChips();renderFrequency()}
-function toggleFreqEntry(id){freqExpandedId=freqExpandedId===id?null:id;renderFrequency()}
+function toggleFreqEntry(id){if(window.getSelection&&window.getSelection().toString().length>0)return;freqExpandedId=freqExpandedId===id?null:id;renderFrequency()}
 function renderFreqChips(){let h=`<button class="chip${!freqCatFilter?' active':''}" onclick="setFreqCat(null)">All Categories</button>`;Object.entries(CATEGORIES).forEach(([k,v])=>{const a=freqCatFilter===k;h+=`<button class="chip" style="${a?`border-color:${v.color};background:${v.color}18;color:${v.color}`:''}" onclick="setFreqCat('${k}')">${v.icon} ${v.label}</button>`});document.getElementById('freq-cat-chips').innerHTML=h}
 function renderFrequency(){const q=document.getElementById('freq-search').value.toLowerCase();let pool=ENTRIES.filter(e=>{if(freqCatFilter&&e.category!==freqCatFilter)return false;if(q){return e.title.toLowerCase().includes(q)||e.tags.some(t=>t.includes(q))||(e.description||'').toLowerCase().includes(q)}return true});const maxCount=Math.max(1,...pool.map(e=>e._mentionCount));const totalMentions=pool.reduce((s,e)=>s+e._mentionCount,0);const repeated=pool.filter(e=>e._mentionCount>1).length;const avg=pool.length?(totalMentions/pool.length).toFixed(1):'0';document.getElementById('freq-summary').innerHTML=`<div class="freq-summary-card"><div class="freq-summary-num">${pool.length}</div><div class="freq-summary-label">Entries in view</div></div><div class="freq-summary-card"><div class="freq-summary-num">${totalMentions}</div><div class="freq-summary-label">Total mentions</div></div><div class="freq-summary-card"><div class="freq-summary-num">${repeated}</div><div class="freq-summary-label">Repeated frameworks</div></div><div class="freq-summary-card"><div class="freq-summary-num">${avg}</div><div class="freq-summary-label">Avg mentions per entry</div></div>`;const sorted=pool.slice().sort((a,b)=>b._mentionCount-a._mentionCount||(b._date||'').localeCompare(a._date||''));if(!sorted.length){document.getElementById('freq-container').innerHTML='<div class="empty"><div class="empty-icon">📊</div><p>No entries match your filters.</p></div>';return}document.getElementById('freq-container').innerHTML=sorted.map((e,i)=>{const cat=CATEGORIES[e.category];const isExp=freqExpandedId===e.id;const widthPct=Math.max(8,(e._mentionCount/maxCount)*100);const callList=e._allMentions.map((cid,idx)=>{const c=CALLS.find(x=>x.id===cid);if(!c)return'';const isOrigin=idx===0;return`<div class="freq-call-item${isOrigin?' origin':''}"><span class="freq-call-name">${c.name}${isOrigin?' <span style="color:var(--teal);font-size:10px;font-weight:700;letter-spacing:1px">ORIGIN</span>':''}</span><span class="freq-call-date">${c.date}</span></div>`}).join('');return`<div class="freq-row${isExp?' expanded':''}" style="border-left-color:${cat.color}" onclick="toggleFreqEntry('${e.id}')"><div class="freq-row-top"><div class="freq-rank">#${i+1}</div><div class="freq-content"><div class="freq-title-row"><span style="font-size:14px">${cat.icon}</span><span class="freq-title">${e.title}</span>${makeBadge(cat.label,cat.color,true)}</div><div class="freq-bar-wrap"><div class="freq-bar-fill" style="width:${widthPct}%;background:${cat.color}"></div><div class="freq-bar-label">${e._mentionCount}× ${e._mentionCount===1?'mention':'mentions'}</div></div></div></div><div class="freq-detail"><div class="detail-label" style="margin-bottom:8px">Mentioned in</div><div class="freq-call-list">${callList}</div></div></div>`}).join('')}
 function goToFormats(id){creatorCatFilter=null;creatorFunnelFilter=null;creatorExpandedId=id;switchView('creator');setTimeout(()=>{const el=document.querySelector('#creator-container .expanded');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},50)}
-function toggleCreatorEntry(id){creatorExpandedId=creatorExpandedId===id?null:id;renderCreator()}
+function toggleCreatorEntry(id){if(window.getSelection&&window.getSelection().toString().length>0)return;creatorExpandedId=creatorExpandedId===id?null:id;renderCreator()}
 function setCreatorCat(k){creatorCatFilter=creatorCatFilter===k?null:k;renderCreatorChips();renderCreator()}
 function setCreatorFunnel(k){creatorFunnelFilter=creatorFunnelFilter===k?null:k;renderCreatorChips();renderCreator()}
 let creatorShowLatest=false;
 function setCreatorLatest(){creatorShowLatest=!creatorShowLatest;renderCreatorChips();renderCreator()}
 function renderCreatorChips(){let h=`<button class="chip${!creatorCatFilter&&!creatorShowLatest?' active':''}" onclick="setCreatorCat(null)">All Categories</button>`;h+=`<button class="chip" style="${creatorShowLatest?'border-color:#0D9488;background:rgba(13,148,136,.08);color:#0D9488':''}" onclick="setCreatorLatest()">✨ Recent 14d (${stats.recentEntries})</button>`;Object.entries(CATEGORIES).forEach(([k,v])=>{const a=creatorCatFilter===k;h+=`<button class="chip" style="${a?`border-color:${v.color};background:${v.color}18;color:${v.color}`:''}" onclick="setCreatorCat('${k}')">${v.icon} ${v.label}</button>`});document.getElementById('creator-cat-chips').innerHTML=h;const f={TOF:"Top of Funnel",MOF:"Middle of Funnel",BOF:"Bottom of Funnel"};let fh=`<button class="chip sm${!creatorFunnelFilter?' active':''}" onclick="setCreatorFunnel(null)">All Stages</button>`;Object.entries(f).forEach(([k,v])=>{const a=creatorFunnelFilter===k;fh+=`<button class="chip sm" style="${a?'border-color:#0D9488;background:rgba(13,148,136,.08);color:#0D9488':''}" onclick="setCreatorFunnel('${k}')">${v}</button>`});document.getElementById('creator-funnel-chips').innerHTML=fh}
-function renderCreator(){const q=document.getElementById('creator-search').value.toLowerCase();const withFormats=ENTRIES.filter(e=>e.formats);let filtered=withFormats.filter(e=>{if(creatorShowLatest&&!recentCallIds.has(e.sourceId))return false;if(creatorCatFilter&&e.category!==creatorCatFilter)return false;if(creatorFunnelFilter&&!e.funnel.includes(creatorFunnelFilter)&&!e.funnel.includes("ALL"))return false;if(q){return e.title.toLowerCase().includes(q)||e.description.toLowerCase().includes(q)||e.tags.some(t=>t.includes(q))}return true});filtered=sortByDate(filtered);document.getElementById('creator-result-count').textContent=`Showing ${filtered.length} of ${withFormats.length} entries with content briefs`;if(!filtered.length){document.getElementById('creator-container').innerHTML='<div class="empty"><div class="empty-icon">🎬</div><p>No entries with content briefs match your filters.</p></div>';return}document.getElementById('creator-container').innerHTML=filtered.map(e=>{const cat=CATEGORIES[e.category];const isExp=creatorExpandedId===e.id;const isNew=latestCallIds.has(e.sourceId);return`<div class="entry-card${isExp?' expanded':''}" style="border-left-color:${cat.color}" onclick="toggleCreatorEntry('${e.id}')"><div class="entry-top"><div class="entry-content"><div class="entry-badges"><span style="font-size:16px">${cat.icon}</span>${makeBadge(cat.label,cat.color)}${e.funnel.filter(f=>f!=='ALL').map(f=>makeBadge(f,'#64748B',true)).join('')}${isNew?'<span class="badge-new">NEW</span>':''}</div><h3 class="entry-title">${e.title}</h3><p class="entry-desc${isExp?'':' clamped'}">${e.description}</p></div><span class="entry-arrow">▼</span></div><div class="entry-detail"><div class="format-grid">${Object.entries(FORMATS).map(([key,fmt])=>{const b=e.formats[key];if(!b)return'';const done=isCreated(e.id,key);return`<div class="format-card${done?' created':''}" style="border-top:3px solid ${fmt.color}"><div class="format-header"><span class="format-icon">${fmt.icon}</span><span class="format-name">${fmt.label}</span><span class="format-difficulty" style="background:${fmt.color}18;color:${fmt.color}">${'\u25CF'.repeat(fmt.difficulty)}${'\u25CB'.repeat(6-fmt.difficulty)}</span></div><div class="format-section"><span class="format-label">Hook</span><p>${b.hook}</p></div><div class="format-section"><span class="format-label">Body</span><p>${b.body}</p></div><div class="format-section"><span class="format-label">CTA</span><p>${b.cta}</p></div><div class="format-section"><span class="format-label">Notes</span><p>${b.notes}</p></div><label class="format-check" onclick="event.stopPropagation()"><input type="checkbox" ${done?'checked':''} onchange="toggleCreated('${e.id}','${key}',event)"><span>Created</span></label></div>`}).join('')}</div></div></div>`}).join('')}
+function renderCreator(){const q=document.getElementById('creator-search').value.toLowerCase();const withFormats=ENTRIES.filter(e=>e.formats);let filtered=withFormats.filter(e=>{if(creatorShowLatest&&!recentCallIds.has(e.sourceId))return false;if(creatorCatFilter&&e.category!==creatorCatFilter)return false;if(creatorFunnelFilter&&!e.funnel.includes(creatorFunnelFilter)&&!e.funnel.includes("ALL"))return false;if(q){return e.title.toLowerCase().includes(q)||e.description.toLowerCase().includes(q)||e.tags.some(t=>t.includes(q))}return true});filtered=sortByDate(filtered);document.getElementById('creator-result-count').textContent=`Showing ${filtered.length} of ${withFormats.length} entries with content briefs`;if(!filtered.length){document.getElementById('creator-container').innerHTML='<div class="empty"><div class="empty-icon">🎬</div><p>No entries with content briefs match your filters.</p></div>';return}document.getElementById('creator-container').innerHTML=filtered.map(e=>{const cat=CATEGORIES[e.category];const isExp=creatorExpandedId===e.id;const isNew=latestCallIds.has(e.sourceId);return`<div class="entry-card${isExp?' expanded':''}" style="border-left-color:${cat.color}" onclick="toggleCreatorEntry('${e.id}')"><div class="entry-top"><div class="entry-content"><div class="entry-badges"><span style="font-size:16px">${cat.icon}</span>${makeBadge(cat.label,cat.color)}${e.funnel.filter(f=>f!=='ALL').map(f=>makeBadge(f,'#64748B',true)).join('')}${isNew?'<span class="badge-new">NEW</span>':''}</div><h3 class="entry-title">${e.title}</h3><p class="entry-desc${isExp?'':' clamped'}">${e.description}</p></div><span class="entry-arrow">▼</span></div><div class="entry-detail"><div class="format-grid">${Object.entries(FORMATS).map(([key,fmt])=>{const b=e.formats[key];if(!b)return'';const done=isCreated(e.id,key);return`<div class="format-card${done?' created':''}" style="border-top:3px solid ${fmt.color}"><div class="format-header"><span class="format-icon">${fmt.icon}</span><span class="format-name">${fmt.label}</span><span class="format-difficulty" style="background:${fmt.color}18;color:${fmt.color}">${'\u25CF'.repeat(fmt.difficulty)}${'\u25CB'.repeat(6-fmt.difficulty)}</span></div><div class="format-section"><span class="format-label">Hook</span><p>${b.hook}</p></div><div class="format-section"><span class="format-label">Body</span><p>${b.body}</p></div><div class="format-section"><span class="format-label">CTA</span><p>${b.cta}</p></div><div class="format-section"><span class="format-label">Notes</span><p>${b.notes}</p></div><button class="format-copy" onclick="copyBrief('${e.id}','${key}',event)" title="Copy full brief to clipboard">📋 Copy brief</button><label class="format-check" onclick="event.stopPropagation()"><input type="checkbox" ${done?'checked':''} onchange="toggleCreated('${e.id}','${key}',event)"><span>Created</span></label></div>`}).join('')}</div></div></div>`}).join('')}
 function setTrackerFormat(k){trackerFormatFilter=trackerFormatFilter===k?null:k;renderTrackerChips();renderTracker()}
 function setTrackerCat(k){trackerCatFilter=trackerCatFilter===k?null:k;renderTrackerChips();renderTracker()}
 function setTrackerStatus(k){trackerStatusFilter=trackerStatusFilter===k?null:k;renderTrackerChips();renderTracker()}
