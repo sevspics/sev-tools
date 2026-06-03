@@ -217,6 +217,39 @@ const CATEGORIES={strategy:{label:"Content Strategy",color:"#0D9488",icon:"📐"
 const FORMATS={faceless:{label:"Faceless",icon:"\u{1F5A5}\uFE0F",difficulty:1,color:"#10B981"},meme:{label:"Memes",icon:"\u{1F602}",difficulty:2,color:"#84CC16"},candid:{label:"Candid",icon:"\u{1F4F1}",difficulty:3,color:"#F59E0B"},framed:{label:"Framed",icon:"\u{1F3AC}",difficulty:4,color:"#F97316"},"visual-storyteller":{label:"Visual Storyteller",icon:"\u{1F3A5}",difficulty:5,color:"#EF4444"},"talking-head":{label:"Talking Head",icon:"\u{1F5E3}\uFE0F",difficulty:6,color:"#DC2626"}};
 const CALLS=[
   {
+    "id": "sky-belcher-s1",
+    "name": "Sky Belcher — Content Workshop Onboarding (Empire Auto Garage, $3,300 Online Closed)",
+    "date": "2026-06-02",
+    "type": "Onboarding",
+    "attendees": [
+      "Sky Belcher"
+    ],
+    "link": "https://fathom.video/calls/695762827",
+    "duration": 45
+  },
+  {
+    "id": "max-oneill-s1",
+    "name": "Max O'Neill — Content Workshop Application (Gold Coast Dog Training, $35k→$100k Goal)",
+    "date": "2026-06-02",
+    "type": "BTS Sales",
+    "attendees": [
+      "Max O'Neill"
+    ],
+    "link": "https://fathom.video/calls/695706247",
+    "duration": 35
+  },
+  {
+    "id": "kieran-jun02",
+    "name": "Kieran Ramsay × Sev — Claude-Built Client Workflow + Shot List Tool",
+    "date": "2026-06-02",
+    "type": "1:1 Build Session",
+    "attendees": [
+      "Kieran Ramsay"
+    ],
+    "link": "https://fathom.video/calls/695875473",
+    "duration": 145
+  },
+  {
     "id": "withu-jun01",
     "name": "With U Advisory Call (Organic Content) — Jun 1",
     "date": "2026-06-01",
@@ -1301,6 +1334,263 @@ const CALLS=[
 ];
 const ENTRIES=[
   {
+    "id": "sky-belcher-s1-01",
+    "title": "Brand DNA Gem (AI Agent That Mines Reviews For Voice)",
+    "mentions": [],
+    "category": "ai",
+    "funnel": [
+      "ALL"
+    ],
+    "sourceId": "sky-belcher-s1",
+    "type": "tactic",
+    "description": "Most founders can't articulate their own brand voice — they recognize it when they see it but can't write it down, which means an agency, editor, or content writer always dilutes it. The fix is a custom Gemini Gem (or Claude Project) prefilled with every customer review, Google rating comment, testimonial screenshot, and DM thank-you the business has ever collected. The Gem ingests the raw voice of the customer (their actual words, the phrases they repeat, what they emphasize emotionally) and outputs a brand voice guide grounded in customer language — not founder intuition. The guide becomes the source of truth every script, post, ad, and email runs through. Reviews are the cheat code because they capture the buyer's words AND the buyer's emotional state at the moment of transformation — which is exactly the voice that resonates with the next buyer. The agent runs continuously: dump in new reviews monthly and the voice guide refines itself.",
+    "context": "On Sky Belcher's Empire Auto Garage onboarding, the question came up: how do you keep the authentic voice that grew you from $0 to $100k+/mo when you start delegating content? Sev's answer was the Brand DNA Gem — a Gemini-built agent inside The Compound platform that takes the raw customer reviews (the highest-signal data the business owns) and spits out a brand voice guide. Sky's brand sells to women looking for a safe auto environment; their reviews are full of the exact language that converts that audience, and the Gem makes that language reusable across every content piece.",
+    "businessTypes": [
+      "All"
+    ],
+    "tags": [
+      "ai",
+      "brand-voice",
+      "customer-reviews",
+      "gemini",
+      "delegation",
+      "brand-dna"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: dragging 200+ customer review screenshots into a Gemini Gem. Caption: 'Your brand voice already exists. It's in the reviews you haven't read.'",
+        "body": "[SETUP] Caption: 'Founders say their brand voice is in their head. It isn't. It's in the customers' heads — written in 5-star reviews you've never re-read.' (show stack of review screenshots). [TENSION] Caption: 'So when you hand content to an agency, an editor, or a VA, it always sounds off. They guessed. The customer would've told you.' [PAYOFF] Caption: 'Build a Gem. Feed it every review you've ever got. Ask it: what's the voice that converts our customer? You get a brand voice guide written in your buyer's own words.' Show the Gem output: phrases, emotional triggers, vocabulary. Final caption: 'The reviews are the cheat code.'",
+        "cta": "Comment 'DNA' — I'll send the Gem prompt I use with clients.",
+        "notes": "Screen-only, no face. 45–60s. The dragging-reviews-in moment is the visual hook. Lo-fi music, captions only."
+      },
+      "meme": {
+        "hook": "Title text over two panels — 'Founders writing a brand voice guide from scratch vs founders feeding 5 years of reviews into a Gem.'",
+        "body": "[SETUP] LEFT panel: founder at a whiteboard with 'PROFESSIONAL BUT FUN' and 'AUTHENTIC?' scribbled. Caption: 'Day 3 trying to describe their own voice.' [TENSION] Centre text: 'Your customers already wrote it for you.' [PAYOFF] RIGHT panel: same founder, calm, watching a Gem output stream the voice guide from review data. Caption: 'Took 4 minutes.'",
+        "cta": "Tag a founder still trying to write their own brand voice doc.",
+        "notes": "Two-panel format. 8–12s. The whiteboard cringe on the left is the universal moment. Text-only, no voiceover."
+      },
+      "candid": {
+        "hook": "Phone selfie, walking — 'Onboarded a client this morning. $0 to $100k a month, all from content. And she was scared to delegate because she said nobody else can write in her voice.'",
+        "body": "[SETUP] 'This is the moment every founder hits. The brand grew because YOU wrote it. The reviews came in because YOU sounded like a real person. The thought of an editor or a VA or a writer touching it makes you sick — because they'll sand off the thing that worked.' [TENSION] 'The fix is dumb-simple. Your brand voice already exists. Not in your head. In your reviews. Customers literally typed out, for free, the language that resonated with them — and you've been ignoring it.' [PAYOFF] 'Build a Gem in Gemini. Or a Project in Claude. Feed it every review, every testimonial, every DM thank-you. Ask it what the voice is. It gives you a guide written in your buyer's own words — not your guess. Now anyone can write content that sounds like you, because the source isn't you. The source is the customer.'",
+        "cta": "DM me 'DNA' and I'll send the prompt I use to build the Gem.",
+        "notes": "Phone selfie, walking. Pause before 'the source is the customer'. 60–80s. Raw, no cuts."
+      },
+      "framed": {
+        "hook": "Seated, eye contact — 'Your brand voice isn't in your head. It's in your reviews. You've been guessing at the thing your customers already wrote down for you.'",
+        "body": "[SETUP] 'The bottleneck every growing brand hits: the founder can't delegate content because they can't articulate their own voice. They know it when they see it. They can't write it down. So every editor, VA, and agency dilutes it.' [TENSION] 'The fix isn't a brand voice workshop. It isn't a 40-page deck. It's a Gem — a custom AI agent — fed every customer review you've ever collected. Reviews are the highest-signal data your business owns. They're the buyer's words at the moment of transformation. They contain the exact language that converts the next buyer.' [PAYOFF] 'You ingest reviews, ratings, DMs, testimonial transcripts. You ask the Gem: what is the voice that resonates? It outputs a brand voice guide written in the customer's language — not the founder's guess. Every script, post, ad, and email runs through it. Anyone can write in your voice now, because the source isn't your head. The source is the customer.'",
+        "cta": "Comment 'DNA' for the Gem prompt I install in client workspaces.",
+        "notes": "Seated, authority pace. 70–90s. Lower-third when 'Brand DNA Gem' is named. The 'source isn't your head, source is the customer' line lands slow."
+      },
+      "visual-storyteller": {
+        "hook": "Voiceover over visual — 'She grew her brand to $100k a month writing every word herself. Now she can't delegate. The voice is the thing.'",
+        "body": "[SETUP] Open on Sky filming a reel at her workshop — phone propped, raw, the voice clearly her own. VO: 'For two years she wrote every script, every caption, every DM. The brand grew because it sounded like a real human, not a chain.' [TENSION] Cut to the moment she's offered help: an editor's draft on a laptop. She winces. VO: 'The fear is universal — if I let someone else write this, it'll sound like everyone else.' [PAYOFF] Cut to the Gem build: stacks of review screenshots feeding into Gemini, the voice guide writing itself, the customer's own language appearing in real time. VO: 'The voice was never in her head. It was in five years of reviews. The Gem mined it, structured it, handed it back as a guide.' End on the editor writing a script the founder approves on first read. Text overlay: 'Reviews are the cheat code.'",
+        "cta": "Save this if you're scared to delegate your content.",
+        "notes": "SAO arc. 75–90s. The Gem build mid-shot is the centrepiece. Music builds at the voice-guide reveal. Warm, document-style."
+      },
+      "talking-head": {
+        "hook": "Direct to camera, fast — 'Stop trying to write your brand voice guide. Your customers already wrote it. You just never bothered to read it.'",
+        "body": "[SETUP] 'Founders treat brand voice like it's an internal mystery. Three days at a whiteboard. Forty-page decks. Pages of adjectives nobody uses again. Meanwhile the actual voice — the one that converts — is sitting in 200 customer reviews you stopped reading after year one.' [TENSION] 'The reason agencies and VAs always sand off your voice is they're guessing. They're working from a deck you wrote at a whiteboard. They're not working from the customer's mouth.' [PAYOFF] 'Build a Gem. Dump every review, every DM, every testimonial transcript into it. Ask it: what's the voice that resonates? It outputs a brand voice guide written in the buyer's own words. Now anyone can write in your voice — because the source isn't your guess, it's the customer. Reviews are the cheat code.'",
+        "cta": "Follow for the AI delegation stack I'm rolling out with workshop clients.",
+        "notes": "Direct to camera, high conviction. The 'reviews are the cheat code' line lands twice — once in setup, once in payoff. Hold eye contact. 55–70s."
+      }
+    }
+  },
+  {
+    "id": "max-oneill-s1-01",
+    "title": "60%+ Close Rate = Price Too Low (The Underpricing Diagnostic)",
+    "mentions": [],
+    "category": "sales",
+    "funnel": [
+      "BOF"
+    ],
+    "sourceId": "max-oneill-s1",
+    "type": "principle",
+    "description": "A close rate that looks great is usually a price that's broken. The diagnostic: if you're closing 60-75% of qualified leads, the price is too low — full stop. A healthy close rate for premium service work sits around 30-50%; above that, you're not selling, you're order-taking, and you're leaving 2-3x on the table. The reason it feels good is the founder anchors on volume ('I close most calls!'); the reality is the price is below the buyer's intuitive threshold for the value being delivered, so it's not a real decision — it's a no-brainer purchase. The fix has two moves. (1) Raise the price until the close rate drops to ~30-50%. The lost deals were never going to be profitable anyway; the kept ones print more per unit. (2) Stack a higher-ticket tier on top so the original price becomes the anchor, not the offer. The pricing isn't the constraint — the conviction to raise it is.",
+    "context": "Max O'Neill is running a dog training business in the Gold Coast at $35k/mo with a 60-75% close rate and a $550 average deal value. Targeting $100k/mo by EOY 2026. Sev's immediate read: the close rate IS the constraint — it's a glowing-red signal that the offer is underpriced. The new high-ticket program at $1,500-$2,000 isn't an experiment; it's a correction. Same lead volume, double the revenue, healthier close rate, and the kind of buyer who actually completes the program.",
+    "businessTypes": [
+      "Service Business",
+      "Coaching",
+      "All"
+    ],
+    "tags": [
+      "pricing",
+      "close-rate",
+      "sales-diagnostic",
+      "underpricing",
+      "deal-value",
+      "high-ticket"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: a spreadsheet cell that says 'Close rate: 72%'. Type next to it: 'You're not winning. You're underpriced.' Caption: 'The metric that lies the loudest.'",
+        "body": "[SETUP] Caption: 'Founders brag about high close rates. 60. 70. 80 percent.' (show 5 LinkedIn screenshots of 'closed every call this week' posts). [TENSION] Caption: 'High close rate isn't proof you're great. It's proof your price is below the no-brainer threshold. The buyer didn't decide. They just bought.' [PAYOFF] Caption: 'Healthy close rate for premium service work is 30-50%. Above that, you're an order-taker. Raise the price until the close rate drops. The deals you lose were never going to be profitable. The ones you keep print 2-3x more per unit.' End frame: 'Volume isn't the constraint. Conviction is.'",
+        "cta": "Comment 'DIAGNOSE' — I'll send the price-pressure-test framework.",
+        "notes": "Screen-only, no face. 40–55s. Use real numbers (72%, $550 deal, $100k target). The 'volume vs conviction' end line is the kicker. Lo-fi, captions only."
+      },
+      "meme": {
+        "hook": "Title text over two panels — 'Founders bragging about 75% close rates vs founders quietly raising prices and losing half their deals.'",
+        "body": "[SETUP] LEFT panel: founder with a hand-up high-five, caption 'Closed 7 out of 9 this week! 🎉' [TENSION] Centre text between panels: 'One closed 9 cheap deals. The other closed 4 deals worth 3x.' [PAYOFF] RIGHT panel: same founder, calm at a desk, caption 'Closed 4 of 9. Revenue up 60%. Buyer quality up 200%.'",
+        "cta": "Tag a founder still flexing their close rate.",
+        "notes": "Two-panel format. 8–12s. The high-five-emoji-cringe is universal. Text-only, no voiceover."
+      },
+      "candid": {
+        "hook": "Phone selfie, walking — 'Just got off a call with a guy doing $35k a month at a 72% close rate. He thinks the close rate is his win. It's actually the problem.'",
+        "body": "[SETUP] 'Every founder I talk to who's closing 60, 70, 80 percent of calls is wildly underpriced. They think the high close rate means the offer is irresistible. It does. It means it's so cheap nobody has to decide.' [TENSION] 'A premium service offer should close at 30 to 50 percent. Above that, you're not selling — you're order-taking. Half the deals you close at that price were never going to be your best clients anyway. They bought because it was cheap, not because they were committed.' [PAYOFF] 'The move is to raise the price until the close rate drops to a healthy band. You lose the wrong deals. You keep the right ones. Revenue goes up. Buyer quality goes up. You're not losing customers — you're filtering them. The pricing isn't the constraint. The conviction to raise it is.'",
+        "cta": "DM me 'DIAGNOSE' and I'll send the price-pressure-test I run with clients.",
+        "notes": "Phone selfie, walking. Real-story setup. Pause before 'order-taking'. 60–80s. Raw, no cuts."
+      },
+      "framed": {
+        "hook": "Seated, flat and certain — 'If your close rate is above 60%, your price is too low. Doesn't matter how good it feels. The number is a diagnostic, not a brag.'",
+        "body": "[SETUP] 'Founders treat close rate like a trophy. The higher, the better. I'll close it on the call. We close 8 of 10. Meanwhile the deal value sits at $500, $800, $1,200 — and they wonder why the business doesn't scale past $35k a month.' [TENSION] 'High close rate isn't proof the offer is great. It's proof the offer is below the buyer's intuitive value threshold. There was no decision. There was a no-brainer purchase. Half those buyers wouldn't have done the work anyway — they bought because the price didn't make them think.' [PAYOFF] 'Healthy close rate for premium service work is 30-50%. Above that, you're under-charging. Raise the price until you start losing half the deals. The lost ones were never going to be profitable. The kept ones print 2-3x more. Stack a higher-ticket tier above to anchor the original. Same lead volume. Double the revenue. Better clients. The pricing isn't the constraint. The conviction to raise it is.'",
+        "cta": "Save this. Comment 'DIAGNOSE' for the price-pressure-test I use with advisory clients.",
+        "notes": "Seated, deadpan conviction. 70–85s. Use a lower-third with the close-rate band (30-50% healthy / 60%+ underpriced). The closing line lands slow."
+      },
+      "visual-storyteller": {
+        "hook": "Voiceover over visual — 'He closed 7 out of 9 calls last week. He thought that was the win. It was actually the leak.'",
+        "body": "[SETUP] Open on Max scrolling his Stripe dashboard — $35k month, dozens of small transactions. VO: 'High volume. Decent revenue. Great close rate. The kind of dashboard founders post on LinkedIn.' [TENSION] Cut to the diagnostic moment: Sev whiteboards the close-rate band — 30-50% healthy, 60%+ underpriced. The line lands. VO: 'A close rate that high isn't a trophy. It's a price that doesn't make the buyer think.' [PAYOFF] Cut to the price change: $550 average → $1,800 new tier. Close rate drops to 45%. Stripe dashboard a month later: fewer transactions, higher totals, $58k month. VO: 'Lost the deals he was never meant to win. Kept the ones that paid. The pricing wasn't the constraint. The conviction to raise it was.'",
+        "cta": "Save this if your close rate looks too good.",
+        "notes": "SAO arc. 70–90s. The whiteboard moment with the band labels is the centrepiece. Stripe-dashboard before/after gives the numerical receipt. Music builds at the price change."
+      },
+      "talking-head": {
+        "hook": "Direct to camera, fast — 'If you're closing 70% of your calls, congratulations — you're the cheapest option in your market. That's not a flex.'",
+        "body": "[SETUP] 'Every week a founder tells me their close rate is 65, 70, 75 percent like it's a trophy. It's not. It's a diagnostic. Premium service offers close at 30-50%. Above that, you're not selling — you're order-taking, and the buyer never made a real decision.' [TENSION] 'The deals you're closing at that price are the wrong deals. Buyers who don't think twice don't show up twice. Half of them ghost the work. The other half want to be hand-held because they didn't earn the buy-in.' [PAYOFF] 'Raise the price until the close rate drops to a healthy band. You lose the wrong deals. You keep the right ones. Revenue goes up. Buyer quality goes up. The pricing isn't the constraint — the conviction to raise it is.'",
+        "cta": "Follow for the pricing diagnostics I'm running with advisory clients this month.",
+        "notes": "Direct to camera, high conviction. The 'you're the cheapest option' line is the hook punch — pause after it. Hold eye contact. 55–70s. No cuts."
+      }
+    }
+  },
+  {
+    "id": "kieran-jun02-01",
+    "title": "Double The Concepts For Built-In Upsell (Sell 10, Show 20)",
+    "mentions": [],
+    "category": "sales",
+    "funnel": [
+      "BOF"
+    ],
+    "sourceId": "kieran-jun02",
+    "type": "tactic",
+    "description": "Service-business proposals usually deliver exactly the scope sold — 10 videos for the 10-video package, 6 reels for the 6-reel retainer. The trap: the buyer never feels the value of the ones they're NOT getting, so the upsell conversation has to happen later as a separate pitch (which usually doesn't). The flip: at the concept-presentation stage, always show 2x the agreed-upon scope. Sold 10? Show 20. The client picks their favourite 10 and locks them in. The other 10 sit on the proposal as 'available extras at $X each' or 'bundle the remaining 10 for $Y.' The upsell now feels like a client choice, not a vendor push. The buyer pre-loved the extra concepts in the selection process; saying no to them feels like cutting their own kids. The tactic stacks with the rest of the watertight workflow — every approval click is logged, every locked-in scope is timestamped, every extra concept lives in the doc as a future upsell wedge whenever the client wants to extend.",
+    "context": "Built into Kieran Ramsay's Claude-coded HTML client workflow on the 2-hour build session. He was burning hours on every project chasing approvals and never upselling. Sev's fix inside the tool: the proposal stage auto-generates 2x the concepts, the client approves the top 10 in-app, and the unused 10 stay visible as priced extras. RASWA was the proof — a $7,500 project landed because the proposal showed more concepts than the package included, creating natural upsell tension at the close.",
+    "businessTypes": [
+      "Service Business",
+      "Agency",
+      "Videographer",
+      "Consulting"
+    ],
+    "tags": [
+      "upsell",
+      "proposal",
+      "scope",
+      "client-workflow",
+      "pricing",
+      "sales-mechanics"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: 20 video concepts in a proposal doc. 10 highlighted green ('included'). 10 highlighted orange ('+$300 each'). Caption: 'Sell 10. Show 20. Watch what happens.'",
+        "body": "[SETUP] Caption: 'Most proposals deliver exactly the scope sold. 10 videos for 10. Clean. Boring. Zero upsell tension.' (show a standard 10-line proposal). [TENSION] Caption: 'Problem: the client never feels the value of the ones they're not getting. So you have to upsell later. You never do.' [PAYOFF] Caption: 'Flip it. Show 2x at the concept stage. Client picks their favourite 10. The other 10 sit there as priced extras. Saying no feels like cutting their own kids.' Show client clicking to ADD 4 of the extras. Final caption: 'Same proposal stage. 40% larger deal.'",
+        "cta": "Comment 'STACK' — I'll send the proposal template I built into the workflow.",
+        "notes": "Screen-only, no face. 45–60s. The green/orange highlighting in the doc is the visual hook. Lo-fi music, captions only."
+      },
+      "meme": {
+        "hook": "Title text over two panels — 'Videographers delivering exactly the 10 videos they sold vs videographers delivering 20 concepts at proposal stage.'",
+        "body": "[SETUP] LEFT panel: contractor handing over a USB with 10 files. Client smiles politely. Caption: 'Job done. No expansion path. Pray for a referral.' [TENSION] Centre text: 'The upsell doesn't happen later. It happens at the proposal.' [PAYOFF] RIGHT panel: client highlighting 4 extras in a doc, total ticking up. Caption: '+$1,200 they begged you for.'",
+        "cta": "Tag a service provider stuck doing only what they were paid for.",
+        "notes": "Two-panel format. 8–12s. The USB-handoff on the left is the cringe pull. Sound effect on the total ticking up. Text-only."
+      },
+      "candid": {
+        "hook": "Phone selfie, in the car — 'Just rebuilt a videographer's whole client workflow in 2 hours with Claude. The biggest upgrade wasn't the tool. It was one tactic at the proposal stage.'",
+        "body": "[SETUP] 'Most service businesses send a proposal with exactly the scope they sold. 10 videos for the 10-video package. Job done. No room for the client to expand. So you have to come back later with an upsell pitch — and you never actually do, because it feels gross.' [TENSION] 'The fix is dumb. At the proposal stage, show twice the scope you sold. 10 paid. 20 concepts. The client picks their favourite 10 and locks them in. The other 10 sit on the doc as available extras at a price per item. Now the upsell isn't a vendor push — it's a client choice.' [PAYOFF] 'Saying no to a concept they already fell in love with feels like cutting their own kids. We landed a $7,500 deal last month because the proposal showed more concepts than the package included. Same selling time. Bigger deal. Built into the workflow forever.'",
+        "cta": "DM me 'STACK' and I'll send the proposal template I built into Kieran's workflow.",
+        "notes": "Phone selfie in car. Real-story setup. Pause before '$7,500'. 60–80s. Raw, no cuts."
+      },
+      "framed": {
+        "hook": "Seated, eye contact — 'Your proposal is your second sale. If you're showing exactly what you sold, you're killing the second sale before it starts.'",
+        "body": "[SETUP] 'Service businesses sell a package, then deliver exactly that package. 10 videos for 10. 6 reels for 6. Clean scope. Zero upsell tension. The expansion conversation has to happen later as a separate pitch — and 90% of the time, it doesn't.' [TENSION] 'The proposal is the moment the client's emotional buy-in is highest. They want to imagine the work. They want to picture the outcomes. Showing them exactly the scope they sold doesn't use that energy — it caps it.' [PAYOFF] 'Show 2x the agreed scope at proposal stage. Sold 10? Present 20. Client picks their favourite 10 and locks them in. The other 10 stay visible as priced extras — single items or bundle. Now saying no to a concept feels like cutting their own kid. Upsell becomes a client choice. RASWA landed at $7,500 because the proposal had more concepts than the package included. Built into the workflow once — works forever.'",
+        "cta": "Save this. Comment 'STACK' for the proposal template I install in client workflows.",
+        "notes": "Seated, structured. 70–85s. Use a lower-third when '2x the agreed scope' is named. The 'cutting their own kid' line lands."
+      },
+      "visual-storyteller": {
+        "hook": "Voiceover over visual — 'He was selling 10-video packages and delivering 10 videos. Clean. Efficient. Zero expansion. We doubled what showed up at the proposal stage.'",
+        "body": "[SETUP] Open on Kieran's old proposal — clean 10-line doc, client signs, work delivered, project ends. VO: 'Most service providers cap their own deal size at the proposal stage. Sold 10. Show 10. Job done.' [TENSION] Cut to the workflow build in Claude Code — the proposal template re-architected. The new doc has 20 concept cards, 10 green ('included'), 10 orange ('+$300 each'). VO: 'The fix wasn't the tool. It was the principle. The proposal is the second sale. Show more than you sold.' [PAYOFF] Cut to a client in-app: highlighting their favourite 10, hesitating over the orange extras, clicking ADD on 4 of them. Total ticks up. VO: 'Same selling time. 40% bigger deal. Built into the workflow once. Works forever.' End text: 'The upsell isn't a future pitch. It's a present choice.'",
+        "cta": "Save this if your proposal is the same shape as your offer.",
+        "notes": "SAO arc. 70–90s. The proposal-doc transformation mid-shot is the centrepiece. Music builds at the client adding extras. The 'second sale' line is the anchor."
+      },
+      "talking-head": {
+        "hook": "Direct to camera, fast — 'If your proposal delivers exactly what you sold, you're capping every deal at the price you quoted. That's not service — that's order entry.'",
+        "body": "[SETUP] 'Service businesses sell a package, deliver exactly that package, then wonder why nobody upsells. The upsell isn't a future conversation — it's a present design decision. And it lives at the proposal stage.' [TENSION] 'Show exactly the scope you sold and the client never sees what they're missing. Show 2x the scope and they see it, want it, and now saying no to it feels like cutting their own kid.' [PAYOFF] 'Sold 10? Present 20. Client picks their favourite 10 to lock in. The other 10 sit there as priced extras. Same selling time. Same number of approvals. Bigger deal almost every time. RASWA closed at $7,500 because the proposal had more concepts than the package included. Build the principle into the proposal template once. It compounds forever.'",
+        "cta": "Follow for the rest of the watertight client workflow patterns I'm building with founders.",
+        "notes": "Direct to camera, high conviction. The 'order entry' line is the hook punch. Hold eye contact. 55–70s. No cuts."
+      }
+    }
+  },
+  {
+    "id": "kieran-jun02-02",
+    "title": "Auto-Approval Clock (3-Day Window Then Locked)",
+    "mentions": [],
+    "category": "workflow",
+    "funnel": [
+      "BOF"
+    ],
+    "sourceId": "kieran-jun02",
+    "type": "tactic",
+    "description": "The single biggest source of scope creep and unpaid delays in service work is the client who never gets back to you. The proposal sits. The concepts sit. The deliverables sit. The project drifts for weeks because there's no clock and no consequence. The fix is mechanical: every approval stage in the client workflow has a hard 3-day review window with an auto-approval clause. Send the deliverable. Timer starts. Client has 3 days to log feedback inside the workflow (not via email). Day 4, the deliverable is locked in as approved — explicitly, with a timestamp in the approval ledger. This kills the 'I never said yes to that' conversation forever. The clock isn't punitive — it's protective for both sides. The client gets a forcing function that prevents projects from rotting in their inbox. The vendor gets an evidence trail that makes scope creep legally and emotionally impossible. Inside the workflow: clicking 'send for review' starts the countdown visible to the client, with email reminders at day 2 and day 3. Pair it with the watertight approval ledger (every click timestamped) and the proposal layer (every concept logged) and you have a project that cannot drift.",
+    "context": "Built into Kieran Ramsay's Claude-coded client workflow during the 2-hour build session. Fox Removals stalled because the client's BDM never approved required deliverables — no clock, no enforcement, project rots. The auto-approval window was the structural fix: write the consequence into the tool, not into the relationship. The pattern came from Sev's own RASWA workflow where every approval was already timestamped; Kieran's version added the 3-day default countdown so even silent clients can't stall the timeline.",
+    "businessTypes": [
+      "Service Business",
+      "Agency",
+      "Videographer",
+      "Consulting",
+      "All"
+    ],
+    "tags": [
+      "client-workflow",
+      "scope-creep",
+      "approvals",
+      "automation",
+      "project-management",
+      "evidence-trail"
+    ],
+    "formats": {
+      "faceless": {
+        "hook": "Screen recording: client portal with a 3-day countdown timer ticking down next to a deliverable. Caption: 'The most expensive thing in service work is silence. Here's how you charge for it.'",
+        "body": "[SETUP] Caption: 'Client never gets back to you. Project rots. You eat the delay.' (show 3 unread email follow-ups). [TENSION] Caption: 'You think the problem is the client. It isn't. The problem is no clock and no consequence. So they don't prioritize.' [PAYOFF] Caption: '3-day auto-approval window. Send deliverable. Timer starts. Day 4 — locked in, timestamped, ledgered. No more I-never-approved-that. No more pretending email is a contract. The clock is in the tool. The tool keeps you both honest.' Show countdown ticking from 3:00:00 to 0:00:00, deliverable auto-locks.",
+        "cta": "Comment 'CLOCK' — I'll send the workflow template I built with Kieran.",
+        "notes": "Screen-only, no face. 45–60s. The countdown timer is the visual hook. Ticking sound on the final 3 seconds. Lo-fi music, captions only."
+      },
+      "meme": {
+        "hook": "Title text over two panels — 'Videographers chasing approvals on email for 3 weeks vs videographers running a 3-day auto-approval clock inside the workflow.'",
+        "body": "[SETUP] LEFT panel: a contractor sending 'just bumping this up' for the 6th time. Caption: 'Day 23. Project in purgatory. Eating the delay.' [TENSION] Centre text: 'The clock isn't punitive. It's protective.' [PAYOFF] RIGHT panel: same contractor, calm, watching a 3-day timer auto-lock a deliverable on day 4. Caption: 'Done. Logged. Move on.'",
+        "cta": "Tag a service provider stuck chasing approvals on email.",
+        "notes": "Two-panel format. 8–12s. The 'just bumping this' email cringe is universal. Text-only."
+      },
+      "candid": {
+        "hook": "Phone selfie, walking — 'A guy lost a job last month because the client never approved his deliverables. He emailed seven times. The project just rotted. The fix is the dumbest thing.'",
+        "body": "[SETUP] 'Every service business eats this. Client goes quiet. Deliverables sit. You can't move to the next stage. You can't invoice. You can't free up capacity. And you don't get to charge for the delay, because email isn't a contract.' [TENSION] 'The problem isn't the client. It's that you gave them no clock and no consequence. Of course they don't prioritize a project that costs them nothing to ignore. You'd do the same.' [PAYOFF] 'The fix lives in the workflow, not the relationship. Every approval stage has a hard 3-day review window with auto-approval baked in. Send the deliverable. Timer starts. Day 4, it's locked. Timestamped. Ledgered. The I-never-approved-that conversation is dead forever. The clock isn't punitive. It's protective — for both of you. They get a forcing function. You get an evidence trail.'",
+        "cta": "DM me 'CLOCK' and I'll send the workflow template I built with Kieran.",
+        "notes": "Phone selfie, walking. Real-story setup. Pause before 'protective — for both of you'. 60–80s. Raw, no cuts."
+      },
+      "framed": {
+        "hook": "Seated, eye contact — 'The single biggest source of scope creep in service work isn't client demands. It's client silence. And you can fix it with a 3-day timer.'",
+        "body": "[SETUP] 'Service projects don't usually die from a client saying no. They die from a client saying nothing. The proposal sits. The deliverables sit. The project drifts for weeks because there's no clock and no consequence written into the contract.' [TENSION] 'Email is not a contract. Following up six times is not a process. Hoping the client prioritizes is not a strategy. You have no leverage because you gave none.' [PAYOFF] 'Build a 3-day auto-approval window into the workflow. Client gets the deliverable. Timer starts. Day 4, the deliverable auto-locks as approved — timestamped in the ledger, no take-backs. They get email reminders at day 2 and day 3. They get the forcing function they actually need. You get an evidence trail that makes scope creep legally and emotionally impossible. The clock isn't punitive. It's the contract showing up in the tool.'",
+        "cta": "Save this. Comment 'CLOCK' for the workflow template I install in client systems.",
+        "notes": "Seated, structured. 70–85s. Lower-third when '3-day auto-approval window' is named. The closing 'contract showing up in the tool' line lands slow."
+      },
+      "visual-storyteller": {
+        "hook": "Voiceover over visual — 'A project he was owed $7,000 on rotted for 26 days because the client never replied. We rebuilt the workflow so it can never happen again.'",
+        "body": "[SETUP] Open on Kieran's inbox — 7 unread follow-ups to the same client, all 'just bumping this'. VO: 'Most service businesses lose more to client silence than to client objections. The project doesn't die. It just rots in the inbox.' [TENSION] Cut to the build session in Claude Code: the workflow re-architected with a countdown timer on every approval stage. The timer renders on the client side too. VO: 'The fix isn't another reminder email. It's a clock the contract enforces.' [PAYOFF] Cut to a new project in motion: deliverable sent, 3-day timer counting down on the client portal, email reminders at day 2 and 3, day 4 — auto-locked, ledger updated, deliverable approved. VO: 'No chase. No purgatory. The clock kept them both honest. Same vendor. Same client. Different workflow.' End text: 'The contract belongs in the tool.'",
+        "cta": "Save this if your projects are dying in client inboxes.",
+        "notes": "SAO arc. 70–90s. The timer on the client portal is the centrepiece. Music builds at the auto-lock. The 'contract in the tool' line is the anchor."
+      },
+      "talking-head": {
+        "hook": "Direct to camera, fast — 'If your client never replies, that's not their fault. That's your workflow.'",
+        "body": "[SETUP] 'Service businesses blame ghost clients for stalled projects. The truth: you gave them no clock and no consequence. Of course they don't prioritize a project that costs nothing to ignore.' [TENSION] 'Email isn't a contract. Following up isn't a process. Hoping for a reply isn't a strategy. The problem isn't the client. It's that the only thing keeping the project alive is your patience.' [PAYOFF] '3-day auto-approval window. Built into the workflow. Send deliverable. Timer starts. Day 4 — locked, timestamped, ledgered. The I-never-approved-that conversation is dead forever. The clock isn't punitive. It's the contract showing up in the tool.'",
+        "cta": "Follow for the rest of the watertight client workflow patterns.",
+        "notes": "Direct to camera, high conviction. The 'that's your workflow' opening line is the hook punch. Hold eye contact. 55–70s. No cuts."
+      }
+    }
+  },
+  {
     "id": "withu-jun01-01",
     "title": "Cafe Test (Talk To Camera, Not At It)",
     "mentions": [],
@@ -1324,40 +1614,194 @@ const ENTRIES=[
     ],
     "formats": {
       "faceless": {
-        "hook": "Screen recording: two side-by-side takes of the same script. One reads stiff and rehearsed. One sounds like a conversation. Same words. Different video.",
-        "body": "Show the audio waveforms of both takes. Overlay the rules: take one had eyes fixed on the lens, monotone, no pauses, mouth doing the words but the brain checked out. Take two: speaker imagined a friend across the table, internalized the line first, then said it. Cut to a real before/after of the speaker's face. Same content, completely different scroll behavior.",
-        "cta": "Save this and run the Cafe Test on your next reel before you hit record.",
-        "notes": "A/B audio comparison is the format. Use a real example if possible. Captions only, no voiceover. Lo-fi music in the background. Under 45 seconds."
+        "styleNote": "💡 Also test: POV first-person (your own notes-app script with the Cafe Test cue typed at the top), a duet/stitch reacting to a stiff 'read-at-the-lens' creator clip, or a whiteboard draw of the 'lens = friend' diagram. The theme stays fixed — only the surface changes.",
+        "variants": [
+          {
+            "label": "Caption Teach (Setup → Tension → Payoff)",
+            "hook": "On-screen text over two side-by-side takes of the identical script — 'Same words. One sounds like a sermon. One sounds like a chat. Here's the one thing that changed.'",
+            "body": "[SETUP] Caption over the two waveforms side by side: 'Same script, both takes. The audio is the only tell — take one is a flat line, take two breathes.'\n[TENSION] 'Take one: eyes locked on the lens, monotone, no pauses, mouth doing the words while the brain checked out. That's the read-at-the-camera voice that screams I'm making content — and triggers the scroll.' (zoom on the dead-flat waveform).\n[PAYOFF] 'Take two ran the Cafe Test: imagine a mate sitting opposite you and just answer them. Internalize the line, then say it — never read it.' Final caption: 'Same words. Different video.'",
+            "cta": "Comment 'CAFE' — I'll send the 60-second pre-record drill that kills the stiff voice.",
+            "notes": "Screen-only, no face. 40–55s. The waveform A/B is the proof — a flat line next to a lively one. Lo-fi, captions only, no voiceover, music in on the take-two reveal."
+          },
+          {
+            "label": "Aesthetic B-roll + One Line",
+            "hook": "Moody aesthetic B-roll (steam off a flat white, a sunlit empty cafe table, two chairs facing each other) with one slow line of text — 'Stop talking AT the camera. Talk to the person across the table.'",
+            "body": "[VIBE] One unbroken aesthetic shot of an empty cafe table set for two — calm, warm, a little wistful. The mild mismatch with a 'delivery tip' is the scroll-stopper.\n[ONE LINE] A single line of text fades in over the shot: 'The lens isn't an audience. It's a friend waiting for an answer.'\n[CAPTION CARRIES IT] The teaching lives in the written caption, not on screen — the Cafe Test: most reels die because the creator reads at the lens like a teleprompter; imagine a mate at a cafe and just explain it; same words, completely different video (the take that dropped 80% of the stiffness without a single word changing).",
+            "cta": "Full breakdown's in the caption. Comment 'CAFE' for the pre-record drill.",
+            "notes": "No face, no spoken words. 12–20s loop. Choose footage for FEELING (warmth, intimacy), not literal relevance. One text line only. Trending ambient / soft-piano audio. Write the caption LONG — it does the heavy lifting."
+          },
+          {
+            "label": "Kinetic Typography (Word Hits)",
+            "hook": "Black screen. Words punch in one at a time, synced to a beat — 'YOU. ARE. READING. AT. IT.' Hard cut. 'TALK. TO. IT. INSTEAD.'",
+            "body": "[SETUP] Fast word-by-word text on a solid background, each word timed to the track: 'Your hook is good. Your script is good. Your delivery sounds like a hostage video.'\n[TENSION] Tempo drops, one line holds full-screen: 'Because you're reading AT the lens, not talking TO it.'\n[PAYOFF] Tempo kicks back up: 'Fix: picture a mate across a cafe table and answer them. Internalize first. Say it second. Never read it.' End card: 'Same words. Different video.'",
+            "cta": "Save this. Comment 'CAFE' for the pre-record drill.",
+            "notes": "No footage, no face. 20–30s. Beat-synced typography IS the format — pick the track first, cut text to it. High contrast, one or two colours max."
+          },
+          {
+            "label": "Receipts (Screen-Record Proof)",
+            "hook": "Screen recording, scrubbing the two takes in the timeline of an edit — left clip stiff, right clip alive. Caption: 'Same project file. Same script. Watch the audio line, not the face.'",
+            "body": "[SETUP] Scrub take one on screen — drag the playhead across the flat, even waveform; caption: 'This is reading at the lens. Robotic. Mouth on, brain off.'\n[TENSION] Drop in take two beside it; caption: 'Same words, after one reframe.' Highlight the rise-and-fall of the second waveform against the dead-flat first one.\n[PAYOFF] Type the cue live in the notes panel: 'Talk to a mate at a cafe — don't read.' Caption: 'That's the whole fix. 80% of the stiffness gone, zero script changes. Same words. Different video.'",
+            "cta": "Comment 'CAFE' and I'll send the pre-record drill I run with clients.",
+            "notes": "Screen-only, no face. 30–45s. Use the real editing timeline — the two waveforms side by side ARE the receipt. Annotate as you scrub. The typing-the-cue moment is the payoff."
+          },
+          {
+            "label": "Numbered List (3-Rule Overlay)",
+            "hook": "Plain background, a big number '1' slams on screen — '3 rules so your reel sounds like a person, not a press release. Rule 1: stop reading at the lens.'",
+            "body": "[1] Text card: 'The lens is a friend across a cafe table — not an audience. Talk TO it, never AT it.'\n[2] Text card: 'Internalize the line first, then say it in your own words. Reading is the tell that kills the scroll.'\n[3] Text card: 'Let the cadence drop — pauses, moving hands, alive eyes. Same words, different video.'",
+            "cta": "Save for your next shoot. Comment 'CAFE' for the full pre-record drill.",
+            "notes": "No face. 25–40s. Each rule is one clean text card with a number stinger + swipe sound. Works as a static carousel too — same three cards as slides."
+          }
+        ]
       },
       "meme": {
-        "hook": "Creators reading their script at the camera vs. creators having a chat with the camera.",
-        "body": "Left: someone delivering a reel with a thousand-yard stare, mouth moving robotically. Right: same person mid-laugh, hands moving, eyes alive — same script. Text: 'The script didn't change. The audience did.'",
-        "cta": "Tag a creator who sounds like a podcast host stuck on a press release.",
-        "notes": "Two-panel format. Exaggerate the robotic delivery on the left. Under 10 seconds."
+        "styleNote": "💡 Also test: a Drake yes/no ('reading AT the lens' ✗ vs 'chatting with a mate' ✓), an 'expectation vs reality' split, or a green-screen react to a creator delivering a reel like a robot. Match the audio's tone to the joke — wrong audio kills a meme faster than wrong text.",
+        "variants": [
+          {
+            "label": "Two-Panel Contrast",
+            "hook": "Title text over two panels — 'Reading your script AT the camera vs having a chat WITH the camera.'",
+            "body": "[SETUP] LEFT panel: a creator with a thousand-yard stare, mouth moving robotically, captioned 'delivering a great script like a hostage video'.\n[TENSION] Centre text between panels: 'The script didn't change. The delivery did.'\n[PAYOFF] RIGHT panel: same person mid-laugh, hands moving, eyes alive, captioned 'after imagining a mate across the cafe table'. Caption: 'Same words. Different video.'",
+            "cta": "Tag a creator who sounds like a podcast host stuck on a press release.",
+            "notes": "Two-panel, text-only, no voiceover. 8–12s. Exaggerate the robotic stare on the left. Punch-in on the RIGHT caption."
+          },
+          {
+            "label": "Single Reaction (One Clip + Text)",
+            "hook": "One static clip: you sit across an empty cafe table, dead calm, a slow knowing nod to camera. Top text: 'Me watching creators read a perfect script straight off the lens.'",
+            "body": "[ONE SHOT] No cuts. You hold one expression — quietly amused, leaning back — for the whole clip while the text does the talking.\n[TEXT TURN] Text swaps once at the midpoint: 'The hook's great. You just sound like you're reading a hostage note.'\n[BUTTON] Final text drop: 'Talk to me like I'm sitting right here. Same words. Different video.'",
+            "cta": "Comment 'CAFE' if your reels feel stiff.",
+            "notes": "Single locked-off clip, one held reaction, no dialogue. 6–10s. Pick a trending audio with a knowing/unbothered tone. The comedy is the stillness against the text. Loop-friendly."
+          },
+          {
+            "label": "Nobody / Me: Format",
+            "hook": "Plain text meme — 'Nobody:' (beat) 'Absolutely nobody:' (beat) 'Creators with a perfect script: *reads it straight at the lens in a dead monotone*'",
+            "body": "[SETUP] Classic stacked text build: 'Nobody: … Absolutely nobody: … Every creator with a good hook:' then 'eyes locked on the lens, zero pauses, sounds like a press release.'\n[TENSION] Hard cut text: 'Me:'\n[PAYOFF] '…just imagining a mate across the cafe table and answering them.' Small tag underneath: 'Same words. Different video.'",
+            "cta": "Tag the creator stuck reading at the lens. Comment 'CAFE' for the drill.",
+            "notes": "Text-only, or text over a single clip of you shrugging. 8–12s. The 'Me:' cut is the punchline — leave a half-second pause before it."
+          },
+          {
+            "label": "Text-Thread Screenshot",
+            "hook": "A screen-recorded text exchange. Them: 'why does my reel feel scripted even though the script is good?' You, typing… deleting 'rewrite it'… deleting 'change the hook'…",
+            "body": "[SETUP] Show the typing bubble cycle through the wrong fixes and backspace each one — 'rewrite it', 'change the hook', 'add b-roll' — all deleted.\n[TENSION] One beat of an empty text box. The question still sitting there: 'why does it feel scripted?'\n[PAYOFF] You finally send one line: 'You're reading AT the lens. Imagine a mate at a cafe and just answer them. Don't change a word.' Read receipt: 'Seen ✓'.",
+            "cta": "Comment 'CAFE' for the pre-record drill that does this for you.",
+            "notes": "Screen recording of a mocked-up thread. 12–18s. The delete-cycle of wrong fixes is the joke; the single delivery fix is the payoff. Keypress + send sounds, low or no music."
+          },
+          {
+            "label": "Two-Buttons (Hard Choice)",
+            "hook": "The 'difficult choice / sweating guy' meme template. Two buttons: 'READ THE SCRIPT AT THE LENS' and 'TALK TO IT LIKE A MATE AT A CAFE'. Caption: 'Creators, frozen, ten seconds before record.'",
+            "body": "[SETUP] Sweating-guy template, finger hovering between the two buttons.\n[TENSION] Cut-in text: 'One sounds like a sermon. One sounds like a conversation.'\n[PAYOFF] He picks 'TALK TO IT LIKE A MATE'. Cut to the result: 'Didn't change a word. 80% of the stiffness gone. Same words. Different video.'",
+            "cta": "Tag a creator stuck on button one. Comment 'CAFE' for the drill.",
+            "notes": "Meme-template format (sweating buttons). 8–12s. Works as a static image post too. Keep button text SHORT and big."
+          }
+        ]
       },
       "candid": {
-        "hook": "Just ran an audit and the fix for 90% of the content wasn't the script — it was a 30-second mindset shift.",
-        "body": "Phone selfie, walking. Explain: most creators write a good script and then blow it by reading at the lens. The fix is the Cafe Test — imagine the camera is a mate sitting across from you at a cafe. You're not performing. You're explaining. Cadence drops, eyes soften, hands move, the message lands. Same words, different video.",
-        "cta": "DM me 'CAFE' if you want me to look at your last reel and tell you exactly what to change in the delivery.",
-        "notes": "Walking selfie. The 'mate at a cafe' line is the hook of the explanation — say it the same way both times. Raw, not over-edited."
+        "variants": [
+          {
+            "label": "The Question (Re-told, Properly Filmed)",
+            "origin": "On the With U June 1 call, Niro's reels had genuinely strong hooks on paper but every take landed flat — he was reading at the camera, not talking to it. The spark was the moment you gave him the Cafe Test: 'If you were sitting opposite me at a cafe and I asked you this question, how would you actually say it?' His very next take dropped 80% of the stiffness without changing a single word. Re-feel THAT moment — the click of watching a good script finally sound human — and say it again, properly, to a real camera (not the Zoom grid it happened on).",
+            "question": "Answer this on camera (have someone ask it, or answer it cold): 'Why do most reels sound scripted even when the script is actually good?' Then just… answer it, the way you answered Niro — unscripted, in your voice. The story is the content. You're not performing; you're re-explaining something you already coach.",
+            "hooks": [
+              "Your script isn't the problem. You're reading AT the camera — and everyone can hear it.",
+              "I fixed 80% of a creator's stiffness in one take and never touched his script. Here's the line I gave him.",
+              "If your reel feels like a hostage video, stop rewriting it. The fix is a 30-second mindset shift.",
+              "The lens is not an audience. It's a mate sitting across a cafe table — and you keep ignoring them.",
+              "'Felt scripted' has nothing to do with the script. It's how you're talking to the camera."
+            ],
+            "cta": "DM me 'CAFE' and I'll look at your last reel and tell you exactly what to change in the delivery.",
+            "notes": "Real camera, not a webcam — this is the upgrade from the Zoom moment it came from. Pick ONE hook, say it straight to lens, pause, then answer the question conversationally. No teleprompter. Hands moving, talk to one person like they're across the table. 45–90s. The hook is the only 'written' part — the rest is just you, re-told. Let it run long and cut later."
+          }
+        ]
       },
       "framed": {
-        "hook": "Your hook is right. Your script is right. Your delivery is killing your reels — and there's a one-line fix.",
-        "body": "Seated, direct delivery. Explain the diagnostic: if your delivery feels stiff, you're reading at the camera, not talking to it. The Cafe Test reframes the lens as a friend sitting across the table. Internalize the message first, then say it. Eyes alive, natural pauses, hands move. The viewer's pattern-recognition flips from 'this is content' to 'this is a person talking to me.' That's the entire difference between a scroll and a save.",
-        "cta": "Comment 'CAFE' for the 60-second pre-record drill I use with clients. Save this for your next shoot.",
-        "notes": "Authority delivery, methodical. Use a behind-the-camera shot or example clips to show the contrast. Slow pace, clear pause after the 'this is a person' line."
+        "styleNote": "💡 These five are attention-retention engines — open loop, contrarian, stakes, numbered, in-medias-res. Pick the one that fits the clip's energy. Whatever you choose, the hook has to earn the next 3 seconds or the rest is wasted.",
+        "variants": [
+          {
+            "label": "Open Loop (Withhold The Payoff)",
+            "hook": "Seated, eye contact — 'There's one 30-second shift that drops 80% of the stiffness out of any reel, and I'm going to give you the exact cue — but first you have to see why your delivery is failing.'",
+            "body": "[OPEN LOOP] Promise the specific payoff up front (the exact cue) but don't reveal it yet — the viewer stays for the resolution.\n[TENSION] Teach the why: your hook and script can be perfect, but if you read AT the lens — eyes locked, monotone, no pauses — the viewer's brain reads 'this is content' and scrolls. Reading is the tell.\n[PAYOFF / CLOSE LOOP] Land it: 'The cue is the Cafe Test — imagine a mate sitting opposite you at a cafe and just answer them. Internalize the line first, then say it. That's the take that fixed it on a call last week without changing a word. Same words. Different video.'",
+            "cta": "Comment 'CAFE' for the 60-second pre-record drill.",
+            "notes": "Seated, authority pace. 60–80s. The open loop MUST resolve at the end or it feels like a cheat — pay off the exact cue explicitly. Lower-third when you name the Cafe Test."
+          },
+          {
+            "label": "Contrarian Cold Open",
+            "hook": "Seated, flat and certain — 'Your script is not why your reel feels scripted. I mean it. You could have the best script on the platform and still sound like a hostage video.'",
+            "body": "[CONTRARIAN CLAIM] Open on the line that makes people stop and think 'that's wrong' — then earn it.\n[TENSION] 'The problem is you're reading AT the camera. Eyes glued to the lens, flat cadence, no pauses. That delivery is the universal signal for I'm-making-content, and it triggers the scroll before your great script gets a chance.'\n[PAYOFF] 'The fix isn't the words, it's the target. The Cafe Test: talk to the lens like it's a mate across a cafe table. Internalize first, say it second. Same words. Different video.'",
+            "cta": "Save this. Comment 'CAFE' for the drill I use with clients.",
+            "notes": "Seated, deadpan conviction on the cold open — no smile, let it sit. 60–80s. Pause after the opening claim before you justify it."
+          },
+          {
+            "label": "Stakes & Cost (What It's Costing You)",
+            "hook": "Seated, leaning in — 'Every reel you read straight off the lens is burning the hook you worked hours on. Here's what that stiff delivery is actually costing you.'",
+            "body": "[STAKES] Name the cost: a flat, read-at-the-camera delivery makes the viewer pattern-match 'this is an ad' and scroll in two seconds — so the script, the hook, the edit, all of it dies before it lands.\n[TENSION] 'You think the fix is a better hook or more b-roll. It isn't. You'll just polish a video nobody watches past second two.'\n[PAYOFF] 'The only thing that flips it is changing who you're talking to. The Cafe Test — a mate across the table, not an audience. Internalize, then speak. It dropped 80% of one creator's stiffness with zero script changes. Same words. Different video.'",
+            "cta": "Comment 'CAFE' for the pre-record drill that fixes the delivery.",
+            "notes": "Seated, slightly urgent. 60–80s. Lean on the cost language ('burning', 'costing you') — loss aversion is the retention engine here."
+          },
+          {
+            "label": "Numbered Promise (3 Reasons)",
+            "hook": "Seated — 'Three reasons your reel sounds scripted even when the script is great. The third one is the actual fix, and nobody talks about it.'",
+            "body": "[1] 'Your eyes are locked on the lens — that dead stare reads as performance, not conversation.'\n[2] 'Your cadence is flat — no pauses, no thinking, just words on a conveyor belt off a teleprompter.'\n[3] (the tease pays off) 'You're talking AT the camera instead of to it. Fix all three at once with the Cafe Test — imagine a mate across a cafe table and just answer them. One creator did it last week and dropped 80% of the stiffness without changing a word. Same words. Different video.'",
+            "cta": "Save this. Comment 'CAFE' for the pre-record drill.",
+            "notes": "Seated. 60–85s. Number each reason on screen as you say it; the 'third one nobody talks about' tease in the hook is what carries them past reason two."
+          },
+          {
+            "label": "In Medias Res (Drop Mid-Story)",
+            "hook": "Seated, mid-thought as if already talking — 'So we're on a call, his hooks are genuinely great on paper, and I hit play on his take — and it's flat, robotic, he's reading straight at the lens and burying the whole thing.'",
+            "body": "[IN MEDIAS RES] Start inside the story at the tense beat (a strong script being killed by stiff delivery, live on the call), no preamble.\n[TENSION] Pull back to the lesson: 'This is what almost everyone does — they nail the script and then read it AT the camera like a teleprompter, and the brain checks out while the mouth keeps going.'\n[PAYOFF] 'So I gave him one cue: if I asked you this across a cafe table, how would you actually say it? Next take, same words — 80% of the stiffness gone. Same words. Different video.'",
+            "cta": "Comment 'CAFE' for the pre-record drill that does this on your own.",
+            "notes": "Seated, but start as if the camera caught you mid-sentence — no 'hey guys'. 60–85s. The in-progress open is the retention trick; backfill only after they're hooked."
+          }
+        ]
       },
       "visual-storyteller": {
-        "hook": "Same script. Same lighting. Same outfit. Two completely different reels. Here's what changed.",
-        "body": "Open on take one: stiff, robotic delivery, eyes fixed at the lens. Cut to the Cafe Test reframe being explained off-camera. Cut to take two: same script, but the speaker is now relaxed, hands moving, eyes alive. End on the engagement screens side by side: take one flatlines at 2 seconds, take two holds past the halfway mark.",
-        "cta": "Save this if your reels feel stiff. The delivery is the content.",
-        "notes": "Before/after vignette. Use real footage of both takes if possible. Music starts neutral, lifts at the take-two reveal. SAO arc — Situation (flat delivery), Action (Cafe Test reframe), Outcome (engaged take + analytics)."
+        "styleNote": "💡 Keep these cinematic and sparing — visual storyteller is your highest-production format. Don't make more versions than you'll actually shoot.",
+        "variants": [
+          {
+            "label": "Before / After Arc",
+            "hook": "Voiceover over visual — 'Same script. Same lighting. Same outfit. Watch what one sentence did to the delivery.'",
+            "body": "[SETUP] Open on take one: the creator stiff, eyes drilled into the lens, mouth moving like a teleprompter. VO: 'Great hook, great script — and he's reading it straight at the camera. Dead on arrival.'\n[TENSION] Cut to the reframe landing off-camera — the Cafe Test cue. VO: 'You're not performing to an audience. You're answering a mate across a cafe table.'\n[PAYOFF] Cut to take two: same words, but relaxed — hands moving, eyes alive, natural pauses. End on the two retention graphs: take one flatlines at two seconds, take two holds past halfway. VO: '80% of the stiffness gone. Not one word changed. Same words. Different video.'",
+            "cta": "Save this if your reels feel stiff.",
+            "notes": "SAO arc. 60–90s. Music builds at the reframe. Real before/after footage of both takes if possible. The dead-stare cold open is the hook."
+          },
+          {
+            "label": "Single-Subject Vignette",
+            "hook": "Voiceover over one continuous follow-shot of a creator setting up their phone to film — 'This person has a great script in their hand. In about ten seconds they're going to read it straight at the lens and ruin it.'",
+            "body": "[SETUP] One unbroken vignette — the creator framing the shot, glancing at notes, pressing record. VO sets the quiet tension: brilliant script, about to be flattened by the delivery.\n[TENSION] VO: 'They lock onto the lens like it's a teleprompter. Monotone. No pauses. The brain checks out and the mouth keeps going.'\n[PAYOFF] The shot ends on them softening, leaning back, half-smiling as if someone just sat down across from them. VO: 'One cue changed it — talk to it like a mate at a cafe. Same words. Different video.'",
+            "cta": "Comment 'CAFE' if this is you.",
+            "notes": "One subject, one location, minimal cuts — closer to a brand film than a talking video. 45–70s. Let the visuals breathe; VO is sparse. Warm, observational."
+          },
+          {
+            "label": "Time-Compression Montage",
+            "hook": "Voiceover over a fast montage of take after take after take — same creator, same script, all flat — 'Eleven takes, all stiff. The twelfth one changed everything, and it had nothing to do with the words.'",
+            "body": "[SETUP] Rapid montage compressing a whole shoot — take 1, take 2, take 3, each one robotic, eyes nailed to the lens, the creator getting more frustrated. VO: 'A good script, read at the camera, over and over. Same wooden result every time.'\n[TENSION] Montage slows on the moment of the reframe — the notes app, the cue typed in: 'mate at a cafe.' VO: 'This is the part everyone skips. They fix the script when the script was never broken.'\n[PAYOFF] Land on the final take — relaxed, alive, conversational. VO: 'Talk to the lens like a friend across the table. 80% of the stiffness, gone. Same words. Different video.'",
+            "cta": "Save this. Comment 'CAFE' for the pre-record drill.",
+            "notes": "Montage of repeated takes — needs the real outtakes for texture. 60–90s. Lean into the mounting frustration of the stiff takes. Music is a slow build to a peak on the final relaxed take."
+          }
+        ]
       },
       "talking-head": {
-        "hook": "If your reel feels like a hostage video, your script isn't the problem. You're talking AT the camera.",
-        "body": "Close to camera, fast. The reframe: the lens isn't an audience, it's a friend. Imagine a mate sitting opposite you at a cafe. How would you actually say this line? That's how the video should sound. Most creators read at the lens like it's a teleprompter and wonder why the comments say 'felt scripted.' Internalize first, deliver second. Same words, different video.",
-        "cta": "Follow for the on-camera delivery breakdowns I'm doing with the cohort this month.",
-        "notes": "High conviction. The 'hostage video' line is the hook of the hook — pause after. Close-up framing, eye contact with the lens to demonstrate the principle."
+        "styleNote": "💡 Same script, three energies — rant, measured, rapid-fire. Match the energy to the platform: rapid-fire for TikTok, measured for YouTube, rant for a bold IG hook.",
+        "variants": [
+          {
+            "label": "High-Conviction Rant",
+            "hook": "Direct to camera, fast — 'If your reel feels like a hostage video, your script isn't the problem. You're talking AT the camera.'",
+            "body": "[SETUP] 'Creators write a great script, then read it straight off the lens. Eyes locked, monotone, no pauses. The viewer's brain instantly clocks I'm-being-sold-to and scrolls.'\n[TENSION] 'Reading at the camera is the tell. It doesn't matter how good the hook is — performative delivery kills it before it lands. The comments say felt scripted, and they're right.'\n[PAYOFF] 'The fix is the Cafe Test: the lens isn't an audience, it's a mate across a cafe table. Imagine they asked you the question and just answer them. Internalize first, deliver second, never read. Same words. Different video.'",
+            "cta": "Follow for the on-camera delivery breakdowns I'm doing with the cohort this month.",
+            "notes": "Direct to camera, high conviction. The 'hostage video' line is the hook of the hook — pause after it. Hold eye contact. 55–70s, no cuts."
+          },
+          {
+            "label": "Calm Authority (Measured)",
+            "hook": "Direct to camera, slow and level — 'I want to gently fix the reason your reels feel scripted. It isn't the script. It's that you're talking at the lens instead of to it. Let me show you.'",
+            "body": "[SETUP] Measured: 'Your script can be excellent. But if you read it at the camera — eyes fixed, flat cadence — the delivery signals performance, and that's what triggers the scroll.'\n[TENSION] 'The viewer can feel the difference between someone reading and someone talking to them. One is a sermon. One is a conversation. Same words, completely different video.'\n[PAYOFF] 'So change who you're speaking to. The Cafe Test — imagine a friend sitting opposite you and answer them. Internalize the line, then say it in your own words. I gave a creator that cue last week and it dropped 80% of the stiffness instantly. Same words. Different video.'",
+            "cta": "Comment 'CAFE' for the drill I walk clients through.",
+            "notes": "Direct to camera, calm and warm — teacher, not preacher. Slower cadence, softer gestures. 60–75s. The authority comes from stillness, not volume."
+          },
+          {
+            "label": "Rapid-Fire (Punchy List)",
+            "hook": "Direct to camera, high energy — '30 seconds to fix every stiff reel you make: stop reading at the lens, start talking to it. Go.'",
+            "body": "[SETUP] Fast: 'One — your eyes are locked on the lens. That dead stare reads as performance. Drop it.'\n[TENSION] Faster: 'Two — your cadence is flat, no pauses, like you're reading a teleprompter. That's the tell.'\n[PAYOFF] Land it: 'Three — talk to the camera like a mate at a cafe and just answer them. Internalize first, say it second. 80% of the stiffness, gone, zero words changed. Same words. Different video.'",
+            "cta": "Follow for daily 30-second on-camera fixes.",
+            "notes": "Direct to camera, high tempo, quick jump-cuts on each number allowed. 25–40s. Energy IS the format — keep it snappy."
+          }
+        ]
       }
     }
   },
@@ -1389,40 +1833,194 @@ const ENTRIES=[
     ],
     "formats": {
       "faceless": {
-        "hook": "Screen recording: a Google search for '[your service] near me' — 47 providers, all saying the same thing. Caption: 'The buyer has no way to choose. Until you give them one.'",
-        "body": "Walk through the buyer's actual decision process: they Google, they get 47 identical options, they pick whoever was cheapest or showed up first. Now show the alternative — a post titled '5 things to look for in a [your category]'. Each criterion is something you genuinely have. The buyer leaves with a vetting checklist that quietly eliminates everyone less qualified than you.",
-        "cta": "Save this and write your own selection-criteria post tonight. Comment 'CHOOSE' for the template.",
-        "notes": "Real search screen recording for impact. Show 5 criteria appearing as text overlays. Under 60s. The 'walks away with a checklist' moment is the payoff."
+        "styleNote": "💡 Also test: POV first-person (thumb scrolling 47 identical search results), a duet/stitch reacting to a 'just trust me, I'm the best' guru clip, or a whiteboard draw of the 5-point checklist building live. The theme stays fixed — only the surface changes.",
+        "variants": [
+          {
+            "label": "Caption Teach (Setup → Tension → Payoff)",
+            "hook": "On-screen text over a Google search of '[your service] near me' showing 47 near-identical listings — 'The buyer can't tell you apart. So stop arguing. Hand them a checklist.'",
+            "body": "[SETUP] Caption over the wall of identical listings: 'In a flooded category, every provider says the same thing — best, trusted, experienced. The buyer has nothing to choose on.'\n[TENSION] 'So they default to whoever's cheapest or showed up first. You lose leads to coaches who started last month.' (zoom on three identical 'best in the business' bios).\n[PAYOFF] 'Don't claim you're the best. Teach them how to choose one — and build the checklist around what you actually have. 11 years. 400+ clients. Structured engagement.' Show 5 criteria appearing as cards. Final caption: 'Authority by checklist, not by claim.'",
+            "cta": "Comment 'CHOOSE' — I'll send the 5-criterion template that writes your selection-criteria post.",
+            "notes": "Screen-only, no face. 40–55s. The identical-bios zoom is the cringe pull. Lo-fi, captions only, music in on the checklist reveal."
+          },
+          {
+            "label": "Aesthetic B-roll + One Line",
+            "hook": "Moody aesthetic B-roll (a single chess piece, a hand turning one page, light through blinds) with one slow line of text — 'Don't tell them you're the best. Teach them how to spot one.'",
+            "body": "[VIBE] One unbroken aesthetic shot, slightly disconnected from the topic — that mild mismatch is the scroll-stopper. Calm, deliberate, a little mysterious.\n[ONE LINE] A single line of text fades in over the shot: 'The provider who teaches the buyer how to choose has already been chosen.'\n[CAPTION CARRIES IT] The teaching lives in the written caption, not on screen — the selection-criteria idea: claims are invisible, a checklist is undeniable, engineer every criterion around an edge you genuinely have (11 years, 400+ clients, real structure).",
+            "cta": "Full breakdown's in the caption. Comment 'CHOOSE' for the criteria template.",
+            "notes": "No face, no spoken words. 12–20s loop. Choose footage for FEELING, not relevance. One text line only. Trending ambient / sad-piano audio. Write the caption LONG — it does the heavy lifting."
+          },
+          {
+            "label": "Kinetic Typography (Word Hits)",
+            "hook": "Black screen. Words punch in one at a time, synced to a beat — 'CLAIMS. ARE. INVISIBLE.' Hard cut. 'A. CHECKLIST. IS. UNDENIABLE.'",
+            "body": "[SETUP] Fast word-by-word text on a solid background, each word timed to the track: 'Every competitor screams they're the best. It's noise the buyer tunes out.'\n[TENSION] Tempo drops, one line holds full-screen: 'You can't win an argument about who's better.'\n[PAYOFF] Tempo kicks back up: 'So don't argue. Teach them how to choose. 11 years. 400+ clients. Structured engagement. The checklist disqualifies everyone newer — without naming a soul.' End card: 'Authority by checklist, not by claim.'",
+            "cta": "Save this. Comment 'CHOOSE' for the 5-criterion template.",
+            "notes": "No footage, no face. 20–30s. Beat-synced typography IS the format — pick the track first, cut text to it. High contrast, one or two colours max."
+          },
+          {
+            "label": "Receipts (Screen-Record Proof)",
+            "hook": "Screen recording, thumb scrolling a real search of coaches in the niche — every bio says 'best', 'trusted', 'transformational'. Caption: 'Spot the difference. Exactly. There isn't one — until you build the checklist.'",
+            "body": "[SETUP] Scroll the real sea of sameness on screen — ten profiles, identical claims; highlight each repeated buzzword as you pass it.\n[TENSION] Stop scrolling. Caption: 'This is what the buyer sees. 47 options, zero way to choose. So they pick on price.'\n[PAYOFF] Cut to a notes-app list of selection criteria being typed live: 'Years in practice. Clients served. Engagement structure. Documented outcomes.' Caption: '11 years and 400+ clients quietly clears that bar. Authority by checklist, not by claim.'",
+            "cta": "Comment 'CHOOSE' and I'll send the template that builds your checklist.",
+            "notes": "Screen-only, no face. 30–45s. Use a real (anonymised) scroll — the authenticity is the point. Annotate repeated buzzwords as you go. The typing-the-criteria moment is the payoff."
+          },
+          {
+            "label": "Numbered List (3-Rule Overlay)",
+            "hook": "Plain background, a big number '1' slams on screen — '3 rules to win a flooded category. Rule 1: stop telling buyers you're the best.'",
+            "body": "[1] Text card: 'Claims are invisible. Every new competitor says the identical thing. Drop the bragging.'\n[2] Text card: 'Teach the buyer how to choose. Post the 5 things to look for in a coach who won't waste their time.'\n[3] Text card: 'Engineer every criterion around an edge you genuinely have. 11 years. 400+ clients. Real structure. Authority by checklist, not by claim.'",
+            "cta": "Save for your next post. Comment 'CHOOSE' for the full template.",
+            "notes": "No face. 25–40s. Each rule is one clean text card with a number stinger + swipe sound. Works as a static carousel too — same three cards as slides."
+          }
+        ]
       },
       "meme": {
-        "hook": "Creators saying 'I'm the best' vs. creators teaching buyers how to spot the best.",
-        "body": "Left: someone screaming 'I'M THE BEST!' into a megaphone in an empty room. Right: same person calmly handing a buyer a 5-point checklist that conveniently matches their entire CV. Text: 'One repels the buyer. One arms them.'",
-        "cta": "Tag a coach or consultant still leading with 'best in the business'.",
-        "notes": "Two-panel format. The 'empty room' visual on the left sells the futility. Under 10 seconds."
+        "styleNote": "💡 Also test: a Drake yes/no ('I'm the best' ✗ vs 'here's how to choose one' ✓), an 'expectation vs reality' split, or a green-screen react to a guru yelling 'just trust me, I'm number one'. Match the audio's tone to the joke — wrong audio kills a meme faster than wrong text.",
+        "variants": [
+          {
+            "label": "Two-Panel Contrast",
+            "hook": "Title text over two panels — 'How coaches try to win a flooded market vs what actually gets the call.'",
+            "body": "[SETUP] LEFT panel: a guy screaming 'I'M THE BEST, MOST TRUSTED COACH!' into a megaphone in an empty room — surrounded by 10 clones screaming the exact same line.\n[TENSION] Centre text between panels: 'Claims repel the buyer. A checklist arms them.'\n[PAYOFF] RIGHT panel: same guy, calm, handing a buyer a 5-point checklist captioned 'here's how to choose a coach who won't waste your time' — every box conveniently his (11 years, 400+ clients). Caption: 'Authority by checklist, not by claim.'",
+            "cta": "Tag a coach or consultant still leading with 'best in the business'.",
+            "notes": "Two-panel, text-only, no voiceover. 8–12s. The clone army with megaphones on the left is the joke. Punch-in on the RIGHT caption."
+          },
+          {
+            "label": "Single Reaction (One Clip + Text)",
+            "hook": "One static clip: you stand there, dead calm, unbothered, a slow nod to camera. Top text: 'Me watching 47 brand-new coaches all call themselves the best.'",
+            "body": "[ONE SHOT] No cuts. You hold one expression — quietly amused, arms folded — for the whole clip while the text does the talking.\n[TEXT TURN] Text swaps once at the midpoint: 'I don't argue who's best. I just teach buyers how to choose.'\n[BUTTON] Final text drop: '11 years. 400+ clients. The checklist picks me — they can't.'",
+            "cta": "Comment 'CHOOSE' if you're done shouting 'best' into the void.",
+            "notes": "Single locked-off clip, one held reaction, no dialogue. 6–10s. Pick a trending audio with a smug/unbothered tone. The comedy is the stillness against the text. Loop-friendly."
+          },
+          {
+            "label": "Nobody / Me: Format",
+            "hook": "Plain text meme — 'Nobody:' (beat) 'Absolutely nobody:' (beat) 'Every coach who started last month: I'm the best, most trusted, life-changing expert—'",
+            "body": "[SETUP] Classic stacked text build: 'Nobody: … Absolutely nobody: … Every new coach online:' then the wall of identical 'best in the business' claims.\n[TENSION] Hard cut text: 'Me:'\n[PAYOFF] '…just posting the 5 things to look for in a coach, knowing every box is 11 years and 400+ clients deep.' Small tag underneath: 'Authority by checklist, not by claim.'",
+            "cta": "Tag the 'best in the business' guy. Comment 'CHOOSE' for the template.",
+            "notes": "Text-only, or text over a single clip of you shrugging. 8–12s. The 'Me:' cut is the punchline — leave a half-second pause before it."
+          },
+          {
+            "label": "Text-Thread Screenshot",
+            "hook": "A screen-recorded text exchange. Them: 'why should I pick you over the cheaper coach?' You, typing… deleting 'because I'm the best'… deleting 'because I'm more trusted'…",
+            "body": "[SETUP] Show the typing bubble cycle through the clichés and backspace each one — 'I'm the best', 'I'm more experienced', 'just trust me' — all deleted.\n[TENSION] One beat of an empty text box. The question still sitting there: 'why should I pick you?'\n[PAYOFF] You finally send one line: 'Don't pick me — pick on these 5 things: years in practice, clients served, engagement structure, outcomes. Then decide.' Read receipt: 'Seen ✓'.",
+            "cta": "Comment 'CHOOSE' for the template that writes your 5 criteria.",
+            "notes": "Screen recording of a mocked-up thread. 12–18s. The delete-cycle is the joke; the single confident checklist is the payoff. Keypress + send sounds, low or no music."
+          },
+          {
+            "label": "Two-Buttons (Hard Choice)",
+            "hook": "The 'difficult choice / sweating guy' meme template. Two buttons: 'KEEP SHOUTING I'M THE BEST' and 'TEACH THEM HOW TO CHOOSE ONE'. Caption: 'Coaches, frozen.'",
+            "body": "[SETUP] Sweating-guy template, finger hovering between the two buttons.\n[TENSION] Cut-in text: 'One sounds like every new competitor. One quietly disqualifies them all.'\n[PAYOFF] He picks 'TEACH THEM HOW TO CHOOSE'. Cut to the result: 'Posted the 5-point checklist. 11 years and 400+ clients made every box. Never argued who's best again.'",
+            "cta": "Tag a coach stuck on button one. Comment 'CHOOSE' for the template.",
+            "notes": "Meme-template format (sweating buttons). 8–12s. Works as a static image post too. Keep button text SHORT and big."
+          }
+        ]
       },
       "candid": {
-        "hook": "Sat with a life coach with 400+ clients and the only reason he's losing leads to brand-new coaches is one positioning mistake.",
-        "body": "Phone selfie, walking. Explain: he was saying 'I'm the best' on every reel. Doesn't work because every new coach says the same thing. The shift: post 'here are the 5 things to look for in a coach who actually changes your life.' Every criterion is something he has and they don't — 10+ years, 400+ clients, structured engagement, real outcomes. Buyer leaves with a checklist. Coach gets the call without ever naming a competitor.",
-        "cta": "DM me 'CHOOSE' if you want the criteria-content prompt I use with clients.",
-        "notes": "Real audit story. The 400+ clients number anchors the credibility. Walk and talk, natural delivery."
+        "variants": [
+          {
+            "label": "The Question (Re-told, Properly Filmed)",
+            "origin": "On the With U June 1 strategy call, Niro was frustrated — 11 years and 400+ clients in, and he's watching leads go to coaches who started last month, all because they post louder 'I'm the best' reels than he does. The spark was the moment you flipped it for him: stop competing on 'best coach' and start posting 'here's how to choose a coach who won't waste your time' — then quietly stack every criterion (experience, track record, structure) around what only he has. Re-feel THAT moment — the slight frustration that the most qualified guy in the room was making himself invisible — and say it again, properly, to a real camera.",
+            "question": "Answer this on camera (have someone ask it, or answer it cold): 'Why do you tell experienced operators to stop calling themselves the best?' Then just… answer it, the way you answered Niro — unscripted, in your voice. The audit story is the content. You're not performing; you're re-explaining something you already believe.",
+            "hooks": [
+              "Stop telling buyers you're the best. It's a claim — and in a flooded market it's invisible. (beat) Teach them how to choose instead. That's undeniable.",
+              "A coach with 11 years and 400+ clients was losing leads to people who started last month. One positioning mistake. Here's the fix.",
+              "'Why should I pick you?' is the question that makes most experts brag. The smarter move is to never answer it — hand them a checklist instead.",
+              "I'll prove your 'I'm the best' content is invisible in about ten seconds. Open Instagram, search your category, scroll. Every bio is identical.",
+              "The most experienced provider in a category usually loses to the loudest. Here's how you flip that without naming a single competitor."
+            ],
+            "cta": "DM me 'CHOOSE' and I'll send the 5-criterion prompt that turns your real edge into a buyer's checklist.",
+            "notes": "Real camera, not a webcam — this is the upgrade from the original Zoom call moment. Pick ONE hook, say it straight to lens, pause, then answer the question conversationally. No teleprompter. Hands moving, talk to one person. 45–90s. The 400+ clients number anchors the credibility — land on it. The hook is the only 'written' part — the rest is just you, re-told. Let it run long and cut later."
+          }
+        ]
       },
       "framed": {
-        "hook": "If you're losing leads to less qualified competitors, stop telling buyers you're the best. Teach them how to spot you.",
-        "body": "Seated, structured. Explain the move: buyers in saturated categories can't tell providers apart, so they default to price or whoever's loudest. The fix is selection-criteria content. Pick 5 things a buyer should look for in your category — every criterion engineered around something you genuinely have. Years, track record, specialization, structure, guarantee. The buyer leaves with a vetting framework. The framework happens to describe you. Authority by checklist, not by claim.",
-        "cta": "Save this and comment 'CHOOSE' for the 5-criterion template I use with clients.",
-        "notes": "Authority delivery. Display the 5-criteria framework as a lower-third overlay. Slow, methodical. This is foundational positioning content."
+        "styleNote": "💡 These five are attention-retention engines — open loop, contrarian, stakes, numbered, in-medias-res. Pick the one that fits the clip's energy. Whatever you choose, the hook has to earn the next 3 seconds or the rest is wasted.",
+        "variants": [
+          {
+            "label": "Open Loop (Withhold The Payoff)",
+            "hook": "Seated, eye contact — 'There's one type of post that makes the most qualified person in a category lose to the newest, and I'll show you exactly how to flip it — but first you need to understand why claiming you're the best backfires.'",
+            "body": "[OPEN LOOP] Promise the specific payoff up front (the post format that flips it) but don't reveal it yet — the viewer stays for the resolution.\n[TENSION] Teach the why: in a flooded category every provider claims they're the best, the buyer can't verify any of it, so they default to price or whoever's loudest — and that's rarely the most experienced one.\n[PAYOFF / CLOSE LOOP] Land it: 'The format is selection-criteria content. Don't say you're the best — post the 5 things a buyer should look for, and engineer every criterion around an edge you genuinely have. 11 years. 400+ clients. Real structure. Authority by checklist, not by claim.'",
+            "cta": "Comment 'CHOOSE' for the 5-criterion template.",
+            "notes": "Seated, authority pace. 60–80s. The open loop MUST resolve at the end or it feels like a cheat — pay it off explicitly. Lower-third when you reveal the 5 criteria."
+          },
+          {
+            "label": "Contrarian Cold Open",
+            "hook": "Seated, flat and certain — 'Telling buyers you're the best is the worst thing you can do in a crowded market. I mean it. The more you say it, the more invisible you get.'",
+            "body": "[CONTRARIAN CLAIM] Open on the line that makes people stop and think 'that's wrong' — then earn it.\n[TENSION] 'Every new competitor claims the exact same thing. The buyer can't tell a coach with 11 years from one who started last month — so your claim just adds to the noise.'\n[PAYOFF] 'What works is the opposite of bragging: teach them how to choose. Post the criteria a smart buyer should vet on, and quietly build each one around what only you have. 11 years. 400+ clients. Authority by checklist, not by claim.'",
+            "cta": "Save this. Comment 'CHOOSE' for the template I use with clients.",
+            "notes": "Seated, deadpan conviction on the cold open — no smile, let it be uncomfortable. 60–80s. Pause after the opening claim before you justify it."
+          },
+          {
+            "label": "Stakes & Cost (What It's Costing You)",
+            "hook": "Seated, leaning in — 'Every time you post about how good you are, you're handing your inexperienced competitors free cover to look exactly like you. Here's the bill.'",
+            "body": "[STAKES] Name the cost: when everyone claims 'best', the buyer can't tell experience apart from a beginner, so they choose on price — and the most qualified operator quietly loses leads they should have won.\n[TENSION] 'You think posting more proof that you're the best fixes it. It doesn't. It just adds you to the same pile, louder, next to people with a fraction of your record.'\n[PAYOFF] 'The only thing that pulls you out is teaching the buyer how to choose — then building the checklist around what only you have. 11 years. 400+ clients. Real structure. Authority by checklist, not by claim.'",
+            "cta": "Comment 'CHOOSE' for the template that builds your checklist.",
+            "notes": "Seated, slightly urgent. 60–80s. Lean on the cost language ('the bill', 'free cover') — loss aversion is the retention engine here."
+          },
+          {
+            "label": "Numbered Promise (3 Reasons)",
+            "hook": "Seated — 'Three reasons your 'I'm the best coach' content gets you zero leads in a flooded market. The third one is the one nobody admits.'",
+            "body": "[1] 'It's unverifiable — the buyer can't fact-check 'best', so they ignore it.'\n[2] 'It's crowded — every new competitor says the identical thing, so you blend right in with them.'\n[3] (the tease pays off) 'It's backwards — bragging puts you next to beginners; teaching the buyer how to choose puts you above them. Post the 5 criteria, build each around an edge you genuinely have — 11 years, 400+ clients, real structure — and the checklist disqualifies them for you. Authority by checklist, not by claim.'",
+            "cta": "Save this. Comment 'CHOOSE' for the 5-criterion template.",
+            "notes": "Seated. 60–85s. Number each reason on screen as you say it; the 'third one nobody admits' tease in the hook is what carries them past reason two."
+          },
+          {
+            "label": "In Medias Res (Drop Mid-Story)",
+            "hook": "Seated, mid-thought as if already talking — 'So he's got 11 years and 400-plus clients, and he's about to lose another lead to a coach who started last month — because he keeps posting that he's the best.'",
+            "body": "[IN MEDIAS RES] Start inside the story at the tense beat (the most qualified guy in the category losing to a beginner), no preamble.\n[TENSION] Pull back to the lesson: 'This is what every experienced operator does — they shout 'best' alongside everyone who isn't, and the buyer can't tell the difference, so they pick on price.'\n[PAYOFF] 'I told him what I'll tell you: stop claiming it, teach them how to choose it. Post the 5 things to look for, and engineer every criterion around what only you have. His is 11 years and 400+ clients. Authority by checklist, not by claim.'",
+            "cta": "Comment 'CHOOSE' for the template that surfaces your criteria.",
+            "notes": "Seated, but start as if the camera caught you mid-sentence — no 'hey guys'. 60–85s. The in-progress open is the retention trick; backfill only after they're hooked."
+          }
+        ]
       },
       "visual-storyteller": {
-        "hook": "He has 11 years and 400 clients. He keeps losing leads to coaches who started last month. Watch what we changed.",
-        "body": "Open on the problem: experienced coach losing inquiries to fresh-faced competitors with louder reels. Cut to the strategy session: instead of 'I'm the best,' we mapped 5 things a buyer should look for. Each criterion happens to be something only he has. Cut to the new content: the post goes up, the DMs change — buyers messaging with the checklist in mind, pre-qualifying themselves.",
-        "cta": "Save this if you're the most qualified person nobody's hiring.",
-        "notes": "SAO arc: Situation (losing to newer competitors), Action (built the criteria post), Outcome (qualified DMs). Music builds at the post-going-live moment."
+        "styleNote": "💡 Keep these cinematic and sparing — visual storyteller is your highest-production format. Don't make more versions than you'll actually shoot.",
+        "variants": [
+          {
+            "label": "Before / After Arc",
+            "hook": "Voiceover over visual — 'He has 11 years and 400 clients. He keeps losing leads to coaches who started last month. Watch what we changed.'",
+            "body": "[SETUP] Open on Niro at his desk, watching an inquiry go cold while a fresh-faced competitor's reel plays on the second screen. VO: 'The most experienced coach in the category — invisible, because he only ever posts that he's the best.'\n[TENSION] Cut to the strategy session; the reframe lands. VO: 'You can't win an argument about who's better. So we stopped claiming, and started teaching the buyer how to choose.'\n[PAYOFF] Montage of the new post going live — the 5-point checklist — and the DMs changing: buyers messaging pre-qualified. VO: '11 years. 400+ clients. Every box, his. Authority by checklist, not by claim.'",
+            "cta": "Save this if you're the most qualified person nobody's hiring.",
+            "notes": "SAO arc. 60–90s. Music builds at the reframe. The inquiry-going-cold shot is the cold open."
+          },
+          {
+            "label": "Single-Subject Vignette",
+            "hook": "Voiceover over one continuous follow-shot of a coach walking into a session room and getting to work — 'This is the most experienced person in their market. Nobody choosing online knows, because they only ever post that they're the best.'",
+            "body": "[SETUP] One unbroken vignette — the coach in their real environment, mid-session, doing the work. VO sets the quiet tragedy: 11 years, 400+ clients, and invisible against beginners online.\n[TENSION] VO: 'They keep reaching for the same word as everyone they're trying to beat. Best. Best. Best. The buyer can't tell who means it.'\n[PAYOFF] The shot ends on them looking to camera. VO: 'The fix was to stop claiming and start teaching — post how to choose, build the checklist around what only they have. Authority by checklist, not by claim.'",
+            "cta": "Comment 'CHOOSE' if this is you.",
+            "notes": "One subject, one location, minimal cuts — closer to a brand film than a talking video. 45–70s. Let the visuals breathe; VO is sparse. Warm, observational."
+          },
+          {
+            "label": "Time-Compression Montage",
+            "hook": "Voiceover over a fast time-lapse of a coaching career — first client, to a hundred, to four hundred-plus — 'Eleven years and 400 clients in ninety seconds. The part that wins the lead isn't the number.'",
+            "body": "[SETUP] Rapid montage compressing the whole journey — early sessions, the grind, the client count climbing. VO: 'All of this is real proof. But shouting it as 'I'm the best' makes it invisible.'\n[TENSION] Montage slows on a present-day search screen — 47 identical listings. VO: 'Because to the buyer, you look exactly like the coach who started last week.'\n[PAYOFF] Land on the new post — the 5-point checklist. VO: 'So don't claim the record. Teach them how to choose, and let the criteria do the disqualifying. 11 years. 400+ clients. Authority by checklist, not by claim.'",
+            "cta": "Save this. Comment 'CHOOSE' for the 5-criterion template.",
+            "notes": "Archival / time-lapse montage. 60–90s. Needs old session photos and clips — lean into texture and the climbing client count. Music is a slow build to a peak on the checklist reveal."
+          }
+        ]
       },
       "talking-head": {
-        "hook": "Stop telling the buyer you're the best. Teach them how to figure it out — and quietly engineer the answer to be you.",
-        "body": "Direct to camera, fast. The reframe: 'I'm the best' is invisible because every competitor says it. Selection-criteria content is invisible only to your competitors. You post '5 things to look for in a [category]' and stack the criteria with stuff only you genuinely have — experience, volume, structure, outcomes. The buyer learns to vet. The vet picks you. Nobody gets named. Nobody gets fought. You just become the obvious answer.",
-        "cta": "Follow for the buyer-education content playbook I'm rolling out this month.",
-        "notes": "High conviction. The 'invisible to competitors' line is the hook of the hook. Confident pace, close framing."
+        "styleNote": "💡 Same script, three energies — rant, measured, rapid-fire. Match the energy to the platform: rapid-fire for TikTok, measured for YouTube, rant for a bold IG hook.",
+        "variants": [
+          {
+            "label": "High-Conviction Rant",
+            "hook": "Direct to camera, fast — 'Stop telling buyers you're the best. It's invisible and you'll lose to a beginner. Teach them how to choose one — that's undeniable.'",
+            "body": "[SETUP] 'In a flooded category every coach claims they're the best, the most trusted, the most experienced. The buyer hears the same three words from everyone, so you vanish.'\n[TENSION] 'A claim can't be verified. The buyer can't tell 11 years from last month, so they pick on price — and the most qualified person loses.'\n[PAYOFF] 'What can't be argued is a checklist. Don't claim it — teach them how to choose, and engineer every criterion around an edge you genuinely have. 11 years. 400+ clients. Real structure. Authority by checklist, not by claim.'",
+            "cta": "Follow for the rest of the buyer-education content playbook.",
+            "notes": "Direct to camera, high conviction. Pause after the opening line. Hold eye contact. 55–70s, no cuts."
+          },
+          {
+            "label": "Calm Authority (Measured)",
+            "hook": "Direct to camera, slow and level — 'I want to gently take something away from you: the idea that telling buyers you're the best is helping you. In a crowded market, it's doing the opposite. Let me show you what works.'",
+            "body": "[SETUP] Measured: 'Your experience is real. But claiming it as 'best' is the weakest move you've got — because every newcomer claims the same thing, and the buyer can't verify any of it.'\n[TENSION] 'When everyone sounds identical, the buyer has nothing to choose on but price. That's the trap claiming the best walks you into.'\n[PAYOFF] 'So teach them how to choose instead. Post the criteria a smart buyer should vet on, and build each one around what only you have. 11 years. 400+ clients. Authority by checklist, not by claim.'",
+            "cta": "Comment 'CHOOSE' for the template I walk clients through.",
+            "notes": "Direct to camera, calm and warm — teacher, not preacher. Slower cadence, softer gestures. 60–75s. The authority comes from stillness, not volume."
+          },
+          {
+            "label": "Rapid-Fire (Punchy List)",
+            "hook": "Direct to camera, high energy — 'Three seconds to fix your positioning: stop saying best, start teaching them how to choose. Go.'",
+            "body": "[SETUP] Fast: 'One — a claim is invisible. Every competitor says best. Drop it.'\n[TENSION] Faster: 'Two — teach the buyer how to choose. Post the 5 things to look for in your category.'\n[PAYOFF] Land it: 'Three — engineer every criterion around what only you have. 11 years. 400+ clients. The checklist picks you. Authority by checklist, not by claim.'",
+            "cta": "Follow for daily 30-second positioning fixes.",
+            "notes": "Direct to camera, high tempo, quick jump-cuts on each number allowed. 25–40s. Energy IS the format — keep it snappy."
+          }
+        ]
       }
     }
   },
@@ -1455,40 +2053,194 @@ const ENTRIES=[
     ],
     "formats": {
       "faceless": {
-        "hook": "Most podcasts are unsearchable, unclippable, and unforgettable. Here's the 5-beat structure that fixes all three.",
-        "body": "Animated breakdown of the 5 beats: Theme (search query) → Anchor Story → Analogy → Hot Take → CTA. Show how the theme becomes the title, the anchor story becomes the cold open, the analogy becomes the carousel, the hot take becomes the 3 clips, the CTA becomes the comment-mining tool. Overlay the result: same hour of audio, four pieces of distribution.",
-        "cta": "Save this and brief your next guest with the 5-beat template. Comment 'BEAT' for the doc.",
-        "notes": "Clean animated diagram. Build the beats one at a time on screen. Use icons for each beat. Lo-fi background music. Under 60 seconds."
+        "styleNote": "💡 Also test: POV first-person (hands dragging the 5 beats onto a storyboard), a duet/stitch reacting to a 'we just have a great chat' podcast clip, or a whiteboard draw of the query-out flow. The architecture stays fixed — only the surface changes.",
+        "variants": [
+          {
+            "label": "Caption Teach (Setup → Tension → Payoff)",
+            "hook": "On-screen text over a podcast waveform with a flatlined analytics graph beside it — 'A killer guest won't save you. A search query will.'",
+            "body": "[SETUP] Caption over a clip of two people laughing into mics: 'Most podcasts are built guest-out — book the name, hit record, see where it goes.'\n[TENSION] 'So you get sixty great minutes that nobody can find, nobody clips, and nobody buys from.' (cut to the flatlined inquiries graph).\n[PAYOFF] 'Build it query-out instead. Pick the exact phrase a buyer Googles, then architect five beats: Theme, Anchor story, Analogy, Hot take, CTA.' Show each beat slam onto a storyboard. Final caption: 'Same hour of audio. Four assets.'",
+            "cta": "Comment '5BEAT' — I'll send the one-page template to brief your next guest.",
+            "notes": "Screen-only, no face. 40–55s. The flatline-graph-next-to-the-waveform is the cringe pull. Build the 5 beats one at a time on screen. Lo-fi, captions only, music in on the storyboard reveal."
+          },
+          {
+            "label": "Aesthetic B-roll + One Line",
+            "hook": "Moody aesthetic B-roll (a dim studio, a single mic under a key light, a slow dolly across foam panels) with one slow line of text — 'They booked the guest. They forgot the question.'",
+            "body": "[VIBE] One unbroken cinematic shot of an empty podcast studio, slightly disconnected from the lesson — that mild mismatch is the scroll-stopper. Quiet, warm, a little lonely.\n[ONE LINE] A single line of text fades in over the shot: 'A great conversation nobody searched for is just a nice memory.'\n[CAPTION CARRIES IT] The teaching lives in the written caption, not on screen — the query-out idea: pick the phrase the buyer Googles first, then build the 5 beats (Theme, Anchor story, Analogy, Hot take, CTA) so the episode ranks, clips and converts. Donna had Roblox's Head of Child Safety on and converted zero — this is the fix.",
+            "cta": "Full breakdown's in the caption. Comment '5BEAT' for the template.",
+            "notes": "No face, no spoken words. 12–20s loop. Choose footage for FEELING, not relevance. One text line only. Trending ambient / slow-piano audio. Write the caption LONG — it does the heavy lifting."
+          },
+          {
+            "label": "Kinetic Typography (Word Hits)",
+            "hook": "Black screen. Words punch in one at a time, synced to a beat — 'BOOK. THE. GUEST?' Hard cut. 'WRONG. ORDER.'",
+            "body": "[SETUP] Fast word-by-word text on a solid background, each word timed to the track: 'You picked the guest first. That's why nobody can find the episode.'\n[TENSION] Tempo drops, one line holds full-screen: 'A conversation with no query is invisible.'\n[PAYOFF] Tempo kicks back up, five words slam in sequence: 'THEME. ANCHOR. ANALOGY. HOT TAKE. CTA. Pick the search phrase first, then build those five. Donna's Roblox episode meandered — this would've ranked.' End card: 'Same hour of audio. Four assets.'",
+            "cta": "Save this. Comment '5BEAT' for the guest-brief template.",
+            "notes": "No footage, no face. 20–30s. Beat-synced typography IS the format — pick the track first, cut text to it. High contrast, one or two colours max. Let the five beat-words land on five separate hits."
+          },
+          {
+            "label": "Receipts (Screen-Record Proof)",
+            "hook": "Screen recording, thumb scrolling a podcast's episode list — every title is a guest name, zero are search phrases. Caption: 'Spot the searchable title. Exactly. There isn't one.'",
+            "body": "[SETUP] Scroll the real episode feed on screen — ten episodes, all named after the guest; highlight that not one matches anything a buyer would type.\n[TENSION] Stop scrolling. Cut to the analytics tab: flat listens, zero inquiries. Caption: 'Great guests. Built guest-out. Unfindable.'\n[PAYOFF] Cut to a doc being filled live — Theme, Anchor story, Analogy, Hot take, CTA — and the title rewritten to the exact phrase a buyer Googles. Caption: 'You can't rank a guest name. Same hour of audio. Four assets.'",
+            "cta": "Comment '5BEAT' and I'll send the template that rebuilds your episode list.",
+            "notes": "Screen-only, no face. 30–45s. Use a real (anonymised) feed — the authenticity is the point. Annotate the guest-name titles as you pass them. The filling-the-5-beat-doc moment is the payoff."
+          },
+          {
+            "label": "Numbered List (3-Rule Overlay)",
+            "hook": "Plain background, a big number '1' slams on screen — '3 rules for a podcast that ranks, clips and converts. Rule 1: pick the search query before you book the guest.'",
+            "body": "[1] Text card: 'Theme first. Start from the exact phrase a buyer Googles — that becomes the title and the ranking.'\n[2] Text card: 'Engineer the moments. Brief one anchor story, one analogy, and one hot take — the hot take is your pre-planned clip.'\n[3] Text card: 'Stamp the CTA. Same comment ask at the same minute, every episode. Theme, Anchor, Analogy, Hot take, CTA — same hour of audio, four assets.'",
+            "cta": "Save for your next recording. Comment '5BEAT' for the full template.",
+            "notes": "No face. 25–40s. Each rule is one clean text card with a number stinger + swipe sound. Works as a static carousel too — same three cards as slides."
+          }
+        ]
       },
       "meme": {
-        "hook": "Podcasters who 'just had a great chat' vs. podcasters who reverse-engineered every episode from a search query.",
-        "body": "Left: someone wide-eyed in headphones saying 'we just vibe and see where it goes' — analytics flatlined. Right: same person, episode title is the exact query buyers Google, hot take pre-planned, 3 clips pre-marked. Text: 'One was fun. One was found.'",
-        "cta": "Tag a podcaster still freestyling 60-minute episodes.",
-        "notes": "Two-panel format. The 'analytics flatlined' visual on the left sells it. Under 10 seconds."
+        "styleNote": "💡 Also test: a Drake yes/no ('we just vibe and see where it goes' ✗ vs 'pick the search query first' ✓), an 'expectation vs reality' split (famous guest vs flat analytics), or a green-screen react to a podcaster saying 'the algorithm will find it'. Match the audio's tone to the joke — wrong audio kills a meme faster than wrong text.",
+        "variants": [
+          {
+            "label": "Two-Panel Contrast",
+            "hook": "Title text over two panels — 'How podcasters try to grow vs what actually gets found, clipped and booked.'",
+            "body": "[SETUP] LEFT panel: a guy in headphones captioned 'We just had a great chat and let it flow' — a flatlined analytics graph photoshopped behind him.\n[TENSION] Centre text between panels: 'A conversation isn't a strategy. A query is.'\n[PAYOFF] RIGHT panel: same guy, captioned 'Episode title = the exact thing buyers Google. Hot take pre-marked. CTA stamped.' — clips and inquiries stacking up beside him. Caption: 'One was fun. One was found.'",
+            "cta": "Tag a podcaster still naming episodes after the guest.",
+            "notes": "Two-panel, text-only, no voiceover. 8–12s. The flatlined-graph behind the left guy is the joke. Punch-in on the RIGHT caption."
+          },
+          {
+            "label": "Single Reaction (One Clip + Text)",
+            "hook": "One static clip: you sit at the mic, dead calm, a slow knowing nod to camera. Top text: 'Me watching a podcaster book a celebrity guest with no theme, no hot take, and no CTA.'",
+            "body": "[ONE SHOT] No cuts. You hold one expression — quietly amused, arms folded — for the whole clip while the text does the talking.\n[TEXT TURN] Text swaps once at the midpoint: 'Great guest. Built guest-out. Will rank for nothing.'\n[BUTTON] Final text drop: 'Pick the search query first. Same hour of audio, four assets. They literally can't say that.'",
+            "cta": "Comment '5BEAT' if you're done freestyling 60-minute episodes.",
+            "notes": "Single locked-off clip, one held reaction, no dialogue. 6–10s. Pick a trending audio with a smug/unbothered tone. The comedy is the stillness against the text. Loop-friendly."
+          },
+          {
+            "label": "Nobody / Me: Format",
+            "hook": "Plain text meme — 'Nobody:' (beat) 'Absolutely nobody:' (beat) 'Podcasters: we just hit record and see where the magic takes us—'",
+            "body": "[SETUP] Classic stacked text build: 'Nobody: … Absolutely nobody: … Every podcaster:' then 'a 60-minute chat with a huge guest, no theme, no clips, no CTA.'\n[TENSION] Hard cut text: 'Me:'\n[PAYOFF] '…picking the exact phrase a buyer Googles before I even book the guest.' Small tag underneath: 'Query-out, not guest-out.'",
+            "cta": "Tag the 'the algorithm will find it' guy. Comment '5BEAT' for the template.",
+            "notes": "Text-only, or text over a single clip of you shrugging at the mic. 8–12s. The 'Me:' cut is the punchline — leave a half-second pause before it."
+          },
+          {
+            "label": "Text-Thread Screenshot",
+            "hook": "A screen-recorded text exchange. Client: 'we landed an INSANE guest for the pod 🔥' You, typing… 'amazing — what search phrase is the episode built around?' …typing bubble from them goes quiet.",
+            "body": "[SETUP] Show the client hyping the guest booking; you keep replying with one question: 'what's the Theme? what would a buyer actually Google?' Their typing bubble appears and disappears, appears and disappears.\n[TENSION] One beat of an empty thread. The question still sitting there: 'what's the query?'\n[PAYOFF] You finally send the fix: 'Guest is great. But pick the phrase first, then bake in the anchor story, the analogy, the hot take and the CTA. Then it ranks AND clips AND converts.' Read receipt: 'Seen ✓'.",
+            "cta": "Comment '5BEAT' for the template that answers 'what's the query?' for you.",
+            "notes": "Screen recording of a mocked-up thread. 12–18s. The disappearing typing-bubble is the joke; the single structured fix is the payoff. Keypress + send sounds, low or no music."
+          },
+          {
+            "label": "Two-Buttons (Hard Choice)",
+            "hook": "The 'difficult choice / sweating guy' meme template. Two buttons: 'BOOK A BIGGER GUEST' and 'PICK THE SEARCH QUERY FIRST'. Caption: 'Podcasters, frozen.'",
+            "body": "[SETUP] Sweating-guy template, finger hovering between the two buttons.\n[TENSION] Cut-in text: 'One feels like growth and ranks for nothing. One is boring and gets you found, clipped and booked.'\n[PAYOFF] He picks 'PICK THE SEARCH QUERY FIRST'. Cut to the result: 'Theme → Anchor → Analogy → Hot take → CTA. Same hour of audio. Four assets. Never freestyled an episode again.'",
+            "cta": "Tag a podcaster stuck on button one. Comment '5BEAT' for the template.",
+            "notes": "Meme-template format (sweating buttons). 8–12s. Works as a static image post too. Keep button text SHORT and big."
+          }
+        ]
       },
       "candid": {
-        "hook": "Just rebuilt a podcast strategy and the whole thing came down to one rule: pick the search query before you book the guest.",
-        "body": "Phone selfie, walking. Explain: Donna's podcast had killer guests and zero conversion. The fix wasn't more guests — it was reversing the order. Pick the exact phrase someone Googles. Brief the guest around that theme. Bake in an anchor story, an analogy, a hot take, and a CTA at known points. The episode ranks, the hot take clips, the CTA converts. Same hour, four assets.",
-        "cta": "DM me 'BEAT' if you want the 5-part template I just gave her.",
-        "notes": "Walking selfie. The 'pick the search query before you book the guest' line is the reframe — say it slow. Real client story sells it."
+        "variants": [
+          {
+            "label": "The Question (Re-told, Properly Filmed)",
+            "origin": "On the June 1 Marketing Weekly, Donna was frustrated that her podcast had unreal guests — Roblox's Head of Child Safety, the works — and still converted nobody. The spark was the moment you flipped the whole thing: stop building the episode around the guest, build it around the search query. You sketched the 5-beat template live — Theme, Anchor story, Analogy, Hot take, CTA — and the room felt it click. Re-feel THAT moment — the slight frustration that a brilliant guest was being wasted on an unfindable episode — and say it again, properly, to a real camera.",
+            "question": "Answer this on camera (have someone ask it, or answer it cold): 'You told Donna a famous guest was the wrong place to start — so where does a podcast episode actually start?' Then just… answer it, the way you answered her — unscripted, in your voice. Walk through picking the query first and the five beats. The story is the content. You're not performing; you're re-explaining something you already believe.",
+            "hooks": [
+              "Stop booking the guest first. The guest isn't the strategy — the search query is. (beat) Build the episode query-out, not guest-out.",
+              "Donna had Roblox's Head of Child Safety on her podcast. It converted zero people. The problem wasn't the guest — it was the order.",
+              "'Who should we get on the podcast?' is the wrong first question. The right one is 'what would our buyer type into Google?' — and most hosts have never asked it.",
+              "Your 60-minute episode is invisible, and I can tell you the exact reason in one sentence: no episode is built around anything anyone is searching for.",
+              "A podcast isn't a conversation you record. It's a search result you engineer — five beats, in order. Here's the first one."
+            ],
+            "cta": "DM me '5BEAT' and I'll send the five-part template I built for Donna — Theme, Anchor story, Analogy, Hot take, CTA.",
+            "notes": "Real camera, not a webcam — this is the upgrade from the original Zoom moment. Pick ONE hook, say it straight to lens, pause, then answer the question conversationally. No teleprompter. Hands moving, talk to one person. 45–90s. The hook is the only 'written' part — the rest is just you, re-told. Let it run long and cut later."
+          }
+        ]
       },
       "framed": {
-        "hook": "If your podcast isn't ranking, isn't clipping, and isn't converting, your episodes are missing five beats.",
-        "body": "Seated, methodical. Walk through the 5-beat template on screen: Theme (the search query), Anchor Story (the real client case), Analogy (the memorable simplification), Hot Take (the contrarian moment that becomes the clips), CTA (the comment ask that converts). Explain why the order matters: without a theme, you can't be found. Without a hot take, you can't be clipped. Without a CTA, you can't be converted. The beats turn a conversation into a content engine.",
-        "cta": "Save this and overlay it on your next 5 episodes. Comment 'BEAT' for the brief.",
-        "notes": "Authority delivery. Display the 5 beats as a lower-third overlay. Slow, structured pace. This is teaching content — earn the save."
+        "styleNote": "💡 These five are attention-retention engines — open loop, contrarian, stakes, numbered, in-medias-res. Pick the one that fits the clip's energy. Whatever you choose, the hook has to earn the next 3 seconds or the rest is wasted.",
+        "variants": [
+          {
+            "label": "Open Loop (Withhold The Payoff)",
+            "hook": "Seated, eye contact — 'There's one decision that makes your whole podcast findable, and I'm going to tell you exactly what it is — but first you need to understand why a famous guest can't save you.'",
+            "body": "[OPEN LOOP] Promise the specific payoff up front (the one decision that makes the episode rank) but don't reveal it yet — the viewer stays for the resolution.\n[TENSION] Teach the why: most podcasts are built guest-out, so a brilliant conversation ends up unsearchable, unclippable and unconverting — Donna had Roblox's Head of Child Safety on and still got zero inquiries.\n[PAYOFF / CLOSE LOOP] Land it: 'The decision is picking the search query before you book the guest, then building five beats — Theme, Anchor story, Analogy, Hot take, CTA. Same hour of audio. Four assets.'",
+            "cta": "Comment '5BEAT' for the guest-brief template.",
+            "notes": "Seated, authority pace. 60–80s. The open loop MUST resolve at the end or it feels like a cheat — pay it off explicitly. Lower-third when you name the five beats."
+          },
+          {
+            "label": "Contrarian Cold Open",
+            "hook": "Seated, flat and certain — 'Booking a better guest is the worst thing you can do for your podcast right now. I mean it. The guest is not the strategy.'",
+            "body": "[CONTRARIAN CLAIM] Open on the line that makes people stop and think 'that's wrong' — then earn it.\n[TENSION] 'A guest-out podcast is built backwards. You record sixty great minutes that rank for nothing, clip into nothing, and convert nobody — because no part of it answers a question anyone is actually searching.'\n[PAYOFF] 'Build it query-out. Pick the exact phrase a buyer Googles, then architect five beats — Theme, Anchor story, Analogy, Hot take, CTA. The hot take is your pre-planned clip. Same hour of audio. Four assets.'",
+            "cta": "Save this. Comment '5BEAT' for the template I use with clients.",
+            "notes": "Seated, deadpan conviction on the cold open — no smile, let it be uncomfortable. 60–80s. Pause after the opening claim before you justify it."
+          },
+          {
+            "label": "Stakes & Cost (What It's Costing You)",
+            "hook": "Seated, leaning in — 'Every episode you record without a search query is sixty minutes you'll never get found for, clipped from, or paid back on. Here's the bill.'",
+            "body": "[STAKES] Name the cost: guest-out episodes don't rank, so nobody finds them; they have no engineered moment, so nobody clips them; they have no stamped ask, so nobody converts — that's your best content, dead on arrival.\n[TENSION] 'You think the answer is a bigger guest. It isn't. A bigger guest on a structureless episode just wastes a bigger name.'\n[PAYOFF] 'The fix is free and it's the order: query first, then the five beats — Theme, Anchor story, Analogy, Hot take, CTA. Donna's Roblox episode could've ranked, clipped and converted. Same hour of audio. Four assets.'",
+            "cta": "Comment '5BEAT' for the template that stops the waste.",
+            "notes": "Seated, slightly urgent. 60–80s. Lean on the cost language ('the bill', 'dead on arrival') — loss aversion is the retention engine here."
+          },
+          {
+            "label": "Numbered Promise (3 Reasons)",
+            "hook": "Seated — 'Three reasons your podcast gets zero leads no matter how good the guest is. The third one is the one nobody admits.'",
+            "body": "[1] 'It can't be found — there's no theme, so no episode matches anything a buyer would Google.'\n[2] 'It can't be clipped — there's no engineered hot take, so there's no moment worth cutting.'\n[3] (the tease pays off) 'It can't convert — and that's because you built it guest-out instead of query-out. Pick the search phrase first, then bake in the anchor story, the analogy, the hot take and the CTA. Same hour of audio. Four assets.'",
+            "cta": "Save this. Comment '5BEAT' for the template.",
+            "notes": "Seated. 60–85s. Number each reason on screen as you say it; the 'third one nobody admits' tease in the hook is what carries them past reason two."
+          },
+          {
+            "label": "In Medias Res (Drop Mid-Story)",
+            "hook": "Seated, mid-thought as if already talking — 'So she's telling me she got Roblox's Head of Child Safety on the show, and I stop her — because the episode had already aired and converted literally nobody.'",
+            "body": "[IN MEDIAS RES] Start inside the story at the tense beat (a dream guest, zero return), no preamble.\n[TENSION] Pull back to the lesson: 'This is what everyone does — they chase the guest and never ask what a buyer would actually search. So the best conversation of the year ranks for nothing.'\n[PAYOFF] 'I told her what I'll tell you: build it query-out. Pick the phrase first, then the five beats — Theme, Anchor story, Analogy, Hot take, CTA. The hot take becomes the clips, the CTA does the converting. Same hour of audio. Four assets.'",
+            "cta": "Comment '5BEAT' for the template that rebuilds your next episode.",
+            "notes": "Seated, but start as if the camera caught you mid-sentence — no 'hey guys'. 60–85s. The in-progress open is the retention trick; backfill only after they're hooked."
+          }
+        ]
       },
       "visual-storyteller": {
-        "hook": "She had a podcast with Roblox's Head of Child Safety and it converted zero listeners. We changed the architecture. Watch what happened.",
-        "body": "Open on the underperforming episode: great guest, no theme, no clips, no inquiries. Cut to the whiteboard session: the 5-beat structure goes up — Theme, Anchor Story, Analogy, Hot Take, CTA. Walk through how each beat solves one of the three failures (rank, clip, convert). End on the rebuilt episode in production: searchable title, pre-planned hot take, clip moments timestamped, CTA stamped at minute 45.",
-        "cta": "Save this if your podcast has been great content and bad business. The architecture is the unlock.",
-        "notes": "SAO arc: Situation (great guests, no conversion), Action (5-beat rebuild), Outcome (rankable, clippable, convertible). Music builds at the whiteboard moment."
+        "styleNote": "💡 Keep these cinematic and sparing — visual storyteller is your highest-production format. Don't make more versions than you'll actually shoot.",
+        "variants": [
+          {
+            "label": "Before / After Arc",
+            "hook": "Voiceover over visual — 'She put Roblox's Head of Child Safety on her podcast. It converted zero people. Watch what we changed.'",
+            "body": "[SETUP] Open on the underperforming episode in an editor — a dream guest, a flat analytics panel, no clips exported, an empty inquiries inbox. VO: 'Incredible guest. Built guest-out. Unfindable.'\n[TENSION] Cut to the whiteboard session; the five beats go up. VO: 'You don't start with the guest. You start with the exact phrase a buyer Googles — then build the architecture around it.'\n[PAYOFF] Montage of the rebuilt episode in production: searchable title, hot take timestamped, clips pre-marked, CTA stamped at minute 45. VO: 'Theme, Anchor story, Analogy, Hot take, CTA. Same hour of audio. Four assets.'",
+            "cta": "Save this if your podcast has been great content and bad business.",
+            "notes": "SAO arc. 60–90s. Music builds at the whiteboard moment. The dream-guest-next-to-the-flat-graph shot is the cold open."
+          },
+          {
+            "label": "Single-Subject Vignette",
+            "hook": "Voiceover over one continuous shot of a host alone in a dark studio, packing up after a recording — 'They just recorded the best conversation in their industry. Nobody will ever find it.'",
+            "body": "[SETUP] One unbroken vignette — the host coiling cables, killing the studio lights, the mic going dark. VO sets the quiet tragedy: a brilliant episode with no theme, built around the guest, headed nowhere.\n[TENSION] VO: 'No search phrase, so it can't be found. No engineered hot take, so it can't be clipped. No stamped ask, so it can't convert.'\n[PAYOFF] The shot ends on them pausing at the door, looking back at the empty chair. VO: 'The fix was the order — pick the query first, then the five beats. Same hour of audio. Four assets.'",
+            "cta": "Comment '5BEAT' if this is your podcast.",
+            "notes": "One subject, one location, minimal cuts — closer to a brand film than a talking video. 45–70s. Let the visuals breathe; VO is sparse. Warm, observational, a little melancholy."
+          },
+          {
+            "label": "Time-Compression Montage",
+            "hook": "Voiceover over a fast montage of one episode's whole lifecycle — booking email, record light, 60-minute timeline, publish, silence — 'Sixty minutes of gold, compressed into ten seconds of nothing happening.'",
+            "body": "[SETUP] Rapid montage compressing the guest-out workflow — the booking, the setup, the long recording, the upload. VO: 'This is how most podcasts are made. Guest first, question never.'\n[TENSION] Montage slows on the silence after publish — no clips, no comments, no inquiries. VO: 'This is the part hosts won't look at. The best conversation of the year, ranking for nothing.'\n[PAYOFF] Re-run the montage fast, but now with the five beats overlaid in order — searchable title, anchor story, analogy, hot take clipped out, CTA stamped. VO: 'Build it query-out. Theme, Anchor story, Analogy, Hot take, CTA. Same hour of audio. Four assets.'",
+            "cta": "Save this. Comment '5BEAT' for the template.",
+            "notes": "Montage / time-lapse. 60–90s. Needs studio b-roll and screen-record of the publish-then-silence beat — lean into the contrast between effort and result. Music is a slow build to a peak on the re-run with the beats overlaid."
+          }
+        ]
       },
       "talking-head": {
-        "hook": "Your podcast doesn't need a better guest. It needs a search query, an anchor story, an analogy, a hot take, and a CTA — in that order.",
-        "body": "Close to camera, fast. The five beats: pick the exact thing a buyer would Google before you record. Open with a real client story so it's concrete. Drop an analogy halfway in so the complex idea sticks. Engineer one contrarian moment that becomes your 3 clips. Stamp the CTA at minute 45 every time. Most podcasters do none of these. The ones who do all five get found, clipped, and booked.",
-        "cta": "Follow for the podcast architecture series — I'm breaking down each of the five beats this month.",
-        "notes": "High conviction, fast pacing. Pause briefly after each beat as you name it. Close framing. The 'in that order' tag at the end of the hook is what carries the curiosity."
+        "styleNote": "💡 Same script, three energies — rant, measured, rapid-fire. Match the energy to the platform: rapid-fire for TikTok, measured for YouTube, rant for a bold IG hook.",
+        "variants": [
+          {
+            "label": "High-Conviction Rant",
+            "hook": "Direct to camera, fast — 'Stop booking guests for your podcast. The guest is not the strategy. The search query is.'",
+            "body": "[SETUP] 'Most podcasts are built guest-out — book the name, hit record, hope it lands. So you get sixty great minutes nobody can find, clip or buy from.'\n[TENSION] 'A famous guest doesn't fix that. Donna had Roblox's Head of Child Safety on and converted zero people, because the episode answered no question anyone was searching.'\n[PAYOFF] 'Build it query-out. Pick the exact phrase a buyer Googles, then architect five beats — Theme, Anchor story, Analogy, Hot take, CTA. The hot take is your pre-planned clip; the CTA converts. Same hour of audio. Four assets.'",
+            "cta": "Follow for the rest of the podcast architecture series.",
+            "notes": "Direct to camera, high conviction. Pause after the opening line. Hold eye contact. 55–70s, no cuts."
+          },
+          {
+            "label": "Calm Authority (Measured)",
+            "hook": "Direct to camera, slow and level — 'I want to gently change the order you make your podcast in — because right now you're starting with the wrong thing. You start with the guest. You should start with the question.'",
+            "body": "[SETUP] Measured: 'Your guests are great. But for getting found, the guest is the weakest place to start — because the episode ends up built around a name, not a search.'\n[TENSION] 'When nothing answers a real query, the episode can't rank, can't clip, can't convert. That's how a conversation with Roblox's Head of Child Safety returns nothing.'\n[PAYOFF] 'Reverse it. Pick the phrase a buyer Googles first, then build five beats — Theme, Anchor story, Analogy, Hot take, CTA. Specific, searchable, repeatable. Same hour of audio. Four assets.'",
+            "cta": "Comment '5BEAT' for the template I walk clients through.",
+            "notes": "Direct to camera, calm and warm — teacher, not preacher. Slower cadence, softer gestures. 60–75s. The authority comes from stillness, not volume."
+          },
+          {
+            "label": "Rapid-Fire (Punchy List)",
+            "hook": "Direct to camera, high energy — 'Five beats to fix your whole podcast: query first, then build. Go.'",
+            "body": "[SETUP] Fast: 'One — Theme. Pick the exact phrase a buyer Googles. That's the title. Two — Anchor story. A real client case so it's concrete.'\n[TENSION] Faster: 'Three — Analogy. Make the complex idea stick. Four — Hot take. One contrarian moment, pre-planned as your clip.'\n[PAYOFF] Land it: 'Five — CTA. Stamp the comment ask at the same minute, every time. Query-out, not guest-out. Same hour of audio. Four assets.'",
+            "cta": "Follow for daily 30-second content architecture fixes.",
+            "notes": "Direct to camera, high tempo, quick jump-cuts on each number allowed. 25–40s. Energy IS the format — keep it snappy. Land each of the five beats on its own cut."
+          }
+        ]
       }
     }
   },
@@ -1520,40 +2272,194 @@ const ENTRIES=[
     ],
     "formats": {
       "faceless": {
-        "hook": "Most podcasts book one type of guest and wonder why only one type of listener sticks. Here's the 3-stage guesting map that fixes it.",
-        "body": "Animated diagram building the three buckets: Future Clients (people about to face the problem), Current Clients (people in it), Past Clients (people through it). Show the listener journey arrow underneath — each prospect maps to one bucket and finds an episode that sounds like their life. End on the rotation: 3 future, 3 current, 3 past, repeat.",
-        "cta": "Save this and audit your last 10 episodes against the 3 stages. Comment 'GUEST' for the booking template.",
-        "notes": "Clean animated diagram. Build the three buckets one at a time. Use distinct colors. Show the listener journey arrow as the payoff. Under 60 seconds."
+        "styleNote": "💡 Also test: POV first-person (hands dragging guest names into three columns on a calendar), a duet/stitch reacting to a 'just book big names' podcast-growth guru, or a whiteboard draw of the Future → Current → Past rotation. The theme stays fixed — only the surface changes.",
+        "variants": [
+          {
+            "label": "Caption Teach (Setup → Tension → Payoff)",
+            "hook": "On-screen text over a podcast booking calendar where every single guest is captioned 'industry expert' — 'You booked 10 experts. You spoke to one type of listener.'",
+            "body": "[SETUP] Caption over a calendar of identical 'expert' guests: 'Most podcasts book whoever's available, then wonder why only one kind of listener sticks.'\n[TENSION] 'Your prospect isn't one person. They're at three different stages — about to face the problem, in the middle of it, or through it — and your guest list only speaks to one.' (zoom on the wall of identical 'expert' labels).\n[PAYOFF] 'Map guests to the buyer journey instead. Future clients seed urgency. Current clients build trust. Past clients are pure social proof. Rotate all three.' Show the three labelled buckets building. Final caption: 'Same audience. Three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' — I'll send the 3-stage booking template I built with a parenting podcast.",
+            "notes": "Screen-only, no face. 40–55s. The wall-of-identical-experts zoom is the cringe pull. Lo-fi, captions only, music in on the three-bucket reveal."
+          },
+          {
+            "label": "Aesthetic B-roll + One Line",
+            "hook": "Moody aesthetic B-roll (a single mic in an empty studio, a record spinning, headphones on a desk) with one slow line of text — 'You're booking a calendar. You should be building a journey.'",
+            "body": "[VIBE] One unbroken aesthetic shot, slightly disconnected from the topic — that mild mismatch is the scroll-stopper. Calm, cinematic, a little wistful.\n[ONE LINE] A single line of text fades in over the shot: 'One audience. Three stages. Most shows only talk to one.'\n[CAPTION CARRIES IT] The teaching lives in the written caption, not on screen — the guesting idea: stop booking whoever's available, map guests to Future / Current / Past clients so every prospect finds an episode that sounds like their life (a parenting podcast did exactly this).",
+            "cta": "Full breakdown's in the caption. Comment 'GUESTS' for the booking template.",
+            "notes": "No face, no spoken words. 12–20s loop. Choose footage for FEELING, not relevance. One text line only. Trending ambient / lo-fi audio. Write the caption LONG — it does the heavy lifting."
+          },
+          {
+            "label": "Kinetic Typography (Word Hits)",
+            "hook": "Black screen. Words punch in one at a time, synced to a beat — 'FUTURE. CURRENT. PAST.' Hard cut. 'BOOK. ALL. THREE.'",
+            "body": "[SETUP] Fast word-by-word text on a solid background, each word timed to the track: 'Booking whoever's free talks to whoever's already a fan. Forgettable.'\n[TENSION] Tempo drops, one line holds full-screen: 'Your buyer is at three stages. Your guest list only covers one.'\n[PAYOFF] Tempo kicks back up: 'So map them. Future clients — urgency. Current clients — trust. Past clients — proof. Rotate forever.' End card: 'Same audience. Three reasons to subscribe.'",
+            "cta": "Save this. Comment 'GUESTS' for the rotation template.",
+            "notes": "No footage, no face. 20–30s. Beat-synced typography IS the format — pick the track first, cut text to it. High contrast, one or two colours max."
+          },
+          {
+            "label": "Receipts (Screen-Record Proof)",
+            "hook": "Screen recording, thumb scrolling a podcast's episode list — every title is another 'expert interview', downloads fine, comments dead. Caption: 'Great guests. Zero new clients. Here's why.'",
+            "body": "[SETUP] Scroll the real episode list on screen — ten titles, all big-name experts; highlight the repeated 'expert' pattern as you pass each one.\n[TENSION] Stop scrolling. Caption: 'Strong downloads, no conversion. The buyer never saw themselves in a single episode.'\n[PAYOFF] Cut to a calendar being rebuilt live — guests dragged into three columns: Future, Current, Past. Caption: 'Now every listener finds their stage. Same audience. Three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' and I'll send the booking template that maps it for you.",
+            "notes": "Screen-only, no face. 30–45s. Use a real (anonymised) episode list — the authenticity is the point. Annotate the repeated 'expert' pattern. The drag-into-three-columns moment is the payoff."
+          },
+          {
+            "label": "Numbered List (3-Rule Overlay)",
+            "hook": "Plain background, a big number '1' slams on screen — '3 guests that turn a podcast into a client machine. Guest 1: someone about to face the problem.'",
+            "body": "[1] Text card: 'FUTURE client — interview someone about to hit the problem. Surfaces unknown unknowns, seeds urgency.'\n[2] Text card: 'CURRENT client — interview someone living it now. The episode is a roadmap; builds trust by adjacency.'\n[3] Text card: 'PAST client — interview someone through it. Pure social proof — a testimonial disguised as an episode. Same audience. Three reasons to subscribe.'",
+            "cta": "Save for your next quarter. Comment 'GUESTS' for the full template.",
+            "notes": "No face. 25–40s. Each guest type is one clean text card with a number stinger + swipe sound. Works as a static carousel too — same three cards as slides."
+          }
+        ]
       },
       "meme": {
-        "hook": "Podcasters who only book experts vs. podcasters who book future, current, AND past clients.",
-        "body": "Left: someone celebrating booking another industry expert, episode flat. Right: same person rotating future / current / past client guests, three different listener types in the comments. Text: 'One audience. Three reasons to subscribe.'",
-        "cta": "Tag a podcaster only booking 'thought leaders'.",
-        "notes": "Two-panel format. The 'flat episode' visual on the left contrasts with the multi-comment screen on the right. Under 10 seconds."
+        "styleNote": "💡 Also test: a Drake yes/no ('booking another big-name expert' ✗ vs 'rotating future/current/past clients' ✓), an 'expectation vs reality' split (huge download number vs zero new clients), or a green-screen react to a guru saying 'just book bigger guests'. Match the audio's tone to the joke — wrong audio kills a meme faster than wrong text.",
+        "variants": [
+          {
+            "label": "Two-Panel Contrast",
+            "hook": "Title text over two panels — 'Podcasters who only book experts vs podcasters who book future, current AND past clients.'",
+            "body": "[SETUP] LEFT panel: someone celebrating captioned 'Just landed another industry expert!' — beside a flat, dead-silent comment section.\n[TENSION] Centre text between panels: 'One audience. Three stages. You're only talking to one.'\n[PAYOFF] RIGHT panel: same person captioned 'Future, current AND past clients on rotation' — beside three different listener types in the comments saying 'this is literally me'. Caption: 'Same audience. Three reasons to subscribe.'",
+            "cta": "Tag a podcaster who only books 'thought leaders'.",
+            "notes": "Two-panel, text-only, no voiceover. 8–12s. The flat dead comment section on the left is the joke. Punch-in on the RIGHT comments."
+          },
+          {
+            "label": "Single Reaction (One Clip + Text)",
+            "hook": "One static clip: you stand there, dead calm, a slow knowing nod to camera. Top text: 'Me watching a podcast book its 14th expert and wonder why nobody converts.'",
+            "body": "[ONE SHOT] No cuts. You hold one expression — quietly amused, arms folded — for the whole clip while the text does the talking.\n[TEXT TURN] Text swaps once at the midpoint: 'The guest list isn't a calendar. It's a customer journey.'\n[BUTTON] Final text drop: 'Future, current, past clients on rotation. Same audience — three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' if your podcast is great content and bad business.",
+            "notes": "Single locked-off clip, one held reaction, no dialogue. 6–10s. Pick a trending audio with a smug/knowing tone. The comedy is the stillness against the text. Loop-friendly."
+          },
+          {
+            "label": "Nobody / Me: Format",
+            "hook": "Plain text meme — 'Nobody:' (beat) 'Absolutely nobody:' (beat) 'Every podcaster: let me book ANOTHER big-name expert—'",
+            "body": "[SETUP] Classic stacked text build: 'Nobody: … Absolutely nobody: … Every podcast host:' then the wall of identical 'huge expert guest' announcements.\n[TENSION] Hard cut text: 'Me:'\n[PAYOFF] '…mapping guests to future, current and past clients so every listener finds their stage.' Small tag underneath: 'Same audience. Three reasons to subscribe.'",
+            "cta": "Tag the host chasing big names. Comment 'GUESTS' for the template.",
+            "notes": "Text-only, or text over a single clip of you shrugging. 8–12s. The 'Me:' cut is the punchline — leave a half-second pause before it."
+          },
+          {
+            "label": "Text-Thread Screenshot",
+            "hook": "A screen-recorded text exchange. Them: 'who should we book next on the pod??' You, typing… deleting 'another expert'… deleting 'someone with a big following'…",
+            "body": "[SETUP] Show the typing bubble cycle through the clichés and backspace each one — 'an expert', 'a big name', 'whoever's free' — all deleted.\n[TENSION] One beat of an empty text box. The question still sitting there: 'who should we book next?'\n[PAYOFF] You finally send: 'Depends. Future client, current client, or past client? Pick the stage we haven't covered this month.' Reply bubble: 'wait… that changes everything'.",
+            "cta": "Comment 'GUESTS' for the template that picks the stage for you.",
+            "notes": "Screen recording of a mocked-up thread. 12–18s. The delete-cycle is the joke; the single reframed send is the payoff. Keypress + send sounds, low or no music."
+          },
+          {
+            "label": "Two-Buttons (Hard Choice)",
+            "hook": "The 'difficult choice / sweating guy' meme template. Two buttons: 'BOOK ANOTHER BIG-NAME EXPERT' and 'BOOK THE STAGE MY BUYER IS ACTUALLY AT'. Caption: 'Podcasters, frozen.'",
+            "body": "[SETUP] Sweating-guy template, finger hovering between the two buttons.\n[TENSION] Cut-in text: 'One looks impressive and converts nobody. One sounds like your listener's life.'\n[PAYOFF] He picks 'BOOK THE STAGE'. Cut to the result: 'Future, current, past on rotation. Same audience — three reasons to subscribe.'",
+            "cta": "Tag a host stuck on button one. Comment 'GUESTS' for the template.",
+            "notes": "Meme-template format (sweating buttons). 8–12s. Works as a static image post too. Keep button text SHORT and big."
+          }
+        ]
       },
       "candid": {
-        "hook": "Just rebuilt a parenting podcast guest list and the unlock was treating it like a customer journey, not a calendar.",
-        "body": "Phone selfie, walking. Explain: she was booking whoever was available. The shift was mapping every guest to one of three stages — future clients (about to have the problem), current clients (living it), past clients (out the other side). Every prospect listening finds themselves in at least one episode. Same show, three reasons to subscribe, three pools of testimonial content for free.",
-        "cta": "DM me 'GUEST' if you want the 3-stage booking template I built with her.",
-        "notes": "Walking selfie. The 'three stages of the buyer journey' framing is the reveal. Casual delivery, real story sells it."
+        "variants": [
+          {
+            "label": "The Question (Re-told, Properly Filmed)",
+            "origin": "On the June 1 Marketing Weekly, Donna had just booked Roblox's Head of Child Safety for her parenting podcast — a genuinely great episode, strong downloads, and zero new clients. The spark was the moment you stopped looking at the calendar and started mapping her actual listener: mums and dads at three stages — prepping for the problem, in the thick of it, out the other side. Re-feel THAT moment — the click of realising she'd been booking a guest list when she should have been building a customer journey — and explain it again, properly, to a real camera.",
+            "question": "Answer this on camera (have someone ask it, or answer it cold): 'Why is booking impressive guests actually killing your podcast?' Then just… answer it, the way you walked Donna through it — unscripted, in your voice. The story is the content. You're not performing; you're re-explaining something you already believe.",
+            "hooks": [
+              "Your podcast guest list isn't a calendar. It's a customer journey — and you're probably only filling one third of it.",
+              "Booking the most impressive guest you can is the fastest way to make a podcast nobody buys from. Here's the fix.",
+              "'Who should we book next?' is the wrong question. 'Which stage of my buyer haven't I spoken to this month?' is the right one.",
+              "A parenting podcast landed a huge child-safety expert. Great episode. Zero clients. The problem wasn't the guest — it was the strategy.",
+              "There are exactly three guests every show needs: someone about to face the problem, someone in it, and someone through it. Most book none of them on purpose."
+            ],
+            "cta": "DM me 'GUESTS' and I'll send the 3-stage booking template I built with a parenting podcast.",
+            "notes": "Real camera, not a webcam — this is the upgrade from the original Zoom moment. Pick ONE hook, say it straight to lens, pause, then answer the question conversationally. No teleprompter. Hands moving, talk to one person. 45–90s. The hook is the only 'written' part — the rest is just you, re-told. Let it run long and cut later."
+          }
+        ]
       },
       "framed": {
-        "hook": "If your podcast is bleeding subscribers after every episode, you're booking the wrong type of guest — and there are exactly three right ones.",
-        "body": "Seated, structured. Walk through the three buckets: Future Clients (interviewing people about to face the problem creates urgency and surfaces unknown unknowns), Current Clients (people mid-problem map the roadmap and build trust), Past Clients (people through the problem deliver pure social proof). Rotation: every third episode is a different bucket. Your audience always sees themselves. Your testimonial library grows automatically.",
-        "cta": "Save this for your next quarterly podcast plan. Comment 'GUEST' for the rotation template.",
-        "notes": "Authority delivery. Use a lower-third with the 3 stages labeled. Slow, methodical. Foundational podcast architecture content."
+        "styleNote": "💡 These five are attention-retention engines — open loop, contrarian, stakes, numbered, in-medias-res. Pick the one that fits the clip's energy. Whatever you choose, the hook has to earn the next 3 seconds or the rest is wasted.",
+        "variants": [
+          {
+            "label": "Open Loop (Withhold The Payoff)",
+            "hook": "Seated, eye contact — 'There are exactly three guests that turn a podcast into a client machine, and I'll name all three — but first you have to see why booking impressive people is the trap.'",
+            "body": "[OPEN LOOP] Promise the specific payoff up front (the three exact guest types) but don't reveal them yet — the viewer stays for the resolution.\n[TENSION] Teach the why: most shows book whoever's available or whoever's impressive, so they speak to one kind of listener and the rest never see themselves — strong downloads, no conversion.\n[PAYOFF / CLOSE LOOP] Land it: 'The three are future clients — about to face the problem, which seeds urgency. Current clients — living it, which builds trust. Past clients — through it, which is pure social proof. Rotate all three. Same audience. Three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' for the booking template.",
+            "notes": "Seated, authority pace. 60–80s. The open loop MUST resolve at the end or it feels like a cheat — name all three explicitly. Lower-third when you list the stages."
+          },
+          {
+            "label": "Contrarian Cold Open",
+            "hook": "Seated, flat and certain — 'Booking impressive guests is killing your podcast. I mean it. The bigger the name, the fewer clients you get.'",
+            "body": "[CONTRARIAN CLAIM] Open on the line that makes people stop and think 'that's wrong' — then earn it.\n[TENSION] 'A parenting podcast booked Roblox's Head of Child Safety. Huge episode. Zero new clients. Because the listener never saw their own life in it — they saw a celebrity.'\n[PAYOFF] 'What converts is when the guest IS your buyer's stage. Future clients seed urgency. Current clients build trust. Past clients are proof. Map the guest list to the buyer journey, not your ego. Same audience. Three reasons to subscribe.'",
+            "cta": "Save this. Comment 'GUESTS' for the template I use with clients.",
+            "notes": "Seated, deadpan conviction on the cold open — no smile, let it be uncomfortable. 60–80s. Pause after the opening claim before you justify it."
+          },
+          {
+            "label": "Stakes & Cost (What It's Costing You)",
+            "hook": "Seated, leaning in — 'Every episode you spend chasing a bigger guest, you're paying to grow an audience that will never buy from you. Here's the bill.'",
+            "body": "[STAKES] Name the cost: book for prestige and you get downloads but no clients — attention you can't convert, an audience that admires you instead of needing you.\n[TENSION] 'You think a bigger name fixes it. It doesn't. It just adds more listeners who aren't at a buying stage.'\n[PAYOFF] 'The fix is free and already on your calendar: map guests to where your buyer actually is. Future, current, past clients in rotation. Now every listener finds their stage and a reason to subscribe. Same audience. Three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' for the template that maps your rotation.",
+            "notes": "Seated, slightly urgent. 60–80s. Lean on the cost language ('the bill', 'you're paying') — loss aversion is the retention engine here."
+          },
+          {
+            "label": "Numbered Promise (3 Reasons)",
+            "hook": "Seated — 'Three guests every podcast needs, and the third one is the one nobody books on purpose.'",
+            "body": "[1] 'A FUTURE client — someone about to face the problem. The episode surfaces what they don't know yet and seeds urgency.'\n[2] 'A CURRENT client — someone in the middle of it. The episode plays like a roadmap and builds trust by adjacency.'\n[3] (the tease pays off) 'A PAST client — someone through it. This is the one nobody plans for: it's pure social proof, a testimonial disguised as an episode. Rotate all three. Same audience. Three reasons to subscribe.'",
+            "cta": "Save this. Comment 'GUESTS' for the booking template.",
+            "notes": "Seated. 60–85s. Number each guest type on screen as you say it; the 'third one nobody books' tease in the hook is what carries them past number two."
+          },
+          {
+            "label": "In Medias Res (Drop Mid-Story)",
+            "hook": "Seated, mid-thought as if already talking — 'So she's thrilled, she just booked the Head of Child Safety at Roblox for her parenting podcast — and I have to tell her it's going to do nothing for her business.'",
+            "body": "[IN MEDIAS RES] Start inside the story at the tense beat (the great guest that won't convert), no preamble.\n[TENSION] Pull back to the lesson: 'This is what everyone does — they book for prestige and forget the listener has to see their own life in the episode, not a celebrity's.'\n[PAYOFF] 'So we rebuilt it as a customer journey: future parents prepping for the problem, current parents in the thick of it, past parents with hindsight. Three stages, on rotation. Same audience. Three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' for the template that rebuilds your guest list.",
+            "notes": "Seated, but start as if the camera caught you mid-sentence — no 'hey guys'. 60–85s. The in-progress open is the retention trick; backfill only after they're hooked."
+          }
+        ]
       },
       "visual-storyteller": {
-        "hook": "She'd booked Roblox's Head of Child Safety. Great episode, zero new clients. The fix wasn't more experts. It was more parents.",
-        "body": "Open on the high-profile expert episode — strong download, weak conversion. Cut to the strategy session: the buyer journey gets drawn on the whiteboard. Future / Current / Past. Every parent at every stage now has an episode that mirrors their life. Cut to the rebuilt calendar: a future-parent episode, then a current-parent episode, then a past-parent episode. End on the new comments — listeners messaging that they 'finally felt seen.'",
-        "cta": "Save this if your podcast is great content and bad business. The guest list is the architecture.",
-        "notes": "SAO arc: Situation (great experts, no conversion), Action (3-stage guest map), Outcome (engaged listeners + free testimonial library). Music builds at the whiteboard moment."
+        "styleNote": "💡 Keep these cinematic and sparing — visual storyteller is your highest-production format. Don't make more versions than you'll actually shoot.",
+        "variants": [
+          {
+            "label": "Before / After Arc",
+            "hook": "Voiceover over visual — 'She booked Roblox's Head of Child Safety for her parenting podcast. Great episode. Zero new clients. Watch what we changed.'",
+            "body": "[SETUP] Open on a strong download graph next to a dead-flat client count. VO: 'The guest was impressive. The audience just never saw their own life in it.'\n[TENSION] Cut to the strategy session; the buyer journey gets drawn on the whiteboard — Future, Current, Past. VO: 'A guest list isn't a calendar. It's a customer journey. Map every guest to a stage your buyer is actually at.'\n[PAYOFF] Montage of the rebuilt calendar — a future-parent episode, a current-parent episode, a past-parent episode — and listeners messaging 'this is literally me'. VO: 'Same audience. Three reasons to subscribe.'",
+            "cta": "Save this if your podcast is great content and bad business.",
+            "notes": "SAO arc. 60–90s. Music builds at the whiteboard reframe. The strong-downloads-vs-zero-clients split is the cold open."
+          },
+          {
+            "label": "Single-Subject Vignette",
+            "hook": "Voiceover over one continuous follow-shot of a host setting up their mic in an empty studio — 'This show books the most impressive guests in its niche. And converts almost nobody. Here's the quiet reason.'",
+            "body": "[SETUP] One unbroken vignette — the host preparing, recording, alone in the studio. VO sets the quiet tragedy: brilliant guests, growing downloads, an audience that admires but never buys.\n[TENSION] VO: 'Every guest is impressive. None of them are the listener's stage. So nobody hears their own life and nobody acts.'\n[PAYOFF] The shot ends on the host looking to camera. VO: 'The fix was treating the guest list as a customer journey — future, current, past. Same audience. Three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' if this is your show.",
+            "notes": "One subject, one location, minimal cuts — closer to a brand film than a talking video. 45–70s. Let the visuals breathe; VO is sparse. Warm, observational."
+          },
+          {
+            "label": "Time-Compression Montage",
+            "hook": "Voiceover over a fast montage of a full season of episodes flying by — every thumbnail a different expert — 'A whole season in fifteen seconds. Spot the listener. You can't. That's the problem.'",
+            "body": "[SETUP] Rapid montage compressing a season of 'big guest' episodes — thumbnail after thumbnail of impressive strangers. VO: 'Downloads went up. The business didn't move.'\n[TENSION] Montage slows and reorganises the same calendar into three lanes — Future, Current, Past. VO: 'Same effort. Same audience. We just mapped every guest to a stage the buyer is actually living.'\n[PAYOFF] Land on the new comments rolling in — listeners at every stage saying 'finally felt seen'. VO: 'Future seeds urgency, current builds trust, past is proof. Same audience. Three reasons to subscribe.'",
+            "cta": "Save this. Comment 'GUESTS' for the rotation template.",
+            "notes": "Montage / time-lapse. 60–90s. Needs a wall of real episode thumbnails — lean into the visual sameness of all-expert booking. Music is a slow build to a peak on the 'finally felt seen' comments."
+          }
+        ]
       },
       "talking-head": {
-        "hook": "Your podcast shouldn't book 'experts.' It should book people at three exact stages of the journey your buyer is on right now.",
-        "body": "Close to camera, fast. Three buckets: future clients (people about to face the problem) seed urgency. Current clients (people in it) build trust by adjacency. Past clients (people through it) become free social proof on a loop. Run all three in rotation and you stop bleeding listeners after one episode. Your guest list IS your content architecture.",
-        "cta": "Follow for the podcast guest-mapping breakdown — full template drops this week.",
-        "notes": "High conviction, fast pacing. The 'guest list IS your content architecture' line is the takeaway — pause after. Close framing."
+        "styleNote": "💡 Same script, three energies — rant, measured, rapid-fire. Match the energy to the platform: rapid-fire for TikTok, measured for YouTube, rant for a bold IG hook.",
+        "variants": [
+          {
+            "label": "High-Conviction Rant",
+            "hook": "Direct to camera, fast — 'Stop booking impressive guests. It feels good and it converts nobody. Book the stage your buyer is actually at instead.'",
+            "body": "[SETUP] 'Most podcasts book whoever's available or whoever's impressive. So one type of listener sticks and everyone else bounces after a single episode.'\n[TENSION] 'Your buyer isn't one person. They're about to face the problem, in the middle of it, or through it — and your guest list only speaks to one of those.'\n[PAYOFF] 'Map guests to all three. Future clients seed urgency. Current clients build trust by adjacency. Past clients are free social proof on a loop. Your guest list IS your content architecture. Same audience. Three reasons to subscribe.'",
+            "cta": "Follow for the rest of the podcast-as-a-client-machine playbook.",
+            "notes": "Direct to camera, high conviction. Pause after the opening line. Hold eye contact. 55–70s, no cuts."
+          },
+          {
+            "label": "Calm Authority (Measured)",
+            "hook": "Direct to camera, slow and level — 'I want to gently change how you think about your podcast guest list. It isn't a calendar. It's a customer journey. Let me show you.'",
+            "body": "[SETUP] Measured: 'Booking impressive people grows your downloads. But downloads aren't clients — and a celebrity guest rarely sounds like your listener's actual life.'\n[TENSION] 'Your buyer sits at one of three stages: about to face the problem, in it, or through it. Talk to only one and the rest never see themselves, so they never act.'\n[PAYOFF] 'So map the whole list. Future clients seed urgency. Current clients build trust. Past clients are proof. Run them in rotation and everyone finds their stage. Same audience. Three reasons to subscribe.'",
+            "cta": "Comment 'GUESTS' for the booking template I walk clients through.",
+            "notes": "Direct to camera, calm and warm — teacher, not preacher. Slower cadence, softer gestures. 60–75s. The authority comes from stillness, not volume."
+          },
+          {
+            "label": "Rapid-Fire (Punchy List)",
+            "hook": "Direct to camera, high energy — 'Three guests to fix your whole podcast: one about to face the problem, one in it, one through it. Go.'",
+            "body": "[SETUP] Fast: 'One — a future client. About to hit the problem. Seeds urgency, surfaces what they don't know yet.'\n[TENSION] Faster: 'Two — a current client. Living it now. Builds trust because the episode is their roadmap.'\n[PAYOFF] Land it: 'Three — a past client. Through it. Pure social proof, a testimonial that doubles as an episode. Rotate all three. Same audience. Three reasons to subscribe.'",
+            "cta": "Follow for daily 30-second podcast-growth fixes.",
+            "notes": "Direct to camera, high tempo, quick jump-cuts on each number allowed. 25–40s. Energy IS the format — keep it snappy."
+          }
+        ]
       }
     }
   },
@@ -2511,7 +3417,7 @@ const ENTRIES=[
       "ALL"
     ],
     "sourceId": "daecian-apr16",
-    "mentions": [],
+    "mentions": ["kieran-jun02"],
     "type": "framework",
     "description": "The reason founders freeze on camera is they're improvising structure and performance at the same time. Sev removes one of those: build the shot list first (A-roll interview questions plus hero/B-roll moments), then on the day your only job is to talk. Hand the talent the questions, hit record, and let them 'just yap' for five minutes per question without worrying about saying the wrong thing — you cut it later. The structure does the thinking so the founder can do the talking. Done right it's brutally fast: with a checklist and one pocket camera you can clear a multi-person shoot in a few hours and walk away with a 12–15 minute video's worth of raw, no scripting, no creative block.",
     "context": "Sev walked Daecian through the shot list from a dentist shoot he'd just run for a near-billion-dollar implant company (Nobel). He'd planned three hours; the structured A-roll-plus-hero-moments checklist let him interview the BDM, another staffer, the patient and the doctor and finish in under two — the client flew in to watch and said 'we didn't do any work.' He pushed Daecian to use the same setup for his YouTube videos and his golf-buggy interview with a hero student: iPad checklist, Osmo, just yap.",
@@ -2577,7 +3483,7 @@ const ENTRIES=[
       "ALL"
     ],
     "sourceId": "daecian-apr27",
-    "mentions": [],
+    "mentions": ["sky-belcher-s1"],
     "type": "framework",
     "description": "The reason most channels never launch is the founder can't decide which video to make first. Sev removes the decision with seven non-negotiable videos every business should make before anything else: (1) Origin story — why you left the old life to do this; (2) The 80% video — the ten questions you get asked every single week; (3) Proof of claims — a live demo or before/after, show don't tell; (4) Customer journey — 'they came to me with X, here's exactly what we did'; (5) Service fit — who this is NOT for, then who it actually helps, which disqualifies and qualifies at once; (6) Cost and pricing — what you charge and what changes the price; plus the Welcome video. Make those seven, then forever cover the same handful of core topics and slot every new idea into one of them. The seven are the launch; the topics are the engine.",
     "context": "On the follow-up planning call, Daecian's blocker was unchanged from the equipment call: 'I'm just lost with which video to start with.' Sev pulled up his Compound tool and walked the Money Seven, reframing each for an e-commerce coach (origin = 'why I left school to coach e-comm full time', proof = the student who joined in December and hit ~$90k/month). He set the Origin story as video one and told Daecian every future idea funnels into the core topics so he never stares at a blank page again.",
@@ -3040,7 +3946,7 @@ const ENTRIES=[
       "BOF"
     ],
     "sourceId": "bts-erin",
-    "mentions": [],
+    "mentions": ["sky-belcher-s1"],
     "type": "tactic",
     "description": "The biggest after-purchase fear with any workshop or course is 'great, I've got the content — but what happens the week I get stuck?' Sev kills it by naming exactly what the included support is NOT before saying what it is: not a VA from the Philippines, not one of those group chats where people are trying to sell you crypto — it's me, direct, for six months. Naming the bad versions the buyer has been burned by is what makes the real version land. He stacks it with accountability ('you can add your husband or your admin') and reframes it as half a year of the expert in your pocket. This turns a vague 'support included' line into the most de-risking part of the offer.",
     "context": "On the call with Erin (air-conditioning business), Sev explained that the recurring feedback from every monthly workshop is 'I've got the content, but what happens next when I get stuck?' So he added six months of direct WhatsApp support and pitched it by first ruling out the cheap, annoying versions buyers have experienced before — a VA, a spammy group chat — then landing on 'it's me.'",
@@ -4700,7 +5606,7 @@ const ENTRIES=[
       "BOF"
     ],
     "sourceId": "marius-marrouki-s1",
-    "mentions": [],
+    "mentions": ["max-oneill-s1"],
     "type": "tactic",
     "description": "When a prospect won't fit your productized offer mid-call, don't keep pushing the offer. Pivot. Reposition the same expertise as a higher-touch service. The signal: prospect repeatedly mentions needing 'direct guidance,' 'in-person work,' or 'someone to do it with me' — they don't want a self-serve system, they want a CMO. The pivot move: re-anchor as a fractional CMO offer (monthly recurring, 4 calls/month, story extraction + content plan + editor intro). Three-month minimum is non-negotiable because the system you're installing requires that runway. Pivoting mid-call protects the deal AND repositions you in the prospect's mind — you stopped selling the wrong thing and started solving their actual problem. Pair it with a case-study close ($24k loss → $43k profit Sydney client) so the new offer has external proof, not just internal pitch.",
     "context": "Marius pushed back on Sev's 2-day group workshop early in the call — 'no in-person, no fit.' Instead of grinding the workshop angle, Sev pivoted to a $2,500/mo fractional CMO offer with 3-month minimum and a 50% editor discount ($60/video). Used the $24k→$43k Sydney client case study as proof. Marius left 50/50 but the deal stayed alive — a complete loss became a maybe with one structural pivot.",
@@ -5850,7 +6756,7 @@ const ENTRIES=[
       "ALL"
     ],
     "sourceId": "kieran-may22",
-    "mentions": ["kristian-may24"],
+    "mentions": ["kristian-may24", "kieran-jun02"],
     "type": "reframe",
     "description": "When picking the single offer to anchor a business around, a durable concept beats a trend concept even when the trend prints more cash this quarter. Trends have low retention, eroding moats, and an expiration date the market sets, not you. A durable offer is what clients actually pay for at the end of the day (more revenue, less chaos, a solved bottleneck) wrapped in whatever current vehicle works. AI becomes the tool inside the durable category, not the category itself. The reframe forces every other offer into a supporting role: workshops, low-ticket calls, and partnerships stop being destinations and become lead-gen funnels feeding the one durable advisory engagement.",
     "context": "Sev had been planning to scale Claude workshops to $2.5k/seat with a $100k/month target. Kieran's pushback: AI education is a temporary trend with low retention. The durable play is Marketing Advisory with AI as a tool, not as the category. The session ended with the new core offer locked in and every existing revenue stream re-framed as feeder, not destination.",
@@ -6046,7 +6952,7 @@ const ENTRIES=[
       "ALL"
     ],
     "sourceId": "kieran-may22",
-    "mentions": [],
+    "mentions": ["kieran-jun02"],
     "type": "tactic",
     "description": "Walking into advisory calls without a prep doc kills the structure. The fix is a 15-30 minute LLM-driven pre-call review run before every client session. Feed the LLM the last call's transcript (Fireflies, Fathom, Granola export). Have it extract five things in order: (1) Objectives for this call, (2) Anti-objectives — what NOT to discuss to stay focused, (3) Strategy, (4) Tactics, (5) Primary constraint. The output is a structured agenda you can run the call from. The five-slot frame forces the prep into useful structure rather than freeform notes. The objective/anti-objective pair is the high-leverage move — declaring what you won't talk about is what keeps a 60-minute call from sprawling into 90 minutes of related-but-unrelated tangents.",
     "context": "Sev's pre-call routine was last-minute chaos: open the doc 5 minutes before, scan, hope. Kieran's install was a daily 15-30 min review block using an LLM prompt with the five-slot framework. The objective/anti-objective slot in particular came up as the missing piece — most advisors prep what to cover but never what to deflect.",
@@ -6370,7 +7276,7 @@ const ENTRIES=[
       "MOF"
     ],
     "sourceId": "daecian-s11",
-    "mentions": ["rob-bult-s1", "withu-may29"],
+    "mentions": ["rob-bult-s1", "withu-may29", "sky-belcher-s1"],
     "type": "framework",
     "description": "YouTube videos are cited by AI search engines 200x more than any other platform. Leads from AI citations convert 5-10x better than organic. The blueprint to win the citation: long-form (5-20 min) answering one specific search query. Title is the exact query verbatim (the H1). Deliver the conclusion in the first 30 seconds because that's the section AI scrapes. Structure the body as 5-8 chapters, each tackling a sub-question. Cite sources verbatim on camera ('Meta's 2026 report states...'). In post: upload a manual transcript (auto-captions degrade citation accuracy), add manual chapter labels with their own search queries, write a 200-300 word description, and refresh quarterly with new data to keep the video relevant.",
     "context": "Daecian's 90-day pivot. After organic content overtook ads as his profit driver, the next move was engineering the asset that AI search rewards most. The blueprint emerged from breaking down why ChatGPT and Gemini cite the same YouTube videos repeatedly: structured, source-citing long-form videos titled as exact queries.",
@@ -6569,7 +7475,7 @@ const ENTRIES=[
       "ALL"
     ],
     "sourceId": "benjamin-may21",
-    "mentions": ["brayden-warhurst-s1", "paul-x-sev-s1"],
+    "mentions": ["brayden-warhurst-s1", "paul-x-sev-s1", "kieran-jun02"],
     "type": "framework",
     "description": "The repeatable workflow for building functional HTML apps with Claude in under an hour, even without code experience. Step 1: Brainstorm in a standard chat. Define the requirements, the user, the mechanics — let the model help you scope. Step 2: Move to the Code workspace. Generate the initial HTML in one prompt. Test it live. Step 3: Iterate in the desktop app by uploading the HTML file each round, not pasting the code into a fresh chat. Uploading preserves context, saves tokens, and keeps the model from rewriting working features it forgot existed. Built Benjamin's Winker game timer (multiple sounds, emergency-meeting UI, fast-forward voting) in 45 minutes using this loop.",
     "context": "Live build with Benjamin who has no code background, building a companion timer app for his board game prototype. The unlock was the upload step — once he started uploading the HTML file instead of pasting the code, iteration speed jumped and the model stopped breaking existing features.",
@@ -9174,6 +10080,7 @@ const ENTRIES=[
   {
     "id": "claire-s2-01",
     "title": "Competitor Authority Audit (Find The 0/35)",
+    "mentions": ["max-oneill-s1"],
     "category": "strategy",
     "funnel": [
       "TOF"
@@ -9973,7 +10880,7 @@ const ENTRIES=[
   {
     "id": "donna-s1-02",
     "title": "Three-Tier Offer Ascension Stack",
-    "mentions": ["donna-s2", "janice-smythe-s1", "donna-s4"],
+    "mentions": ["donna-s2", "janice-smythe-s1", "donna-s4", "max-oneill-s1"],
     "category": "sales",
     "funnel": [
       "BOF"
