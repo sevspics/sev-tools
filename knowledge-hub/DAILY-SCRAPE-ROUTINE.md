@@ -39,12 +39,14 @@ Otherwise QUALIFY it.
 ## 4. Build each entry — FOLLOW `knowledge-hub/EXTRACTION-SPEC.md` EXACTLY
 Read `EXTRACTION-SPEC.md` (same folder) at the start of every run. Each entry uses the full schema there, and:
 
-> **CRITICAL — `formats` MUST be the 22-variant structure (EXTRACTION-SPEC §2), never the old single-brief.**
+> **CRITICAL — `formats` MUST be the multi-variant structure (EXTRACTION-SPEC §2), never the old single-brief.**
 > Lock the backbone once (core reframe · proof point from the call · signature payoff line · ONE uppercase
 > CTA code word), then write **5 faceless + 5 meme + 1 candid (5 hook options) + 5 framed + 3 visual-storyteller
-> + 3 talking-head = 22 variants**. Hooks are deliverable lines; bodies use `\n` between beats; stage
-> directions live ONLY in `notes`; `styleNote` on every format except candid. Gold-standard reference entry:
-> `chris-pemberton-may29-01`.
+> + 3 talking-head + 2–3 "3 P's Script" = up to 25 variants across 7 formats**. Hooks are deliverable lines;
+> bodies use `\n` between beats; stage directions live ONLY in `notes`; `styleNote` on every format except
+> candid. The 7th format `threeps` is a Promise→Progression→Payoff to-camera script (hook=Promise,
+> body=`[PROGRESSION]` beats + `[PAYOFF]`, cta=the ask after the payoff). Gold-standard reference entry:
+> `chris-pemberton-may29-01` (6 formats) + any recent entry for the `threeps` shape.
 
 A newly-scraped entry that is still single-brief is a **defect** — do not ship it; convert before committing.
 
