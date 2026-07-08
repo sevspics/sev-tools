@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empax Clinical FAQ Series · Production Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --porcelain: #F4F7F3;
+    --card: #FFFFFF;
+    --ink: #1E2823;
+    --ink-soft: #4E5D54;
+    --ink-mute: #8A968D;
+    --line: #DFE6DF;
+    --line-strong: #C7D3C9;
+    --pine: #2F5D4A;
+    --pine-deep: #234739;
+    --pine-tint: #E7F0E9;
+    --amber: #8F6512;
+    --amber-tint: #F8F0DB;
+    --amber-line: #E7D7A9;
+    --jon: #3F5D78;
+    --jon-tint: #E9EFF5;
+    --claire: #2F5D4A;
+    --claire-tint: #E7F0E9;
+    --mike: #6D4E75;
+    --mike-tint: #F1EAF2;
+    --shared: #55605A;
+    --shared-tint: #ECEFEC;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--porcelain);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+  ::selection { background: var(--pine-tint); }
+
+  button { font-family: inherit; cursor: pointer; }
+
+  :focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; border-radius: 4px; }
+
+  /* ============ STICKY HEADER ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(244, 247, 243, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0 10px;
+    flex-wrap: wrap;
+  }
+  .nav-brand { display: flex; flex-direction: column; gap: 1px; }
+  .nav-title {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .nav-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+  }
+  .nav-stats { display: flex; align-items: center; gap: 18px; }
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--pine);
+    line-height: 1.2;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+  }
+  .sync-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 11px;
+    border-radius: 100px;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-mute);
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  .sync-pill.ok {
+    background: var(--pine-tint);
+    border-color: var(--pine);
+    color: var(--pine);
+  }
+  .sync-pill.err {
+    background: var(--amber-tint);
+    border-color: var(--amber-line);
+    color: var(--amber);
+  }
+  .progress-track {
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--pine);
+    border-radius: 2px;
+    transition: width 0.35s ease;
+  }
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .filters-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+    margin-right: 4px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    padding: 5px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--ink-soft);
+    transition: all 0.15s ease;
+  }
+  .chip:hover { border-color: var(--pine); color: var(--pine); }
+  .chip.active {
+    background: var(--pine);
+    border-color: var(--pine);
+    color: #fff;
+  }
+
+  /* ============ INTRO ============ */
+  .intro { padding: 52px 0 8px; }
+  .intro-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--pine);
+    margin-bottom: 14px;
+  }
+  .intro h1 {
+    font-family: var(--display);
+    font-size: clamp(30px, 5vw, 42px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
+  .intro-lede {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin-bottom: 8px;
+  }
+  .intro-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-mute);
+    margin-top: 14px;
+  }
+
+  .how {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 32px 0 18px;
+  }
+  .how-step {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 18px 16px;
+  }
+  .how-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--pine);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .how-step h3 {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .how-step p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .principle {
+    border-left: 3px solid var(--pine);
+    background: var(--card);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+  }
+  .principle-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pine);
+    margin-bottom: 5px;
+  }
+  .principle p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  .disclaimer {
+    background: var(--amber-tint);
+    border: 1px solid var(--amber-line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .disclaimer strong { color: var(--amber); font-weight: 600; }
+
+  /* ============ CATEGORY SECTIONS ============ */
+  .category { padding-top: 44px; }
+  .cat-head { margin-bottom: 18px; }
+  .cat-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .cat-head h2 {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    margin-bottom: 4px;
+  }
+  .cat-head p { font-size: 14px; color: var(--ink-soft); max-width: 560px; }
+
+  /* ============ VIDEO CARD ============ */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: 12px;
+    padding: 24px 26px 20px;
+    margin-bottom: 18px;
+    transition: border-color 0.25s ease;
+  }
+  .card.ready { border-left-color: var(--pine); }
+  .card.hidden { display: none; }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .vid-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-mute);
+    letter-spacing: 0.06em;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+  .badge-presenter { border: 1px solid transparent; }
+  .badge-jon { background: var(--jon-tint); color: var(--jon); }
+  .badge-claire { background: var(--claire-tint); color: var(--claire); }
+  .badge-mike { background: var(--mike-tint); color: var(--mike); }
+  .badge-shared { background: var(--shared-tint); color: var(--shared); }
+  .badge-runtime { background: transparent; border: 1px solid var(--line-strong); color: var(--ink-mute); }
+  .badge-placement { background: var(--ink); color: #fff; }
+  .badge-ready {
+    background: var(--pine);
+    color: #fff;
+    display: none;
+  }
+  .card.ready .badge-ready { display: inline-block; }
+
+  .headline-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pine);
+    margin-bottom: 4px;
+  }
+  .headline {
+    font-family: var(--display);
+    font-size: clamp(22px, 3.4vw, 28px);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    padding: 2px 4px;
+    margin-left: -4px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+  }
+  .headline:hover { background: var(--pine-tint); }
+  .headline:focus { outline: 2px solid var(--pine); outline-offset: 2px; background: var(--pine-tint); }
+  .headline-alt {
+    font-size: 13.5px;
+    color: var(--ink-mute);
+    font-style: italic;
+    margin-top: 4px;
+    font-family: var(--display);
+  }
+
+  details.question {
+    margin: 14px 0 4px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--porcelain);
+  }
+  details.question summary {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+    padding: 9px 14px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  details.question summary::-webkit-details-marker { display: none; }
+  details.question summary::before { content: "+ "; color: var(--pine); }
+  details.question[open] summary::before { content: "− "; }
+  details.question p {
+    padding: 0 14px 12px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .goal-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin: 14px 0 18px;
+  }
+  .goal-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .goal-row p { font-size: 14px; color: var(--ink-soft); }
+
+  /* ---- Beats timeline ---- */
+  .beats-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .beats-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pine);
+  }
+  .verify-pill {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-mute);
+    transition: all 0.2s ease;
+  }
+  .verify-pill.done {
+    background: var(--pine-tint);
+    border-color: var(--pine);
+    color: var(--pine);
+    font-weight: 600;
+  }
+
+  .beats { position: relative; }
+  .beats::before {
+    content: "";
+    position: absolute;
+    left: 33px;
+    top: 14px;
+    bottom: 14px;
+    width: 1px;
+    background: var(--line);
+  }
+  .beat {
+    display: grid;
+    grid-template-columns: 22px 66px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 9px 0;
+    position: relative;
+  }
+  .beat-check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 6px;
+    background: var(--card);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    margin-top: 2px;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .beat-check:hover { border-color: var(--pine); }
+  .beat-check:checked {
+    background: var(--pine);
+    border-color: var(--pine);
+  }
+  .beat-check:checked::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2.5px;
+    width: 5px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .beat-time {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    padding-top: 3px;
+    position: relative;
+    z-index: 1;
+    background: var(--card);
+    text-align: right;
+    padding-right: 6px;
+  }
+  .beat-body { font-size: 14.5px; line-height: 1.55; color: var(--ink); }
+  .beat-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pine);
+    display: block;
+    margin-bottom: 1px;
+  }
+  .beat.checked .beat-body { color: var(--ink-mute); }
+  .beat.checked .beat-time { color: var(--pine); }
+  .verify-note {
+    font-size: 12px;
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  /* ---- Compliance flag ---- */
+  .flag {
+    background: var(--amber-tint);
+    border: 1px solid var(--amber-line);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px;
+    margin: 16px 0 4px;
+  }
+  .flag-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    margin-bottom: 4px;
+  }
+  .flag p { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+
+  /* ---- Sign-off + notes ---- */
+  .signoff {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    padding: 7px 13px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    background: var(--card);
+    color: var(--ink-soft);
+    transition: all 0.15s ease;
+  }
+  .toggle:hover { border-color: var(--pine); }
+  .toggle .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line-strong);
+    background: transparent;
+    transition: all 0.15s ease;
+  }
+  .toggle.on {
+    background: var(--pine-tint);
+    border-color: var(--pine);
+    color: var(--pine-deep);
+    font-weight: 500;
+  }
+  .toggle.on .dot { background: var(--pine); border-color: var(--pine); }
+  .toggle.auto { cursor: default; }
+  .toggle.auto:hover { border-color: var(--line-strong); }
+  .toggle.auto.on:hover { border-color: var(--pine); }
+
+  .notes-block { margin-top: 14px; }
+  .notes-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .notes {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--porcelain);
+    font-family: var(--body);
+    font-size: 13.5px;
+    color: var(--ink);
+    padding: 10px 12px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .notes:focus { outline: 2px solid var(--pine); outline-offset: 0; background: #fff; }
+  .notes::placeholder { color: var(--ink-mute); }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+    padding: 28px 0 48px;
+  }
+  .footer-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+  .btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 10px 18px;
+    border-radius: 100px;
+    border: 1px solid var(--pine);
+    transition: all 0.15s ease;
+  }
+  .btn-primary { background: var(--pine); color: #fff; }
+  .btn-primary:hover { background: var(--pine-deep); }
+  .btn-ghost { background: transparent; color: var(--pine); }
+  .btn-ghost:hover { background: var(--pine-tint); }
+  .btn-danger { border-color: var(--line-strong); color: var(--ink-mute); }
+  .btn-danger:hover { border-color: var(--amber); color: var(--amber); }
+  .footer-note {
+    font-size: 13px;
+    color: var(--ink-mute);
+    line-height: 1.6;
+    max-width: 560px;
+  }
+  .footer-credit {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+    margin-top: 18px;
+  }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translate(-50%, 80px);
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 11px 20px;
+    border-radius: 100px;
+    transition: transform 0.3s ease;
+    z-index: 200;
+    pointer-events: none;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 640px) {
+    .wrap { padding: 0 18px; }
+    .how { grid-template-columns: 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .card { padding: 20px 18px 16px; }
+    .beat { grid-template-columns: 22px 52px 1fr; gap: 9px; }
+    .beats::before { left: 31px; }
+    .beat-time { font-size: 10px; }
+    .nav-stats { gap: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ============ PRINT ============ */
+  @media print {
+    body { background: #fff; }
+    .nav, .footer-actions, .toast { display: none; }
+    .card { break-inside: avoid; border-left-width: 3px; }
+    .card.hidden { display: block; }
+    details.question { open: true; }
+    .notes { border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ STICKY HEADER ============ -->
+<header class="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="nav-title">Empax · Clinical FAQ Series</div>
+        <div class="nav-sub">Production Checklist</div>
+      </div>
+      <div class="nav-stats">
+        <span class="sync-pill" id="syncStatus">Loading&hellip;</span>
+        <div class="stat">
+          <div class="stat-num" id="statReady">0/10</div>
+          <div class="stat-label">Ready to film</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="statPoints">0/50</div>
+          <div class="stat-label">Points verified</div>
+        </div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="filters" id="filters">
+      <span class="filters-label">Presenter</span>
+      <button class="chip active" data-filter="all">All 10</button>
+      <button class="chip" data-filter="jon">Jon 4</button>
+      <button class="chip" data-filter="claire">Claire 4</button>
+      <button class="chip" data-filter="mike">Mike 4</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="intro">
+    <div class="intro-eyebrow">For Claire · Empax Clinical Team</div>
+    <h1>Ten questions, ten headlines, fifty key points. One pass through this and the series is ready to film.</h1>
+    <p class="intro-lede">This is the template from the Loom, built out. Every video keeps your original question and goal, gains a straight-to-the-point headline, and gets five key point beats mapped across the three minutes so nobody rambles.</p>
+    <div class="intro-meta">10 videos · ~3:00 each · 9 referrer-facing + 1 investor · Prepared July 2026</div>
+
+    <div class="how">
+      <div class="how-step">
+        <div class="how-num">STEP 01</div>
+        <h3>Lock the headline</h3>
+        <p>Each headline is 3 to 5 words, written as the question a referrer is already asking. Click any headline to edit it directly on the card, then mark it locked.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">STEP 02</div>
+        <h3>Verify the beats</h3>
+        <p>Tick each key point once the presenter has confirmed it is clinically accurate, or reworded it. Rewording goes in the notes box on the card.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">STEP 03</div>
+        <h3>Clear compliance, film</h3>
+        <p>Some cards carry an amber compliance note. Once all three sign-offs on a card are green, it marks itself ready to film and the counter up top moves.</p>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-label">Headline rules</div>
+        <p>3 to 5 words. Straight to the point. No hookbait, no misleading titles. If the viewer would say "yes, that is exactly my question", it works.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-label">Why beats, not scripts</div>
+        <p>Three minutes is a long time. Five beats at roughly 35 seconds each keeps the answer moving. The presenter speaks freely inside each beat, the structure does the discipline.</p>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Read this first.</strong> The key points below are drafted structure built from the goals in your document. They are a starting shape, not clinical fact. You and the presenters are the experts here, so every point needs your eyes before filming. Anything marked <em>verify</em> is a deliberate prompt for you to confirm or correct.
+    </div>
+  </section>
+
+  <!-- Cards render here -->
+  <div id="board"></div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-actions">
+      <button class="btn btn-primary" id="copyBtn">Copy progress summary</button>
+      <button class="btn btn-ghost" id="printBtn">Print this checklist</button>
+      <button class="btn btn-danger" id="resetBtn">Reset all progress</button>
+    </div>
+    <p class="footer-note">Every tick, edit and note saves automatically to the cloud, so you can close the tab, switch devices, and Sev sees the same version you do. The copy button builds a plain text status of all ten videos, ready to paste into WhatsApp or email back to Sev.</p>
+    <div class="footer-credit">Prepared by Sev Mozhaev · Talk To Sev</div>
+  </footer>
+
+</main>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============ DATA ============ */
+
+  var CATEGORIES = [
+    {
+      id: 1,
+      name: "Safety and Governance",
+      blurb: "Legitimacy first. These two answer the question sitting behind every other question: is this safe and properly run."
+    },
+    {
+      id: 2,
+      name: "How the Treatments Work",
+      blurb: "The mechanism videos. Give referrers the language to explain the medicine to their own patients."
+    },
+    {
+      id: 3,
+      name: "Evidence and Outcomes",
+      blurb: "Proof plus honesty. Data and straight talk about risk is what earns clinical trust."
+    },
+    {
+      id: 4,
+      name: "Logistics and Partnership",
+      blurb: "The practical path. Cost, funding, and exactly what happens the day a referral lands."
+    },
+    {
+      id: 5,
+      name: "The Big Picture",
+      blurb: "One video for a different audience. Investor-facing, lives on the Emyria homepage."
+    }
+  ];
+
+  var VIDEOS = [
+    {
+      id: 1, cat: 1, presenter: "Jon", pKey: "jon",
+      headline: "How Authorised Prescribing Works",
+      alt: "Alt: Who Regulates This Treatment?",
+      question: "Many clinicians are curious but cautious about the rescheduling of these medicines. How does the TGA's Authorised Prescriber scheme work in practice, and what level of clinical governance is in place at Empax to ensure patient safety?",
+      goal: "Establish legitimacy by explaining HREC oversight, strict TGA protocols and the practicalities of how patients are kept safe.",
+      beats: [
+        { tag: "Open", text: "Name the hesitation directly: the rescheduling happened fast and most clinicians never got a proper briefing. This video is that briefing." },
+        { tag: "", text: "The framework in plain terms: since July 2023, approved psychiatrists can prescribe MDMA for PTSD and psilocybin for treatment-resistant depression under the TGA's Authorised Prescriber scheme, with strict conditions attached.", verify: "Jon to confirm wording on scheme scope" },
+        { tag: "", text: "What approval actually requires: human research ethics committee endorsement, defined treatment protocols and ongoing reporting obligations. Closer to trial-grade oversight than open prescribing." },
+        { tag: "", text: "How that governance runs at Empax day to day: structured screening, medical supervision through dosing, adverse event reporting and regular clinical governance review.", verify: "confirm the specific Empax governance mechanisms to name" },
+        { tag: "Close", text: "The takeaway for a referrer: your patient enters a tightly governed clinical program, and you stay informed at every stage." }
+      ]
+    },
+    {
+      id: 2, cat: 1, presenter: "Claire", pKey: "claire",
+      headline: "Who Is This Therapy For?",
+      alt: "Alt: Should I Refer This Patient?",
+      question: "Which of my patients are the best candidates for these therapies, and conversely, which clinical 'red flags' would automatically exclude someone from these interventions?",
+      goal: "Provide clear screening criteria to assist referrers in deciding who to refer, and who not to.",
+      beats: [
+        { tag: "Open", text: "The two questions every referrer is weighing at once: who genuinely benefits from this, and who could it harm. Answer both in one video." },
+        { tag: "", text: "The strong candidate: a confirmed diagnosis of PTSD or treatment-resistant depression, adequate trials of first-line treatment, medically stable, and able to engage in intensive psychotherapy.", verify: "Claire to confirm the exact suitability criteria" },
+        { tag: "", text: "The hard exclusions: personal or family history of psychosis or bipolar I, unstable cardiovascular disease, current serious suicide risk, and specific medication conflicts.", verify: "confirm the precise exclusion list and medication interactions before filming" },
+        { tag: "", text: "The grey zone: complex comorbidity, tapering questions, uncertain motivation. These are a phone call to Empax, not an automatic no." },
+        { tag: "Close", text: "You do not have to make the final call alone. Empax screening makes the suitability decision, so when in doubt, refer and let the assessment decide." }
+      ]
+    },
+    {
+      id: 3, cat: 2, presenter: "Mike", pKey: "mike",
+      headline: "How MDMA Unlocks Trauma Processing",
+      alt: "Alt: MDMA And The PTSD Brain",
+      question: "Can you explain at a neurological level how MDMA can act as a catalyst to help people with PTSD process trauma?",
+      goal: "Explain what MDMA does at a neurological level, how it opens a window of flexibility, and the role of neuroplasticity.",
+      beats: [
+        { tag: "Open", text: "Why talk therapy alone can stall in PTSD: the fear response floods first, and the processing work never gets started." },
+        { tag: "", text: "What MDMA does neurologically: dampens amygdala threat reactivity while lifting serotonin, oxytocin and a felt sense of safety and connection.", verify: "Mike to confirm the mechanism wording he is comfortable stating on camera" },
+        { tag: "", text: "The window of flexibility: the patient can hold the traumatic memory and stay present at the same time, so reprocessing actually works." },
+        { tag: "", text: "Neuroplasticity: the sessions open a period where new learning consolidates, which is exactly why structured integration follows immediately after dosing." },
+        { tag: "Close", text: "The one-liner referrers can repeat to their patients: the medicine is the catalyst, the psychotherapy is the treatment." }
+      ]
+    },
+    {
+      id: 4, cat: 2, presenter: "Mike", pKey: "mike",
+      headline: "How Psilocybin Resets Depression",
+      alt: "Alt: Psilocybin And The Depressed Brain",
+      question: "Can you explain at a neurological level how psilocybin can act as a catalyst for recovery in treatment-resistant depression?",
+      goal: "Explain what psilocybin does at a neurological level, how quietening the Default Mode Network creates the window of flexibility needed for potential clinical remission, and neuroplasticity.",
+      beats: [
+        { tag: "Open", text: "Treatment-resistant depression as a locked pattern: rumination and rigidity that persist through multiple medication trials." },
+        { tag: "", text: "The Default Mode Network in plain language: the brain's self-referential narrator, overactive and over-connected in entrenched depression.", verify: "Mike to confirm he is happy with this framing of the DMN" },
+        { tag: "", text: "What psilocybin does: temporarily quietens the Default Mode Network and increases communication across brain networks, loosening patterns that have not shifted for years." },
+        { tag: "", text: "The window of flexibility and neuroplasticity: why perspectives formed in-session can hold afterwards, and what durable remission means clinically." },
+        { tag: "Close", text: "Same principle as the MDMA video: a catalyst inside a structured psychotherapy program, not a standalone drug effect." }
+      ]
+    },
+    {
+      id: 5, cat: 2, presenter: "Claire", pKey: "claire",
+      headline: "Inside The 90 Hour Program",
+      alt: "Alt: Why Treatment Takes 90 Hours",
+      question: "Can you walk us through the 70-90 hour model? Why is the 'Integration' phase just as critical as the dosing sessions themselves?",
+      goal: "Emphasise that the medicine is only one part of a highly structured psychotherapeutic program.",
+      beats: [
+        { tag: "Open", text: "Lead with the number that surprises people: 70 to 90 clinician hours per patient. The dosing day is the smallest part of it." },
+        { tag: "", text: "Phase one, preparation: screening, medical work-up, building the therapeutic alliance and setting intentions before any medicine is involved.", verify: "Claire to confirm the phase structure and rough hour split" },
+        { tag: "", text: "Phase two, dosing: full-day supported sessions with clinicians present throughout and medical oversight on site.", verify: "confirm staffing model stated on camera" },
+        { tag: "", text: "Phase three, integration: where insight becomes behaviour change. Name it plainly: skipping integration is where less structured models fail." },
+        { tag: "Close", text: "The frame for referrers: this is a structured psychotherapy program that includes medicine, not a medicine clinic with some therapy attached." }
+      ]
+    },
+    {
+      id: 6, cat: 3, presenter: "Mike", pKey: "mike",
+      headline: "The Results We Are Seeing",
+      alt: "Alt: Empax Outcomes So Far",
+      question: "What results is Empax achieving? For patients who have completed the Empax program, what kind of remission rates and functional improvements (like return-to-work) are we seeing?",
+      goal: "Share specific data and case study outcomes for MDMA and psilocybin where possible.",
+      flag: "AHPRA advertising guidelines prohibit patient testimonials for regulated health services, and outcome claims must be accurate and not create unreasonable expectations of benefit. TGA rules also limit how prescription-only medicines can be promoted to the public. Keep this video about the program and its measured outcomes, use no patient stories or identifying details, and run the final script past your compliance advisor before publishing.",
+      beats: [
+        { tag: "Open", text: "Open on the fair question: does this work outside of trials? Then answer with Empax's own real-world data rather than borrowed trial numbers." },
+        { tag: "", text: "How Empax measures: validated clinical scales at intake, completion and follow-up, plus functional markers like return to work.", verify: "Mike to confirm which instruments to name on camera" },
+        { tag: "", text: "The headline numbers: remission and response rates to date for MDMA-assisted therapy and psilocybin, with the cohort size stated plainly alongside them.", verify: "insert the actual figures Empax is cleared to share" },
+        { tag: "", text: "Context against published trial data: how the real-world results compare, and the honest caveats. Caveats build referrer trust, they do not weaken it." },
+        { tag: "Close", text: "What happens for partial responders and non-responders. Talking about both outcomes is what makes the good numbers believable." }
+      ]
+    },
+    {
+      id: 7, cat: 3, presenter: "Jon or Claire", pKey: "shared",
+      headline: "What Are The Side Effects?",
+      alt: "Alt: How Empax Manages Risk",
+      question: "What can a patient expect in terms of side effects during and after a session, and how does the clinical team manage the 'emotional opening' that occurs in the days following treatment?",
+      goal: "Address common fears about adverse events or psychological destabilisation, and cover coordination with the patient's external treatment team.",
+      beats: [
+        { tag: "Open", text: "Name the two fears out loud: something going wrong on the day, and psychological destabilisation in the days after. Then take them one at a time." },
+        { tag: "", text: "During the session: the common effects, think blood pressure and heart rate changes, nausea, anxiety peaks, challenging emotional material, and the monitoring that sits around all of it.", verify: "presenter to confirm the side effect list and monitoring protocol" },
+        { tag: "", text: "The days after: the emotional opening, fatigue and heightened vulnerability, and the scheduled follow-up contact designed to catch problems early.", verify: "confirm the actual follow-up cadence" },
+        { tag: "", text: "Serious adverse events: how rare they are in this setting, the escalation pathway, and the medical cover on site." },
+        { tag: "Close", text: "Coordination with the patient's existing treatment team through the vulnerable period. Referrers are kept in the loop, not sidelined." }
+      ]
+    },
+    {
+      id: 8, cat: 4, presenter: "Mike", pKey: "mike",
+      headline: "What It Costs, Who Pays",
+      alt: "Alt: Funding Pathways Explained",
+      question: "Cost is a significant barrier for many. What are the current funding pathways available?",
+      goal: "Clarify the financial landscape and the partnerships that make treatment accessible: DVA, Medibank, workers' compensation, potentially Victims of Crime.",
+      flag: "Funding claims date quickly and eligibility is never guaranteed by Empax. Confirm the current status of each pathway with the payer before filming, and keep the language to \"eligible patients may access\" rather than promised coverage.",
+      beats: [
+        { tag: "Open", text: "Say the cost range out loud, because avoiding the number costs trust. Then pivot straight to how eligible patients pay far less.", verify: "insert the range Empax is comfortable stating publicly" },
+        { tag: "", text: "What moves the cost up or down: program length, the medicine involved, level of psychiatrist input and individual clinical needs. Give the viewer the \"it depends\" honestly." },
+        { tag: "", text: "The DVA pathway for veterans: what is covered and how a referrer starts it.", verify: "confirm current DVA arrangement" },
+        { tag: "", text: "Medibank and workers' compensation: who qualifies and what each covers. Add Victims of Crime only if confirmed.", verify: "Claire to confirm each pathway's current status" },
+        { tag: "Close", text: "The practical next step for a referrer with an eligible patient: who to contact at Empax and what to send them." }
+      ]
+    },
+    {
+      id: 9, cat: 4, presenter: "Jon or Claire", pKey: "shared",
+      headline: "The Referral Journey, Mapped",
+      alt: "Alt: What Happens After Referral",
+      question: "If I refer a patient, what does that journey look like for them, including the tapering process, and how do you ensure they are transitioned safely back to my long-term care once the intensive program is complete?",
+      goal: "Assure the referring clinician that they remain a key part of the patient's long-term care team, clarify tapering, and define the transition process.",
+      beats: [
+        { tag: "Open", text: "The referrer's real concern, said plainly: do I lose my patient, and do I get them back safely? Answer up front: no, and yes." },
+        { tag: "", text: "From referral to intake: what the referrer sends, the screening steps, and a realistic timeline to first appointment.", verify: "confirm the current intake timeline" },
+        { tag: "", text: "Tapering: which medications typically need adjustment, who manages the taper, and how it is coordinated with the referrer.", verify: "confirm the tapering protocol and who holds responsibility" },
+        { tag: "", text: "During and after the program: the updates the referrer receives and when, then the handback: discharge summary, relapse plan and a handover conversation." },
+        { tag: "Close", text: "The principle to land on: you remain the long-term clinician. Empax is the intensive intervention inside your care plan, not a replacement for it." }
+      ]
+    },
+    {
+      id: 10, cat: 5, presenter: "Jon", pKey: "jon", placement: "Emyria Homepage",
+      headline: "From Managing To Healing",
+      alt: "Alt: Why Psychiatry Is Changing",
+      question: "For decades, conventional clinical psychiatry has focused on continuous, daily symptom management. Drawing on your 30 years of experience as a psychiatrist, why does advanced medicine-assisted therapy represent such a significant paradigm shift in how we address severe mental illness?",
+      goal: "Establish clinical authority through Jon's 30 years in psychiatry, and give investors a compelling overview of the shift from lifetime symptom suppression to an accelerated, psychotherapy-led catalyst model built for deep, durable remission.",
+      flag: "This one is investor-facing content for a listed company. Have the final script reviewed against Emyria's continuous disclosure obligations before it goes on the homepage, and keep any forward-looking statements inside what has already been disclosed to market.",
+      beats: [
+        { tag: "Open", text: "Open on Jon's authority: 30 years in psychiatry, most of it prescribing daily medication that manages symptoms without resolving the illness underneath." },
+        { tag: "", text: "The legacy model laid bare: indefinite treatment, high non-response rates in treatment-resistant depression and PTSD, and the compounding human and economic cost.", verify: "Jon to confirm any statistics he quotes on camera" },
+        { tag: "", text: "The comparison that carries the video: symptom suppression versus catalyst. A short, intensive, psychotherapy-led program that uses medicine to unlock change and targets durable remission." },
+        { tag: "", text: "Why now: the 2023 rescheduling, a maturing evidence base, and real-world programs like Empax already delivering the model in Australia." },
+        { tag: "Close", text: "Land the one-sentence thesis: a shift from lifetime symptom management to accelerated recovery, with Empax and Emyria positioned at the front of it." }
+      ]
+    }
+  ];
+
+  var TIMES = ["0:00", "0:35", "1:10", "1:50", "2:30"];
+  var STORE_KEY = "empax-faq-checklist-v1";
+
+  /* ============ CLOUD SYNC CONFIG ============ */
+  var SYNC_URL = "https://ztbrbhfrnpdwbdwyuovo.supabase.co/rest/v1/shared_documents";
+  var SYNC_KEY = "sb_publishable_Sc7-vIJ1xkv53G6SRC7omg_aBUoYwt6";
+  var DOC_ID = "empax-clinical-faq-checklist";
+
+  /* ============ SAFE STORAGE ============ */
+  var memStore = {};
+  function load() {
+    try {
+      var raw = window.localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return memStore; }
+  }
+  function save(state) {
+    try { window.localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+    catch (e) { memStore = state; }
+    queueCloudSave();
+  }
+
+  var state = load();
+  VIDEOS.forEach(function (v) {
+    if (!state[v.id]) {
+      state[v.id] = { beats: [false, false, false, false, false], headlineLocked: false, compliance: false, headline: null, notes: "" };
+    }
+  });
+
+  /* ============ RENDER ============ */
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+  function badgeClass(pKey) {
+    return { jon: "badge-jon", claire: "badge-claire", mike: "badge-mike", shared: "badge-shared" }[pKey];
+  }
+
+  function renderCard(v) {
+    var s = state[v.id];
+    var beatsHtml = v.beats.map(function (b, i) {
+      return '' +
+        '<div class="beat' + (s.beats[i] ? " checked" : "") + '" data-beat="' + i + '">' +
+          '<input type="checkbox" class="beat-check" id="b' + v.id + "-" + i + '" data-video="' + v.id + '" data-index="' + i + '"' + (s.beats[i] ? " checked" : "") + ' aria-label="Verify key point ' + (i + 1) + ' of video ' + v.id + '">' +
+          '<label class="beat-time" for="b' + v.id + "-" + i + '">' + TIMES[i] + '</label>' +
+          '<label class="beat-body" for="b' + v.id + "-" + i + '">' +
+            (b.tag ? '<span class="beat-tag">' + esc(b.tag) + '</span>' : "") +
+            esc(b.text) +
+            (b.verify ? ' <span class="verify-note">[Verify: ' + esc(b.verify) + ']</span>' : "") +
+          '</label>' +
+        '</div>';
+    }).join("");
+
+    return '' +
+      '<article class="card" id="card-' + v.id + '" data-presenter="' + v.pKey + '">' +
+        '<div class="card-top">' +
+          '<div class="card-meta">' +
+            '<span class="vid-num">VIDEO ' + pad(v.id) + '</span>' +
+            '<span class="badge badge-presenter ' + badgeClass(v.pKey) + '">' + esc(v.presenter) + '</span>' +
+            '<span class="badge badge-runtime">~3:00</span>' +
+            (v.placement ? '<span class="badge badge-placement">' + esc(v.placement) + '</span>' : "") +
+          '</div>' +
+          '<span class="badge badge-ready">Ready to film</span>' +
+        '</div>' +
+        '<div class="headline-label" id="hl-label-' + v.id + '">' + (s.headline ? "Edited headline" : "Suggested headline · click to edit") + '</div>' +
+        '<h3 class="headline" contenteditable="true" spellcheck="false" data-video="' + v.id + '" aria-label="Editable headline for video ' + v.id + '">' + esc(s.headline || v.headline) + '</h3>' +
+        '<div class="headline-alt">' + esc(v.alt) + '</div>' +
+        '<details class="question">' +
+          '<summary>The question as asked</summary>' +
+          '<p>&ldquo;' + esc(v.question) + '&rdquo;</p>' +
+        '</details>' +
+        '<div class="goal-row"><span class="goal-tag">Goal</span><p>' + esc(v.goal) + '</p></div>' +
+        '<div class="beats-head">' +
+          '<span class="beats-title">Key point beats · tick when verified</span>' +
+          '<span class="verify-pill" id="pill-' + v.id + '">0/5 verified</span>' +
+        '</div>' +
+        '<div class="beats">' + beatsHtml + '</div>' +
+        (v.flag ? '<div class="flag"><div class="flag-label">Compliance check</div><p>' + esc(v.flag) + '</p></div>' : "") +
+        '<div class="signoff">' +
+          '<button class="toggle" data-video="' + v.id + '" data-toggle="headlineLocked" aria-pressed="false"><span class="dot"></span>Headline locked</button>' +
+          '<span class="toggle auto" id="auto-' + v.id + '"><span class="dot"></span>Points verified</span>' +
+          '<button class="toggle" data-video="' + v.id + '" data-toggle="compliance" aria-pressed="false"><span class="dot"></span>Compliance cleared</button>' +
+        '</div>' +
+        '<div class="notes-block">' +
+          '<div class="notes-label">Claire&rsquo;s edits and notes</div>' +
+          '<textarea class="notes" data-video="' + v.id + '" placeholder="Rewording, corrections, anything the presenter should say differently...">' + esc(s.notes) + '</textarea>' +
+        '</div>' +
+      '</article>';
+  }
+
+  var board = document.getElementById("board");
+  board.innerHTML = CATEGORIES.map(function (c) {
+    var cards = VIDEOS.filter(function (v) { return v.cat === c.id; }).map(renderCard).join("");
+    return '' +
+      '<section class="category" data-cat="' + c.id + '">' +
+        '<div class="cat-head">' +
+          '<div class="cat-eyebrow">Category ' + pad(c.id) + '</div>' +
+          '<h2>' + esc(c.name) + '</h2>' +
+          '<p>' + esc(c.blurb) + '</p>' +
+        '</div>' +
+        cards +
+      '</section>';
+  }).join("");
+
+  /* ============ STATE + UI UPDATES ============ */
+  function videoDone(id) {
+    var s = state[id];
+    var allBeats = s.beats.every(Boolean);
+    return allBeats && s.headlineLocked && s.compliance;
+  }
+
+  function updateCard(id) {
+    var s = state[id];
+    var card = document.getElementById("card-" + id);
+    var verified = s.beats.filter(Boolean).length;
+
+    var pill = document.getElementById("pill-" + id);
+    pill.textContent = verified + "/5 verified";
+    pill.classList.toggle("done", verified === 5);
+
+    var auto = document.getElementById("auto-" + id);
+    auto.classList.toggle("on", verified === 5);
+
+    card.querySelectorAll(".toggle[data-toggle]").forEach(function (btn) {
+      var key = btn.getAttribute("data-toggle");
+      btn.classList.toggle("on", !!s[key]);
+      btn.setAttribute("aria-pressed", s[key] ? "true" : "false");
+    });
+
+    card.querySelectorAll(".beat").forEach(function (row, i) {
+      row.classList.toggle("checked", s.beats[i]);
+    });
+
+    card.classList.toggle("ready", videoDone(id));
+  }
+
+  function updateHeader() {
+    var ready = VIDEOS.filter(function (v) { return videoDone(v.id); }).length;
+    var points = VIDEOS.reduce(function (sum, v) {
+      return sum + state[v.id].beats.filter(Boolean).length;
+    }, 0);
+    document.getElementById("statReady").textContent = ready + "/10";
+    document.getElementById("statPoints").textContent = points + "/50";
+    document.getElementById("progressFill").style.width = (points / 50 * 100) + "%";
+  }
+
+  function refresh(id) {
+    updateCard(id);
+    updateHeader();
+    save(state);
+  }
+
+  VIDEOS.forEach(function (v) { updateCard(v.id); });
+  updateHeader();
+
+  /* ============ EVENTS ============ */
+  board.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t.classList.contains("beat-check")) {
+      var id = +t.getAttribute("data-video");
+      var idx = +t.getAttribute("data-index");
+      state[id].beats[idx] = t.checked;
+      refresh(id);
+    }
+  });
+
+  board.addEventListener("click", function (e) {
+    var btn = e.target.closest(".toggle[data-toggle]");
+    if (btn) {
+      var id = +btn.getAttribute("data-video");
+      var key = btn.getAttribute("data-toggle");
+      state[id][key] = !state[id][key];
+      refresh(id);
+    }
+  });
+
+  board.addEventListener("input", function (e) {
+    var t = e.target;
+    if (t.classList.contains("notes")) {
+      var id = +t.getAttribute("data-video");
+      state[id].notes = t.value;
+      save(state);
+    }
+    if (t.classList.contains("headline")) {
+      var vid = +t.getAttribute("data-video");
+      state[vid].headline = t.textContent.trim();
+      document.getElementById("hl-label-" + vid).textContent = "Edited headline";
+      save(state);
+    }
+  });
+
+  board.addEventListener("keydown", function (e) {
+    if (e.target.classList.contains("headline") && e.key === "Enter") {
+      e.preventDefault();
+      e.target.blur();
+    }
+  });
+
+  /* Filters */
+  document.getElementById("filters").addEventListener("click", function (e) {
+    var chip = e.target.closest(".chip");
+    if (!chip) return;
+    document.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("active"); });
+    chip.classList.add("active");
+    var f = chip.getAttribute("data-filter");
+    document.querySelectorAll(".card").forEach(function (card) {
+      var p = card.getAttribute("data-presenter");
+      var show = f === "all" || p === f || (p === "shared" && (f === "jon" || f === "claire"));
+      card.classList.toggle("hidden", !show);
+    });
+    document.querySelectorAll(".category").forEach(function (sec) {
+      var visible = sec.querySelectorAll(".card:not(.hidden)").length > 0;
+      sec.style.display = visible ? "" : "none";
+    });
+  });
+
+  /* Footer actions */
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    setTimeout(function () { el.classList.remove("show"); }, 2200);
+  }
+
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var lines = ["EMPAX CLINICAL FAQ SERIES · STATUS", new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" }), ""];
+    var ready = VIDEOS.filter(function (v) { return videoDone(v.id); }).length;
+    lines.push("Ready to film: " + ready + " of 10");
+    lines.push("");
+    VIDEOS.forEach(function (v) {
+      var s = state[v.id];
+      var verified = s.beats.filter(Boolean).length;
+      var status = videoDone(v.id) ? "READY" : "In review (" + verified + "/5 points" + (s.headlineLocked ? ", headline locked" : "") + (s.compliance ? ", compliance cleared" : "") + ")";
+      lines.push(pad(v.id) + ". " + (s.headline || v.headline) + " (" + v.presenter + ") · " + status);
+      if (s.notes.trim()) lines.push("    Notes: " + s.notes.trim());
+    });
+    lines.push("");
+    lines.push("Generated from the Empax production checklist.");
+    var text = lines.join("\n");
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast("Status copied, paste it anywhere"); },
+        function () { fallbackCopy(text); });
+    } else { fallbackCopy(text); }
+  });
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); toast("Status copied, paste it anywhere"); }
+    catch (e) { toast("Copy failed, select and copy manually"); }
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById("printBtn").addEventListener("click", function () { window.print(); });
+
+  window.addEventListener("beforeprint", function () {
+    document.querySelectorAll("details.question").forEach(function (d) { d.setAttribute("open", ""); });
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    if (!window.confirm("Reset all progress, edits and notes on this checklist?")) return;
+    state = {};
+    VIDEOS.forEach(function (v) {
+      state[v.id] = { beats: [false, false, false, false, false], headlineLocked: false, compliance: false, headline: null, notes: "" };
+    });
+    save(state);
+    VIDEOS.forEach(function (v) {
+      var s = state[v.id];
+      var card = document.getElementById("card-" + v.id);
+      card.querySelectorAll(".beat-check").forEach(function (cb) { cb.checked = false; });
+      card.querySelector(".notes").value = "";
+      card.querySelector(".headline").textContent = v.headline;
+      document.getElementById("hl-label-" + v.id).textContent = "Suggested headline · click to edit";
+      updateCard(v.id);
+    });
+    updateHeader();
+    toast("Checklist reset");
+  });
+
+  /* ============ CLOUD SYNC ============ */
+  var syncEl = document.getElementById("syncStatus");
+  var saveTimer = null;
+  var pendingSave = false;
+  var lastCloudStamp = null;
+
+  function setSync(cls, msg) {
+    syncEl.className = "sync-pill" + (cls ? " " + cls : "");
+    syncEl.textContent = msg;
+  }
+
+  function syncHeaders() {
+    return {
+      "apikey": SYNC_KEY,
+      "Authorization": "Bearer " + SYNC_KEY,
+      "Content-Type": "application/json"
+    };
+  }
+
+  function normalize(cloud) {
+    var next = {};
+    VIDEOS.forEach(function (v) {
+      var c = (cloud && cloud[v.id]) || {};
+      next[v.id] = {
+        beats: Array.isArray(c.beats) && c.beats.length === 5 ? c.beats.map(Boolean) : [false, false, false, false, false],
+        headlineLocked: !!c.headlineLocked,
+        compliance: !!c.compliance,
+        headline: (typeof c.headline === "string" && c.headline) ? c.headline : null,
+        notes: typeof c.notes === "string" ? c.notes : ""
+      };
+    });
+    return next;
+  }
+
+  function applyStateToDom() {
+    VIDEOS.forEach(function (v) {
+      var s = state[v.id];
+      var card = document.getElementById("card-" + v.id);
+      card.querySelectorAll(".beat-check").forEach(function (cb) {
+        cb.checked = !!s.beats[+cb.getAttribute("data-index")];
+      });
+      var notes = card.querySelector(".notes");
+      if (document.activeElement !== notes) notes.value = s.notes;
+      var hl = card.querySelector(".headline");
+      var want = s.headline || v.headline;
+      if (document.activeElement !== hl && hl.textContent !== want) hl.textContent = want;
+      document.getElementById("hl-label-" + v.id).textContent = s.headline ? "Edited headline" : "Suggested headline · click to edit";
+      updateCard(v.id);
+    });
+    updateHeader();
+  }
+
+  function pushCloud() {
+    pendingSave = false;
+    setSync("", "Saving…");
+    var stamp = new Date().toISOString();
+    fetch(SYNC_URL + "?id=eq." + DOC_ID, {
+      method: "PATCH",
+      headers: syncHeaders(),
+      body: JSON.stringify({ data: state, updated_at: stamp }),
+      keepalive: true
+    }).then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      lastCloudStamp = stamp;
+      if (!pendingSave) setSync("ok", "Saved to cloud");
+    }).catch(function () {
+      setSync("err", "Offline · saved in browser");
+      pendingSave = true;
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(pushCloud, 5000);
+    });
+  }
+
+  function queueCloudSave() {
+    pendingSave = true;
+    setSync("", "Saving…");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(pushCloud, 900);
+  }
+
+  function pullCloud() {
+    fetch(SYNC_URL + "?id=eq." + DOC_ID + "&select=data,updated_at", { headers: syncHeaders() })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (rows) {
+        if (pendingSave) return;
+        var doc = rows && rows[0];
+        if (!doc) throw new Error("Document not found");
+        if (doc.data && Object.keys(doc.data).length) {
+          if (doc.updated_at !== lastCloudStamp) {
+            state = normalize(doc.data);
+            lastCloudStamp = doc.updated_at;
+            try { window.localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { memStore = state; }
+            applyStateToDom();
+          }
+          setSync("ok", "Saved to cloud");
+        } else {
+          pushCloud();
+        }
+      })
+      .catch(function () {
+        if (!pendingSave) setSync("err", "Offline · saved in browser");
+      });
+  }
+
+  pullCloud();
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") pullCloud();
+    else if (pendingSave) { clearTimeout(saveTimer); pushCloud(); }
+  });
+  window.addEventListener("pagehide", function () {
+    if (pendingSave) { clearTimeout(saveTimer); pushCloud(); }
+  });
+  window.addEventListener("online", function () {
+    if (pendingSave) pushCloud(); else pullCloud();
+  });
+
+})();
+</script>
+</body>
+</html>
