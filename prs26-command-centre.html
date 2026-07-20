@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRS26 Command Centre | Sevspics x Perth Royal Show</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,640;9..144,700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E7;
+  --card:#FFFEFA;
+  --ink:#22261F;
+  --muted:#6E6A5C;
+  --green:#00694A;
+  --green-deep:#0B4634;
+  --green-soft:#E4EFE7;
+  --ribbon:#23408E;
+  --flag:#B4552D;
+  --flag-soft:#F6E4D7;
+  --tagyellow:#FFD84D;
+  --line:#E3DAC4;
+  --ok:#2D8B5F;
+  --shadow:0 1px 2px rgba(34,38,31,0.06), 0 8px 24px rgba(34,38,31,0.07);
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Instrument Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.55;
+}
+.mono{font-family:"JetBrains Mono", ui-monospace, monospace}
+a{color:var(--green);text-decoration-color:rgba(0,105,74,.4)}
+a:hover{text-decoration-color:var(--green)}
+:focus-visible{outline:3px solid var(--ribbon);outline-offset:2px;border-radius:4px}
+
+/* ---------- topbar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:rgba(247,242,231,0.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;
+  padding:10px 20px;
+}
+.topbar .brand{font-family:Fraunces, serif;font-weight:700;font-size:15px;letter-spacing:.06em;color:var(--green-deep);white-space:nowrap}
+.progresswrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.pbar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.pfill{height:100%;width:0%;background:linear-gradient(90deg,var(--green),var(--green-deep));border-radius:99px;transition:width .4s ease}
+.ppct{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);min-width:38px;text-align:right}
+.countchip{
+  font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;
+  background:var(--green-deep);color:#F3EFE2;
+  padding:6px 12px;border-radius:99px;white-space:nowrap;
+}
+.syncpill{
+  font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;
+  background:var(--line);color:var(--muted);
+  padding:6px 12px;border-radius:99px;white-space:nowrap;
+}
+.syncpill.ok{background:var(--green-soft);color:var(--green-deep)}
+.syncpill.err{background:var(--flag-soft);color:#6E3417}
+@media (max-width:640px){ .topbar .brand{display:none} }
+
+/* ---------- hero ---------- */
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+.hero{padding:44px 0 8px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--flag);text-transform:uppercase}
+h1{font-family:Fraunces, serif;font-weight:700;font-size:clamp(34px,5.4vw,54px);line-height:1.04;color:var(--green-deep);margin:10px 0 12px;letter-spacing:-0.01em}
+.sub{max-width:640px;color:var(--muted);font-size:17px}
+.herochips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+
+/* ear tag chip: the yellow livestock tag */
+.eartag{
+  position:relative;display:inline-flex;align-items:center;gap:7px;
+  background:var(--tagyellow);color:#4A3C00;
+  font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;
+  padding:6px 12px 6px 18px;border-radius:6px 6px 10px 10px;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.08);
+}
+.eartag::before{
+  content:"";position:absolute;left:7px;top:50%;transform:translateY(-50%);
+  width:6px;height:6px;border-radius:50%;
+  background:var(--paper);box-shadow:inset 0 1px 1px rgba(0,0,0,.35);
+}
+.chip{
+  display:inline-flex;align-items:center;
+  font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;
+  background:var(--green-soft);color:var(--green-deep);
+  padding:6px 12px;border-radius:99px;
+}
+
+/* ---------- timeline ---------- */
+.timeline{display:flex;gap:12px;overflow-x:auto;padding:26px 0 10px;scrollbar-width:thin}
+.tpost{
+  min-width:168px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r);padding:14px;position:relative;flex-shrink:0;
+  border-top:4px solid var(--green);
+}
+.tpost.past{opacity:.55;border-top-color:var(--line)}
+.tpost.next{border-top-color:var(--flag);box-shadow:var(--shadow)}
+.tdate{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;color:var(--green-deep)}
+.tpost.next .tdate{color:var(--flag)}
+.tlabel{font-size:13.5px;margin-top:4px;line-height:1.35}
+.tnext{position:absolute;top:-9px;right:10px;background:var(--flag);color:#fff;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;letter-spacing:.08em}
+
+/* ---------- sections ---------- */
+section{margin:34px 0}
+.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+h2{font-family:Fraunces, serif;font-weight:640;font-size:26px;color:var(--green-deep)}
+h2 .h2note{font-family:"Instrument Sans",sans-serif;font-size:14px;font-weight:500;color:var(--flag)}
+.secnote{font-size:13.5px;color:var(--muted)}
+
+/* rules grid */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.rule h3{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--flag);margin-bottom:7px}
+.rule p{font-size:14.5px;color:#3B3E35}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:26px 0 6px}
+.pill{
+  font-family:"JetBrains Mono",monospace;font-size:12.5px;font-weight:600;
+  background:var(--card);border:1px solid var(--line);color:var(--ink);
+  padding:8px 15px;border-radius:99px;cursor:pointer;transition:all .15s ease;
+}
+.pill:hover{border-color:var(--green)}
+.pill.active{background:var(--green-deep);color:#F3EFE2;border-color:var(--green-deep)}
+.pill.util{margin-left:auto}
+@media (max-width:640px){ .pill.util{margin-left:0} }
+
+/* ---------- video cards ---------- */
+.vcard{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:22px;overflow:hidden;
+}
+.vhead{display:flex;gap:18px;align-items:flex-start;padding:22px 22px 4px;flex-wrap:wrap}
+.ribbonwrap{position:relative;width:66px;flex-shrink:0;padding-bottom:22px}
+.rosette{
+  width:66px;height:66px;border-radius:50%;
+  background:repeating-conic-gradient(var(--green) 0 12deg, var(--green-deep) 12deg 24deg);
+  display:grid;place-items:center;position:relative;
+}
+.rosette::before{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--card);border:2px solid var(--green-deep)}
+.rosette b{position:relative;font-family:Fraunces,serif;font-weight:700;font-size:21px;color:var(--green-deep)}
+.ribbonwrap::before,.ribbonwrap::after{
+  content:"";position:absolute;top:56px;width:13px;height:26px;background:var(--green);
+  clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%);
+}
+.ribbonwrap::before{left:14px;transform:rotate(-9deg)}
+.ribbonwrap::after{right:14px;transform:rotate(9deg);background:var(--green-deep)}
+.vtitle{flex:1;min-width:220px}
+.vtitle h3{font-family:Fraunces,serif;font-weight:640;font-size:24px;color:var(--ink);line-height:1.15}
+.vmeta{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px;align-items:center}
+select.status{
+  font-family:"JetBrains Mono",monospace;font-size:12.5px;font-weight:600;
+  border:1.5px solid var(--green);border-radius:99px;background:var(--card);
+  color:var(--green-deep);padding:6px 10px;cursor:pointer;
+}
+.vflag{
+  margin:14px 22px 0;background:var(--flag-soft);border-left:4px solid var(--flag);
+  border-radius:0 10px 10px 0;padding:10px 14px;font-size:13.5px;color:#6E3417;font-weight:500;
+}
+.vflag.ok{background:var(--green-soft);border-left-color:var(--ok);color:var(--green-deep)}
+.vbody{padding:16px 22px 22px}
+.goal{
+  font-size:15px;background:var(--paper);border:1px dashed var(--line);
+  border-radius:10px;padding:12px 14px;margin-bottom:16px;
+}
+.goal strong{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+h4.blocklabel{font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+h4.blocklabel .labelnote{font-weight:500;letter-spacing:0;text-transform:none;color:var(--flag)}
+.beats{width:100%;border-collapse:collapse}
+.beats td{border-top:1px solid var(--line);padding:8px 8px 8px 0;font-size:14.5px;vertical-align:top}
+.beats td.t{font-family:"JetBrains Mono",monospace;font-size:12.5px;font-weight:600;color:var(--green);white-space:nowrap;width:52px;padding-right:12px}
+[contenteditable]{border-radius:6px;padding:2px 5px;transition:background .15s}
+[contenteditable]:hover{background:rgba(0,105,74,.06)}
+[contenteditable]:focus{background:#fff;outline:2px solid var(--green);outline-offset:0}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);font-size:14.5px;cursor:pointer}
+.checks label:first-of-type{border-top:0}
+.checks input{width:18px;height:18px;accent-color:var(--green);margin-top:2px;flex-shrink:0;cursor:pointer}
+body.remaining .checks label.done,
+body.remaining .gearrow.done,
+body.remaining .runsheet tr.done,
+body.remaining .deps label.done{display:none}
+.checks label.done span{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(110,106,92,.5)}
+textarea.notes{
+  width:100%;min-height:64px;margin-top:14px;resize:vertical;
+  font-family:"Instrument Sans",sans-serif;font-size:14px;
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--paper);color:var(--ink);
+}
+textarea.notes:focus{outline:2px solid var(--green);background:#fff}
+
+/* ---------- gear checklist (customisable) ---------- */
+.gearbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:6px 18px 14px}
+.gearrow{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);font-size:14.5px}
+.gearrow:first-child{border-top:0}
+.gearrow input{width:18px;height:18px;accent-color:var(--green);margin-top:2px;flex-shrink:0;cursor:pointer}
+.gearrow span[contenteditable]{flex:1}
+.gearrow.done span[contenteditable]{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(110,106,92,.5)}
+.gearrow .delgear{
+  flex-shrink:0;background:none;border:0;color:var(--muted);cursor:pointer;
+  font-size:15px;line-height:1;padding:4px 7px;border-radius:6px;opacity:.45;margin-top:1px;
+}
+.gearrow .delgear:hover{opacity:1;color:var(--flag);background:var(--flag-soft)}
+.gearfoot{display:flex;justify-content:flex-end;padding-top:10px;border-top:1px solid var(--line);margin-top:2px}
+
+/* ---------- tables (run sheet) ---------- */
+.tablecard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.tscroll{overflow-x:auto}
+table.grid{width:100%;border-collapse:collapse;min-width:640px}
+table.grid th{
+  font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);text-align:left;
+  padding:12px 12px;border-bottom:2px solid var(--line);background:var(--paper);
+}
+table.grid td{padding:9px 12px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+table.grid tr:last-child td{border-bottom:0}
+table.grid td.mono{font-size:12.5px;white-space:nowrap}
+table.grid input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);cursor:pointer}
+table.grid select, table.grid input[type=text]{
+  font-family:"Instrument Sans",sans-serif;font-size:13px;
+  border:1px solid var(--line);border-radius:7px;padding:5px 7px;background:#fff;color:var(--ink);width:100%;
+}
+table.grid select{width:auto;min-width:110px;cursor:pointer}
+.heavy{font-weight:700;color:var(--flag)}
+.tablefoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--paper);border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.btn{
+  font-family:"JetBrains Mono",monospace;font-size:12.5px;font-weight:600;
+  background:var(--green-deep);color:#F3EFE2;border:0;border-radius:99px;
+  padding:9px 16px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--green-deep);border:1.5px solid var(--green-deep)}
+.btn:hover{opacity:.88}
+.runsheet td.t{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;color:var(--green);white-space:nowrap}
+.runsheet tr.done td{color:var(--muted)}
+.runsheet tr.done td:not(.t) span[contenteditable]{text-decoration:line-through;text-decoration-color:rgba(110,106,92,.5)}
+
+/* ---------- dependencies ---------- */
+.deps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){ .deps{grid-template-columns:1fr} }
+.depcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px}
+.depcard h3{font-family:Fraunces,serif;font-weight:640;font-size:19px;color:var(--green-deep);margin-bottom:4px}
+.depcard .who{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.deps label{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line);font-size:14.5px;cursor:pointer}
+.deps label:first-of-type{border-top:0}
+.deps input{width:18px;height:18px;accent-color:var(--green);margin-top:2px;flex-shrink:0;cursor:pointer}
+.deps label.done span.dt{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(110,106,92,.5)}
+.due{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;color:var(--flag);background:var(--flag-soft);padding:2px 8px;border-radius:99px;margin-left:auto;white-space:nowrap;align-self:center}
+
+/* ---------- footer ---------- */
+footer{margin:48px 0 40px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.credit{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted)}
+
+/* ---------- print ---------- */
+@media print{
+  .topbar,.controls,.btn,.tablefoot button,.delgear{display:none !important}
+  body{background:#fff}
+  .vcard,.tablecard,.depcard,.rule,.tpost{box-shadow:none;break-inside:avoid}
+  section[hidden]{display:block !important}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand">SEVSPICS x PRS26</span>
+  <div class="progresswrap">
+    <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    <span class="ppct" id="ppct">0%</span>
+  </div>
+  <span class="syncpill" id="syncpill">Connecting&hellip;</span>
+  <span class="countchip" id="countchip">Loading...</span>
+</div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Content Partnership | Perth Royal Show 2026</div>
+  <h1>PRS26 Command Centre</h1>
+  <p class="sub">Four videos, one shoot day, two Show days, and a slogan you cannot say until 31 August. Everything in one place: rules, scripts, shot lists, and who owes what. Every field is editable and auto-saves to a shared cloud copy, so Sev and Tani are always looking at the same page.</p>
+  <div class="herochips">
+    <span class="eartag">4 VIDEOS</span>
+    <span class="eartag">SHOOT 23 SEPT</span>
+    <span class="eartag">GATES OPEN 26 SEPT</span>
+    <span class="chip">Client: RASWA (Tahnee Lyons)</span>
+  </div>
+</header>
+
+<div class="timeline" id="timeline"></div>
+
+<section id="rules">
+  <div class="sechead">
+    <h2>Campaign rules</h2>
+    <span class="secnote">Non-negotiables from the 8 July call and Tahnee's briefs</span>
+  </div>
+  <div class="rules">
+    <div class="rule">
+      <h3>Slogan embargo</h3>
+      <p>"More Show For Your Dough" cannot appear anywhere before the media campaign goes live on 31 Aug. Video 1 ships clean. Video 2 onward can land it.</p>
+    </div>
+    <div class="rule">
+      <h3>Free stuff only</h3>
+      <p>Value framing leans on free experiences (per their Painted Dog research). Do not sell rides, showbags or food as the draw. They are extras, not the ticket's value.</p>
+    </div>
+    <div class="rule">
+      <h3>Ticket mechanics</h3>
+      <p>Roughly 40 to 50k government-subsidised earlybird tickets. Phase 1 at 50% off, Phase 2 at 40% once Phase 1 sells out. Code via database signup. Launch pends a minister's announcement, expected mid Aug.</p>
+    </div>
+    <div class="rule">
+      <h3>Organic window</h3>
+      <p>No paid media until the OMD/Marketforce campaign starts late Aug. Your videos ARE the earlybird push. That is the leverage in this deal.</p>
+    </div>
+    <div class="rule">
+      <h3>CTA source</h3>
+      <p>Interim CTA: grab half-price tickets now, link in bio. Official lines land in Phoebe's key messages doc. Swap them in the moment it arrives.</p>
+    </div>
+  </div>
+</section>
+
+<div class="controls">
+  <button class="pill active" data-f="all">All</button>
+  <button class="pill" data-f="v1">V1 Ticket Launch</button>
+  <button class="pill" data-f="v2">V2 Value Maths</button>
+  <button class="pill" data-f="v3">V3 Bump-In</button>
+  <button class="pill" data-f="v4">V4 Show Days</button>
+  <button class="pill util" id="remainingBtn">Remaining only</button>
+  <button class="pill" onclick="window.print()">Print</button>
+</div>
+
+<!-- ============ VIDEO 1 ============ -->
+<section data-zone="v1">
+  <div class="vcard">
+    <div class="vhead">
+      <div class="ribbonwrap"><div class="rosette"><b>V1</b></div></div>
+      <div class="vtitle">
+        <h3>Ticket Launch Promo</h3>
+        <div class="vmeta">
+          <span class="eartag">LIVE 19 AUG (TBC)</span>
+          <span class="chip">Archival 2025 footage</span>
+          <select class="status" data-k="v1-status">
+            <option>Concept approved</option>
+            <option>Scripting</option>
+            <option>Editing</option>
+            <option>With Tahnee</option>
+            <option>Delivered</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="vflag">EMBARGO: no slogan in this video. Launch date shifts with the minister's ticket announcement, so keep the edit ready a week early.</div>
+    <div class="vbody">
+      <div class="goal"><strong>Viewer belief</strong><span contenteditable="true" data-k="v1-goal">One ticket buys a full day of experiences, and grabbing it now at half price is the obvious move.</span></div>
+      <h4 class="blocklabel">Beat sheet (edit inline)</h4>
+      <table class="beats">
+        <tr><td class="t">0:00</td><td><span contenteditable="true" data-k="v1-b1">Hook: "Last year half of Perth said the Royal Show was too expensive. Fair. Watch this."</span></td></tr>
+        <tr><td class="t">0:05</td><td><span contenteditable="true" data-k="v1-b2">Fast archival montage: the free stuff one ticket covered in 2025.</span></td></tr>
+        <tr><td class="t">0:18</td><td><span contenteditable="true" data-k="v1-b3">Reveal: RASWA is a not-for-profit. The Show bankrolls scholarships, awards and community programs.</span></td></tr>
+        <tr><td class="t">0:32</td><td><span contenteditable="true" data-k="v1-b4">Value stack: animals, arena shows, fireworks, exhibitions. All included in entry.</span></td></tr>
+        <tr><td class="t">0:48</td><td><span contenteditable="true" data-k="v1-b5">The offer: earlybird allocation at half price. Sign up for your code.</span></td></tr>
+        <tr><td class="t">0:58</td><td><span contenteditable="true" data-k="v1-b6">CTA: link in bio before Phase 1 sells out.</span></td></tr>
+      </table>
+      <h4 class="blocklabel">Asset checklist</h4>
+      <div class="checks">
+        <label><input type="checkbox" data-k="v1-c1"><span>Pull selects from the <a href="https://drive.google.com/drive/folders/1nXTV7iwf27g6ZjaE8bTI8DSTuOGqcpoG" target="_blank" rel="noopener">RAWS folder</a></span></label>
+        <label><input type="checkbox" data-k="v1-c2"><span>Kids and crowd reaction moments tagged</span></label>
+        <label><input type="checkbox" data-k="v1-c3"><span>Animal close-ups and pavilion wides tagged</span></label>
+        <label><input type="checkbox" data-k="v1-c4"><span>Evening atmosphere pulled (IMG_6613 and 6614 are the 6:52pm clips)</span></label>
+        <label><input type="checkbox" data-k="v1-c5"><span>One fresh straight-to-camera PTC recorded</span></label>
+        <label><input type="checkbox" data-k="v1-c6"><span>End card: half-price CTA, zero slogan</span></label>
+      </div>
+      <textarea class="notes" data-k="v1-notes" placeholder="Notes for V1..."></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEO 2 ============ -->
+<section data-zone="v2">
+  <div class="vcard">
+    <div class="vhead">
+      <div class="ribbonwrap"><div class="rosette"><b>V2</b></div></div>
+      <div class="vtitle">
+        <h3>Value Maths</h3>
+        <div class="vmeta">
+          <span class="eartag">LIVE 31 AUG</span>
+          <span class="chip">Teacher mode</span>
+          <select class="status" data-k="v2-status">
+            <option>Concept approved</option>
+            <option>Waiting on inputs</option>
+            <option>Scripting</option>
+            <option>Editing</option>
+            <option>With Tahnee</option>
+            <option>Delivered</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="vflag ok">SLOGAN UNLOCKED: this drops the day the media campaign goes live, so "More Show For Your Dough" is fair game. Blocked until Tahnee's pricing and activities list land (due 19 Aug).</div>
+    <div class="vbody">
+      <div class="goal"><strong>Viewer belief</strong><span contenteditable="true" data-k="v2-goal">The Show beats every other Perth day out on cost per hour, and a maths teacher just showed me the working.</span></div>
+      <h4 class="blocklabel">Beat sheet (edit inline)</h4>
+      <table class="beats">
+        <tr><td class="t">0:00</td><td><span contenteditable="true" data-k="v2-b1">Hook: "I taught high school maths for years. Let me mark Perth's school holidays like an exam."</span></td></tr>
+        <tr><td class="t">0:08</td><td><span contenteditable="true" data-k="v2-b2">Set the board: Show ticket vs Adventure World and co, side by side.</span></td></tr>
+        <tr><td class="t">0:20</td><td><span contenteditable="true" data-k="v2-b3">The working: cost per hour of entertainment, 100+ free activities on one ticket.</span></td></tr>
+        <tr><td class="t">0:38</td><td><span contenteditable="true" data-k="v2-b4">Where the money goes: not-for-profit, programs, awards, scholarships.</span></td></tr>
+        <tr><td class="t">0:50</td><td><span contenteditable="true" data-k="v2-b5">Land the slogan: "More Show For Your Dough."</span></td></tr>
+        <tr><td class="t">0:56</td><td><span contenteditable="true" data-k="v2-b6">CTA: current phase discount plus code signup.</span></td></tr>
+      </table>
+      <h4 class="blocklabel">Asset checklist</h4>
+      <div class="checks">
+        <label><input type="checkbox" data-k="v2-c1"><span>Ticket pricing sheet received from Tahnee (due 19 Aug)</span></label>
+        <label><input type="checkbox" data-k="v2-c2"><span>100+ free activities list received (due 19 Aug)</span></label>
+        <label><input type="checkbox" data-k="v2-c3"><span>Comparison pricing pulled for 2 to 3 rival attractions</span></label>
+        <label><input type="checkbox" data-k="v2-c4"><span>Whiteboard or graphics pass built</span></label>
+        <label><input type="checkbox" data-k="v2-c5"><span>Past comments on your Show videos screenshotted to feature</span></label>
+        <label><input type="checkbox" data-k="v2-c6"><span>End card with slogan plus CTA</span></label>
+      </div>
+      <textarea class="notes" data-k="v2-notes" placeholder="Notes for V2..."></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEO 3 ============ -->
+<section data-zone="v3">
+  <div class="vcard">
+    <div class="vhead">
+      <div class="ribbonwrap"><div class="rosette"><b>V3</b></div></div>
+      <div class="vtitle">
+        <h3>Bump-In BTS</h3>
+        <div class="vmeta">
+          <span class="eartag">SHOOT WED 23 SEPT</span>
+          <span class="eartag">LIVE 25 SEPT</span>
+          <select class="status" data-k="v3-status">
+            <option>Concept approved</option>
+            <option>Pre-production</option>
+            <option>Shot</option>
+            <option>Editing</option>
+            <option>With Tahnee</option>
+            <option>Delivered</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="vflag">SITE RULES: escort required at all times. Crew of two: you plus one videographer. Window is 2 to 3 hours. Timing may shift with the tech rehearsal, confirmed about a week out.</div>
+    <div class="vbody">
+      <div class="goal"><strong>Viewer belief</strong><span contenteditable="true" data-k="v3-goal">I just snuck into WA's biggest event before the gates opened, and tomorrow I can walk in the front.</span></div>
+      <h4 class="blocklabel">Beat sheet (edit inline)</h4>
+      <table class="beats">
+        <tr><td class="t">0:00</td><td><span contenteditable="true" data-k="v3-b1">Hook: "They let me into the Royal Show early. No crowds. Just this."</span></td></tr>
+        <tr><td class="t">0:06</td><td><span contenteditable="true" data-k="v3-b2">Buggy rolling shots. The scale of the build with nobody in it.</span></td></tr>
+        <tr><td class="t">0:20</td><td><span contenteditable="true" data-k="v3-b3">The humans: ride operators and bump-in crew, quick hits.</span></td></tr>
+        <tr><td class="t">0:35</td><td><span contenteditable="true" data-k="v3-b4">Sneak peeks: merch container, Shokens and Moo Moo, Made in WA food trail.</span></td></tr>
+        <tr><td class="t">0:50</td><td><span contenteditable="true" data-k="v3-b5">Tech rehearsal moment, cannon tease if it is running.</span></td></tr>
+        <tr><td class="t">0:58</td><td><span contenteditable="true" data-k="v3-b6">CTA: gates open tomorrow.</span></td></tr>
+      </table>
+      <h4 class="blocklabel">Shot checklist</h4>
+      <div class="checks">
+        <label><input type="checkbox" data-k="v3-c1"><span>Golf buggy tracking shots, Tahnee driving, both directions</span></label>
+        <label><input type="checkbox" data-k="v3-c2"><span>2 to 3 operator or crew interviews in the can</span></label>
+        <label><input type="checkbox" data-k="v3-c3"><span>Merch container reveal plus product close-ups</span></label>
+        <label><input type="checkbox" data-k="v3-c4"><span>Made in WA food trail signage and setup</span></label>
+        <label><input type="checkbox" data-k="v3-c5"><span>Tech rehearsal wide plus safe angles (David the Bullet Smith if live)</span></label>
+        <label><input type="checkbox" data-k="v3-c6"><span>Three PTC hook takes on site minimum</span></label>
+      </div>
+      <textarea class="notes" data-k="v3-notes" placeholder="Notes for V3..."></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RUN SHEET ============ -->
+<section data-zone="v3">
+  <div class="sechead">
+    <h2>23 Sept run sheet <span class="h2note">(suggested only &mdash; for brainstorming, nothing locked in yet)</span></h2>
+    <span class="secnote">A starting point while the day gets finalised. Built for a tight 2.5 hour window with one videographer. Times are elapsed, anchor them once RASWA confirms your slot.</span>
+  </div>
+  <div class="tablecard">
+    <div class="tscroll">
+      <table class="grid runsheet">
+        <thead><tr><th style="width:44px">Done</th><th style="width:110px">Block</th><th>Focus</th><th>Capture notes</th></tr></thead>
+        <tbody>
+          <tr><td><input type="checkbox" data-k="rs1"></td><td class="t">0:00 - 0:15</td><td><span contenteditable="true" data-k="rs1a">Arrive, induction, mic up</span></td><td><span contenteditable="true" data-k="rs1b">Confirm no-go zones with the escort before rolling anything.</span></td></tr>
+          <tr><td><input type="checkbox" data-k="rs2"></td><td class="t">0:15 - 0:40</td><td><span contenteditable="true" data-k="rs2a">Golf buggy tour</span></td><td><span contenteditable="true" data-k="rs2b">Tracking b-roll both directions, Tahnee banter on lav. This is your spine footage.</span></td></tr>
+          <tr><td><input type="checkbox" data-k="rs3"></td><td class="t">0:40 - 1:05</td><td><span contenteditable="true" data-k="rs3a">Operator and crew interviews</span></td><td><span contenteditable="true" data-k="rs3b">2 to 3 quick hits. Get names in your phone as you go.</span></td></tr>
+          <tr><td><input type="checkbox" data-k="rs4"></td><td class="t">1:05 - 1:25</td><td><span contenteditable="true" data-k="rs4a">Merch container</span></td><td><span contenteditable="true" data-k="rs4b">Shokens and Moo Moo reveal, product close-ups, price reactions.</span></td></tr>
+          <tr><td><input type="checkbox" data-k="rs5"></td><td class="t">1:25 - 1:45</td><td><span contenteditable="true" data-k="rs5a">Made in WA food trail</span></td><td><span contenteditable="true" data-k="rs5b">Signage, setup, one taste moment if allowed.</span></td></tr>
+          <tr><td><input type="checkbox" data-k="rs6"></td><td class="t">1:45 - 2:10</td><td><span contenteditable="true" data-k="rs6a">Tech rehearsal / cannon</span></td><td><span contenteditable="true" data-k="rs6b">Wide plus reaction, only from cleared positions. Grab an intro with David if he is about.</span></td></tr>
+          <tr><td><input type="checkbox" data-k="rs7"></td><td class="t">2:10 - 2:30</td><td><span contenteditable="true" data-k="rs7a">PTC hooks and pickups</span></td><td><span contenteditable="true" data-k="rs7b">Three hook takes minimum. Thank the escort on camera, it plays well.</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <h4 class="blocklabel" style="margin-top:18px">Gear checklist <span class="labelnote">(click any item to rewrite it, add or remove rows as you like)</span></h4>
+  <div class="gearbox">
+    <div id="gearlist"></div>
+    <div class="gearfoot"><button class="btn ghost" id="addgear">+ Add gear item</button></div>
+  </div>
+</section>
+
+<!-- ============ VIDEO 4 ============ -->
+<section data-zone="v4">
+  <div class="vcard">
+    <div class="vhead">
+      <div class="ribbonwrap"><div class="rosette"><b>V4</b></div></div>
+      <div class="vtitle">
+        <h3>Show-Day Interviews</h3>
+        <div class="vmeta">
+          <span class="eartag">2 DAYS, DATES TBC</span>
+          <span class="chip">Show runs from 26 Sept</span>
+          <select class="status" data-k="v4-status">
+            <option>Concept approved</option>
+            <option>Blocked on RASWA</option>
+            <option>Pre-production</option>
+            <option>Shot</option>
+            <option>Editing</option>
+            <option>Delivered</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="vflag">BLOCKED ON: media passes x2, giveaway budget, and your two locked dates. All three are in the tracker below with Tahnee's name on them.</div>
+    <div class="vbody">
+      <div class="goal"><strong>Viewer belief</strong><span contenteditable="true" data-k="v4-goal">The atmosphere this year is worth it, and there is still time for me to go.</span></div>
+      <h4 class="blocklabel">Capture priorities (two days)</h4>
+      <table class="beats">
+        <tr><td class="t">P1</td><td><span contenteditable="true" data-k="v4-b1">Attendee vox pops on the "was it worth it" angle. Real families, real numbers.</span></td></tr>
+        <tr><td class="t">P2</td><td><span contenteditable="true" data-k="v4-b2">David the Bullet Smith: walk-and-talk or quick sit-down. Two cannon shows daily, plan around them.</span></td></tr>
+        <tr><td class="t">P3</td><td><span contenteditable="true" data-k="v4-b3">Skip-the-line giveaway at the gate: trivia question tied to a Show feature, film the win.</span></td></tr>
+        <tr><td class="t">P4</td><td><span contenteditable="true" data-k="v4-b4">New attractions: Hot Wheels stunt show, Snackdown panel moment (Lockie, Danielle Oakman, Sarah Oteri, Alex hosting).</span></td></tr>
+        <tr><td class="t">P5</td><td><span contenteditable="true" data-k="v4-b5">Shokens and Moo Moo in the wild: kids holding them, the merch queue.</span></td></tr>
+        <tr><td class="t">P6</td><td><span contenteditable="true" data-k="v4-b6">Closer PTC: days remaining plus ticket CTA.</span></td></tr>
+      </table>
+      <h4 class="blocklabel">Checklist</h4>
+      <div class="checks">
+        <label><input type="checkbox" data-k="v4-c1"><span>Two Show days locked once the program drops</span></label>
+        <label><input type="checkbox" data-k="v4-c2"><span>Media passes confirmed for both of you</span></label>
+        <label><input type="checkbox" data-k="v4-c3"><span>Giveaway budget and mechanics confirmed with Tahnee</span></label>
+        <label><input type="checkbox" data-k="v4-c4"><span>Trivia question drafted, tied to a feature they want pushed</span></label>
+        <label><input type="checkbox" data-k="v4-c5"><span>Snackdown and cannon show times noted in your calendar</span></label>
+        <label><input type="checkbox" data-k="v4-c6"><span>Day 2 held for pickups and anything Day 1 missed</span></label>
+      </div>
+      <textarea class="notes" data-k="v4-notes" placeholder="Notes for V4..."></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEPENDENCIES ============ -->
+<section data-zone="shared">
+  <div class="sechead">
+    <h2>Who owes what</h2>
+    <span class="secnote">Tick as things land. Anything still open a week before its date goes in your next email.</span>
+  </div>
+  <div class="deps">
+    <div class="depcard">
+      <h3>Waiting on Tahnee</h3>
+      <div class="who">RASWA deliverables</div>
+      <label><input type="checkbox" data-k="d-t1"><span class="dt">Presentation deck</span><span class="due">ASAP</span></label>
+      <label><input type="checkbox" data-k="d-t2"><span class="dt">Calendar invite for 23 Sept</span><span class="due">This week</span></label>
+      <label><input type="checkbox" data-k="d-t3"><span class="dt">Shokens and Moo Moo pack</span><span class="due">ASAP</span></label>
+      <label><input type="checkbox" data-k="d-t4"><span class="dt">Official ticket launch date</span><span class="due">Mid Aug</span></label>
+      <label><input type="checkbox" data-k="d-t5"><span class="dt">Ticket pricing plus 100+ free activities list</span><span class="due">19 Aug</span></label>
+      <label><input type="checkbox" data-k="d-t6"><span class="dt">Phoebe's key messages doc</span><span class="due">Pre 19 Aug</span></label>
+      <label><input type="checkbox" data-k="d-t7"><span class="dt">Media passes x2</span><span class="due">Pre 23 Sept</span></label>
+      <label><input type="checkbox" data-k="d-t8"><span class="dt">Bump-in access approval</span><span class="due">Pre 23 Sept</span></label>
+      <label><input type="checkbox" data-k="d-t9"><span class="dt">Giveaway budget decision</span><span class="due">Pre Show</span></label>
+    </div>
+    <div class="depcard">
+      <h3>On you</h3>
+      <div class="who">Sevspics deliverables</div>
+      <label><input type="checkbox" data-k="d-s1"><span class="dt">Reply email: briefs approved plus on-site hours</span><span class="due">Today</span></label>
+      <label><input type="checkbox" data-k="d-s2"><span class="dt">Tag the 25 clips in the RAWS folder</span><span class="due">This week</span></label>
+      <label><input type="checkbox" data-k="d-s3"><span class="dt">V1 script and edit locked</span><span class="due">17 Aug</span></label>
+      <label><input type="checkbox" data-k="d-s4"><span class="dt">V2 build once pricing lands</span><span class="due">19 to 29 Aug</span></label>
+      <label><input type="checkbox" data-k="d-s5"><span class="dt">Brief the videographer for 23 Sept</span><span class="due">By 15 Sept</span></label>
+      <label><input type="checkbox" data-k="d-s6"><span class="dt">Lock two Show days with Tahnee</span><span class="due">Program drop</span></label>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="credit">SEVSPICS | PRS26 Content Partnership | <a href="https://drive.google.com/drive/folders/1Xel9U9TCs5H85ma3RNPfiPp2v9NNq-Fi" target="_blank" rel="noopener">Drive folder</a></span>
+  <button class="btn ghost" id="resetbtn">Reset saved data</button>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "prs26cc-v1";
+
+  /* ---- cloud sync config ---- */
+  var SYNC_URL = "https://ztbrbhfrnpdwbdwyuovo.supabase.co/rest/v1/shared_documents";
+  var SYNC_KEY = "sb_publishable_Sc7-vIJ1xkv53G6SRC7omg_aBUoYwt6";
+  var DOC_ID = "prs26-command-centre";
+
+  /* ---- safe storage: localStorage with in-memory fallback ---- */
+  var mem = {};
+  var hasLS = false;
+  try { localStorage.setItem("__t","1"); localStorage.removeItem("__t"); hasLS = true; } catch(e) {}
+  function load(){
+    if (hasLS) { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { return {}; } }
+    return mem;
+  }
+  function saveLocal(d){
+    if (hasLS) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e) {} }
+    mem = d;
+  }
+  function save(d){
+    saveLocal(d);
+    queueCloudSave();
+  }
+  var state = load();
+
+  /* ---- milestones: timeline + countdown ---- */
+  var milestones = [
+    { y:2026, m:7, d:19, date:"19 AUG", label:"V1 live (TBC) + pricing and activities list due" },
+    { y:2026, m:7, d:31, date:"31 AUG", label:"Media campaign live. V2 drops. Slogan unlocked" },
+    { y:2026, m:8, d:23, date:"23 SEPT", label:"Bump-in shoot, 2 to 3 hrs, crew of two" },
+    { y:2026, m:8, d:25, date:"25 SEPT", label:"V3 drops, day before gates" },
+    { y:2026, m:8, d:26, date:"26 SEPT", label:"Gates open. Two V4 days TBC" }
+  ];
+  var today = new Date(); today.setHours(12,0,0,0);
+  var nextIdx = -1;
+  var tl = document.getElementById("timeline");
+  milestones.forEach(function(ms, i){
+    var dt = new Date(ms.y, ms.m, ms.d, 12);
+    var past = dt < today;
+    if (!past && nextIdx === -1) nextIdx = i;
+    var post = document.createElement("div");
+    post.className = "tpost" + (past ? " past" : "");
+    post.innerHTML = '<div class="tdate mono">' + ms.date + '</div><div class="tlabel">' + ms.label + '</div>';
+    tl.appendChild(post);
+  });
+  var chip = document.getElementById("countchip");
+  if (nextIdx >= 0) {
+    var posts = tl.querySelectorAll(".tpost");
+    posts[nextIdx].classList.add("next");
+    var badge = document.createElement("span");
+    badge.className = "tnext";
+    badge.textContent = "NEXT";
+    posts[nextIdx].appendChild(badge);
+    var nms = milestones[nextIdx];
+    var diff = Math.round((new Date(nms.y, nms.m, nms.d, 12) - today) / 86400000);
+    chip.textContent = nms.date + " in " + diff + "d";
+  } else {
+    chip.textContent = "Show wrapped";
+  }
+
+  /* ---- gear checklist: fully customisable ---- */
+  var GEAR_DEFAULTS = [
+    "Two camera rigs charged plus spare batteries",
+    "2x wireless lavs plus windshields",
+    "Gimbal balanced for the buggy runs",
+    "Media cards dumped and formatted",
+    "ND for the afternoon sun",
+    "Run sheet on both phones, videographer briefed"
+  ];
+  function defaultGear(){
+    return GEAR_DEFAULTS.map(function(t, i){
+      return { t: t, c: !!state["g" + (i + 1)] }; /* migrates ticks from the old fixed list */
+    });
+  }
+  function cleanGear(list){
+    if (!Array.isArray(list)) return null;
+    return list.filter(function(x){ return x && typeof x.t === "string"; })
+               .map(function(x){ return { t: x.t, c: !!x.c }; });
+  }
+  if (!cleanGear(state.__gear)) state.__gear = defaultGear();
+  else state.__gear = cleanGear(state.__gear);
+
+  var gearlist = document.getElementById("gearlist");
+  function renderGear(){
+    gearlist.innerHTML = "";
+    state.__gear.forEach(function(item, i){
+      var row = document.createElement("div");
+      row.className = "gearrow" + (item.c ? " done" : "");
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = !!item.c;
+      cb.setAttribute("aria-label", "Gear item done");
+      cb.addEventListener("change", function(){
+        state.__gear[i].c = cb.checked;
+        row.classList.toggle("done", cb.checked);
+        updateProgress();
+        save(state);
+      });
+      var span = document.createElement("span");
+      span.contentEditable = "true";
+      span.spellcheck = false;
+      span.textContent = item.t;
+      function commit(){
+        state.__gear[i].t = span.textContent;
+        save(state);
+      }
+      span.addEventListener("input", commit);
+      span.addEventListener("blur", commit);
+      span.addEventListener("keydown", function(e){
+        if (e.key === "Enter") { e.preventDefault(); span.blur(); }
+      });
+      var del = document.createElement("button");
+      del.className = "delgear";
+      del.title = "Remove this item";
+      del.setAttribute("aria-label", "Remove gear item");
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if (!confirm("Remove this gear item for both of you?")) return;
+        state.__gear.splice(i, 1);
+        renderGear();
+        updateProgress();
+        save(state);
+      });
+      row.appendChild(cb);
+      row.appendChild(span);
+      row.appendChild(del);
+      gearlist.appendChild(row);
+    });
+  }
+  renderGear();
+  document.getElementById("addgear").addEventListener("click", function(){
+    state.__gear.push({ t: "New gear item", c: false });
+    renderGear();
+    updateProgress();
+    save(state);
+    var spans = gearlist.querySelectorAll("span[contenteditable]");
+    var last = spans[spans.length - 1];
+    if (last) {
+      last.focus();
+      try {
+        var range = document.createRange();
+        range.selectNodeContents(last);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } catch(e) {}
+    }
+  });
+
+  /* ---- persistence ---- */
+  function restore(el){
+    var k = el.getAttribute("data-k");
+    if (!(k in state)) return;
+    if (el.type === "checkbox") { el.checked = !!state[k]; markDone(el); }
+    else if (el.isContentEditable) { el.textContent = state[k]; }
+    else { el.value = state[k]; }
+  }
+  function markDone(cb){
+    var lbl = cb.closest("label");
+    if (lbl) lbl.classList.toggle("done", cb.checked);
+    var tr = cb.closest("tr");
+    if (tr && tr.parentElement && tr.parentElement.parentElement && tr.parentElement.parentElement.classList.contains("runsheet")) {
+      tr.classList.toggle("done", cb.checked);
+    }
+  }
+  function persist(el){
+    var k = el.getAttribute("data-k");
+    if (el.type === "checkbox") { state[k] = el.checked; markDone(el); updateProgress(); }
+    else if (el.isContentEditable) { state[k] = el.textContent; }
+    else { state[k] = el.value; }
+    save(state);
+  }
+  function bind(scope){
+    (scope || document).querySelectorAll("[data-k]").forEach(function(el){
+      if (el.__bound) return;
+      el.__bound = true;
+      restore(el);
+      var evt = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
+      el.addEventListener(evt, function(){ persist(el); });
+      if (el.isContentEditable) el.addEventListener("blur", function(){ persist(el); });
+    });
+  }
+  bind(document);
+
+  /* ---- progress ---- */
+  function updateProgress(){
+    var boxes = document.querySelectorAll('input[type="checkbox"][data-k], #gearlist input[type="checkbox"]');
+    var done = 0;
+    boxes.forEach(function(b){ if (b.checked) done++; });
+    var pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+    document.getElementById("pfill").style.width = pct + "%";
+    document.getElementById("ppct").textContent = pct + "%";
+  }
+  updateProgress();
+
+  /* ---- filters ---- */
+  var pills = document.querySelectorAll(".pill[data-f]");
+  pills.forEach(function(p){
+    p.addEventListener("click", function(){
+      pills.forEach(function(x){ x.classList.remove("active"); });
+      p.classList.add("active");
+      var f = p.getAttribute("data-f");
+      document.querySelectorAll("section[data-zone]").forEach(function(s){
+        var z = s.getAttribute("data-zone");
+        s.hidden = !(f === "all" || z === f || z === "shared");
+      });
+    });
+  });
+  document.getElementById("remainingBtn").addEventListener("click", function(){
+    document.body.classList.toggle("remaining");
+    this.classList.toggle("active");
+  });
+
+  /* ---- cloud sync ---- */
+  var syncEl = document.getElementById("syncpill");
+  var saveTimer = null;
+  var pendingSave = false;
+  var lastCloudStamp = null;
+
+  function setSync(cls, msg){
+    syncEl.className = "syncpill" + (cls ? " " + cls : "");
+    syncEl.textContent = msg;
+  }
+  function syncHeaders(){
+    return {
+      "apikey": SYNC_KEY,
+      "Authorization": "Bearer " + SYNC_KEY,
+      "Content-Type": "application/json"
+    };
+  }
+  function normalize(cloud){
+    var next = (cloud && typeof cloud === "object") ? cloud : {};
+    var gear = cleanGear(next.__gear);
+    next.__gear = gear || defaultGear();
+    return next;
+  }
+  function applyStateToDom(){
+    document.querySelectorAll("[data-k]").forEach(function(el){
+      var k = el.getAttribute("data-k");
+      if (el.type === "checkbox") {
+        el.checked = !!state[k];
+        markDone(el);
+      } else if (el.isContentEditable) {
+        if ((k in state) && document.activeElement !== el && el.textContent !== state[k]) el.textContent = state[k];
+      } else {
+        if ((k in state) && document.activeElement !== el) el.value = state[k];
+      }
+    });
+    if (!gearlist.contains(document.activeElement)) renderGear();
+    updateProgress();
+  }
+  function pushCloud(){
+    pendingSave = false;
+    setSync("", "Saving…");
+    var stamp = new Date().toISOString();
+    fetch(SYNC_URL + "?id=eq." + DOC_ID, {
+      method: "PATCH",
+      headers: syncHeaders(),
+      body: JSON.stringify({ data: state, updated_at: stamp }),
+      keepalive: true
+    }).then(function(res){
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      lastCloudStamp = stamp;
+      if (!pendingSave) setSync("ok", "Saved to cloud");
+    }).catch(function(){
+      setSync("err", "Offline · saved in browser");
+      pendingSave = true;
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(pushCloud, 5000);
+    });
+  }
+  function queueCloudSave(){
+    pendingSave = true;
+    setSync("", "Saving…");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(pushCloud, 900);
+  }
+  function pullCloud(){
+    fetch(SYNC_URL + "?id=eq." + DOC_ID + "&select=data,updated_at", { headers: syncHeaders() })
+      .then(function(res){
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function(rows){
+        if (pendingSave) return;
+        var doc = rows && rows[0];
+        if (!doc) throw new Error("Document not found");
+        if (doc.data && Object.keys(doc.data).length) {
+          if (doc.updated_at !== lastCloudStamp) {
+            state = normalize(doc.data);
+            lastCloudStamp = doc.updated_at;
+            saveLocal(state);
+            applyStateToDom();
+          }
+          setSync("ok", "Saved to cloud");
+        } else {
+          pushCloud();
+        }
+      })
+      .catch(function(){
+        if (!pendingSave) setSync("err", "Offline · saved in browser");
+      });
+  }
+
+  pullCloud();
+  setInterval(function(){
+    if (!pendingSave && document.visibilityState === "visible") pullCloud();
+  }, 20000);
+
+  document.addEventListener("visibilitychange", function(){
+    if (document.visibilityState === "visible") pullCloud();
+    else if (pendingSave) { clearTimeout(saveTimer); pushCloud(); }
+  });
+  window.addEventListener("pagehide", function(){
+    if (pendingSave) { clearTimeout(saveTimer); pushCloud(); }
+  });
+  window.addEventListener("online", function(){
+    if (pendingSave) pushCloud(); else pullCloud();
+  });
+
+  /* ---- reset ---- */
+  document.getElementById("resetbtn").addEventListener("click", function(){
+    if (!confirm("Clear every checkbox, note and edit for BOTH of you? This resets the shared cloud copy too.")) return;
+    state = { __gear: GEAR_DEFAULTS.map(function(t){ return { t: t, c: false }; }) };
+    saveLocal(state);
+    setSync("", "Resetting…");
+    pendingSave = true;
+    clearTimeout(saveTimer);
+    fetch(SYNC_URL + "?id=eq." + DOC_ID, {
+      method: "PATCH",
+      headers: syncHeaders(),
+      body: JSON.stringify({ data: state, updated_at: new Date().toISOString() }),
+      keepalive: true
+    }).then(function(){ location.reload(); })
+      .catch(function(){ location.reload(); });
+  });
+})();
+</script>
+</body>
+</html>
