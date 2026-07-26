@@ -4,9 +4,9 @@
 The daily scrape (and any agent adding entries) MUST follow this. As of 2026-06, every new entry's
 `formats` uses the **multi-variant (cyclable) structure** below — NOT the old single-brief shape.
 
-Canonical working copy & repo: `~/Desktop/Sevs Brain/Sev's Brain/sev-tools` (clone of
+Canonical working copy & repo: `~/Desktop/Claude Projects/Sevs Brain/Sev's Brain/sev-tools` (clone of
 `github.com/sevspics/sev-tools`, published via GitHub Pages from `main` root →
-https://sevspics.github.io/sev-tools/knowledge-hub/). The `~/Desktop/sev-tools` clone is STALE — do not use it.
+https://sevspics.github.io/sev-tools/knowledge-hub/). The `~/Desktop/Claude Projects/sev-tools` clone is STALE — do not use it.
 
 The live gold-standard reference entry is `chris-pemberton-may29-01` ("Unique Selling Personality")
 inside `knowledge-hub/index.html`. When in doubt, copy its `formats` shape exactly.

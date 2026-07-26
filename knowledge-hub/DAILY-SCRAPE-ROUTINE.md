@@ -10,8 +10,8 @@ summary. This file is the single source of truth for the routine — edit it her
 ---
 
 ## 0. Repo & tools
-- **Canonical repo (edit/commit HERE):** `~/Desktop/Sevs Brain/Sev's Brain/sev-tools`. File: `knowledge-hub/index.html`.
-  **NEVER** use `~/Desktop/sev-tools` — it's a stale clone; editing it regresses the live site.
+- **Canonical repo (edit/commit HERE):** `~/Desktop/Claude Projects/Sevs Brain/Sev's Brain/sev-tools`. File: `knowledge-hub/index.html`.
+  **NEVER** use `~/Desktop/Claude Projects/sev-tools` — it's a stale clone; editing it regresses the live site.
 - Live: https://sevspics.github.io/sev-tools/knowledge-hub/ (Pages from `main` root, ~30–60s build).
 - **Fathom MCP** (load via ToolSearch if deferred): `fathom_list_meetings`, `fathom_get_transcript`, `fathom_get_summary`.
   Note: `list_meetings` returns both `recording_id` (use this for `get_transcript`) and `url` (contains the public
@@ -63,7 +63,7 @@ When a qualifying call references an already-indexed framework, append the call'
 
 ## 7. Commit + push
 ```
-cd "/Users/sevamozhaev/Desktop/Sevs Brain/Sev's Brain/sev-tools"
+cd "/Users/sev/Desktop/Claude Projects/Sevs Brain/Sev's Brain/sev-tools"
 git add knowledge-hub/index.html
 git commit -m "Daily scrape: <YYYY-MM-DD> — N new entries, M mention updates"
 git push origin main
