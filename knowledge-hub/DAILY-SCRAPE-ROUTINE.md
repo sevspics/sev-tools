@@ -50,6 +50,33 @@ Read `EXTRACTION-SPEC.md` (same folder) at the start of every run. Each entry us
 
 A newly-scraped entry that is still single-brief is a **defect** — do not ship it; convert before committing.
 
+## 4b. Fact-check every entry before it ships (NON-NEGOTIABLE)
+Format compliance says nothing about truthfulness. Agents drafting these entries **fabricate at a high rate**,
+and the fabrications read as the most vivid copy in the brief — so they survive a structure check untouched.
+Every variant is a script that may actually get filmed and published, often naming a real client, so a made-up
+quote or anecdote is a reputational problem, not a formatting nit.
+
+After harvesting and before inserting, run a **separate fidelity pass per entry**: re-read the transcript and
+demand a supporting line for every number, quote, date, name and asserted event. Default to "cut it" when
+uncertain. The recurring failure modes, all seen in the wild:
+- **Paraphrase escalated into quotation** — a third-person description of a client becomes a verbatim "review".
+- **Invented numbers** — durations, lead counts, conversion rates. Agents reach for a figure when a beat feels thin.
+- **Invented events** — advice that was *given* written up as coaching that *happened*; a demo script Sev was
+  openly improvising written up as a real client story.
+- **Reversed causality** — something Sev raised unprompted rewritten as his answer to a client's question.
+- **Vague self-reports hardened into metrics** — "my close rate is pretty good" → "she closes almost everyone".
+- **Fabricated after-states** — depicting a result for someone who hasn't bought or hasn't acted yet.
+
+Repairs get **reworded around rather than removed**, so re-verify with fresh eyes, not the agent that wrote it.
+The rule that actually prevents it: *no variant may make a third-person factual claim about an identifiable real
+person beyond what the transcript literally states.* Three safe framings — second person to the viewer ("your
+reviews"), Sev's own first-person experience of the call, or an explicitly-labelled composite with identifying
+details stripped (notes must say to cast an actor). When an invention is removed the replacement must be
+**plainer, not a new story**: a duller true line beats a vivid false one.
+
+An entry that still has a fabrication is a **defect** — drop that entry and note it as skipped. Shipping fewer,
+true entries is always the right trade. A partial run is valid.
+
 ## 5. Mentions
 When a qualifying call references an already-indexed framework, append the call's `id` to that entry's
 `mentions` array (powers the 🔁 multiplier). Track each one for the summary.
